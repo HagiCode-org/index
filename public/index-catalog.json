@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-24T07:56:51.263Z",
+  "generatedAt": "2026-03-24T01:16:43.021Z",
   "entries": [
     {
       "id": "presets-catalog",
@@ -19,6 +19,7 @@
       "title": "HagiCode Server Packages",
       "description": "镜像发布 HagiCode Server 的 index.json 稳定入口。",
       "path": "/server/index.json",
+      "historyPagePath": "/server/history/",
       "category": "packages",
       "sourceRepo": "repos/hagicode-core",
       "lastUpdated": "2026-03-23T14:51:42.000Z",
@@ -30,11 +31,27 @@
       "title": "HagiCode Desktop Packages",
       "description": "镜像发布 HagiCode Desktop 的 index.json 稳定入口。",
       "path": "/desktop/index.json",
+      "historyPagePath": "/desktop/history/",
       "category": "packages",
       "sourceRepo": "repos/hagicode-desktop",
       "lastUpdated": "2026-03-23T15:14:45.000Z",
       "status": "published",
       "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/hagicode-desktop"
+    },
+    {
+      "id": "activity-metrics",
+      "title": "Activity Metrics",
+      "description": "镜像发布 HagiCode Index 的活跃用户快照与 90 天历史。",
+      "path": "/activity-metrics.json",
+      "category": "analytics",
+      "sourceRepo": "repos/index",
+      "lastUpdated": "2026-03-24T01:16:43.021Z",
+      "status": "published",
+      "activityMetrics": {
+        "activeUsers": 178,
+        "activeSessions": 197,
+        "dateRange": "3Days"
+      }
     }
   ]
 }

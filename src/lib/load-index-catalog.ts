@@ -6,6 +6,8 @@ export interface IndexCatalogEntry {
   title: string;
   description: string;
   path: string;
+  activityMetrics?: ActivityMetricsSummary;
+  historyPagePath?: string;
   category: string;
   sourceRepo: string;
   lastUpdated: string;
@@ -18,6 +20,12 @@ export interface IndexCatalog {
   version: string;
   generatedAt: string;
   entries: IndexCatalogEntry[];
+}
+
+export interface ActivityMetricsSummary {
+  activeUsers: number;
+  activeSessions: number;
+  dateRange: string;
 }
 
 const requiredEntryFields = [
@@ -39,6 +47,46 @@ function assertString(value: unknown, fieldName: string): string {
   return value;
 }
 
+function optionalString(value: unknown): string | undefined {
+  if (typeof value !== 'string' || value.trim().length === 0) {
+    return undefined;
+  }
+
+  return value;
+}
+
+function normalizeActivityMetrics(value: unknown, entryId: string): ActivityMetricsSummary | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`Catalog entry "${entryId}" activityMetrics must be an object.`);
+  }
+
+  const summary = value as Record<string, unknown>;
+
+  if (!Number.isInteger(summary.activeUsers) || Number(summary.activeUsers) < 0) {
+    throw new Error(`Catalog entry "${entryId}" activityMetrics.activeUsers must be a non-negative integer.`);
+  }
+
+  if (!Number.isInteger(summary.activeSessions) || Number(summary.activeSessions) < 0) {
+    throw new Error(
+      `Catalog entry "${entryId}" activityMetrics.activeSessions must be a non-negative integer.`,
+    );
+  }
+
+  if (typeof summary.dateRange !== 'string' || summary.dateRange.trim().length === 0) {
+    throw new Error(`Catalog entry "${entryId}" activityMetrics.dateRange must be a non-empty string.`);
+  }
+
+  return {
+    activeUsers: Number(summary.activeUsers),
+    activeSessions: Number(summary.activeSessions),
+    dateRange: summary.dateRange,
+  };
+}
+
 function normalizeEntry(rawEntry: unknown): IndexCatalogEntry {
   if (!rawEntry || typeof rawEntry !== 'object') {
     throw new Error('Catalog entry must be an object.');
@@ -55,18 +103,14 @@ function normalizeEntry(rawEntry: unknown): IndexCatalogEntry {
     title: String(entry.title),
     description: String(entry.description),
     path: String(entry.path),
+    activityMetrics: normalizeActivityMetrics(entry.activityMetrics, String(entry.id)),
+    historyPagePath: optionalString(entry.historyPagePath),
     category: String(entry.category),
     sourceRepo: String(entry.sourceRepo),
     lastUpdated: String(entry.lastUpdated),
     status: String(entry.status),
-    readmePath:
-      typeof entry.readmePath === 'string' && entry.readmePath.trim().length > 0
-        ? entry.readmePath
-        : undefined,
-    sourceUrl:
-      typeof entry.sourceUrl === 'string' && entry.sourceUrl.trim().length > 0
-        ? entry.sourceUrl
-        : undefined,
+    readmePath: optionalString(entry.readmePath),
+    sourceUrl: optionalString(entry.sourceUrl),
   };
 }
 

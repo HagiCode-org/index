@@ -1,0 +1,45 @@
+---
+import Analytics51LA from '@/components/51LAAnalytics.astro';
+import IndexFooter from '@/components/IndexFooter.astro';
+import VersionHistoryPage from '@/components/VersionHistoryPage.astro';
+import { loadPackageHistory } from '@/lib/load-package-history';
+import '@/styles/global.css';
+
+const page = await loadPackageHistory('server');
+const pageTitle = `${page.title} | HagiCode Index`;
+const pageDescription = 'HagiCode Server 的可人工浏览版本历史页，基于 /server/index.json 静态生成。';
+const canonicalUrl = 'https://index.hagicode.com/server/history/';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand-mark" href="/">H</a>
+        <div>
+          <p class="brand-name">HagiCode Index</p>
+          <p class="brand-subtitle">Server package history</p>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <VersionHistoryPage page={page} />
+      </main>
+
+      <IndexFooter />
+    </div>
+    <Analytics51LA />
+  </body>
+</html>

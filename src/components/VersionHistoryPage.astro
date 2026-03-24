@@ -1,0 +1,149 @@
+---
+import type { PackageHistoryPageModel } from '@/lib/load-package-history';
+
+interface Props {
+  page: PackageHistoryPageModel;
+}
+
+const { page } = Astro.props;
+const totalReleases = page.releases.length;
+const latestRelease = page.latestRelease;
+const updatedSummary = page.generatedAt ? `索引快照更新时间：${page.generatedAtLabel}` : '索引快照更新时间未知';
+---
+
+<section class="history-shell">
+  <section class="hero-panel history-panel" aria-labelledby="history-heading">
+    <div class="history-hero-grid">
+      <div class="history-copy">
+        <p class="eyebrow">{page.sourceLabel} history</p>
+        <div>
+          <p class="hero-kicker">可人工浏览的发布记录</p>
+          <h1 id="history-heading">{page.title}</h1>
+        </div>
+        <p class="hero-lede">{page.description}</p>
+        <div class="hero-actions">
+          <a class="button button-secondary" href="/">
+            返回首页
+          </a>
+          <a class="button button-primary" href={page.sourceJsonPath} target="_blank" rel="noreferrer">
+            原始 JSON
+          </a>
+        </div>
+      </div>
+
+      <div class="history-summary-grid" aria-label={`${page.sourceLabel} 历史摘要`}>
+        <article class="history-summary-card">
+          <p class="history-summary-label">版本总数</p>
+          <p class="history-summary-value">{totalReleases}</p>
+          <p class="history-summary-note">当前页面只依赖仓库内静态索引。</p>
+        </article>
+        <article class="history-summary-card">
+          <p class="history-summary-label">最新发布</p>
+          <p class="history-summary-value history-summary-text">
+            {latestRelease ? latestRelease.version : '暂无发布'}
+          </p>
+          <p class="history-summary-note">
+            {latestRelease ? latestRelease.publishedLabel : '当前索引还没有可展示的版本记录。'}
+          </p>
+        </article>
+        <article class="history-summary-card">
+          <p class="history-summary-label">数据来源</p>
+          <p class="history-summary-value history-summary-text">
+            <code>{page.sourceJsonPath}</code>
+          </p>
+          <p class="history-summary-note">{updatedSummary}</p>
+        </article>
+      </div>
+    </div>
+
+    {latestRelease ? (
+      <article class="history-latest-card" aria-label="最新发布摘要">
+        <div>
+          <p class="card-category">最新发布</p>
+          <h2>{latestRelease.version}</h2>
+        </div>
+        <dl class="history-latest-meta">
+          <div>
+            <dt>发布日期</dt>
+            <dd>{latestRelease.publishedLabel}</dd>
+          </div>
+          <div>
+            <dt>主要资源</dt>
+            <dd>{latestRelease.primaryArtifactLabel}</dd>
+          </div>
+        </dl>
+        <div class="history-row-actions" aria-label={`${latestRelease.version} 操作`}>
+          {latestRelease.actions.map((action) => (
+            <a
+              class={`button ${action.kind === 'download' ? 'button-primary' : 'button-secondary'}`}
+              href={action.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {action.label}
+            </a>
+          ))}
+        </div>
+      </article>
+    ) : null}
+  </section>
+
+  <section class="catalog-section history-table-section" aria-labelledby="history-table-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Release ledger</p>
+        <h2 id="history-table-heading">历史版本</h2>
+        <p>按最新优先排序，缺少日期或下载链接时显示回退文案并保留原始 JSON 入口。</p>
+      </div>
+    </div>
+
+    {totalReleases > 0 ? (
+      <div class="history-table-wrap">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th scope="col">版本号</th>
+              <th scope="col">发布日期</th>
+              <th scope="col">主要资源</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {page.releases.map((release) => (
+              <tr>
+                <td data-label="版本号">
+                  <strong>{release.version}</strong>
+                </td>
+                <td data-label="发布日期">{release.publishedLabel}</td>
+                <td data-label="主要资源">
+                  <span class={release.hasDirectDownload ? 'history-artifact' : 'history-artifact history-artifact-muted'}>
+                    {release.primaryArtifactLabel}
+                  </span>
+                </td>
+                <td data-label="操作">
+                  <div class="history-row-actions" aria-label={`${release.version} 操作`}>
+                    {release.actions.map((action) => (
+                      <a
+                        class={`button ${action.kind === 'download' ? 'button-primary' : 'button-secondary'}`}
+                        href={action.href}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {action.label}
+                      </a>
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ) : (
+      <div class="empty-state history-empty-state" role="status" aria-live="polite">
+        <p>当前还没有已发布版本。</p>
+        <p>先同步 <code>{page.sourceJsonPath}</code>，再重新构建即可看到完整历史。</p>
+      </div>
+    )}
+  </section>
+</section>

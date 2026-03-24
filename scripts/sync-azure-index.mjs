@@ -33,6 +33,7 @@ export const MANAGED_SOURCE_REGISTRY = Object.freeze([
     catalog: Object.freeze({
       title: 'HagiCode Server Packages',
       description: '镜像发布 HagiCode Server 的 index.json 稳定入口。',
+      historyPagePath: '/server/history/',
       category: 'packages',
       sourceRepo: 'repos/hagicode-core',
       status: 'published',
@@ -47,6 +48,7 @@ export const MANAGED_SOURCE_REGISTRY = Object.freeze([
     catalog: Object.freeze({
       title: 'HagiCode Desktop Packages',
       description: '镜像发布 HagiCode Desktop 的 index.json 稳定入口。',
+      historyPagePath: '/desktop/history/',
       category: 'packages',
       sourceRepo: 'repos/hagicode-desktop',
       status: 'published',
@@ -302,6 +304,7 @@ function buildManagedCatalogEntry(source, existingEntry, lastUpdated) {
     title: source.catalog.title,
     description: source.catalog.description,
     path: source.targetPath,
+    ...(source.catalog.historyPagePath ? { historyPagePath: source.catalog.historyPagePath } : {}),
     category: source.catalog.category,
     sourceRepo: source.catalog.sourceRepo,
     lastUpdated,

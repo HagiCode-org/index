@@ -30,6 +30,12 @@ const statusLabel = entry.status === 'published' ? '已发布' : entry.status;
       <dt>原始路径</dt>
       <dd><code>{entry.path}</code></dd>
     </div>
+    {entry.historyPagePath ? (
+      <div>
+        <dt>历史页面</dt>
+        <dd><code>{entry.historyPagePath}</code></dd>
+      </div>
+    ) : null}
     <div>
       <dt>来源仓库</dt>
       <dd>{entry.sourceRepo}</dd>
@@ -40,10 +46,36 @@ const statusLabel = entry.status === 'published' ? '已发布' : entry.status;
     </div>
   </dl>
 
+  {entry.activityMetrics ? (
+    <section class="activity-summary" aria-label={`${entry.title} 活动摘要`}>
+      <p class="activity-summary-title">活动摘要</p>
+      <dl class="activity-summary-grid">
+        <div class="activity-summary-item">
+          <dt>活跃用户</dt>
+          <dd>{entry.activityMetrics.activeUsers}</dd>
+        </div>
+        <div class="activity-summary-item">
+          <dt>活跃会话</dt>
+          <dd>{entry.activityMetrics.activeSessions}</dd>
+        </div>
+        <div class="activity-summary-item">
+          <dt>时间窗口</dt>
+          <dd>{entry.activityMetrics.dateRange}</dd>
+        </div>
+      </dl>
+    </section>
+  ) : null}
+
   <div class="card-actions" aria-label={`${entry.title} 操作`}>
     {entry.readmePath ? (
       <a class="button button-tertiary" href={entry.readmePath} target="_blank" rel="noreferrer">
         查看 README
+      </a>
+    ) : null}
+
+    {entry.historyPagePath ? (
+      <a class="button button-tertiary" href={entry.historyPagePath}>
+        版本历史
       </a>
     ) : null}
 

@@ -89,6 +89,7 @@ async function createFixtureProject() {
         title: 'HagiCode Server Packages',
         description: '镜像发布 HagiCode Server 的 index.json 稳定入口。',
         path: '/server/index.json',
+        historyPagePath: '/server/history/',
         category: 'packages',
         sourceRepo: 'repos/hagicode-core',
         lastUpdated: '2026-03-10T00:00:00.000Z',
@@ -100,6 +101,7 @@ async function createFixtureProject() {
         title: 'HagiCode Desktop Packages',
         description: '镜像发布 HagiCode Desktop 的 index.json 稳定入口。',
         path: '/desktop/index.json',
+        historyPagePath: '/desktop/history/',
         category: 'packages',
         sourceRepo: 'repos/hagicode-desktop',
         lastUpdated: '2026-03-10T00:00:00.000Z',
@@ -248,8 +250,10 @@ test('syncManagedIndexes publishes changed mirrors together and refreshes manage
 
   assert.equal(presetsEntry.path, '/presets/index.json');
   assert.equal(serverEntry.path, '/server/index.json');
+  assert.equal(serverEntry.historyPagePath, '/server/history/');
   assert.equal(serverEntry.lastUpdated, '2026-03-24T08:00:00.000Z');
   assert.equal(desktopEntry.path, '/desktop/index.json');
+  assert.equal(desktopEntry.historyPagePath, '/desktop/history/');
   assert.equal(desktopEntry.lastUpdated, '2026-03-24T08:01:00.000Z');
   assert.equal(catalog.generatedAt, '2026-03-24T08:05:00.000Z');
 });
