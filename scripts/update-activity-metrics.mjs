@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 const HISTORY_RETENTION_DAYS = 90;
 const DEFAULT_DOCKER_HUB_REPOSITORY = 'newbe36524/hagicode';
 const DEFAULT_CLARITY_DATE_RANGE = '3Days';
+const ACTIVITY_CATALOG_ENTRY_ID = 'activity-metrics';
 const REQUIRED_TOP_LEVEL_FIELDS = ['lastUpdated', 'dockerHub', 'clarity', 'history'];
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
@@ -329,9 +330,77 @@ export async function writeActivityMetrics(filePath, data) {
   await writeFile(filePath, JSON.stringify(data), 'utf8');
 }
 
+async function readCatalogSnapshot(catalogPath) {
+  const raw = await readFile(catalogPath, 'utf8');
+  const catalog = JSON.parse(raw);
+
+  assert(isObject(catalog), 'Catalog must be an object.');
+  assert(Array.isArray(catalog.entries), 'Catalog entries must be an array.');
+  assert(typeof catalog.version === 'string' && catalog.version.trim().length > 0, 'Catalog version is required.');
+  assert(
+    typeof catalog.generatedAt === 'string' && catalog.generatedAt.trim().length > 0,
+    'Catalog generatedAt is required.',
+  );
+
+  return catalog;
+}
+
+export function buildActivityMetricsSummary(data) {
+  return {
+    activeUsers: data.clarity.activeUsers,
+    activeSessions: data.clarity.activeSessions,
+    dateRange: data.clarity.dateRange,
+  };
+}
+
+export function syncActivityMetricsCatalogEntry(catalog, data) {
+  const summary = buildActivityMetricsSummary(data);
+  const activityEntry = {
+    ...(catalog.entries.find((entry) => entry?.id === ACTIVITY_CATALOG_ENTRY_ID) ?? {}),
+    id: ACTIVITY_CATALOG_ENTRY_ID,
+    title: 'Activity Metrics',
+    description: '镜像发布 HagiCode Index 的活跃用户快照与 90 天历史。',
+    path: '/activity-metrics.json',
+    category: 'analytics',
+    sourceRepo: 'repos/index',
+    lastUpdated: data.lastUpdated,
+    status: 'published',
+    activityMetrics: summary,
+  };
+
+  const nextEntries = [];
+  let replaced = false;
+
+  for (const entry of catalog.entries) {
+    if (entry?.id !== ACTIVITY_CATALOG_ENTRY_ID) {
+      nextEntries.push(entry);
+      continue;
+    }
+
+    nextEntries.push(activityEntry);
+    replaced = true;
+  }
+
+  if (!replaced) {
+    nextEntries.push(activityEntry);
+  }
+
+  return {
+    ...catalog,
+    generatedAt: data.lastUpdated,
+    entries: nextEntries,
+  };
+}
+
+export async function writeCatalogSnapshot(catalogPath, catalog) {
+  await mkdir(path.dirname(catalogPath), { recursive: true });
+  await writeFile(catalogPath, JSON.stringify(catalog), 'utf8');
+}
+
 export async function updateActivityMetrics({
   now = new Date(),
   filePath = path.join(projectRoot, 'public', 'activity-metrics.json'),
+  catalogPath = path.join(path.dirname(filePath), 'index-catalog.json'),
   env = process.env,
   fetchImpl = globalThis.fetch,
 } = {}) {
@@ -354,9 +423,13 @@ export async function updateActivityMetrics({
 
   warnings.push(...merged.warnings);
   await writeActivityMetrics(filePath, merged.data);
+  const catalog = await readCatalogSnapshot(catalogPath);
+  const nextCatalog = syncActivityMetricsCatalogEntry(catalog, merged.data);
+  await writeCatalogSnapshot(catalogPath, nextCatalog);
 
   return {
     data: merged.data,
+    catalog: nextCatalog,
     warnings: [...new Set(warnings)],
   };
 }
