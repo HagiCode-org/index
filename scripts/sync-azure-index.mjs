@@ -76,7 +76,7 @@ const defaultFileOps = {
 };
 
 function stableStringify(value) {
-  return `${JSON.stringify(value, null, 2)}\n`;
+  return JSON.stringify(value);
 }
 
 function toIsoTimestamp(value) {

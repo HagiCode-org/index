@@ -24,7 +24,7 @@ const managedEnv = {
 };
 
 function stableStringify(value) {
-  return `${JSON.stringify(value, null, 2)}\n`;
+  return JSON.stringify(value);
 }
 
 function createFetchMock(routes) {

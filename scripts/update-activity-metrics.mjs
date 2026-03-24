@@ -326,7 +326,7 @@ export function mergeActivityMetrics({ existingData, dockerHubMetrics, clarityMe
 
 export async function writeActivityMetrics(filePath, data) {
   await mkdir(path.dirname(filePath), { recursive: true });
-  await writeFile(filePath, `${JSON.stringify(data, null, 2)}\n`, 'utf8');
+  await writeFile(filePath, JSON.stringify(data), 'utf8');
 }
 
 export async function updateActivityMetrics({
