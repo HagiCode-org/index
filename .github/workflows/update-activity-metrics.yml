@@ -1,0 +1,181 @@
+name: Update Activity Metrics
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: index-activity-metrics
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: '22'
+  DOCKER_HUB_REPOSITORY: 'newbe36524/hagicode'
+  METRICS_BRANCH: 'metrics-update'
+
+jobs:
+  update-metrics:
+    name: Fetch and Update Activity Metrics
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run metrics update script
+        id: metrics
+        env:
+          CLARITY_API_KEY: ${{ secrets.CLARITY_API_KEY }}
+          HAGICODE_CLARITY_PROJECT_ID: ${{ secrets.HAGICODE_CLARITY_PROJECT_ID }}
+          DOCKER_HUB_REPOSITORY: ${{ env.DOCKER_HUB_REPOSITORY }}
+        run: |
+          npm run update-activity-metrics 2>&1 | tee /tmp/index-activity-metrics.log
+          SUMMARY_JSON=$(grep '^METRICS_SUMMARY ' /tmp/index-activity-metrics.log | tail -n 1 | sed 's/^METRICS_SUMMARY //')
+
+          if [ -z "$SUMMARY_JSON" ]; then
+            echo "Failed to capture METRICS_SUMMARY from script output." >&2
+            exit 1
+          fi
+
+          {
+            echo "summary_json<<EOF"
+            echo "$SUMMARY_JSON"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Validate updated assets
+        run: |
+          npm run validate
+          npm test
+
+      - name: Collect change summary
+        id: summary
+        env:
+          SUMMARY_JSON: ${{ steps.metrics.outputs.summary_json }}
+        run: |
+          PULL_COUNT=$(printf '%s' "$SUMMARY_JSON" | jq -r '.dockerHubPullCount')
+          ACTIVE_USERS=$(printf '%s' "$SUMMARY_JSON" | jq -r '.activeUsers')
+          ACTIVE_SESSIONS=$(printf '%s' "$SUMMARY_JSON" | jq -r '.activeSessions')
+          LAST_UPDATED=$(printf '%s' "$SUMMARY_JSON" | jq -r '.lastUpdated')
+          WARNINGS=$(printf '%s' "$SUMMARY_JSON" | jq -r 'if (.warnings | length) == 0 then "none" else (.warnings | join(", ")) end')
+
+          if git diff --quiet -- public/activity-metrics.json; then
+            echo 'has_changes=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'has_changes=true' >> "$GITHUB_OUTPUT"
+          fi
+
+          {
+            echo 'pull_count='$PULL_COUNT
+            echo 'active_users='$ACTIVE_USERS
+            echo 'active_sessions='$ACTIVE_SESSIONS
+            echo 'last_updated='$LAST_UPDATED
+            echo 'warnings='$WARNINGS
+          } >> "$GITHUB_OUTPUT"
+
+          echo '### Activity metrics update' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '| Metric | Value |' >> "$GITHUB_STEP_SUMMARY"
+          echo '|---|---|' >> "$GITHUB_STEP_SUMMARY"
+          echo "| Docker Hub pull count | $PULL_COUNT |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Clarity active users | $ACTIVE_USERS |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Clarity active sessions | $ACTIVE_SESSIONS |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Updated at | $LAST_UPDATED |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Warnings | $WARNINGS |" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Configure Git
+        if: steps.summary.outputs.has_changes == 'true'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Create or reset automation branch
+        if: steps.summary.outputs.has_changes == 'true'
+        env:
+          BRANCH_NAME: ${{ env.METRICS_BRANCH }}
+        run: |
+          git fetch origin "$BRANCH_NAME" || true
+          git checkout -B "$BRANCH_NAME"
+
+      - name: Commit updated metrics
+        if: steps.summary.outputs.has_changes == 'true'
+        run: |
+          git add public/activity-metrics.json
+          git commit -m "chore(index): update activity metrics\n\n- updated at: ${{ steps.summary.outputs.last_updated }}"
+
+      - name: Push automation branch
+        if: steps.summary.outputs.has_changes == 'true'
+        env:
+          BRANCH_NAME: ${{ env.METRICS_BRANCH }}
+        run: git push origin "$BRANCH_NAME" --force-with-lease
+
+      - name: Close previous pull requests
+        if: steps.summary.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr list \
+            --state open \
+            --head "$METRICS_BRANCH" \
+            --json number \
+            --jq '.[].number' | while read -r pr_number; do
+            if [ -n "$pr_number" ]; then
+              gh pr close "$pr_number" --comment 'Superseded by a newer activity metrics refresh.'
+            fi
+          done
+
+      - name: Create pull request
+        if: steps.summary.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_BODY=$(cat <<'BODY'
+          ## Activity metrics refresh
+
+          | Metric | Value |
+          |---|---|
+          | Docker Hub pull count | __PULL_COUNT__ |
+          | Clarity active users | __ACTIVE_USERS__ |
+          | Clarity active sessions | __ACTIVE_SESSIONS__ |
+          | Updated at | __LAST_UPDATED__ |
+          | Warnings | __WARNINGS__ |
+
+          - Asset: `public/activity-metrics.json`
+          - Source workflow: `${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`
+          BODY
+          )
+
+          PR_BODY=${PR_BODY/__PULL_COUNT__/${{ steps.summary.outputs.pull_count }}}
+          PR_BODY=${PR_BODY/__ACTIVE_USERS__/${{ steps.summary.outputs.active_users }}}
+          PR_BODY=${PR_BODY/__ACTIVE_SESSIONS__/${{ steps.summary.outputs.active_sessions }}}
+          PR_BODY=${PR_BODY/__LAST_UPDATED__/${{ steps.summary.outputs.last_updated }}}
+          PR_BODY=${PR_BODY/__WARNINGS__/${{ steps.summary.outputs.warnings }}}
+
+          gh pr create \
+            --title 'chore(index): update activity metrics' \
+            --body "$PR_BODY" \
+            --base main \
+            --head "$METRICS_BRANCH" \
+            --label 'automation,metrics'
+
+      - name: No-op summary
+        if: steps.summary.outputs.has_changes != 'true'
+        run: echo 'No JSON change detected; pull request skipped.' >> "$GITHUB_STEP_SUMMARY"
