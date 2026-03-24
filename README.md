@@ -31,7 +31,7 @@
 
 - Docker Hub：`DOCKER_HUB_REPOSITORY` 指向的仓库拉取次数。
 - Microsoft Clarity：近 3 天活跃用户与活跃会话。
-- GitHub Actions：定时执行仓库内脚本。更新 `public/activity-metrics.json`。并通过 PR 暴露变更。
+- GitHub Actions：定时执行仓库内脚本。更新 `public/activity-metrics.json`。并直接提交到主分支。
 
 ## 环境变量
 
@@ -65,12 +65,12 @@ node --env-file=.env ./scripts/update-activity-metrics.mjs
 - 支持 `schedule`、`workflow_dispatch`、`workflow_call`
 - 在仓库内安装依赖。执行 `npm run update-activity-metrics`
 - 输出核心指标、更新时间与警告到 workflow summary
-- 若 JSON 有变更。通过固定分支 `metrics-update` 创建或更新 PR
+- 若 JSON 有变更。直接提交并推送到当前分支。默认是主分支
 
 这样做的原因很直接。
 
 - 指标文件属于静态资产。
-- 需要可审查变更面。
+- 更新策略需要与 `index.json` 系列资产保持一致。
 - 需要异常可追踪。
 
 ## presets 来源与边界
