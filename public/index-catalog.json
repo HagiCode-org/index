@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-03-24T00:00:00.000Z",
+  "generatedAt": "2026-03-24T07:56:51.263Z",
   "entries": [
     {
       "id": "presets-catalog",
@@ -21,7 +21,7 @@
       "path": "/server/index.json",
       "category": "packages",
       "sourceRepo": "repos/hagicode-core",
-      "lastUpdated": "2026-03-24T00:00:00.000Z",
+      "lastUpdated": "2026-03-23T14:51:42.000Z",
       "status": "published",
       "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/hagicode-core"
     },
@@ -32,7 +32,7 @@
       "path": "/desktop/index.json",
       "category": "packages",
       "sourceRepo": "repos/hagicode-desktop",
-      "lastUpdated": "2026-03-24T00:00:00.000Z",
+      "lastUpdated": "2026-03-23T15:14:45.000Z",
       "status": "published",
       "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/hagicode-desktop"
     }
