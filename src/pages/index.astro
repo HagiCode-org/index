@@ -1,4 +1,5 @@
 ---
+import Analytics51LA from '@/components/51LAAnalytics.astro';
 import IndexCard from '@/components/IndexCard.astro';
 import IndexFooter from '@/components/IndexFooter.astro';
 import IndexHero from '@/components/IndexHero.astro';
@@ -47,7 +48,7 @@ const firstPublishedPath = catalog.entries.find((entry) => entry.status === 'pub
             <p class="eyebrow">Catalog</p>
             <div>
               <h2 id="catalog-heading">索引目录</h2>
-              <p>首页与外部程序共用同一份 <code>/index-catalog.json</code>。</p>
+              <p>首页与外部程序共用同一份 <code>/index-catalog.json</code>，活动摘要也直接从这里读取。</p>
             </div>
           </div>
 
@@ -101,5 +102,6 @@ const firstPublishedPath = catalog.entries.find((entry) => entry.status === 'pub
         });
       }
     </script>
+    <Analytics51LA />
   </body>
 </html>
