@@ -1,0 +1,71 @@
+---
+import type { IndexCatalogEntry } from '@/lib/load-index-catalog';
+
+interface Props {
+  entry: IndexCatalogEntry;
+}
+
+const { entry } = Astro.props;
+const updatedLabel = new Intl.DateTimeFormat('zh-CN', {
+  dateStyle: 'long',
+  timeZone: 'UTC',
+}).format(new Date(entry.lastUpdated));
+const copyUrl = new URL(entry.path, 'https://index.hagicode.com').toString();
+const statusLabel = entry.status === 'published' ? '已发布' : entry.status;
+---
+
+<article class="index-card">
+  <div class="card-topline">
+    <p class="card-category">{entry.category}</p>
+    <span class="status-badge">{statusLabel}</span>
+  </div>
+
+  <div class="card-heading">
+    <h2>{entry.title}</h2>
+    <p>{entry.description}</p>
+  </div>
+
+  <dl class="card-meta">
+    <div>
+      <dt>原始路径</dt>
+      <dd><code>{entry.path}</code></dd>
+    </div>
+    <div>
+      <dt>来源仓库</dt>
+      <dd>{entry.sourceRepo}</dd>
+    </div>
+    <div>
+      <dt>更新时间</dt>
+      <dd>{updatedLabel}</dd>
+    </div>
+  </dl>
+
+  <div class="card-actions" aria-label={`${entry.title} 操作`}>
+    {entry.readmePath ? (
+      <a class="button button-tertiary" href={entry.readmePath} target="_blank" rel="noreferrer">
+        查看 README
+      </a>
+    ) : null}
+
+    <a class="button button-primary" href={entry.path} target="_blank" rel="noreferrer">
+      原始 JSON
+    </a>
+
+    <button
+      class="button button-secondary"
+      type="button"
+      data-copy-url={copyUrl}
+      aria-label={`复制 ${entry.title} 的原始 JSON 链接`}
+    >
+      复制链接
+    </button>
+  </div>
+
+  {entry.sourceUrl ? (
+    <p class="card-source-link">
+      <a href={entry.sourceUrl} target="_blank" rel="noreferrer">
+        查看源目录
+      </a>
+    </p>
+  ) : null}
+</article>

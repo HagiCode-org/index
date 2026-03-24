@@ -1,0 +1,50 @@
+---
+interface Props {
+  totalCount: number;
+  catalogPath: string;
+  primaryPath: string | null;
+}
+
+const { totalCount, catalogPath, primaryPath } = Astro.props;
+---
+
+<section class="hero-panel">
+  <p class="eyebrow">index.hagicode.com</p>
+  <div class="hero-copy">
+    <div>
+      <p class="hero-kicker">公开 JSON 边界</p>
+      <h1>HagiCode Index</h1>
+    </div>
+    <p class="hero-lede">
+      面向程序直连，也给维护者一个能快速核对目录、来源与同步状态的首页。
+    </p>
+  </div>
+  <dl class="hero-metrics" aria-label="目录概览">
+    <div>
+      <dt>已发布条目</dt>
+      <dd>{totalCount}</dd>
+    </div>
+    <div>
+      <dt>目录清单</dt>
+      <dd>JSON</dd>
+    </div>
+    <div>
+      <dt>交付方式</dt>
+      <dd>静态发布</dd>
+    </div>
+  </dl>
+  <div class="hero-actions">
+    {primaryPath ? (
+      <a class="button button-primary" href={primaryPath} target="_blank" rel="noreferrer">
+        打开首个索引
+      </a>
+    ) : (
+      <span class="button button-disabled" aria-disabled="true">
+        暂无可用索引
+      </span>
+    )}
+    <a class="button button-secondary" href={catalogPath} target="_blank" rel="noreferrer">
+      查看目录 JSON
+    </a>
+  </div>
+</section>

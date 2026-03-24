@@ -1,0 +1,105 @@
+---
+import IndexCard from '@/components/IndexCard.astro';
+import IndexFooter from '@/components/IndexFooter.astro';
+import IndexHero from '@/components/IndexHero.astro';
+import { loadIndexCatalog } from '@/lib/load-index-catalog';
+import '@/styles/global.css';
+
+const catalog = await loadIndexCatalog();
+const pageTitle = 'HagiCode Index';
+const pageDescription = 'index.hagicode.com 的公开 JSON 索引目录，集中托管 presets 等静态清单。';
+const canonicalUrl = 'https://index.hagicode.com/';
+const firstPublishedPath = catalog.entries.find((entry) => entry.status === 'published')?.path ?? null;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand-mark" href="/">H</a>
+        <div>
+          <p class="brand-name">HagiCode Index</p>
+          <p class="brand-subtitle">JSON catalog and static asset mirror</p>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <IndexHero
+          totalCount={catalog.entries.length}
+          catalogPath="/index-catalog.json"
+          primaryPath={firstPublishedPath}
+        />
+
+        <section class="catalog-section" aria-labelledby="catalog-heading">
+          <div class="section-heading">
+            <p class="eyebrow">Catalog</p>
+            <div>
+              <h2 id="catalog-heading">索引目录</h2>
+              <p>首页与外部程序共用同一份 <code>/index-catalog.json</code>。</p>
+            </div>
+          </div>
+
+          {catalog.entries.length > 0 ? (
+            <div class="card-grid">
+              {catalog.entries.map((entry) => (
+                <IndexCard entry={entry} />
+              ))}
+            </div>
+          ) : (
+            <div class="empty-state" role="status" aria-live="polite">
+              <p>当前还没有已发布索引。</p>
+              <p>先同步静态 JSON，再补充目录清单后重新构建即可。</p>
+            </div>
+          )}
+        </section>
+      </main>
+
+      <IndexFooter />
+      <p class="sr-only" id="copy-status" aria-live="polite"></p>
+    </div>
+
+    <script is:inline>
+      const statusNode = document.getElementById('copy-status');
+      const buttons = document.querySelectorAll('[data-copy-url]');
+
+      const setStatus = (message) => {
+        if (statusNode) {
+          statusNode.textContent = message;
+        }
+      };
+
+      for (const button of buttons) {
+        button.addEventListener('click', async () => {
+          const url = button.getAttribute('data-copy-url');
+          if (!url) {
+            return;
+          }
+
+          try {
+            await navigator.clipboard.writeText(url);
+            setStatus(`已复制链接：${url}`);
+            const previousLabel = button.textContent;
+            button.textContent = '已复制';
+            window.setTimeout(() => {
+              button.textContent = previousLabel;
+            }, 1600);
+          } catch {
+            setStatus('复制失败，请手动复制原始 JSON 链接。');
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
