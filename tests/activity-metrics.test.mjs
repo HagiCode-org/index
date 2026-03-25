@@ -265,6 +265,7 @@ test('updateActivityMetrics writes the JSON asset, updates catalog summary and k
   assert.equal(stored.clarity.activeUsers, 7);
   assert.equal(stored.history.length, 1);
   assert.equal(loaded?.history.length, 1);
+  assert.equal(catalog.generatedAt, stored.lastUpdated);
   assert.equal(activityEntry.lastUpdated, stored.lastUpdated);
   assert.deepEqual(activityEntry.activityMetrics, {
     activeUsers: 7,
@@ -326,6 +327,7 @@ test('updateActivityMetrics keeps same-day dedupe and catalog summary aligned on
   const activityEntry = catalog.entries.find((entry) => entry.id === 'activity-metrics');
 
   assert.equal(stored.history.length, 1);
+  assert.equal(catalog.generatedAt, stored.lastUpdated);
   assert.equal(stored.history[0].dockerHub.pullCount, 99);
   assert.deepEqual(activityEntry.activityMetrics, {
     activeUsers: 55,
@@ -388,6 +390,7 @@ test('updateActivityMetrics keeps fallback-preserved clarity consistent in catal
 
   assert.equal(stored.clarity.activeUsers, 42);
   assert.equal(stored.clarity.activeSessions, 84);
+  assert.equal(catalog.generatedAt, stored.lastUpdated);
   assert.deepEqual(activityEntry.activityMetrics, {
     activeUsers: 42,
     activeSessions: 84,

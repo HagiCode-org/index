@@ -43,6 +43,7 @@ test('activity metrics catalog entry mirrors the current raw snapshot summary', 
   const activityMetrics = JSON.parse(await readFile(activityMetricsPath, 'utf8'));
   const activityEntry = catalog.entries.find((entry) => entry.id === 'activity-metrics');
 
+  assert.equal(catalog.generatedAt, activityMetrics.lastUpdated);
   assert.equal(activityEntry.path, '/activity-metrics.json');
   assert.equal(activityEntry.lastUpdated, activityMetrics.lastUpdated);
   assert.deepEqual(activityEntry.activityMetrics, {
