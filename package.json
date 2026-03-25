@@ -6,8 +6,8 @@
   "description": "HagiCode JSON index site for index.hagicode.com",
   "packageManager": "npm@10.9.2",
   "scripts": {
-    "dev": "astro dev --port ${PORT_INDEX:-31266}",
-    "start": "astro dev",
+    "dev": "astro dev --host 0.0.0.0 --port ${PORT_INDEX:-31266}",
+    "start": "astro dev --host 0.0.0.0",
     "build": "npm run validate && astro build",
     "preview": "astro preview --port ${PORT_INDEX:-31266}",
     "astro": "astro",
