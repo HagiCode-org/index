@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
-import { readFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import os from 'node:os';
 import { promisify } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,6 +10,91 @@ import { fileURLToPath } from 'node:url';
 const execFileAsync = promisify(execFile);
 const testDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(testDir, '..');
+
+function buildActivityMetricsFixture({
+  lastUpdated = '2026-03-24T10:00:00.000Z',
+  pullCount = 123,
+  activeUsers = 7,
+  activeSessions = 11,
+  dateRange = '3Days',
+} = {}) {
+  return {
+    lastUpdated,
+    dockerHub: {
+      repository: 'newbe36524/hagicode',
+      pullCount,
+    },
+    clarity: {
+      activeUsers,
+      activeSessions,
+      dateRange,
+    },
+    history: [
+      {
+        date: lastUpdated,
+        dockerHub: {
+          pullCount,
+        },
+        clarity: {
+          activeUsers,
+          activeSessions,
+        },
+      },
+    ],
+  };
+}
+
+function buildCatalogFixture({
+  lastUpdated = '2026-03-24T10:00:00.000Z',
+  activityMetrics = {
+    activeUsers: 7,
+    activeSessions: 11,
+    dateRange: '3Days',
+  },
+} = {}) {
+  return {
+    version: '1.0.0',
+    generatedAt: lastUpdated,
+    entries: [
+      {
+        id: 'activity-metrics',
+        title: 'Activity Metrics',
+        description: '镜像发布 HagiCode Index 的活跃用户快照与 90 天历史。',
+        path: '/activity-metrics.json',
+        category: 'analytics',
+        sourceRepo: 'repos/index',
+        lastUpdated,
+        status: 'published',
+        activityMetrics,
+      },
+    ],
+  };
+}
+
+async function createValidationFixture({ catalog, activityMetrics }) {
+  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'index-validate-catalog-'));
+  const scriptsDir = path.join(tempDir, 'scripts');
+  const publicDir = path.join(tempDir, 'public');
+  const validateScriptPath = path.join(projectRoot, 'scripts', 'validate-catalog.mjs');
+  const updateScriptPath = path.join(projectRoot, 'scripts', 'update-activity-metrics.mjs');
+
+  await mkdir(scriptsDir, { recursive: true });
+  await mkdir(publicDir, { recursive: true });
+  await writeFile(
+    path.join(scriptsDir, 'validate-catalog.mjs'),
+    await readFile(validateScriptPath, 'utf8'),
+    'utf8',
+  );
+  await writeFile(
+    path.join(scriptsDir, 'update-activity-metrics.mjs'),
+    await readFile(updateScriptPath, 'utf8'),
+    'utf8',
+  );
+  await writeFile(path.join(publicDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
+  await writeFile(path.join(publicDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
+
+  return tempDir;
+}
 
 test('catalog validation script succeeds', async () => {
   const { stdout } = await execFileAsync('node', ['./scripts/validate-catalog.mjs'], {
@@ -51,4 +137,33 @@ test('activity metrics catalog entry mirrors the current raw snapshot summary', 
     activeSessions: activityMetrics.clarity.activeSessions,
     dateRange: activityMetrics.clarity.dateRange,
   });
+});
+
+test('catalog validation fails when the activity metrics catalog entry drifts from the raw snapshot', async () => {
+  const activityMetrics = buildActivityMetricsFixture();
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture({
+      lastUpdated: '2026-03-23T10:00:00.000Z',
+      activityMetrics: {
+        activeUsers: 5,
+        activeSessions: 9,
+        dateRange: '3Days',
+      },
+    }),
+    activityMetrics,
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(
+        error.stderr,
+        /Activity metrics entry lastUpdated must match \/activity-metrics\.json\./,
+      );
+      return true;
+    },
+  );
 });
