@@ -16,7 +16,8 @@
     "test": "node --test ./tests/*.test.mjs",
     "typecheck": "astro check",
     "sync:index": "node ./scripts/sync-azure-index.mjs",
-    "update-activity-metrics": "node ./scripts/update-activity-metrics.mjs"
+    "update-activity-metrics": "node ./scripts/update-activity-metrics.mjs",
+    "sync:agent-templates": "node ./scripts/sync-agent-templates.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.1",
