@@ -19,6 +19,7 @@ const expectedHistoryPaths = new Map([
   ['desktop-packages', '/desktop/history/'],
 ]);
 const activityEntryId = 'activity-metrics';
+const agentTemplatesEntryId = 'agent-templates';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
@@ -62,6 +63,44 @@ function validateActivitySummary(value, fieldName) {
   };
 }
 
+function validateAgentTemplateTagGroups(value, fieldName) {
+  assert(value && typeof value === 'object' && !Array.isArray(value), `${fieldName} must be an object.`);
+
+  for (const key of ['languages', 'domains', 'roles']) {
+    const entries = value[key];
+    assert(Array.isArray(entries), `${fieldName}.${key} must be an array.`);
+    assert(entries.every((entry) => typeof entry === 'string'), `${fieldName}.${key} entries must be strings.`);
+  }
+}
+
+async function validateAgentTemplateManifest(entry) {
+  assert(entry.path === '/agent-templates/index.json', 'Agent templates entry path must be /agent-templates/index.json.');
+
+  const manifest = JSON.parse(await readFile(resolvePublicPath(entry.path), 'utf8'));
+  assert(Array.isArray(manifest.types), 'Agent templates manifest must define a types array.');
+
+  for (const [index, typeEntry] of manifest.types.entries()) {
+    assert(typeEntry && typeof typeEntry === 'object', `Agent template type ${index} must be an object.`);
+    assert(typeof typeEntry.templateType === 'string' && typeEntry.templateType.trim().length > 0, `Agent template type ${index} templateType is required.`);
+    assert(typeof typeEntry.path === 'string' && typeEntry.path.startsWith('/agent-templates/'), `Agent template type ${index} path must stay within /agent-templates/.`);
+
+    const typeIndexPath = resolvePublicPath(typeEntry.path);
+    await access(typeIndexPath);
+    const typeIndex = JSON.parse(await readFile(typeIndexPath, 'utf8'));
+
+    assert(typeIndex.templateType === typeEntry.templateType, `Agent template type ${index} templateType must match its index payload.`);
+    assert(Array.isArray(typeIndex.templates), `Agent template type ${typeEntry.templateType} templates must be an array.`);
+    validateAgentTemplateTagGroups(typeIndex.availableTagGroups, `Agent template type ${typeEntry.templateType} availableTagGroups`);
+
+    for (const [templateIndex, template] of typeIndex.templates.entries()) {
+      assert(typeof template.path === 'string' && template.path.startsWith(`/agent-templates/${typeEntry.templateType}/templates/`), `Agent template ${typeEntry.templateType}[${templateIndex}] path must match the public template directory.`);
+      validateAgentTemplateTagGroups(template.tagGroups, `Agent template ${typeEntry.templateType}[${templateIndex}] tagGroups`);
+      await access(resolvePublicPath(template.path));
+      JSON.parse(await readFile(resolvePublicPath(template.path), 'utf8'));
+    }
+  }
+}
+
 const raw = await readFile(catalogFile, 'utf8');
 const catalog = JSON.parse(raw);
 const activityMetricsAsset = await loadActivityMetrics(resolvePublicPath('/activity-metrics.json'));
@@ -72,6 +111,7 @@ assert(Array.isArray(catalog.entries), 'Catalog entries must be an array.');
 assert(activityMetricsAsset, 'Activity metrics asset is required.');
 
 let sawActivityEntry = false;
+let sawAgentTemplatesEntry = false;
 
 for (const [index, entry] of catalog.entries.entries()) {
   assert(entry && typeof entry === 'object', `Entry ${index} must be an object.`);
@@ -137,8 +177,14 @@ for (const [index, entry] of catalog.entries.entries()) {
       'Activity metrics entry dateRange must match /activity-metrics.json.',
     );
   }
+
+  if (entry.id === agentTemplatesEntryId) {
+    sawAgentTemplatesEntry = true;
+    await validateAgentTemplateManifest(entry);
+  }
 }
 
 assert(sawActivityEntry, 'Catalog must include an activity-metrics entry.');
+assert(sawAgentTemplatesEntry, 'Catalog must include an agent-templates entry.');
 
 console.log(`Validated ${catalog.entries.length} catalog entries.`);
