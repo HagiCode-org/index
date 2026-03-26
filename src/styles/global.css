@@ -14,8 +14,34 @@
   --radius-xl: 28px;
   --radius-lg: 20px;
   --radius-md: 14px;
-  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  --font-body: "Avenir Next", "Segoe UI", sans-serif;
+  /* Keep default Chinese copy on native CJK fonts before Latin UI fonts. */
+  --font-display:
+    "Iowan Old Style",
+    "Palatino Linotype",
+    "Book Antiqua",
+    "Songti SC",
+    "STSong",
+    "Hiragino Mincho ProN",
+    "SimSun",
+    "NSimSun",
+    "Noto Serif CJK SC",
+    "Noto Serif SC",
+    "Source Han Serif SC",
+    Georgia,
+    serif;
+  --font-body:
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft YaHei UI",
+    "Microsoft YaHei",
+    "Noto Sans CJK SC",
+    "Noto Sans SC",
+    "Source Han Sans SC",
+    "WenQuanYi Micro Hei",
+    "Avenir Next",
+    "Segoe UI",
+    system-ui,
+    sans-serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", "Liberation Mono", monospace;
 }
 
