@@ -52,7 +52,7 @@
     {
       "id": "character-templates",
       "title": "Character Templates",
-      "description": "镜像发布角色模板目录的稳定 JSON 入口，提供有序 SOUL 片段组合与 Trait 模板绑定。",
+      "description": "镜像发布角色模板目录的稳定 JSON 入口，兼容 curated 与 universal 两种应用模式。",
       "path": "/character-templates/index.json",
       "category": "templates",
       "sourceRepo": "repos/index",

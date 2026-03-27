@@ -121,6 +121,8 @@ node --env-file=.env ./scripts/update-activity-metrics.mjs
 - 角色模板扩充遵循固定顺序：先计数当前 SOUL / Trait / Character 资产，再按缺口优先生成，最后执行发布校验。
 - 生成输入与基线快照位于 `src/data/agent-preset-library.json`。这里沉淀了当前计数、缺口优先清单、默认 SOUL 过滤规则和模板组合定义。
 - 角色模板生成脚本是 `scripts/build-agent-preset-library.mjs`，输出目录是 `public/character-templates/`。
+- 角色模板现分两种模式：`curated` 输出 `applyScope = ["soul", "trait"]`，会同时替换 SOUL 与 Trait；`universal` 输出 `applyScope = ["soul"]`，只锁定 SOUL，Trait 保持开放。
+- 维护边界很明确：`curated` 必须声明非空 `traitTemplateIds`；`universal` 不得声明 Trait 替换，只允许空数组或省略源数据中的 `traitTemplateIds`。
 - 默认角色模板只允许使用专业化 SOUL 个性与语言风格组合。当前固定为 `soul-main-12-aloof-ace-scholar` + `soul-orth-11-classical-chinese-ultra-minimal-mode`。
 - 本次范围只扩充模板数据资产，不包含新的页面级创建入口或弹窗流程。
 
@@ -207,9 +209,9 @@ npm run build
 ### Character template 资产
 
 1. 先执行上面的 Agent template 同步流程，确保 `public/agent-templates/` 已是最新镜像。
-2. 检查 `src/data/agent-preset-library.json` 里的计数基线、缺口优先清单和 `templateMatrix` 是否仍符合当前扩充目标。
+2. 检查 `src/data/agent-preset-library.json` 里的计数基线、缺口优先清单和 `templateMatrix` 是否仍符合当前扩充目标，并确认每个模板都显式声明 `templateMode`。
 3. 在本仓库执行 `npm run sync:character-templates`，按“先计数、后生成”的规则重建 `public/character-templates/`。
-4. 执行 `npm run validate` 与 `npm test`，确认角色模板数量、去重、引用完整性和默认 SOUL 过滤规则都通过。
+4. 执行 `npm run validate` 与 `npm test`，确认角色模板数量、去重、`templateMode` / `applyScope` 契约、引用完整性和默认 SOUL 过滤规则都通过。
 5. 若只是需要更多模板，直接更新源数据并重跑生成即可；不要先加页面入口。本仓库当前不包含新的模板创建 UI。
 
 ### 活动数据资产
