@@ -27,6 +27,7 @@ const expectedHistoryPaths = new Map([
 const activityEntryId = 'activity-metrics';
 const agentTemplatesEntryId = 'agent-templates';
 const characterTemplatesEntryId = 'character-templates';
+const supportedCharacterTemplateModes = ['curated', 'universal'];
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
@@ -128,6 +129,31 @@ function validateDungeonBindings(value, fieldName) {
   });
 }
 
+function validateCharacterTemplateModeAndScope(templateMode, applyScope, fieldName) {
+  assert(
+    typeof templateMode === 'string' && supportedCharacterTemplateModes.includes(templateMode),
+    `${fieldName}.templateMode must be one of ${supportedCharacterTemplateModes.join(', ')}.`,
+  );
+  validateStringArray(applyScope, `${fieldName}.applyScope`, { minLength: 1 });
+  assert(
+    applyScope.every((entry) => ['soul', 'trait'].includes(entry)),
+    `${fieldName}.applyScope entries must be soul or trait.`,
+  );
+
+  if (templateMode === 'curated') {
+    assert(
+      isDeepStrictEqual(applyScope, ['soul', 'trait']),
+      `${fieldName}.applyScope must be ["soul", "trait"] for curated templates.`,
+    );
+    return;
+  }
+
+  assert(
+    isDeepStrictEqual(applyScope, ['soul']),
+    `${fieldName}.applyScope must be ["soul"] for universal templates.`,
+  );
+}
+
 async function loadPublishedAgentTemplateIds(templateType) {
   const typeIndex = JSON.parse(await readFile(
     resolvePublicPath(`/agent-templates/${templateType}/index.json`),
@@ -208,6 +234,7 @@ async function validateCharacterTemplateManifest(entry) {
       typeof summary.path === 'string' && summary.path.startsWith('/character-templates/templates/'),
       `Character template ${summary.id} path must stay within /character-templates/templates/.`,
     );
+    validateCharacterTemplateModeAndScope(summary.templateMode, summary.applyScope, `Character template ${summary.id}`);
     validateStringArray(summary.tags, `Character template ${summary.id} tags`, { minLength: 1 });
     validateStringArray(summary.scenes, `Character template ${summary.id} scenes`, { minLength: 1 });
     validateTemplateTagGroups(summary.tagGroups, `Character template ${summary.id} tagGroups`);
@@ -224,9 +251,19 @@ async function validateCharacterTemplateManifest(entry) {
     assert(detail.id === summary.id, `Character template ${summary.id} detail id must match its summary.`);
     assert(detail.path === summary.path, `Character template ${summary.id} detail path must match its summary.`);
     assert(detail.templateVersion === summary.templateVersion, `Character template ${summary.id} detail templateVersion must match its summary.`);
+    assert(detail.templateMode === summary.templateMode, `Character template ${summary.id} detail templateMode must match its summary.`);
+    assert(
+      isDeepStrictEqual(detail.applyScope, summary.applyScope),
+      `Character template ${summary.id} detail applyScope must match its summary.`,
+    );
     validateStringArray(detail.soulTemplateIds, `Character template ${summary.id} soulTemplateIds`, { minLength: 1 });
-    validateStringArray(detail.traitTemplateIds, `Character template ${summary.id} traitTemplateIds`, { minLength: 1 });
+    validateStringArray(
+      detail.traitTemplateIds,
+      `Character template ${summary.id} traitTemplateIds`,
+      { minLength: detail.templateMode === 'curated' ? 1 : 0 },
+    );
     validateDungeonBindings(detail.dungeonBindings ?? [], `Character template ${summary.id} detail dungeonBindings`);
+    validateCharacterTemplateModeAndScope(detail.templateMode, detail.applyScope, `Character template ${summary.id} detail`);
     assert(
       detail.soulSelection && typeof detail.soulSelection === 'object',
       `Character template ${summary.id} detail soulSelection is required.`,
@@ -251,6 +288,13 @@ async function validateCharacterTemplateManifest(entry) {
       assert(
         publishedTraitIds.has(traitTemplateId),
         `Character template ${summary.id} references unknown trait template ${traitTemplateId}.`,
+      );
+    }
+
+    if (detail.templateMode === 'universal') {
+      assert(
+        detail.traitTemplateIds.length === 0,
+        `Character template ${summary.id} templateMode universal must not control Trait templates.`,
       );
     }
 

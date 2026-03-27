@@ -7,6 +7,7 @@ export const defaultProjectRoot = path.resolve(scriptDir, '..');
 export const agentPresetLibraryPath = path.join(defaultProjectRoot, 'src', 'data', 'agent-preset-library.json');
 export const coreDungeonScriptKeys = ['proposal-generate', 'proposal-execute', 'proposal-archive'];
 const templateTagGroupKeys = ['languages', 'domains', 'roles'];
+const supportedTemplateModes = ['curated', 'universal'];
 
 function assert(condition, message) {
   if (!condition) {
@@ -82,6 +83,14 @@ function ensureFlatTagsContainGroupTags(tags, tagGroups, templateId) {
 
 function buildTemplateIndex(templates) {
   return new Map((templates ?? []).map((template) => [template.id, template]));
+}
+
+function buildApplyScope(templateMode, templateId) {
+  assert(
+    supportedTemplateModes.includes(templateMode),
+    `Character template ${templateId} templateMode ${templateMode} is not supported.`,
+  );
+  return templateMode === 'curated' ? ['soul', 'trait'] : ['soul'];
 }
 
 function assertNoIntersection(values, blockedValues, fieldName, templateId) {
@@ -321,9 +330,25 @@ export function buildCharacterTemplateLibrary({ libraryData, soulIndex, traitInd
     seenIds.add(templateDefinition.id);
     seenNames.add(templateDefinition.name);
 
+    const templateMode = typeof templateDefinition.templateMode === 'string'
+      ? templateDefinition.templateMode.trim()
+      : '';
+    const applyScope = buildApplyScope(templateMode, templateDefinition.id);
+
     ensureArray(templateDefinition.styleTags, `Character template ${templateDefinition.id} styleTags`, { minLength: 1 });
     ensureArray(templateDefinition.scenes, `Character template ${templateDefinition.id} scenes`, { minLength: 1 });
-    ensureArray(templateDefinition.traitTemplateIds, `Character template ${templateDefinition.id} traitTemplateIds`, { minLength: 1 });
+    const traitTemplateIds = templateDefinition.traitTemplateIds ?? [];
+    ensureArray(
+      traitTemplateIds,
+      `Character template ${templateDefinition.id} traitTemplateIds`,
+      { minLength: templateMode === 'curated' ? 1 : 0 },
+    );
+    if (templateMode === 'universal') {
+      assert(
+        traitTemplateIds.length === 0,
+        `Character template ${templateDefinition.id} templateMode universal must not declare traitTemplateIds.`,
+      );
+    }
 
     const personalityId = templateDefinition.soulSelection?.personalityId;
     const languageStyleId = templateDefinition.soulSelection?.languageStyleId;
@@ -335,9 +360,9 @@ export function buildCharacterTemplateLibrary({ libraryData, soulIndex, traitInd
     validatePersonalitySoul(personalitySoul, templateDefinition.id, libraryData.soulFilters.personality);
     validateLanguageStyleSoul(languageStyleSoul, templateDefinition.id, libraryData.soulFilters.languageStyle);
 
-    const uniqueTraitIds = sortUniqueStrings(templateDefinition.traitTemplateIds);
+    const uniqueTraitIds = sortUniqueStrings(traitTemplateIds);
     assert(
-      uniqueTraitIds.length === templateDefinition.traitTemplateIds.length,
+      uniqueTraitIds.length === traitTemplateIds.length,
       `Character template ${templateDefinition.id} traitTemplateIds must be unique.`,
     );
 
@@ -348,7 +373,7 @@ export function buildCharacterTemplateLibrary({ libraryData, soulIndex, traitInd
       );
     }
 
-    const comboKey = `${personalityId}__${languageStyleId}__${uniqueTraitIds.join('__')}`;
+    const comboKey = `${templateMode}__${personalityId}__${languageStyleId}__${uniqueTraitIds.join('__')}`;
     assert(!seenCombos.has(comboKey), `Duplicate character template combination ${templateDefinition.id}.`);
     seenCombos.add(comboKey);
 
@@ -377,6 +402,8 @@ export function buildCharacterTemplateLibrary({ libraryData, soulIndex, traitInd
       summary: templateDefinition.summary,
       path: `/character-templates/templates/${templateDefinition.id}.json`,
       templateVersion: libraryData.templateVersion,
+      templateMode,
+      applyScope,
       tags,
       tagGroups,
       scenes: [...templateDefinition.scenes],
@@ -398,6 +425,8 @@ export function buildCharacterTemplateLibrary({ libraryData, soulIndex, traitInd
       summary: detail.summary,
       path: detail.path,
       templateVersion: detail.templateVersion,
+      templateMode: detail.templateMode,
+      applyScope: detail.applyScope,
       tags: detail.tags,
       tagGroups: detail.tagGroups,
       scenes: detail.scenes,
@@ -438,7 +467,7 @@ export function buildCharacterTemplateLibrary({ libraryData, soulIndex, traitInd
       version: libraryData.version,
       generatedAt: libraryData.generatedAt,
       title: 'Character Templates',
-      description: 'Count-driven character templates that bind professional SOUL personality and language-style combinations to curated Trait bundles for one-click Hero draft initialization.',
+      description: 'Count-driven character templates that publish curated SOUL-plus-Trait bundles and universal SOUL-only starting points for one-click Hero draft initialization.',
       availableTagGroups,
       templates: summaries,
     },
