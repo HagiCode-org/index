@@ -1,0 +1,41 @@
+{
+  "id": "character-cold-scholar-react-engineer",
+  "name": "文言极简 React 学霸工程师",
+  "summary": "把高冷学霸主气质、文言极简表达和 React 工程实践组合为统一角色模板。",
+  "path": "/character-templates/templates/character-cold-scholar-react-engineer.json",
+  "templateVersion": "1.0.0",
+  "tags": [
+    "react",
+    "frontend",
+    "classical-chinese",
+    "scholar"
+  ],
+  "tagGroups": {
+    "languages": [
+      "classical-chinese",
+      "mandarin"
+    ],
+    "domains": [
+      "frontend"
+    ],
+    "roles": [
+      "scholar",
+      "engineer"
+    ]
+  },
+  "scenes": [
+    "react-architecture",
+    "frontend-refactor",
+    "code-review"
+  ],
+  "sourceRepo": "repos/index",
+  "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/character-templates/templates/character-cold-scholar-react-engineer.json",
+  "soulTemplateIds": [
+    "soul-main-12-aloof-ace-scholar",
+    "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  ],
+  "traitTemplateIds": [
+    "01-core-development-frontend-developer",
+    "02-language-specialists-react-specialist"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "character-rigorous-test-reviewer",
+  "name": "冷静审校测试工程师",
+  "summary": "强调结论优先、短句审校和回归测试纪律的质量保障角色模板。",
+  "path": "/character-templates/templates/character-rigorous-test-reviewer.json",
+  "templateVersion": "1.0.0",
+  "tags": [
+    "quality",
+    "testing",
+    "review",
+    "scholar"
+  ],
+  "tagGroups": {
+    "languages": [
+      "mandarin"
+    ],
+    "domains": [
+      "quality"
+    ],
+    "roles": [
+      "reviewer",
+      "scholar"
+    ]
+  },
+  "scenes": [
+    "code-review",
+    "test-plan",
+    "regression-guard"
+  ],
+  "sourceRepo": "repos/index",
+  "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/character-templates/templates/character-rigorous-test-reviewer.json",
+  "soulTemplateIds": [
+    "soul-main-12-aloof-ace-scholar",
+    "soul-orth-01-fragmented-short-sentence-mode"
+  ],
+  "traitTemplateIds": [
+    "04-quality-security-code-reviewer",
+    "04-quality-security-test-automator"
+  ]
+}

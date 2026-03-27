@@ -20,6 +20,7 @@ const expectedHistoryPaths = new Map([
 ]);
 const activityEntryId = 'activity-metrics';
 const agentTemplatesEntryId = 'agent-templates';
+const characterTemplatesEntryId = 'character-templates';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
@@ -63,7 +64,7 @@ function validateActivitySummary(value, fieldName) {
   };
 }
 
-function validateAgentTemplateTagGroups(value, fieldName) {
+function validateTemplateTagGroups(value, fieldName) {
   assert(value && typeof value === 'object' && !Array.isArray(value), `${fieldName} must be an object.`);
 
   for (const key of ['languages', 'domains', 'roles']) {
@@ -71,6 +72,32 @@ function validateAgentTemplateTagGroups(value, fieldName) {
     assert(Array.isArray(entries), `${fieldName}.${key} must be an array.`);
     assert(entries.every((entry) => typeof entry === 'string'), `${fieldName}.${key} entries must be strings.`);
   }
+}
+
+function validateStringArray(value, fieldName, { minLength = 0 } = {}) {
+  assert(Array.isArray(value), `${fieldName} must be an array.`);
+  assert(value.length >= minLength, `${fieldName} must contain at least ${minLength} entries.`);
+  assert(
+    value.every((entry) => typeof entry === 'string' && entry.trim().length > 0),
+    `${fieldName} entries must be non-empty strings.`,
+  );
+  assert(
+    new Set(value).size === value.length,
+    `${fieldName} entries must be unique.`,
+  );
+}
+
+async function loadPublishedAgentTemplateIds(templateType) {
+  const typeIndex = JSON.parse(await readFile(
+    resolvePublicPath(`/agent-templates/${templateType}/index.json`),
+    'utf8',
+  ));
+
+  return new Set(
+    (typeIndex.templates ?? [])
+      .map((template) => (typeof template?.id === 'string' ? template.id.trim() : ''))
+      .filter(Boolean),
+  );
 }
 
 async function validateAgentTemplateManifest(entry) {
@@ -90,13 +117,63 @@ async function validateAgentTemplateManifest(entry) {
 
     assert(typeIndex.templateType === typeEntry.templateType, `Agent template type ${index} templateType must match its index payload.`);
     assert(Array.isArray(typeIndex.templates), `Agent template type ${typeEntry.templateType} templates must be an array.`);
-    validateAgentTemplateTagGroups(typeIndex.availableTagGroups, `Agent template type ${typeEntry.templateType} availableTagGroups`);
+    validateTemplateTagGroups(typeIndex.availableTagGroups, `Agent template type ${typeEntry.templateType} availableTagGroups`);
 
     for (const [templateIndex, template] of typeIndex.templates.entries()) {
       assert(typeof template.path === 'string' && template.path.startsWith(`/agent-templates/${typeEntry.templateType}/templates/`), `Agent template ${typeEntry.templateType}[${templateIndex}] path must match the public template directory.`);
-      validateAgentTemplateTagGroups(template.tagGroups, `Agent template ${typeEntry.templateType}[${templateIndex}] tagGroups`);
+      validateTemplateTagGroups(template.tagGroups, `Agent template ${typeEntry.templateType}[${templateIndex}] tagGroups`);
       await access(resolvePublicPath(template.path));
       JSON.parse(await readFile(resolvePublicPath(template.path), 'utf8'));
+    }
+  }
+}
+
+async function validateCharacterTemplateManifest(entry) {
+  assert(entry.path === '/character-templates/index.json', 'Character templates entry path must be /character-templates/index.json.');
+
+  const manifest = JSON.parse(await readFile(resolvePublicPath(entry.path), 'utf8'));
+  assert(Array.isArray(manifest.templates), 'Character templates manifest must define a templates array.');
+  validateTemplateTagGroups(manifest.availableTagGroups, 'Character templates availableTagGroups');
+
+  const publishedSoulIds = await loadPublishedAgentTemplateIds('soul');
+  const publishedTraitIds = await loadPublishedAgentTemplateIds('trait');
+
+  for (const [index, summary] of manifest.templates.entries()) {
+    assert(summary && typeof summary === 'object', `Character template ${index} must be an object.`);
+    assert(typeof summary.id === 'string' && summary.id.trim().length > 0, `Character template ${index} id is required.`);
+    assert(typeof summary.name === 'string' && summary.name.trim().length > 0, `Character template ${summary.id} name is required.`);
+    assert(typeof summary.summary === 'string' && summary.summary.trim().length > 0, `Character template ${summary.id} summary is required.`);
+    assert(typeof summary.templateVersion === 'string' && summary.templateVersion.trim().length > 0, `Character template ${summary.id} templateVersion is required.`);
+    assert(
+      typeof summary.path === 'string' && summary.path.startsWith('/character-templates/templates/'),
+      `Character template ${summary.id} path must stay within /character-templates/templates/.`,
+    );
+    validateStringArray(summary.tags, `Character template ${summary.id} tags`, { minLength: 1 });
+    validateStringArray(summary.scenes, `Character template ${summary.id} scenes`, { minLength: 1 });
+    validateTemplateTagGroups(summary.tagGroups, `Character template ${summary.id} tagGroups`);
+
+    const detailPath = resolvePublicPath(summary.path);
+    await access(detailPath);
+    const detail = JSON.parse(await readFile(detailPath, 'utf8'));
+
+    assert(detail.id === summary.id, `Character template ${summary.id} detail id must match its summary.`);
+    assert(detail.path === summary.path, `Character template ${summary.id} detail path must match its summary.`);
+    assert(detail.templateVersion === summary.templateVersion, `Character template ${summary.id} detail templateVersion must match its summary.`);
+    validateStringArray(detail.soulTemplateIds, `Character template ${summary.id} soulTemplateIds`, { minLength: 1 });
+    validateStringArray(detail.traitTemplateIds, `Character template ${summary.id} traitTemplateIds`, { minLength: 1 });
+
+    for (const soulTemplateId of detail.soulTemplateIds) {
+      assert(
+        publishedSoulIds.has(soulTemplateId),
+        `Character template ${summary.id} references unknown soul template ${soulTemplateId}.`,
+      );
+    }
+
+    for (const traitTemplateId of detail.traitTemplateIds) {
+      assert(
+        publishedTraitIds.has(traitTemplateId),
+        `Character template ${summary.id} references unknown trait template ${traitTemplateId}.`,
+      );
     }
   }
 }
@@ -112,6 +189,7 @@ assert(activityMetricsAsset, 'Activity metrics asset is required.');
 
 let sawActivityEntry = false;
 let sawAgentTemplatesEntry = false;
+let sawCharacterTemplatesEntry = false;
 
 for (const [index, entry] of catalog.entries.entries()) {
   assert(entry && typeof entry === 'object', `Entry ${index} must be an object.`);
@@ -182,9 +260,15 @@ for (const [index, entry] of catalog.entries.entries()) {
     sawAgentTemplatesEntry = true;
     await validateAgentTemplateManifest(entry);
   }
+
+  if (entry.id === characterTemplatesEntryId) {
+    sawCharacterTemplatesEntry = true;
+    await validateCharacterTemplateManifest(entry);
+  }
 }
 
 assert(sawActivityEntry, 'Catalog must include an activity-metrics entry.');
 assert(sawAgentTemplatesEntry, 'Catalog must include an agent-templates entry.');
+assert(sawCharacterTemplatesEntry, 'Catalog must include a character-templates entry.');
 
 console.log(`Validated ${catalog.entries.length} catalog entries.`);

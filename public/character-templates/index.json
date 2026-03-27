@@ -1,0 +1,114 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-03-27T00:00:00.000Z",
+  "title": "Character Templates",
+  "description": "Composable character templates that bind ordered SOUL segments and Trait templates for one-click Hero draft initialization.",
+  "availableTagGroups": {
+    "languages": [
+      "classical-chinese",
+      "mandarin"
+    ],
+    "domains": [
+      "frontend",
+      "quality",
+      "infrastructure"
+    ],
+    "roles": [
+      "scholar",
+      "reviewer",
+      "engineer"
+    ]
+  },
+  "templates": [
+    {
+      "id": "character-cold-scholar-react-engineer",
+      "name": "文言极简 React 学霸工程师",
+      "summary": "把高冷学霸主气质、文言极简表达和 React 工程实践组合为统一角色模板。",
+      "path": "/character-templates/templates/character-cold-scholar-react-engineer.json",
+      "templateVersion": "1.0.0",
+      "tags": [
+        "react",
+        "frontend",
+        "classical-chinese",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "classical-chinese",
+          "mandarin"
+        ],
+        "domains": [
+          "frontend"
+        ],
+        "roles": [
+          "scholar",
+          "engineer"
+        ]
+      },
+      "scenes": [
+        "react-architecture",
+        "frontend-refactor",
+        "code-review"
+      ]
+    },
+    {
+      "id": "character-rigorous-test-reviewer",
+      "name": "冷静审校测试工程师",
+      "summary": "强调结论优先、短句审校和回归测试纪律的质量保障角色模板。",
+      "path": "/character-templates/templates/character-rigorous-test-reviewer.json",
+      "templateVersion": "1.0.0",
+      "tags": [
+        "quality",
+        "testing",
+        "review",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "mandarin"
+        ],
+        "domains": [
+          "quality"
+        ],
+        "roles": [
+          "reviewer",
+          "scholar"
+        ]
+      },
+      "scenes": [
+        "code-review",
+        "test-plan",
+        "regression-guard"
+      ]
+    },
+    {
+      "id": "character-efficient-devops-engineer",
+      "name": "极简 DevOps 值守工程师",
+      "summary": "把高冷学霸的结论式表达与运维、容器、SRE 能力组合成稳定的值守角色。",
+      "path": "/character-templates/templates/character-efficient-devops-engineer.json",
+      "templateVersion": "1.0.0",
+      "tags": [
+        "devops",
+        "docker",
+        "sre",
+        "minimal"
+      ],
+      "tagGroups": {
+        "languages": [
+          "mandarin"
+        ],
+        "domains": [
+          "infrastructure"
+        ],
+        "roles": [
+          "engineer"
+        ]
+      },
+      "scenes": [
+        "incident-response",
+        "deployment-audit",
+        "runbook-update"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "character-efficient-devops-engineer",
+  "name": "极简 DevOps 值守工程师",
+  "summary": "把高冷学霸的结论式表达与运维、容器、SRE 能力组合成稳定的值守角色。",
+  "path": "/character-templates/templates/character-efficient-devops-engineer.json",
+  "templateVersion": "1.0.0",
+  "tags": [
+    "devops",
+    "docker",
+    "sre",
+    "minimal"
+  ],
+  "tagGroups": {
+    "languages": [
+      "mandarin"
+    ],
+    "domains": [
+      "infrastructure"
+    ],
+    "roles": [
+      "engineer"
+    ]
+  },
+  "scenes": [
+    "incident-response",
+    "deployment-audit",
+    "runbook-update"
+  ],
+  "sourceRepo": "repos/index",
+  "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/character-templates/templates/character-efficient-devops-engineer.json",
+  "soulTemplateIds": [
+    "soul-main-12-aloof-ace-scholar",
+    "soul-orth-02-telegram-style-minimal-mode"
+  ],
+  "traitTemplateIds": [
+    "03-infrastructure-devops-engineer",
+    "03-infrastructure-docker-expert",
+    "03-infrastructure-sre-engineer"
+  ]
+}
