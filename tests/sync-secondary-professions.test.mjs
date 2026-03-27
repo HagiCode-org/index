@@ -115,8 +115,13 @@ test('syncSecondaryProfessions keeps GLM 5.1 aligned across the published asset 
       reasoning: 'high',
     },
   });
-  assert.deepEqual(publishedEntry, sourceEntry);
-  assert.deepEqual(fallbackEntry, sourceEntry);
+  assert.deepEqual(publishedEntry, {
+    ...sourceEntry,
+    primaryProfessionId: null,
+    icon: null,
+    fieldConstraints: [],
+  });
+  assert.deepEqual(fallbackEntry, publishedEntry);
   assert.deepEqual(
     publishedIds.slice(publishedIds.indexOf('secondary-glm-5-codebuddy'), publishedIds.indexOf('secondary-minimax-m2-7') + 1),
     ['secondary-glm-5-codebuddy', 'secondary-glm-5-1', 'secondary-minimax-m2-7'],

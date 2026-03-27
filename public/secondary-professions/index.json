@@ -227,6 +227,29 @@
       "fieldConstraints": []
     },
     {
+      "id": "secondary-glm-5-1",
+      "name": "GLM 5.1",
+      "family": "anthropic",
+      "primaryProfessionId": null,
+      "summary": "hero.professionCopy.secondary.glm51.summary",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
+      "sortOrder": 64,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
+        "hermes",
+        "qoder",
+        "kiro"
+      ],
+      "defaultParameters": {
+        "model": "glm-5.1",
+        "reasoning": "high"
+      },
+      "fieldConstraints": []
+    },
+    {
       "id": "secondary-minimax-m2-7",
       "name": "Minimax M2.7",
       "family": "anthropic",
