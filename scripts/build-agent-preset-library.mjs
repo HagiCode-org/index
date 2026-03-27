@@ -5,6 +5,8 @@ import { fileURLToPath } from 'node:url';
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 export const defaultProjectRoot = path.resolve(scriptDir, '..');
 export const agentPresetLibraryPath = path.join(defaultProjectRoot, 'src', 'data', 'agent-preset-library.json');
+export const coreDungeonScriptKeys = ['proposal-generate', 'proposal-execute', 'proposal-archive'];
+const templateTagGroupKeys = ['languages', 'domains', 'roles'];
 
 function assert(condition, message) {
   if (!condition) {
@@ -151,6 +153,103 @@ function validatePriorityCoverage(values, priorities, fieldName) {
   }
 }
 
+function buildKnownTemplateTagGroups(templateMatrix = []) {
+  const knownTagGroups = {
+    languages: new Set(),
+    domains: new Set(),
+    roles: new Set(),
+  };
+
+  for (const templateDefinition of templateMatrix) {
+    for (const groupKey of templateTagGroupKeys) {
+      for (const tag of templateDefinition?.tagGroups?.[groupKey] ?? []) {
+        knownTagGroups[groupKey].add(tag);
+      }
+    }
+  }
+
+  return knownTagGroups;
+}
+
+function normalizeDungeonBindingPresetSources(presetSources, knownTagGroups) {
+  assert(Array.isArray(presetSources), 'dungeonBindingPresetSources must be an array.');
+
+  const seenScriptKeys = new Set();
+
+  return presetSources.map((presetSource, index) => {
+    assert(presetSource && typeof presetSource === 'object', `dungeonBindingPresetSources[${index}] must be an object.`);
+    const scriptKey = typeof presetSource.scriptKey === 'string' ? presetSource.scriptKey.trim() : '';
+    assert(scriptKey.length > 0, `dungeonBindingPresetSources[${index}].scriptKey is required.`);
+    assert(
+      coreDungeonScriptKeys.includes(scriptKey),
+      `dungeonBindingPresetSources[${index}] scriptKey ${scriptKey} is not supported.`,
+    );
+    assert(
+      !seenScriptKeys.has(scriptKey),
+      `dungeonBindingPresetSources contains duplicate scriptKey ${scriptKey}.`,
+    );
+    seenScriptKeys.add(scriptKey);
+
+    const normalizedTagGroups = {};
+
+    for (const groupKey of templateTagGroupKeys) {
+      const fieldName = `dungeonBindingPresetSources[${index}].tagGroups.${groupKey}`;
+      const entries = sortUniqueStrings(presetSource?.tagGroups?.[groupKey] ?? []);
+      ensureArray(entries, fieldName);
+
+      for (const tag of entries) {
+        assert(
+          knownTagGroups[groupKey].has(tag),
+          `dungeonBindingPresetSources[${index}] references unknown ${groupKey} tag ${tag}.`,
+        );
+      }
+
+      normalizedTagGroups[groupKey] = entries;
+    }
+
+    return {
+      scriptKey,
+      tagGroups: normalizedTagGroups,
+    };
+  });
+}
+
+function buildDungeonBindings(tagGroups, presetSources, templateId) {
+  const bindings = presetSources.flatMap((presetSource) => {
+    const matchedTags = sortUniqueStrings(
+      templateTagGroupKeys.flatMap((groupKey) => {
+        const sourceTags = new Set(presetSource.tagGroups[groupKey] ?? []);
+        return (tagGroups[groupKey] ?? []).filter((tag) => sourceTags.has(tag));
+      }),
+    );
+
+    if (matchedTags.length === 0) {
+      return [];
+    }
+
+    return [{
+      scriptKey: presetSource.scriptKey,
+      matchedTags,
+      matchedTagGroups: templateTagGroupKeys.filter((groupKey) =>
+        (tagGroups[groupKey] ?? []).some((tag) => presetSource.tagGroups[groupKey].includes(tag))),
+      priority: coreDungeonScriptKeys.indexOf(presetSource.scriptKey),
+    }];
+  });
+
+  const seenScriptKeys = new Set();
+  for (const binding of bindings) {
+    assert(
+      !seenScriptKeys.has(binding.scriptKey),
+      `Character template ${templateId} generated duplicate dungeon binding for ${binding.scriptKey}.`,
+    );
+    seenScriptKeys.add(binding.scriptKey);
+  }
+
+  return bindings.sort(
+    (left, right) => left.priority - right.priority || left.scriptKey.localeCompare(right.scriptKey),
+  );
+}
+
 export async function loadAgentPresetLibrary(projectRoot = defaultProjectRoot) {
   return loadJson(resolveProjectPath(projectRoot, 'src', 'data', 'agent-preset-library.json'));
 }
@@ -196,6 +295,11 @@ export function buildPublishedTemplateStats({ soulIndex, traitIndex, characterIn
 export function buildCharacterTemplateLibrary({ libraryData, soulIndex, traitIndex }) {
   const soulTemplates = buildTemplateIndex(soulIndex.templates);
   const traitTemplates = buildTemplateIndex(traitIndex.templates);
+  const knownTagGroups = buildKnownTemplateTagGroups(libraryData.templateMatrix);
+  const dungeonBindingPresetSources = normalizeDungeonBindingPresetSources(
+    libraryData.dungeonBindingPresetSources ?? [],
+    knownTagGroups,
+  );
   const summaries = [];
   const details = [];
   const seenIds = new Set();
@@ -265,6 +369,7 @@ export function buildCharacterTemplateLibrary({ libraryData, soulIndex, traitInd
       ...tagGroups.roles,
     ]);
     ensureFlatTagsContainGroupTags(tags, tagGroups, templateDefinition.id);
+    const dungeonBindings = buildDungeonBindings(tagGroups, dungeonBindingPresetSources, templateDefinition.id);
 
     const detail = {
       id: templateDefinition.id,
@@ -283,6 +388,7 @@ export function buildCharacterTemplateLibrary({ libraryData, soulIndex, traitInd
       },
       soulTemplateIds: [personalityId, languageStyleId],
       traitTemplateIds: uniqueTraitIds,
+      dungeonBindings,
     };
 
     details.push(detail);
@@ -295,6 +401,7 @@ export function buildCharacterTemplateLibrary({ libraryData, soulIndex, traitInd
       tags: detail.tags,
       tagGroups: detail.tagGroups,
       scenes: detail.scenes,
+      dungeonBindings: detail.dungeonBindings,
     });
   }
 

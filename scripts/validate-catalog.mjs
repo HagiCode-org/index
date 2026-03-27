@@ -3,7 +3,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { loadActivityMetrics } from './update-activity-metrics.mjs';
-import { buildCharacterTemplateLibrary, loadAgentPresetLibrary } from './build-agent-preset-library.mjs';
+import {
+  buildCharacterTemplateLibrary,
+  coreDungeonScriptKeys,
+  loadAgentPresetLibrary,
+} from './build-agent-preset-library.mjs';
 
 const requiredFields = [
   'id',
@@ -89,6 +93,41 @@ function validateStringArray(value, fieldName, { minLength = 0 } = {}) {
   );
 }
 
+function validateDungeonBindings(value, fieldName) {
+  assert(Array.isArray(value), `${fieldName} must be an array.`);
+
+  const seenScriptKeys = new Set();
+  let previousPriority = -1;
+
+  value.forEach((binding, index) => {
+    assert(binding && typeof binding === 'object' && !Array.isArray(binding), `${fieldName}[${index}] must be an object.`);
+    assert(
+      typeof binding.scriptKey === 'string' && binding.scriptKey.trim().length > 0,
+      `${fieldName}[${index}].scriptKey is required.`,
+    );
+    assert(
+      coreDungeonScriptKeys.includes(binding.scriptKey),
+      `${fieldName}[${index}].scriptKey ${binding.scriptKey} is not supported.`,
+    );
+    assert(
+      !seenScriptKeys.has(binding.scriptKey),
+      `${fieldName} must not contain duplicate scriptKey ${binding.scriptKey}.`,
+    );
+    seenScriptKeys.add(binding.scriptKey);
+    validateStringArray(binding.matchedTags, `${fieldName}[${index}].matchedTags`, { minLength: 1 });
+    validateStringArray(binding.matchedTagGroups, `${fieldName}[${index}].matchedTagGroups`, { minLength: 1 });
+    assert(
+      Number.isInteger(binding.priority) && binding.priority >= 0,
+      `${fieldName}[${index}].priority must be a non-negative integer.`,
+    );
+    assert(
+      binding.priority >= previousPriority,
+      `${fieldName} must keep stable priority ordering.`,
+    );
+    previousPriority = binding.priority;
+  });
+}
+
 async function loadPublishedAgentTemplateIds(templateType) {
   const typeIndex = JSON.parse(await readFile(
     resolvePublicPath(`/agent-templates/${templateType}/index.json`),
@@ -172,6 +211,7 @@ async function validateCharacterTemplateManifest(entry) {
     validateStringArray(summary.tags, `Character template ${summary.id} tags`, { minLength: 1 });
     validateStringArray(summary.scenes, `Character template ${summary.id} scenes`, { minLength: 1 });
     validateTemplateTagGroups(summary.tagGroups, `Character template ${summary.id} tagGroups`);
+    validateDungeonBindings(summary.dungeonBindings ?? [], `Character template ${summary.id} dungeonBindings`);
     assert(
       isDeepStrictEqual(summary, expectedSummaries.get(summary.id)),
       `Character template ${summary.id} summary must match the generated library output.`,
@@ -186,6 +226,7 @@ async function validateCharacterTemplateManifest(entry) {
     assert(detail.templateVersion === summary.templateVersion, `Character template ${summary.id} detail templateVersion must match its summary.`);
     validateStringArray(detail.soulTemplateIds, `Character template ${summary.id} soulTemplateIds`, { minLength: 1 });
     validateStringArray(detail.traitTemplateIds, `Character template ${summary.id} traitTemplateIds`, { minLength: 1 });
+    validateDungeonBindings(detail.dungeonBindings ?? [], `Character template ${summary.id} detail dungeonBindings`);
     assert(
       detail.soulSelection && typeof detail.soulSelection === 'object',
       `Character template ${summary.id} detail soulSelection is required.`,

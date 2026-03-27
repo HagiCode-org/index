@@ -79,6 +79,30 @@ test('generated library keeps the expected template count and priority coverage'
         && detail.soulSelection.languageStyleId === 'soul-orth-11-classical-chinese-ultra-minimal-mode',
     ),
   );
+  assert(
+    library.manifest.templates.every((template) =>
+      template.dungeonBindings.every((binding, index, bindings) => (
+        ['proposal-generate', 'proposal-execute', 'proposal-archive'].includes(binding.scriptKey)
+        && binding.priority === index
+        && bindings.findIndex((candidate) => candidate.scriptKey === binding.scriptKey) === index
+      ))),
+  );
+});
+
+test('published character templates expose stable core-flow bindings in summaries and details', async () => {
+  const { library } = await loadCurrentLibrary();
+  const reactEngineer = library.manifest.templates.find((template) => template.id === 'character-cold-scholar-react-engineer');
+  const reactEngineerDetail = library.details.find((template) => template.id === 'character-cold-scholar-react-engineer');
+
+  assert.deepEqual(
+    reactEngineer?.dungeonBindings.map((binding) => binding.scriptKey),
+    ['proposal-generate', 'proposal-execute', 'proposal-archive'],
+  );
+  assert.deepEqual(reactEngineerDetail?.dungeonBindings, reactEngineer?.dungeonBindings);
+  assert.deepEqual(
+    reactEngineer?.dungeonBindings[0]?.matchedTags.includes('react'),
+    true,
+  );
 });
 
 test('duplicate character combinations are rejected', async () => {

@@ -94,82 +94,162 @@
     "domains": [
       {
         "tag": "backend",
-        "reason": "\u73b0\u6709\u89d2\u8272\u6a21\u677f\u5728\u540e\u7aef\u65b9\u5411\u4ecd\u4e3a\u7a7a\u767d\uff0c\u9700\u8981\u5148\u8865 API\u3001\u670d\u52a1\u4e0e\u6570\u636e\u5c42\u573a\u666f\u3002"
+        "reason": "现有角色模板在后端方向仍为空白，需要先补 API、服务与数据层场景。"
       },
       {
         "tag": "mobile",
-        "reason": "\u79fb\u52a8\u7aef\u65b9\u5411\u5728\u5df2\u6709\u89d2\u8272\u6a21\u677f\u91cc\u5b8c\u5168\u7f3a\u5e2d\uff0c\u4f46 Trait \u8d44\u4ea7\u5df2\u7ecf\u8db3\u591f\u652f\u6491\u76f4\u63a5\u6269\u5145\u3002"
+        "reason": "移动端方向在已有角色模板里完全缺席，但 Trait 资产已经足够支撑直接扩充。"
       },
       {
         "tag": "architecture",
-        "reason": "\u67b6\u6784\u51b3\u7b56\u7c7b Trait \u6570\u91cf\u5145\u8db3\uff0c\u4f46\u89d2\u8272\u6a21\u677f\u5c1a\u672a\u5f62\u6210\u7a33\u5b9a\u8f93\u51fa\u3002"
+        "reason": "架构决策类 Trait 数量充足，但角色模板尚未形成稳定输出。"
       },
       {
         "tag": "security",
-        "reason": "\u5b89\u5168\u5ba1\u6821\u7c7b Trait \u5df2\u53d1\u5e03\uff0c\u89d2\u8272\u6a21\u677f\u4ecd\u7f3a\u5931\u4e13\u4e1a\u9ed8\u8ba4\u7ec4\u5408\u3002"
+        "reason": "安全审校类 Trait 已发布，角色模板仍缺失专业默认组合。"
       },
       {
         "tag": "frontend",
-        "reason": "\u524d\u7aef\u53ea\u6709\u5355\u4e00 React \u7ec4\u5408\uff0c\u9700\u8981\u8865\u66f4\u5b8c\u6574\u7684\u6280\u672f\u77e9\u9635\u3002"
+        "reason": "前端只有单一 React 组合，需要补更完整的技术矩阵。"
       },
       {
         "tag": "devops",
-        "reason": "DevOps \u5df2\u6709\u5355\u4e2a\u6a21\u677f\uff0c\u4f46\u8fd8\u7f3a\u66f4\u660e\u786e\u7684\u503c\u5b88\u4e0e\u5e73\u53f0\u5de5\u7a0b\u8986\u76d6\u3002"
+        "reason": "DevOps 已有单个模板，但还缺更明确的值守与平台工程覆盖。"
       },
       {
         "tag": "testing",
-        "reason": "\u6d4b\u8bd5\u573a\u666f\u5df2\u6709\u57fa\u7840\u6a21\u677f\uff0c\u4f46\u4ecd\u9700\u4fdd\u6301\u56de\u5f52\u4e0e\u5ba1\u6821\u65b9\u5411\u7684\u7a33\u5b9a\u4f9b\u7ed9\u3002"
+        "reason": "测试场景已有基础模板，但仍需保持回归与审校方向的稳定供给。"
       }
     ],
     "languages": [
       {
         "tag": "vue",
-        "reason": "\u524d\u7aef\u77e9\u9635\u7f3a\u5c11 Vue \u65b9\u5411\u6a21\u677f\u3002"
+        "reason": "前端矩阵缺少 Vue 方向模板。"
       },
       {
         "tag": "java",
-        "reason": "\u540e\u7aef\u6a21\u677f\u5c1a\u672a\u8986\u76d6 Java / Spring \u7ec4\u5408\u3002"
+        "reason": "后端模板尚未覆盖 Java / Spring 组合。"
       },
       {
         "tag": "python",
-        "reason": "\u6570\u636e\u4e0e\u670d\u52a1\u81ea\u52a8\u5316\u65b9\u5411\u9700\u8981 Python \u89d2\u8272\u6a21\u677f\u3002"
+        "reason": "数据与服务自动化方向需要 Python 角色模板。"
       },
       {
         "tag": "csharp",
-        "reason": "C# Trait \u6570\u91cf\u504f\u5c11\u4f46\u4e1a\u52a1\u91cd\u8981\uff0c\u9700\u8981\u4f18\u5148\u8865\u4e00\u6761\u9ed8\u8ba4\u6a21\u677f\u94fe\u8def\u3002"
+        "reason": "C# Trait 数量偏少但业务重要，需要优先补一条默认模板链路。"
       },
       {
         "tag": "dart",
-        "reason": "\u79fb\u52a8\u7aef\u6a21\u677f\u9700\u8981\u663e\u5f0f\u8986\u76d6 Dart / Flutter \u751f\u6001\u3002"
+        "reason": "移动端模板需要显式覆盖 Dart / Flutter 生态。"
       },
       {
         "tag": "react",
-        "reason": "React \u5df2\u6709\u57fa\u7840\u6a21\u677f\uff0c\u4f46\u4ecd\u662f\u89d2\u8272\u5e93\u91cc\u6700\u53ef\u590d\u7528\u7684\u524d\u7aef\u5165\u53e3\u3002"
+        "reason": "React 已有基础模板，但仍是角色库里最可复用的前端入口。"
       },
       {
         "tag": "typescript",
-        "reason": "TypeScript \u4ecd\u662f\u524d\u7aef\u4e0e\u5de5\u5177\u94fe\u6a21\u677f\u7684\u516c\u5171\u6280\u672f\u5e95\u5ea7\u3002"
+        "reason": "TypeScript 仍是前端与工具链模板的公共技术底座。"
       }
     ],
     "roles": [
       {
         "tag": "architect",
-        "reason": "\u5f53\u524d\u89d2\u8272\u6a21\u677f\u91cc\u8fd8\u6ca1\u6709\u67b6\u6784\u5e08\u5b9a\u4f4d\u7684\u7a33\u5b9a\u9884\u8bbe\u3002"
+        "reason": "当前角色模板里还没有架构师定位的稳定预设。"
       },
       {
         "tag": "developer",
-        "reason": "\u5f00\u53d1\u8005\u5411\u89d2\u8272\u6a21\u677f\u4ecd\u4e0d\u8db3\uff0c\u65e0\u6cd5\u8986\u76d6\u4e3b\u8981\u5b9e\u73b0\u8def\u5f84\u3002"
+        "reason": "开发者向角色模板仍不足，无法覆盖主要实现路径。"
       },
       {
         "tag": "reviewer",
-        "reason": "\u5ba1\u6821\u89d2\u8272\u5df2\u6709\u57fa\u7840\u6a21\u677f\uff0c\u4f46\u9700\u8981\u6269\u5230\u5b89\u5168\u4e0e\u7c7b\u578b\u7cfb\u7edf\u573a\u666f\u3002"
+        "reason": "审校角色已有基础模板，但需要扩到安全与类型系统场景。"
       },
       {
         "tag": "engineer",
-        "reason": "\u5de5\u7a0b\u5e08\u6a21\u677f\u6570\u91cf\u76f8\u5bf9\u8f83\u9ad8\uff0c\u4f46\u4ecd\u627f\u62c5\u5e73\u53f0\u3001\u79fb\u52a8\u4e0e DevOps \u4e3b\u529b\u573a\u666f\u3002"
+        "reason": "工程师模板数量相对较高，但仍承担平台、移动与 DevOps 主力场景。"
       }
     ]
   },
+  "dungeonBindingPresetSources": [
+    {
+      "scriptKey": "proposal-generate",
+      "tagGroups": {
+        "languages": [
+          "csharp",
+          "dart",
+          "go",
+          "java",
+          "kotlin",
+          "python",
+          "react",
+          "swift",
+          "typescript",
+          "vue"
+        ],
+        "domains": [
+          "architecture",
+          "backend",
+          "frontend",
+          "mobile"
+        ],
+        "roles": [
+          "architect",
+          "developer"
+        ]
+      }
+    },
+    {
+      "scriptKey": "proposal-execute",
+      "tagGroups": {
+        "languages": [
+          "csharp",
+          "dart",
+          "go",
+          "java",
+          "kotlin",
+          "python",
+          "react",
+          "swift",
+          "typescript",
+          "vue"
+        ],
+        "domains": [
+          "backend",
+          "devops",
+          "frontend",
+          "mobile",
+          "testing"
+        ],
+        "roles": [
+          "developer",
+          "engineer"
+        ]
+      }
+    },
+    {
+      "scriptKey": "proposal-archive",
+      "tagGroups": {
+        "languages": [
+          "bash",
+          "python",
+          "sql",
+          "typescript"
+        ],
+        "domains": [
+          "architecture",
+          "backend",
+          "frontend",
+          "security",
+          "testing"
+        ],
+        "roles": [
+          "architect",
+          "engineer",
+          "reviewer"
+        ]
+      }
+    }
+  ],
   "soulFilters": {
     "personality": {
       "preferredIds": [
@@ -262,8 +342,8 @@
   "templateMatrix": [
     {
       "id": "character-cold-scholar-react-engineer",
-      "name": "\u6587\u8a00\u6781\u7b80 React \u5b66\u9738\u5de5\u7a0b\u5e08",
-      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u4e3b\u6c14\u8d28\u3001\u6587\u8a00\u6781\u7b80\u8868\u8fbe\u548c React \u5de5\u7a0b\u5b9e\u8df5\u7ec4\u5408\u4e3a\u7edf\u4e00\u89d2\u8272\u6a21\u677f\u3002",
+      "name": "文言极简 React 学霸工程师",
+      "summary": "把高冷学霸主气质、文言极简表达和 React 工程实践组合为统一角色模板。",
       "styleTags": [
         "classical-chinese",
         "mandarin",
@@ -299,8 +379,8 @@
     },
     {
       "id": "character-cold-scholar-vue-architect",
-      "name": "\u6587\u8a00\u6781\u7b80 Vue \u524d\u7aef\u67b6\u6784\u5e08",
-      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u514b\u5236\u8868\u8fbe\u3001Vue \u5b9e\u8df5\u548c\u524d\u7aef\u67b6\u6784\u5224\u65ad\u6574\u5408\u6210\u7a33\u5b9a\u7684\u5347\u7ea7\u6a21\u677f\u3002",
+      "name": "文言极简 Vue 前端架构师",
+      "summary": "把高冷学霸的克制表达、Vue 实践和前端架构判断整合成稳定的升级模板。",
       "styleTags": [
         "classical-chinese",
         "mandarin",
@@ -338,8 +418,8 @@
     },
     {
       "id": "character-rigorous-typescript-reviewer",
-      "name": "\u6587\u8a00\u6781\u7b80 TypeScript \u5ba1\u6821\u5e08",
-      "summary": "\u5f3a\u8c03\u7ed3\u8bba\u5148\u884c\u3001\u7c7b\u578b\u8fb9\u754c\u548c\u56de\u5f52\u7eaa\u5f8b\u7684 TypeScript \u5ba1\u6821\u89d2\u8272\u6a21\u677f\u3002",
+      "name": "文言极简 TypeScript 审校师",
+      "summary": "强调结论先行、类型边界和回归纪律的 TypeScript 审校角色模板。",
       "styleTags": [
         "classical-chinese",
         "mandarin",
@@ -375,8 +455,8 @@
     },
     {
       "id": "character-cold-scholar-java-backend-architect",
-      "name": "\u6587\u8a00\u6781\u7b80 Java \u540e\u7aef\u67b6\u6784\u5e08",
-      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u7406\u6027\u5224\u65ad\u4e0e Java\u3001\u670d\u52a1\u62c6\u5206\u548c\u63a5\u53e3\u8bbe\u8ba1\u7ec4\u5408\u6210\u540e\u7aef\u67b6\u6784\u6a21\u677f\u3002",
+      "name": "文言极简 Java 后端架构师",
+      "summary": "把高冷学霸的理性判断与 Java、服务拆分和接口设计组合成后端架构模板。",
       "styleTags": [
         "classical-chinese",
         "mandarin",
@@ -413,8 +493,8 @@
     },
     {
       "id": "character-cold-scholar-python-backend-developer",
-      "name": "\u6587\u8a00\u6781\u7b80 Python \u540e\u7aef\u5f00\u53d1\u8005",
-      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u77ed\u7ed3\u8bba\u98ce\u683c\u4e0e Python \u670d\u52a1\u5b9e\u73b0\u3001\u81ea\u52a8\u5316\u548c\u6570\u636e\u63a5\u53e3\u534f\u4f5c\u7ed1\u5b9a\u4e3a\u7edf\u4e00\u6a21\u677f\u3002",
+      "name": "文言极简 Python 后端开发者",
+      "summary": "把高冷学霸的短结论风格与 Python 服务实现、自动化和数据接口协作绑定为统一模板。",
       "styleTags": [
         "classical-chinese",
         "mandarin",
@@ -450,8 +530,8 @@
     },
     {
       "id": "character-cold-scholar-csharp-service-developer",
-      "name": "\u6587\u8a00\u6781\u7b80 C# \u670d\u52a1\u5f00\u53d1\u8005",
-      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u7406\u6027\u8868\u8fbe\u4e0e C# \u670d\u52a1\u62c6\u89e3\u3001\u96c6\u6210\u8fb9\u754c\u548c\u7ef4\u62a4\u7eaa\u5f8b\u7ec4\u5408\u6210\u7a33\u5b9a\u6a21\u677f\u3002",
+      "name": "文言极简 C# 服务开发者",
+      "summary": "把高冷学霸的理性表达与 C# 服务拆解、集成边界和维护纪律组合成稳定模板。",
       "styleTags": [
         "classical-chinese",
         "mandarin",
@@ -488,8 +568,8 @@
     },
     {
       "id": "character-focused-mobile-developer",
-      "name": "\u6587\u8a00\u6781\u7b80\u79fb\u52a8\u7aef\u4ea4\u4ed8\u5f00\u53d1\u8005",
-      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u514b\u5236\u98ce\u683c\u4e0e\u79fb\u52a8\u7aef\u4ea4\u4ed8\u3001\u8de8\u7aef\u534f\u4f5c\u548c\u53d1\u5e03\u524d\u6821\u9a8c\u7ec4\u5408\u6210\u7a33\u5b9a\u89d2\u8272\u6a21\u677f\u3002",
+      "name": "文言极简移动端交付开发者",
+      "summary": "把高冷学霸的克制风格与移动端交付、跨端协作和发布前校验组合成稳定角色模板。",
       "styleTags": [
         "classical-chinese",
         "mandarin",
@@ -527,8 +607,8 @@
     },
     {
       "id": "character-efficient-devops-engineer",
-      "name": "\u6587\u8a00\u6781\u7b80 DevOps \u503c\u5b88\u5de5\u7a0b\u5e08",
-      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u514b\u5236\u8868\u8fbe\u4e0e DevOps\u3001Docker\u3001SRE \u80fd\u529b\u7ec4\u5408\u6210\u7a33\u5b9a\u7684\u503c\u5b88\u89d2\u8272\u3002",
+      "name": "文言极简 DevOps 值守工程师",
+      "summary": "把高冷学霸的克制表达与 DevOps、Docker、SRE 能力组合成稳定的值守角色。",
       "styleTags": [
         "classical-chinese",
         "mandarin",
@@ -567,8 +647,8 @@
     },
     {
       "id": "character-rigorous-test-reviewer",
-      "name": "\u6587\u8a00\u6781\u7b80\u6d4b\u8bd5\u5ba1\u6821\u5de5\u7a0b\u5e08",
-      "summary": "\u5f3a\u8c03\u7ed3\u8bba\u4f18\u5148\u3001\u77ed\u53e5\u5ba1\u6821\u548c\u56de\u5f52\u6d4b\u8bd5\u7eaa\u5f8b\u7684\u8d28\u91cf\u4fdd\u969c\u89d2\u8272\u6a21\u677f\u3002",
+      "name": "文言极简测试审校工程师",
+      "summary": "强调结论优先、短句审校和回归测试纪律的质量保障角色模板。",
       "styleTags": [
         "classical-chinese",
         "mandarin",
@@ -605,8 +685,8 @@
     },
     {
       "id": "character-cold-scholar-security-reviewer",
-      "name": "\u6587\u8a00\u6781\u7b80\u5b89\u5168\u5ba1\u6821\u5de5\u7a0b\u5e08",
-      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u51b7\u9759\u5224\u65ad\u4e0e\u6743\u9650\u5ba1\u8ba1\u3001\u5a01\u80c1\u5efa\u6a21\u548c\u5b89\u5168\u590d\u76d8\u7ec4\u5408\u6210\u4e13\u4e1a\u9ed8\u8ba4\u6a21\u677f\u3002",
+      "name": "文言极简安全审校工程师",
+      "summary": "把高冷学霸的冷静判断与权限审计、威胁建模和安全复盘组合成专业默认模板。",
       "styleTags": [
         "classical-chinese",
         "mandarin",

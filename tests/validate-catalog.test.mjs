@@ -152,6 +152,32 @@ function buildCharacterTemplateLibraryFixtureData({
       languages: [{ tag: 'react', reason: 'react gap' }],
       roles: [{ tag: 'engineer', reason: 'engineer gap' }],
     },
+    dungeonBindingPresetSources: [
+      {
+        scriptKey: 'proposal-archive',
+        tagGroups: {
+          languages: ['react'],
+          domains: ['frontend'],
+          roles: ['engineer'],
+        },
+      },
+      {
+        scriptKey: 'proposal-generate',
+        tagGroups: {
+          languages: ['react'],
+          domains: ['frontend'],
+          roles: [],
+        },
+      },
+      {
+        scriptKey: 'proposal-execute',
+        tagGroups: {
+          languages: [],
+          domains: [],
+          roles: ['engineer'],
+        },
+      },
+    ],
     soulFilters: {
       personality: {
         preferredIds: ['soul-one'],
@@ -394,6 +420,71 @@ test('catalog validation script succeeds', async () => {
   });
 
   assert.match(stdout, /Validated \d+ catalog entries\./);
+});
+
+test('character template library materializes stable dungeon bindings for summaries and details', () => {
+  const library = buildCharacterTemplateLibrary({
+    libraryData: buildCharacterTemplateLibraryFixtureData(),
+    soulIndex: buildSoulIndexFixture(),
+    traitIndex: buildTraitIndexFixture(),
+  });
+
+  assert.deepEqual(library.manifest.templates[0].dungeonBindings, [
+    {
+      scriptKey: 'proposal-generate',
+      matchedTags: ['frontend', 'react'],
+      matchedTagGroups: ['languages', 'domains'],
+      priority: 0,
+    },
+    {
+      scriptKey: 'proposal-execute',
+      matchedTags: ['engineer'],
+      matchedTagGroups: ['roles'],
+      priority: 1,
+    },
+    {
+      scriptKey: 'proposal-archive',
+      matchedTags: ['engineer', 'frontend', 'react'],
+      matchedTagGroups: ['languages', 'domains', 'roles'],
+      priority: 2,
+    },
+  ]);
+  assert.deepEqual(library.details[0].dungeonBindings, library.manifest.templates[0].dungeonBindings);
+});
+
+test('character template library rejects unknown dungeon binding tags', () => {
+  const fixture = buildCharacterTemplateLibraryFixtureData();
+  fixture.dungeonBindingPresetSources[0].tagGroups.languages = ['missing-tag'];
+
+  assert.throws(
+    () => buildCharacterTemplateLibrary({
+      libraryData: fixture,
+      soulIndex: buildSoulIndexFixture(),
+      traitIndex: buildTraitIndexFixture(),
+    }),
+    /references unknown languages tag missing-tag\./,
+  );
+});
+
+test('character template library rejects duplicate dungeon binding script keys', () => {
+  const fixture = buildCharacterTemplateLibraryFixtureData();
+  fixture.dungeonBindingPresetSources.push({
+    scriptKey: 'proposal-generate',
+    tagGroups: {
+      languages: ['react'],
+      domains: [],
+      roles: [],
+    },
+  });
+
+  assert.throws(
+    () => buildCharacterTemplateLibrary({
+      libraryData: fixture,
+      soulIndex: buildSoulIndexFixture(),
+      traitIndex: buildTraitIndexFixture(),
+    }),
+    /contains duplicate scriptKey proposal-generate\./,
+  );
 });
 
 test('catalog exposes managed server and desktop entries', async () => {
