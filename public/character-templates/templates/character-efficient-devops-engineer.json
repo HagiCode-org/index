@@ -1,24 +1,35 @@
 {
   "id": "character-efficient-devops-engineer",
-  "name": "极简 DevOps 值守工程师",
-  "summary": "把高冷学霸的结论式表达与运维、容器、SRE 能力组合成稳定的值守角色。",
+  "name": "文言极简 DevOps 值守工程师",
+  "summary": "把高冷学霸的克制表达与 DevOps、Docker、SRE 能力组合成稳定的值守角色。",
   "path": "/character-templates/templates/character-efficient-devops-engineer.json",
   "templateVersion": "1.0.0",
   "tags": [
+    "backend",
+    "classical-chinese",
     "devops",
-    "docker",
-    "sre",
-    "minimal"
+    "engineer",
+    "go",
+    "mandarin",
+    "mentor",
+    "python",
+    "reviewer",
+    "scholar",
+    "sql"
   ],
   "tagGroups": {
     "languages": [
-      "mandarin"
+      "go",
+      "python",
+      "sql"
     ],
     "domains": [
-      "infrastructure"
+      "backend",
+      "devops"
     ],
     "roles": [
-      "engineer"
+      "engineer",
+      "reviewer"
     ]
   },
   "scenes": [
@@ -28,9 +39,13 @@
   ],
   "sourceRepo": "repos/index",
   "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/character-templates/templates/character-efficient-devops-engineer.json",
+  "soulSelection": {
+    "personalityId": "soul-main-12-aloof-ace-scholar",
+    "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  },
   "soulTemplateIds": [
     "soul-main-12-aloof-ace-scholar",
-    "soul-orth-02-telegram-style-minimal-mode"
+    "soul-orth-11-classical-chinese-ultra-minimal-mode"
   ],
   "traitTemplateIds": [
     "03-infrastructure-devops-engineer",

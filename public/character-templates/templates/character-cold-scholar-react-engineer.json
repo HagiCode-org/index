@@ -5,21 +5,26 @@
   "path": "/character-templates/templates/character-cold-scholar-react-engineer.json",
   "templateVersion": "1.0.0",
   "tags": [
-    "react",
-    "frontend",
     "classical-chinese",
-    "scholar"
+    "developer",
+    "engineer",
+    "frontend",
+    "mandarin",
+    "mentor",
+    "react",
+    "scholar",
+    "typescript"
   ],
   "tagGroups": {
     "languages": [
-      "classical-chinese",
-      "mandarin"
+      "react",
+      "typescript"
     ],
     "domains": [
       "frontend"
     ],
     "roles": [
-      "scholar",
+      "developer",
       "engineer"
     ]
   },
@@ -30,6 +35,10 @@
   ],
   "sourceRepo": "repos/index",
   "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/character-templates/templates/character-cold-scholar-react-engineer.json",
+  "soulSelection": {
+    "personalityId": "soul-main-12-aloof-ace-scholar",
+    "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  },
   "soulTemplateIds": [
     "soul-main-12-aloof-ace-scholar",
     "soul-orth-11-classical-chinese-ultra-minimal-mode"

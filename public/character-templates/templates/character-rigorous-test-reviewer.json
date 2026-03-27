@@ -1,25 +1,33 @@
 {
   "id": "character-rigorous-test-reviewer",
-  "name": "冷静审校测试工程师",
+  "name": "文言极简测试审校工程师",
   "summary": "强调结论优先、短句审校和回归测试纪律的质量保障角色模板。",
   "path": "/character-templates/templates/character-rigorous-test-reviewer.json",
   "templateVersion": "1.0.0",
   "tags": [
-    "quality",
+    "classical-chinese",
+    "engineer",
+    "mandarin",
+    "mentor",
+    "python",
+    "reviewer",
+    "scholar",
+    "security",
     "testing",
-    "review",
-    "scholar"
+    "typescript"
   ],
   "tagGroups": {
     "languages": [
-      "mandarin"
+      "python",
+      "typescript"
     ],
     "domains": [
-      "quality"
+      "security",
+      "testing"
     ],
     "roles": [
-      "reviewer",
-      "scholar"
+      "engineer",
+      "reviewer"
     ]
   },
   "scenes": [
@@ -29,9 +37,13 @@
   ],
   "sourceRepo": "repos/index",
   "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/character-templates/templates/character-rigorous-test-reviewer.json",
+  "soulSelection": {
+    "personalityId": "soul-main-12-aloof-ace-scholar",
+    "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  },
   "soulTemplateIds": [
     "soul-main-12-aloof-ace-scholar",
-    "soul-orth-01-fragmented-short-sentence-mode"
+    "soul-orth-11-classical-chinese-ultra-minimal-mode"
   ],
   "traitTemplateIds": [
     "04-quality-security-code-reviewer",
