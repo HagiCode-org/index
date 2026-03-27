@@ -16,10 +16,10 @@ concurrency:
 env:
   NODE_VERSION: '22'
   DOCKER_HUB_REPOSITORY: 'newbe36524/hagicode'
-  # Canonical metrics data and the derived catalog summary ship as one publication set.
-  ACTIVITY_METRICS_PUBLICATION_SET: >-
-    public/activity-metrics.json
-    public/index-catalog.json
+  # Source files only; Astro publishes the stable JSON routes from this set.
+  ACTIVITY_METRICS_SOURCE_SET: >-
+    src/data/public/activity-metrics.json
+    src/data/public/index-catalog.json
 
 jobs:
   update-metrics:
@@ -81,7 +81,7 @@ jobs:
           LAST_UPDATED=$(printf '%s' "$SUMMARY_JSON" | jq -r '.lastUpdated')
           WARNINGS=$(printf '%s' "$SUMMARY_JSON" | jq -r 'if (.warnings | length) == 0 then "none" else (.warnings | join(", ")) end')
 
-          if git diff --quiet -- $ACTIVITY_METRICS_PUBLICATION_SET; then
+          if git diff --quiet -- $ACTIVITY_METRICS_SOURCE_SET; then
             echo 'has_changes=false' >> "$GITHUB_OUTPUT"
           else
             echo 'has_changes=true' >> "$GITHUB_OUTPUT"
@@ -114,7 +114,7 @@ jobs:
       - name: Commit updated metrics
         if: steps.summary.outputs.has_changes == 'true'
         run: |
-          git add $ACTIVITY_METRICS_PUBLICATION_SET
+          git add $ACTIVITY_METRICS_SOURCE_SET
           git commit -m "chore(index): update activity metrics\n\n- updated at: ${{ steps.summary.outputs.last_updated }}"
 
       - name: Push updated metrics to current branch
@@ -125,4 +125,4 @@ jobs:
 
       - name: No-op summary
         if: steps.summary.outputs.has_changes != 'true'
-        run: echo 'No publication-set JSON change detected; nothing was pushed.' >> "$GITHUB_STEP_SUMMARY"
+        run: echo 'No source-side JSON change detected; nothing was pushed.' >> "$GITHUB_STEP_SUMMARY"
