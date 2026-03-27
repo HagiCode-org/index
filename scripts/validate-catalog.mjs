@@ -1,7 +1,9 @@
 import { access, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isDeepStrictEqual } from 'node:util';
 import { loadActivityMetrics } from './update-activity-metrics.mjs';
+import { buildCharacterTemplateLibrary, loadAgentPresetLibrary } from './build-agent-preset-library.mjs';
 
 const requiredFields = [
   'id',
@@ -135,8 +137,27 @@ async function validateCharacterTemplateManifest(entry) {
   assert(Array.isArray(manifest.templates), 'Character templates manifest must define a templates array.');
   validateTemplateTagGroups(manifest.availableTagGroups, 'Character templates availableTagGroups');
 
-  const publishedSoulIds = await loadPublishedAgentTemplateIds('soul');
-  const publishedTraitIds = await loadPublishedAgentTemplateIds('trait');
+  const soulIndex = JSON.parse(await readFile(resolvePublicPath('/agent-templates/soul/index.json'), 'utf8'));
+  const traitIndex = JSON.parse(await readFile(resolvePublicPath('/agent-templates/trait/index.json'), 'utf8'));
+  const publishedSoulIds = new Set((soulIndex.templates ?? []).map((template) => template.id));
+  const publishedTraitIds = new Set((traitIndex.templates ?? []).map((template) => template.id));
+  const libraryData = await loadAgentPresetLibrary(projectRoot);
+  const expectedLibrary = buildCharacterTemplateLibrary({
+    libraryData,
+    soulIndex,
+    traitIndex,
+  });
+  const expectedSummaries = new Map(
+    expectedLibrary.manifest.templates.map((template) => [template.id, template]),
+  );
+  const expectedDetails = new Map(
+    expectedLibrary.details.map((detail) => [detail.id, detail]),
+  );
+
+  assert(
+    isDeepStrictEqual(manifest, expectedLibrary.manifest),
+    'Character template manifest must match the generated library output.',
+  );
 
   for (const [index, summary] of manifest.templates.entries()) {
     assert(summary && typeof summary === 'object', `Character template ${index} must be an object.`);
@@ -151,6 +172,10 @@ async function validateCharacterTemplateManifest(entry) {
     validateStringArray(summary.tags, `Character template ${summary.id} tags`, { minLength: 1 });
     validateStringArray(summary.scenes, `Character template ${summary.id} scenes`, { minLength: 1 });
     validateTemplateTagGroups(summary.tagGroups, `Character template ${summary.id} tagGroups`);
+    assert(
+      isDeepStrictEqual(summary, expectedSummaries.get(summary.id)),
+      `Character template ${summary.id} summary must match the generated library output.`,
+    );
 
     const detailPath = resolvePublicPath(summary.path);
     await access(detailPath);
@@ -161,6 +186,18 @@ async function validateCharacterTemplateManifest(entry) {
     assert(detail.templateVersion === summary.templateVersion, `Character template ${summary.id} detail templateVersion must match its summary.`);
     validateStringArray(detail.soulTemplateIds, `Character template ${summary.id} soulTemplateIds`, { minLength: 1 });
     validateStringArray(detail.traitTemplateIds, `Character template ${summary.id} traitTemplateIds`, { minLength: 1 });
+    assert(
+      detail.soulSelection && typeof detail.soulSelection === 'object',
+      `Character template ${summary.id} detail soulSelection is required.`,
+    );
+    assert(
+      detail.soulSelection.personalityId === detail.soulTemplateIds[0],
+      `Character template ${summary.id} personality SOUL must be the first soulTemplateIds entry.`,
+    );
+    assert(
+      detail.soulSelection.languageStyleId === detail.soulTemplateIds[1],
+      `Character template ${summary.id} language-style SOUL must be the second soulTemplateIds entry.`,
+    );
 
     for (const soulTemplateId of detail.soulTemplateIds) {
       assert(
@@ -175,6 +212,11 @@ async function validateCharacterTemplateManifest(entry) {
         `Character template ${summary.id} references unknown trait template ${traitTemplateId}.`,
       );
     }
+
+    assert(
+      isDeepStrictEqual(detail, expectedDetails.get(summary.id)),
+      `Character template ${summary.id} detail must match the generated library output.`,
+    );
   }
 }
 

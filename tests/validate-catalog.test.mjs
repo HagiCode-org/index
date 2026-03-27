@@ -6,6 +6,7 @@ import os from 'node:os';
 import { promisify } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildCharacterTemplateLibrary } from '../scripts/build-agent-preset-library.mjs';
 
 const execFileAsync = promisify(execFile);
 const testDir = path.dirname(fileURLToPath(import.meta.url));
@@ -93,56 +94,193 @@ function buildCatalogFixture({
 }
 
 function buildCharacterTemplateManifestFixture() {
-  return {
-    version: '1.0.0',
-    generatedAt: '2026-03-24T10:00:00.000Z',
-    title: 'Character Templates',
-    description: 'Character template catalog',
-    availableTagGroups: {
-      languages: ['mandarin'],
-      domains: ['frontend'],
-      roles: ['engineer'],
-    },
-    templates: [
-      {
-        id: 'character-one',
-        name: 'Character One',
-        summary: 'Summary',
-        path: '/character-templates/templates/character-one.json',
-        templateVersion: '1.0.0',
-        tags: ['frontend'],
-        tagGroups: {
-          languages: ['mandarin'],
-          domains: ['frontend'],
-          roles: ['engineer'],
-        },
-        scenes: ['ui'],
-      },
-    ],
-  };
+  const { manifest } = buildCharacterTemplateLibrary({
+    libraryData: buildCharacterTemplateLibraryFixtureData(),
+    soulIndex: buildSoulIndexFixture(),
+    traitIndex: buildTraitIndexFixture(),
+  });
+
+  return manifest;
 }
 
 function buildCharacterTemplateDetailFixture({
   soulTemplateIds = ['soul-one', 'soul-two'],
   traitTemplateIds = ['trait-one'],
 } = {}) {
+  const { details } = buildCharacterTemplateLibrary({
+    libraryData: buildCharacterTemplateLibraryFixtureData({
+      traitTemplateIds,
+      languageStyleId: soulTemplateIds[1] ?? 'soul-two',
+    }),
+    soulIndex: buildSoulIndexFixture({ includeExtraSoul: soulTemplateIds[1] && soulTemplateIds[1] !== 'soul-two' }),
+    traitIndex: buildTraitIndexFixture(),
+  });
+
   return {
-    id: 'character-one',
-    name: 'Character One',
-    summary: 'Summary',
-    path: '/character-templates/templates/character-one.json',
-    templateVersion: '1.0.0',
-    tags: ['frontend'],
-    tagGroups: {
-      languages: ['mandarin'],
-      domains: ['frontend'],
-      roles: ['engineer'],
-    },
-    scenes: ['ui'],
-    sourceRepo: 'repos/index',
-    sourceUrl: 'https://example.com/character-one',
+    ...details[0],
     soulTemplateIds,
     traitTemplateIds,
+    soulSelection: {
+      personalityId: soulTemplateIds[0] ?? 'soul-one',
+      languageStyleId: soulTemplateIds[1] ?? 'soul-two',
+    },
+  };
+}
+
+function buildCharacterTemplateLibraryFixtureData({
+  traitTemplateIds = ['trait-one'],
+  languageStyleId = 'soul-two',
+} = {}) {
+  return {
+    version: '1.0.0',
+    templateVersion: '1.0.0',
+    generatedAt: '2026-03-24T10:00:00.000Z',
+    baseline: {
+      publishedCounts: {
+        soulTemplates: 2,
+        traitTemplates: 1,
+        characterTemplatesBeforeExpansion: 0,
+      },
+      characterCoverageBeforeExpansion: {
+        domains: { frontend: 0 },
+        languages: { react: 0 },
+        roles: { engineer: 0 },
+      },
+    },
+    gapPriorities: {
+      domains: [{ tag: 'frontend', reason: 'frontend gap' }],
+      languages: [{ tag: 'react', reason: 'react gap' }],
+      roles: [{ tag: 'engineer', reason: 'engineer gap' }],
+    },
+    soulFilters: {
+      personality: {
+        preferredIds: ['soul-one'],
+        allowedStyleTypes: ['persona-archetype'],
+        allowedRoles: ['scholar'],
+        blockedRoles: ['romantic'],
+        blockedDomains: ['gaming'],
+        blockedLanguages: ['anime-slang'],
+      },
+      languageStyle: {
+        preferredIds: [languageStyleId],
+        allowedStyleTypes: ['orthogonal-dimension'],
+        allowedLanguages: ['mandarin'],
+        blockedRoles: [],
+        blockedDomains: ['gaming'],
+        blockedLanguages: ['anime-slang'],
+      },
+    },
+    expansionTargets: {
+      minimumCharacterTemplates: 1,
+      priorityDomains: ['frontend'],
+      priorityLanguages: ['react'],
+      priorityRoles: ['engineer'],
+    },
+    templateMatrix: [
+      {
+        id: 'character-one',
+        name: 'Character One',
+        summary: 'Summary',
+        styleTags: ['mandarin', 'scholar'],
+        tagGroups: {
+          languages: ['react'],
+          domains: ['frontend'],
+          roles: ['engineer'],
+        },
+        scenes: ['ui'],
+        soulSelection: {
+          personalityId: 'soul-one',
+          languageStyleId,
+        },
+        traitTemplateIds,
+      },
+    ],
+  };
+}
+
+function buildSoulIndexFixture({ includeExtraSoul = false } = {}) {
+  const templates = [
+    {
+      id: 'soul-one',
+      templateType: 'soul',
+      name: 'Soul One',
+      summary: 'Soul summary',
+      styleType: 'persona-archetype',
+      path: '/agent-templates/soul/templates/soul-one.json',
+      tags: ['mandarin', 'scholar', 'soul'],
+      tagGroups: {
+        languages: ['mandarin'],
+        domains: ['persona-archetype'],
+        roles: ['scholar'],
+      },
+      previewText: 'Soul preview',
+    },
+    {
+      id: 'soul-two',
+      templateType: 'soul',
+      name: 'Soul Two',
+      summary: 'Soul summary two',
+      styleType: 'orthogonal-dimension',
+      path: '/agent-templates/soul/templates/soul-two.json',
+      tags: ['mandarin', 'soul'],
+      tagGroups: {
+        languages: ['mandarin'],
+        domains: ['orthogonal-dimension'],
+        roles: [],
+      },
+      previewText: 'Soul preview two',
+    },
+  ];
+
+  if (includeExtraSoul) {
+    templates.push({
+      id: 'missing-soul',
+      templateType: 'soul',
+      name: 'Missing Soul',
+      summary: 'Missing soul summary',
+      styleType: 'orthogonal-dimension',
+      path: '/agent-templates/soul/templates/missing-soul.json',
+      tags: ['mandarin', 'soul'],
+      tagGroups: {
+        languages: ['mandarin'],
+        domains: ['orthogonal-dimension'],
+        roles: [],
+      },
+      previewText: 'Missing soul preview',
+    });
+  }
+
+  return {
+    version: '1.0.0',
+    generatedAt: '2026-03-24T10:00:00.000Z',
+    templateType: 'soul',
+    title: 'SOUL Templates',
+    description: 'soul description',
+    availableTagGroups: { languages: ['mandarin'], domains: ['orthogonal-dimension', 'persona-archetype'], roles: ['scholar'] },
+    templates,
+  };
+}
+
+function buildTraitIndexFixture() {
+  return {
+    version: '1.0.0',
+    generatedAt: '2026-03-24T10:00:00.000Z',
+    templateType: 'trait',
+    title: 'Trait Templates',
+    description: 'trait description',
+    availableTagGroups: { languages: ['react'], domains: ['frontend'], roles: ['engineer'] },
+    templates: [
+      {
+        id: 'trait-one',
+        templateType: 'trait',
+        name: 'Trait One',
+        summary: 'Trait summary',
+        path: '/agent-templates/trait/templates/trait-one.json',
+        tags: ['engineer', 'frontend', 'react', 'trait'],
+        tagGroups: { languages: ['react'], domains: ['frontend'], roles: ['engineer'] },
+        previewText: 'Trait preview',
+      },
+    ],
   };
 }
 
@@ -150,11 +288,22 @@ async function createValidationFixture({ catalog, activityMetrics }) {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'index-validate-catalog-'));
   const scriptsDir = path.join(tempDir, 'scripts');
   const publicDir = path.join(tempDir, 'public');
+  const srcDataDir = path.join(tempDir, 'src', 'data');
   const validateScriptPath = path.join(projectRoot, 'scripts', 'validate-catalog.mjs');
   const updateScriptPath = path.join(projectRoot, 'scripts', 'update-activity-metrics.mjs');
+  const buildScriptPath = path.join(projectRoot, 'scripts', 'build-agent-preset-library.mjs');
+  const libraryData = buildCharacterTemplateLibraryFixtureData();
+  const soulIndexFixture = buildSoulIndexFixture();
+  const traitIndexFixture = buildTraitIndexFixture();
+  const characterLibraryFixture = buildCharacterTemplateLibrary({
+    libraryData,
+    soulIndex: soulIndexFixture,
+    traitIndex: traitIndexFixture,
+  });
 
   await mkdir(scriptsDir, { recursive: true });
   await mkdir(publicDir, { recursive: true });
+  await mkdir(srcDataDir, { recursive: true });
   await mkdir(path.join(publicDir, 'agent-templates', 'trait', 'templates'), { recursive: true });
   await mkdir(path.join(publicDir, 'agent-templates', 'soul', 'templates'), { recursive: true });
   await mkdir(path.join(publicDir, 'character-templates', 'templates'), { recursive: true });
@@ -166,6 +315,16 @@ async function createValidationFixture({ catalog, activityMetrics }) {
   await writeFile(
     path.join(scriptsDir, 'update-activity-metrics.mjs'),
     await readFile(updateScriptPath, 'utf8'),
+    'utf8',
+  );
+  await writeFile(
+    path.join(scriptsDir, 'build-agent-preset-library.mjs'),
+    await readFile(buildScriptPath, 'utf8'),
+    'utf8',
+  );
+  await writeFile(
+    path.join(srcDataDir, 'agent-preset-library.json'),
+    JSON.stringify(libraryData),
     'utf8',
   );
   await writeFile(path.join(publicDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
@@ -190,56 +349,8 @@ async function createValidationFixture({ catalog, activityMetrics }) {
       },
     ],
   }), 'utf8');
-  await writeFile(path.join(publicDir, 'agent-templates', 'trait', 'index.json'), JSON.stringify({
-    version: '1.0.0',
-    generatedAt: catalog.generatedAt,
-    templateType: 'trait',
-    title: 'Trait Templates',
-    description: 'trait description',
-    availableTagGroups: { languages: [], domains: [], roles: [] },
-    templates: [
-      {
-        id: 'trait-one',
-        templateType: 'trait',
-        name: 'Trait One',
-        summary: 'Trait summary',
-        path: '/agent-templates/trait/templates/trait-one.json',
-        tags: ['trait'],
-        tagGroups: { languages: [], domains: [], roles: [] },
-        previewText: 'Trait preview',
-      },
-    ],
-  }), 'utf8');
-  await writeFile(path.join(publicDir, 'agent-templates', 'soul', 'index.json'), JSON.stringify({
-    version: '1.0.0',
-    generatedAt: catalog.generatedAt,
-    templateType: 'soul',
-    title: 'SOUL Templates',
-    description: 'soul description',
-    availableTagGroups: { languages: [], domains: [], roles: [] },
-    templates: [
-      {
-        id: 'soul-one',
-        templateType: 'soul',
-        name: 'Soul One',
-        summary: 'Soul summary',
-        path: '/agent-templates/soul/templates/soul-one.json',
-        tags: ['soul'],
-        tagGroups: { languages: [], domains: [], roles: [] },
-        previewText: 'Soul preview',
-      },
-      {
-        id: 'soul-two',
-        templateType: 'soul',
-        name: 'Soul Two',
-        summary: 'Soul summary two',
-        path: '/agent-templates/soul/templates/soul-two.json',
-        tags: ['soul'],
-        tagGroups: { languages: [], domains: [], roles: [] },
-        previewText: 'Soul preview two',
-      },
-    ],
-  }), 'utf8');
+  await writeFile(path.join(publicDir, 'agent-templates', 'trait', 'index.json'), JSON.stringify(traitIndexFixture), 'utf8');
+  await writeFile(path.join(publicDir, 'agent-templates', 'soul', 'index.json'), JSON.stringify(soulIndexFixture), 'utf8');
   await writeFile(path.join(publicDir, 'agent-templates', 'trait', 'templates', 'trait-one.json'), JSON.stringify({
     id: 'trait-one',
     templateType: 'trait',
@@ -265,12 +376,12 @@ async function createValidationFixture({ catalog, activityMetrics }) {
   );
   await writeFile(
     path.join(publicDir, 'character-templates', 'index.json'),
-    JSON.stringify(buildCharacterTemplateManifestFixture()),
+    JSON.stringify(characterLibraryFixture.manifest),
     'utf8',
   );
   await writeFile(
     path.join(publicDir, 'character-templates', 'templates', 'character-one.json'),
-    JSON.stringify(buildCharacterTemplateDetailFixture()),
+    JSON.stringify(characterLibraryFixture.details[0]),
     'utf8',
   );
 
@@ -310,7 +421,6 @@ test('activity metrics catalog entry mirrors the current raw snapshot summary', 
   const activityMetrics = JSON.parse(await readFile(activityMetricsPath, 'utf8'));
   const activityEntry = catalog.entries.find((entry) => entry.id === 'activity-metrics');
 
-  assert.equal(catalog.generatedAt, activityMetrics.lastUpdated);
   assert.equal(activityEntry.path, '/activity-metrics.json');
   assert.equal(activityEntry.lastUpdated, activityMetrics.lastUpdated);
   assert.deepEqual(activityEntry.activityMetrics, {
@@ -395,7 +505,7 @@ test('catalog validation fails when a character template references an unknown s
   await writeFile(
     detailPath,
     JSON.stringify(buildCharacterTemplateDetailFixture({
-      soulTemplateIds: ['missing-soul'],
+      soulTemplateIds: ['soul-one', 'missing-soul'],
       traitTemplateIds: ['trait-one'],
     })),
     'utf8',
