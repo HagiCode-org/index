@@ -1,0 +1,239 @@
+{
+  "version": "2026.03.27",
+  "publishedAt": "2026-03-27T00:00:00.000Z",
+  "title": "Secondary Profession Catalog",
+  "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
+  "items": [
+    {
+      "id": "secondary-gpt-5-4",
+      "name": "GPT 5.4",
+      "family": "gpt",
+      "summary": "hero.professionCopy.secondary.gpt54.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
+      "sortOrder": 10,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["codex", "copilot", "hermes"],
+      "defaultParameters": {
+        "model": "gpt-5.4",
+        "reasoning": "high"
+      }
+    },
+    {
+      "id": "secondary-gpt-5-3-codex",
+      "name": "GPT 5.3 Codex",
+      "family": "gpt",
+      "summary": "hero.professionCopy.secondary.gpt53Codex.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiCodex",
+      "sortOrder": 20,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["codex", "copilot", "hermes"],
+      "defaultParameters": {
+        "model": "gpt-5.3-codex",
+        "reasoning": "high"
+      }
+    },
+    {
+      "id": "secondary-gpt-5-2-codex",
+      "name": "GPT 5.2 Codex",
+      "family": "gpt",
+      "summary": "hero.professionCopy.secondary.gpt52Codex.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiCodex",
+      "sortOrder": 21,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["codex", "copilot", "hermes"],
+      "defaultParameters": {
+        "model": "gpt-5.2-codex",
+        "reasoning": "high"
+      }
+    },
+    {
+      "id": "secondary-gpt-5-mini",
+      "name": "GPT 5 Mini",
+      "family": "gpt",
+      "summary": "hero.professionCopy.secondary.gpt5Mini.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersGitHubCopilotModel",
+      "sortOrder": 30,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["codex", "copilot", "hermes"],
+      "defaultParameters": {
+        "model": "gpt-5-mini",
+        "reasoning": "medium"
+      }
+    },
+    {
+      "id": "secondary-claude-4-sonnet",
+      "name": "Claude 4 Sonnet",
+      "family": "anthropic",
+      "summary": "hero.professionCopy.secondary.claude4Sonnet.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
+      "sortOrder": 40,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["claude", "codebuddy", "hermes", "qoder", "kiro"],
+      "defaultParameters": {
+        "model": "anthropic/claude-sonnet-4-6",
+        "reasoning": "high"
+      }
+    },
+    {
+      "id": "secondary-claude-opus-4",
+      "name": "Claude 4 Opus",
+      "family": "anthropic",
+      "summary": "hero.professionCopy.secondary.claude4Opus.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
+      "sortOrder": 41,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["claude", "codebuddy", "hermes", "qoder", "kiro"],
+      "defaultParameters": {
+        "model": "anthropic/claude-opus-4-6",
+        "reasoning": "high"
+      }
+    },
+    {
+      "id": "secondary-glm-4-7",
+      "name": "GLM 4.7",
+      "family": "anthropic",
+      "summary": "hero.professionCopy.secondary.glm47.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
+      "sortOrder": 60,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["claude", "codebuddy", "hermes", "qoder", "kiro"],
+      "defaultParameters": {
+        "model": "glm-4.7",
+        "reasoning": "high"
+      }
+    },
+    {
+      "id": "secondary-glm-5",
+      "name": "GLM 5",
+      "family": "anthropic",
+      "summary": "hero.professionCopy.secondary.glm5.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
+      "sortOrder": 61,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["claude", "codebuddy", "hermes", "qoder", "kiro"],
+      "defaultParameters": {
+        "model": "glm-5",
+        "reasoning": "high"
+      }
+    },
+    {
+      "id": "secondary-glm-5-turbo",
+      "name": "GLM 5 Turbo",
+      "family": "anthropic",
+      "summary": "hero.professionCopy.secondary.glm5Turbo.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
+      "sortOrder": 62,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["claude", "codebuddy", "hermes", "qoder", "kiro"],
+      "defaultParameters": {
+        "model": "glm-5-turbo",
+        "reasoning": "high"
+      }
+    },
+    {
+      "id": "secondary-glm-5-codebuddy",
+      "name": "GLM 5.0",
+      "family": "anthropic",
+      "summary": "hero.professionCopy.secondary.glm50.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
+      "sortOrder": 63,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["claude", "codebuddy", "hermes", "qoder", "kiro"],
+      "defaultParameters": {
+        "model": "glm-5.0",
+        "reasoning": "high"
+      }
+    },
+    {
+      "id": "secondary-minimax-m2-7",
+      "name": "Minimax M2.7",
+      "family": "anthropic",
+      "summary": "hero.professionCopy.secondary.minimaxM27.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
+      "sortOrder": 70,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["claude", "codebuddy", "hermes", "qoder", "kiro"],
+      "defaultParameters": {
+        "model": "minimax-m2.7",
+        "reasoning": "medium"
+      }
+    },
+    {
+      "id": "secondary-minimax-m2-7-high-speed",
+      "name": "Minimax M2.7 High Speed",
+      "family": "anthropic",
+      "summary": "hero.professionCopy.secondary.minimaxM27HighSpeed.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
+      "sortOrder": 71,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["claude", "codebuddy", "hermes", "qoder", "kiro"],
+      "defaultParameters": {
+        "model": "minimax-m2.7-high-speed",
+        "reasoning": "medium"
+      }
+    },
+    {
+      "id": "secondary-minimax-m2-5",
+      "name": "Minimax M2.5",
+      "family": "anthropic",
+      "summary": "hero.professionCopy.secondary.minimaxM25.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
+      "sortOrder": 72,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": ["claude", "codebuddy", "hermes", "qoder", "kiro"],
+      "defaultParameters": {
+        "model": "minimax-m2.5",
+        "reasoning": "medium"
+      }
+    },
+    {
+      "id": "secondary-kimi-k2-5",
+      "name": "Kimi K2.5",
+      "family": "anthropic",
+      "primaryProfessionId": "profession-kimi",
+      "summary": "hero.professionCopy.secondary.kimiK25.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersKimiCliModel",
+      "sortOrder": 80,
+      "supportsImage": true
+    },
+    {
+      "id": "secondary-gemini-2-5-pro",
+      "name": "Gemini 2.5 Pro",
+      "family": "gemini",
+      "primaryProfessionId": "profession-gemini",
+      "summary": "hero.professionCopy.secondary.gemini25Pro.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
+      "sortOrder": 81,
+      "supportsImage": true,
+      "defaultParameters": {
+        "model": "gemini-2.5-pro"
+      }
+    },
+    {
+      "id": "secondary-gemini-2-5-flash",
+      "name": "Gemini 2.5 Flash",
+      "family": "gemini",
+      "primaryProfessionId": "profession-gemini",
+      "summary": "hero.professionCopy.secondary.gemini25Flash.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
+      "sortOrder": 82,
+      "supportsImage": true,
+      "defaultParameters": {
+        "model": "gemini-2.5-flash"
+      }
+    },
+    {
+      "id": "secondary-gemini-2-5-flash-lite",
+      "name": "Gemini 2.5 Flash-Lite",
+      "family": "gemini",
+      "primaryProfessionId": "profession-gemini",
+      "summary": "hero.professionCopy.secondary.gemini25FlashLite.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
+      "sortOrder": 83,
+      "supportsImage": true,
+      "defaultParameters": {
+        "model": "gemini-2.5-flash-lite"
+      }
+    }
+  ]
+}

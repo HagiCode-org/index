@@ -8,6 +8,7 @@
 - 用 `public/index-catalog.json` 作为首页展示和外部程序发现索引的单一来源。
 - 为 `HagiCode Server` 与 `HagiCode Desktop` 生成独立版本历史页。对应路由是 `/server/history/` 与 `/desktop/history/`。
 - 独立生成并发布 `public/activity-metrics.json`，并把当前快照摘要同步到 `public/index-catalog.json`。
+- 独立生成并发布 `public/secondary-professions/index.json`，并把目录入口同步到 `public/index-catalog.json`。
 - 保持原始 JSON 路径稳定可直连。例如 `/presets/index.json`、`/server/index.json` 与 `/desktop/index.json`。
 
 ## 版本历史页面
@@ -107,6 +108,14 @@ node --env-file=.env ./scripts/update-activity-metrics.mjs
 - 根清单：`public/agent-templates/index.json`
 - 维护原则：不要在 `repos/index/public/agent-templates/` 手工编辑模板正文；这里是发布镜像，不是 source-of-truth。
 
+## Secondary profession 目录来源与边界
+
+- 源数据文件：`src/data/secondary-professions.catalog.json`
+- 发布目录：`public/secondary-professions/index.json`
+- catalog 入口：`public/index-catalog.json` 中的 `secondary-professions`
+- 后端 fallback 同步目标：`../hagicode-core/src/PCode.Web/Assets/secondary-professions.index.json`
+- 维护原则：副职业目录以 `repos/index` 源数据为准；不要直接手改 `public/secondary-professions/index.json` 或后端 fallback 快照。
+
 ## Character template 扩充基线
 
 - 角色模板扩充遵循固定顺序：先计数当前 SOUL / Trait / Character 资产，再按缺口优先生成，最后执行发布校验。
@@ -120,6 +129,7 @@ node --env-file=.env ./scripts/update-activity-metrics.mjs
 ```bash
 npm install
 npm run sync:presets
+npm run sync:secondary-professions
 npm run sync:character-templates
 npm run validate
 npm test
@@ -184,6 +194,14 @@ npm run build
 2. 在 monorepo 的 `repos/soul` 执行 `npm run sync:agent-templates`，生成 SOUL 模板快照。
 3. 在本仓库执行 `npm run sync:agent-templates`，把两侧 canonical 输出镜像到 `public/agent-templates/`。
 4. 检查 `public/index-catalog.json` 中 `agent-templates` 条目仍指向 `/agent-templates/index.json`。
+5. 执行 `npm run validate`、`npm test`、`npm run build`。
+
+### Secondary profession 目录资产
+
+1. 在 `src/data/secondary-professions.catalog.json` 更新目录源数据。
+2. 在本仓库执行 `npm run sync:secondary-professions`，同步生成 `public/secondary-professions/index.json`。
+3. 确认 `public/index-catalog.json` 中 `secondary-professions` 条目仍指向 `/secondary-professions/index.json`。
+4. 确认后端 fallback 快照 `../hagicode-core/src/PCode.Web/Assets/secondary-professions.index.json` 已被同步更新。
 5. 执行 `npm run validate`、`npm test`、`npm run build`。
 
 ### Character template 资产

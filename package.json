@@ -8,17 +8,18 @@
   "scripts": {
     "dev": "astro dev --host 0.0.0.0 --port ${PORT_INDEX:-31266}",
     "start": "astro dev --host 0.0.0.0",
-    "build": "npm run validate && astro build",
+    "build": "npm run sync:secondary-professions && npm run validate && astro build",
     "preview": "astro preview --port ${PORT_INDEX:-31266}",
     "astro": "astro",
     "sync:presets": "node ./scripts/sync-presets.mjs",
     "sync:character-templates": "node ./scripts/build-agent-preset-library.mjs",
-    "validate": "node ./scripts/validate-catalog.mjs && node ./scripts/validate-activity-metrics.mjs",
+    "validate": "node ./scripts/sync-secondary-professions.mjs --check && node ./scripts/validate-catalog.mjs && node ./scripts/validate-activity-metrics.mjs",
     "test": "node --test ./tests/*.test.mjs",
     "typecheck": "astro check",
     "sync:index": "node ./scripts/sync-azure-index.mjs",
     "update-activity-metrics": "node ./scripts/update-activity-metrics.mjs",
-    "sync:agent-templates": "node ./scripts/sync-agent-templates.mjs"
+    "sync:agent-templates": "node ./scripts/sync-agent-templates.mjs",
+    "sync:secondary-professions": "node ./scripts/sync-secondary-professions.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.1",

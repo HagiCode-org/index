@@ -401,7 +401,7 @@ test('catalog exposes managed server and desktop entries', async () => {
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
   const entryIds = catalog.entries.map((entry) => entry.id);
 
-  assert.deepEqual(entryIds, ['presets-catalog', 'server-packages', 'desktop-packages', 'agent-templates', 'character-templates', 'activity-metrics']);
+  assert.deepEqual(entryIds, ['presets-catalog', 'server-packages', 'desktop-packages', 'agent-templates', 'character-templates', 'activity-metrics', 'secondary-professions']);
 });
 
 test('managed package entries expose stable history page paths', async () => {
