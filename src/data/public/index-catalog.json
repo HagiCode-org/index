@@ -84,7 +84,7 @@
       "category": "catalogs",
       "sourceRepo": "repos/index",
       "status": "published",
-      "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/secondary-professions",
+      "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/secondary-professions.catalog.json",
       "lastUpdated": "2026-03-27T00:00:00.000Z"
     }
   ]
