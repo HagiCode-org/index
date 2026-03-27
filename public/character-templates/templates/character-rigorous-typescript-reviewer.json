@@ -54,7 +54,7 @@
   ],
   "dungeonBindings": [
     {
-      "scriptKey": "proposal-generate",
+      "scriptKey": "proposal.generate",
       "matchedTags": [
         "frontend",
         "typescript"
@@ -66,7 +66,7 @@
       "priority": 0
     },
     {
-      "scriptKey": "proposal-execute",
+      "scriptKey": "proposal.execute",
       "matchedTags": [
         "frontend",
         "testing",
@@ -79,7 +79,7 @@
       "priority": 1
     },
     {
-      "scriptKey": "proposal-archive",
+      "scriptKey": "proposal.archive",
       "matchedTags": [
         "frontend",
         "reviewer",

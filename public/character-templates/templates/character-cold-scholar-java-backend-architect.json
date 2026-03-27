@@ -56,7 +56,7 @@
   ],
   "dungeonBindings": [
     {
-      "scriptKey": "proposal-generate",
+      "scriptKey": "proposal.generate",
       "matchedTags": [
         "architect",
         "architecture",
@@ -71,7 +71,7 @@
       "priority": 0
     },
     {
-      "scriptKey": "proposal-execute",
+      "scriptKey": "proposal.execute",
       "matchedTags": [
         "backend",
         "engineer",
@@ -85,7 +85,7 @@
       "priority": 1
     },
     {
-      "scriptKey": "proposal-archive",
+      "scriptKey": "proposal.archive",
       "matchedTags": [
         "architect",
         "architecture",

@@ -46,7 +46,7 @@
   "traitTemplateIds": [],
   "dungeonBindings": [
     {
-      "scriptKey": "proposal-generate",
+      "scriptKey": "proposal.generate",
       "matchedTags": [
         "developer",
         "frontend",
@@ -60,7 +60,7 @@
       "priority": 0
     },
     {
-      "scriptKey": "proposal-execute",
+      "scriptKey": "proposal.execute",
       "matchedTags": [
         "developer",
         "frontend",
@@ -74,7 +74,7 @@
       "priority": 1
     },
     {
-      "scriptKey": "proposal-archive",
+      "scriptKey": "proposal.archive",
       "matchedTags": [
         "frontend",
         "typescript"

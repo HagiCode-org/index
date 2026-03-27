@@ -79,7 +79,7 @@
       ],
       "dungeonBindings": [
         {
-          "scriptKey": "proposal-generate",
+          "scriptKey": "proposal.generate",
           "matchedTags": [
             "developer",
             "frontend",
@@ -94,7 +94,7 @@
           "priority": 0
         },
         {
-          "scriptKey": "proposal-execute",
+          "scriptKey": "proposal.execute",
           "matchedTags": [
             "developer",
             "engineer",
@@ -110,7 +110,7 @@
           "priority": 1
         },
         {
-          "scriptKey": "proposal-archive",
+          "scriptKey": "proposal.archive",
           "matchedTags": [
             "engineer",
             "frontend",
@@ -169,7 +169,7 @@
       ],
       "dungeonBindings": [
         {
-          "scriptKey": "proposal-generate",
+          "scriptKey": "proposal.generate",
           "matchedTags": [
             "architect",
             "architecture",
@@ -185,7 +185,7 @@
           "priority": 0
         },
         {
-          "scriptKey": "proposal-execute",
+          "scriptKey": "proposal.execute",
           "matchedTags": [
             "frontend",
             "typescript",
@@ -198,7 +198,7 @@
           "priority": 1
         },
         {
-          "scriptKey": "proposal-archive",
+          "scriptKey": "proposal.archive",
           "matchedTags": [
             "architect",
             "architecture",
@@ -257,7 +257,7 @@
       ],
       "dungeonBindings": [
         {
-          "scriptKey": "proposal-generate",
+          "scriptKey": "proposal.generate",
           "matchedTags": [
             "frontend",
             "typescript"
@@ -269,7 +269,7 @@
           "priority": 0
         },
         {
-          "scriptKey": "proposal-execute",
+          "scriptKey": "proposal.execute",
           "matchedTags": [
             "frontend",
             "testing",
@@ -282,7 +282,7 @@
           "priority": 1
         },
         {
-          "scriptKey": "proposal-archive",
+          "scriptKey": "proposal.archive",
           "matchedTags": [
             "frontend",
             "reviewer",
@@ -342,7 +342,7 @@
       ],
       "dungeonBindings": [
         {
-          "scriptKey": "proposal-generate",
+          "scriptKey": "proposal.generate",
           "matchedTags": [
             "architect",
             "architecture",
@@ -357,7 +357,7 @@
           "priority": 0
         },
         {
-          "scriptKey": "proposal-execute",
+          "scriptKey": "proposal.execute",
           "matchedTags": [
             "backend",
             "engineer",
@@ -371,7 +371,7 @@
           "priority": 1
         },
         {
-          "scriptKey": "proposal-archive",
+          "scriptKey": "proposal.archive",
           "matchedTags": [
             "architect",
             "architecture",
@@ -430,7 +430,7 @@
       ],
       "dungeonBindings": [
         {
-          "scriptKey": "proposal-generate",
+          "scriptKey": "proposal.generate",
           "matchedTags": [
             "backend",
             "developer",
@@ -444,7 +444,7 @@
           "priority": 0
         },
         {
-          "scriptKey": "proposal-execute",
+          "scriptKey": "proposal.execute",
           "matchedTags": [
             "backend",
             "developer",
@@ -458,7 +458,7 @@
           "priority": 1
         },
         {
-          "scriptKey": "proposal-archive",
+          "scriptKey": "proposal.archive",
           "matchedTags": [
             "backend",
             "python",
@@ -518,7 +518,7 @@
       ],
       "dungeonBindings": [
         {
-          "scriptKey": "proposal-generate",
+          "scriptKey": "proposal.generate",
           "matchedTags": [
             "architect",
             "backend",
@@ -533,7 +533,7 @@
           "priority": 0
         },
         {
-          "scriptKey": "proposal-execute",
+          "scriptKey": "proposal.execute",
           "matchedTags": [
             "backend",
             "csharp",
@@ -547,7 +547,7 @@
           "priority": 1
         },
         {
-          "scriptKey": "proposal-archive",
+          "scriptKey": "proposal.archive",
           "matchedTags": [
             "architect",
             "backend",
@@ -608,7 +608,7 @@
       ],
       "dungeonBindings": [
         {
-          "scriptKey": "proposal-generate",
+          "scriptKey": "proposal.generate",
           "matchedTags": [
             "dart",
             "developer",
@@ -625,7 +625,7 @@
           "priority": 0
         },
         {
-          "scriptKey": "proposal-execute",
+          "scriptKey": "proposal.execute",
           "matchedTags": [
             "dart",
             "developer",
@@ -642,7 +642,7 @@
           "priority": 1
         },
         {
-          "scriptKey": "proposal-archive",
+          "scriptKey": "proposal.archive",
           "matchedTags": [
             "frontend",
             "reviewer"
@@ -701,7 +701,7 @@
       ],
       "dungeonBindings": [
         {
-          "scriptKey": "proposal-generate",
+          "scriptKey": "proposal.generate",
           "matchedTags": [
             "backend",
             "go",
@@ -714,7 +714,7 @@
           "priority": 0
         },
         {
-          "scriptKey": "proposal-execute",
+          "scriptKey": "proposal.execute",
           "matchedTags": [
             "backend",
             "devops",
@@ -730,7 +730,7 @@
           "priority": 1
         },
         {
-          "scriptKey": "proposal-archive",
+          "scriptKey": "proposal.archive",
           "matchedTags": [
             "backend",
             "engineer",
@@ -791,7 +791,7 @@
       ],
       "dungeonBindings": [
         {
-          "scriptKey": "proposal-generate",
+          "scriptKey": "proposal.generate",
           "matchedTags": [
             "python",
             "typescript"
@@ -802,7 +802,7 @@
           "priority": 0
         },
         {
-          "scriptKey": "proposal-execute",
+          "scriptKey": "proposal.execute",
           "matchedTags": [
             "engineer",
             "python",
@@ -817,7 +817,7 @@
           "priority": 1
         },
         {
-          "scriptKey": "proposal-archive",
+          "scriptKey": "proposal.archive",
           "matchedTags": [
             "engineer",
             "python",
@@ -879,7 +879,7 @@
       ],
       "dungeonBindings": [
         {
-          "scriptKey": "proposal-generate",
+          "scriptKey": "proposal.generate",
           "matchedTags": [
             "backend"
           ],
@@ -889,7 +889,7 @@
           "priority": 0
         },
         {
-          "scriptKey": "proposal-execute",
+          "scriptKey": "proposal.execute",
           "matchedTags": [
             "backend",
             "engineer"
@@ -901,7 +901,7 @@
           "priority": 1
         },
         {
-          "scriptKey": "proposal-archive",
+          "scriptKey": "proposal.archive",
           "matchedTags": [
             "backend",
             "bash",
@@ -956,7 +956,7 @@
       ],
       "dungeonBindings": [
         {
-          "scriptKey": "proposal-generate",
+          "scriptKey": "proposal.generate",
           "matchedTags": [
             "developer",
             "frontend",
@@ -970,7 +970,7 @@
           "priority": 0
         },
         {
-          "scriptKey": "proposal-execute",
+          "scriptKey": "proposal.execute",
           "matchedTags": [
             "developer",
             "frontend",
@@ -984,7 +984,7 @@
           "priority": 1
         },
         {
-          "scriptKey": "proposal-archive",
+          "scriptKey": "proposal.archive",
           "matchedTags": [
             "frontend",
             "typescript"
