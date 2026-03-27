@@ -104,11 +104,13 @@ function buildCharacterTemplateManifestFixture() {
 }
 
 function buildCharacterTemplateDetailFixture({
+  templateMode = 'curated',
   soulTemplateIds = ['soul-one', 'soul-two'],
-  traitTemplateIds = ['trait-one'],
+  traitTemplateIds = templateMode === 'curated' ? ['trait-one'] : [],
 } = {}) {
   const { details } = buildCharacterTemplateLibrary({
     libraryData: buildCharacterTemplateLibraryFixtureData({
+      templateMode,
       traitTemplateIds,
       languageStyleId: soulTemplateIds[1] ?? 'soul-two',
     }),
@@ -118,6 +120,8 @@ function buildCharacterTemplateDetailFixture({
 
   return {
     ...details[0],
+    templateMode,
+    applyScope: templateMode === 'curated' ? ['soul', 'trait'] : ['soul'],
     soulTemplateIds,
     traitTemplateIds,
     soulSelection: {
@@ -128,7 +132,8 @@ function buildCharacterTemplateDetailFixture({
 }
 
 function buildCharacterTemplateLibraryFixtureData({
-  traitTemplateIds = ['trait-one'],
+  templateMode = 'curated',
+  traitTemplateIds = templateMode === 'curated' ? ['trait-one'] : [],
   languageStyleId = 'soul-two',
 } = {}) {
   return {
@@ -207,6 +212,7 @@ function buildCharacterTemplateLibraryFixtureData({
         id: 'character-one',
         name: 'Character One',
         summary: 'Summary',
+        templateMode,
         styleTags: ['mandarin', 'scholar'],
         tagGroups: {
           languages: ['react'],
@@ -310,7 +316,11 @@ function buildTraitIndexFixture() {
   };
 }
 
-async function createValidationFixture({ catalog, activityMetrics }) {
+async function createValidationFixture({
+  catalog,
+  activityMetrics,
+  libraryData = buildCharacterTemplateLibraryFixtureData(),
+} = {}) {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'index-validate-catalog-'));
   const scriptsDir = path.join(tempDir, 'scripts');
   const publicDir = path.join(tempDir, 'public');
@@ -318,7 +328,6 @@ async function createValidationFixture({ catalog, activityMetrics }) {
   const validateScriptPath = path.join(projectRoot, 'scripts', 'validate-catalog.mjs');
   const updateScriptPath = path.join(projectRoot, 'scripts', 'update-activity-metrics.mjs');
   const buildScriptPath = path.join(projectRoot, 'scripts', 'build-agent-preset-library.mjs');
-  const libraryData = buildCharacterTemplateLibraryFixtureData();
   const soulIndexFixture = buildSoulIndexFixture();
   const traitIndexFixture = buildTraitIndexFixture();
   const characterLibraryFixture = buildCharacterTemplateLibrary({
@@ -450,6 +459,26 @@ test('character template library materializes stable dungeon bindings for summar
     },
   ]);
   assert.deepEqual(library.details[0].dungeonBindings, library.manifest.templates[0].dungeonBindings);
+  assert.equal(library.manifest.templates[0].templateMode, 'curated');
+  assert.deepEqual(library.manifest.templates[0].applyScope, ['soul', 'trait']);
+  assert.deepEqual(library.details[0].applyScope, ['soul', 'trait']);
+});
+
+test('character template library materializes universal summaries and details with soul-only apply scope', () => {
+  const library = buildCharacterTemplateLibrary({
+    libraryData: buildCharacterTemplateLibraryFixtureData({
+      templateMode: 'universal',
+      traitTemplateIds: [],
+    }),
+    soulIndex: buildSoulIndexFixture(),
+    traitIndex: buildTraitIndexFixture(),
+  });
+
+  assert.equal(library.manifest.templates[0].templateMode, 'universal');
+  assert.deepEqual(library.manifest.templates[0].applyScope, ['soul']);
+  assert.equal(library.details[0].templateMode, 'universal');
+  assert.deepEqual(library.details[0].applyScope, ['soul']);
+  assert.deepEqual(library.details[0].traitTemplateIds, []);
 });
 
 test('character template library rejects unknown dungeon binding tags', () => {
@@ -544,6 +573,8 @@ test('catalog exposes character template discovery entry with the public manifes
   assert.equal(entry.readmePath, '/character-templates/README.md');
   assert.equal(entry.category, 'templates');
   assert.equal(manifest.templates.length >= 1, true);
+  assert(manifest.templates.every((template) => ['curated', 'universal'].includes(template.templateMode)));
+  assert(manifest.templates.every((template) => Array.isArray(template.applyScope)));
 });
 
 test('character template detail preserves ordered multi-soul references', async () => {
@@ -554,6 +585,17 @@ test('character template detail preserves ordered multi-soul references', async 
     'soul-main-12-aloof-ace-scholar',
     'soul-orth-11-classical-chinese-ultra-minimal-mode',
   ]);
+  assert.equal(detail.templateMode, 'curated');
+  assert.deepEqual(detail.applyScope, ['soul', 'trait']);
+});
+
+test('published universal character template only exposes soul bindings', async () => {
+  const detailPath = path.join(projectRoot, 'public', 'character-templates', 'templates', 'character-cold-scholar-universal-template.json');
+  const detail = JSON.parse(await readFile(detailPath, 'utf8'));
+
+  assert.equal(detail.templateMode, 'universal');
+  assert.deepEqual(detail.applyScope, ['soul']);
+  assert.deepEqual(detail.traitTemplateIds, []);
 });
 
 test('catalog validation fails when the activity metrics catalog entry drifts from the raw snapshot', async () => {
@@ -611,6 +653,46 @@ test('catalog validation fails when a character template references an unknown s
       assert.match(
         error.stderr,
         /Character template character-one references unknown soul template missing-soul\./,
+      );
+      return true;
+    },
+  );
+});
+
+test('catalog validation fails when a universal character template still controls traits', async () => {
+  const activityMetrics = buildActivityMetricsFixture();
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics,
+    libraryData: buildCharacterTemplateLibraryFixtureData({
+      templateMode: 'universal',
+      traitTemplateIds: [],
+    }),
+  });
+
+  const detailPath = path.join(tempDir, 'public', 'character-templates', 'templates', 'character-one.json');
+  await writeFile(
+    detailPath,
+    JSON.stringify({
+      ...buildCharacterTemplateDetailFixture({
+        templateMode: 'universal',
+        traitTemplateIds: [],
+      }),
+      applyScope: ['soul', 'trait'],
+      traitTemplateIds: ['trait-one'],
+    }),
+    'utf8',
+  );
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(
+        error.stderr,
+        /detail applyScope must match its summary|applyScope must be \["soul"\] for universal templates|templateMode universal must not control Trait templates\./,
       );
       return true;
     },

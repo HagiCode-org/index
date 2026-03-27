@@ -35,7 +35,7 @@ test('published template stats reflect the expanded current counts', async () =>
   assert.deepEqual(stats.counts, {
     soulTemplates: 61,
     traitTemplates: 307,
-    characterTemplates: 10,
+    characterTemplates: 11,
   });
   assert.equal(stats.characterCoverage.domains.backend, 5);
   assert.equal(stats.characterCoverage.domains.mobile, 1);
@@ -62,7 +62,7 @@ test('gap priorities remain focused on the pre-expansion zero and low coverage m
 test('generated library keeps the expected template count and priority coverage', async () => {
   const { library } = await loadCurrentLibrary();
 
-  assert.equal(library.details.length, 10);
+  assert.equal(library.details.length, 11);
   assert.deepEqual(library.manifest.availableTagGroups.roles, ['architect', 'developer', 'engineer', 'reviewer']);
   assert.deepEqual(
     library.manifest.availableTagGroups.domains,
@@ -80,6 +80,9 @@ test('generated library keeps the expected template count and priority coverage'
     ),
   );
   assert(
+    library.manifest.templates.every((template) => ['curated', 'universal'].includes(template.templateMode)),
+  );
+  assert(
     library.manifest.templates.every((template) =>
       template.dungeonBindings.every((binding, index, bindings) => (
         ['proposal-generate', 'proposal-execute', 'proposal-archive'].includes(binding.scriptKey)
@@ -87,6 +90,22 @@ test('generated library keeps the expected template count and priority coverage'
         && bindings.findIndex((candidate) => candidate.scriptKey === binding.scriptKey) === index
       ))),
   );
+});
+
+test('universal character templates publish soul-only apply scope in manifest and detail payloads', async () => {
+  const { library } = await loadCurrentLibrary();
+  const summary = library.manifest.templates.find((template) => template.id === 'character-cold-scholar-universal-template');
+  const detail = library.details.find((template) => template.id === 'character-cold-scholar-universal-template');
+
+  assert.equal(summary?.templateMode, 'universal');
+  assert.deepEqual(summary?.applyScope, ['soul']);
+  assert.equal(detail?.templateMode, 'universal');
+  assert.deepEqual(detail?.applyScope, ['soul']);
+  assert.deepEqual(detail?.traitTemplateIds, []);
+  assert.deepEqual(detail?.soulTemplateIds, [
+    'soul-main-12-aloof-ace-scholar',
+    'soul-orth-11-classical-chinese-ultra-minimal-mode',
+  ]);
 });
 
 test('published character templates expose stable core-flow bindings in summaries and details', async () => {
@@ -123,5 +142,22 @@ test('duplicate character combinations are rejected', async () => {
       traitIndex: indexes.traitIndex,
     }),
     /Duplicate character template combination character-duplicate-react-engineer\./,
+  );
+});
+
+test('universal character templates reject non-empty trait bindings', async () => {
+  const { libraryData, indexes } = await loadCurrentLibrary();
+  const invalid = structuredClone(libraryData);
+  const universalTemplate = invalid.templateMatrix.find((template) => template.id === 'character-cold-scholar-universal-template');
+
+  universalTemplate.traitTemplateIds = ['01-core-development-frontend-developer'];
+
+  assert.throws(
+    () => buildCharacterTemplateLibrary({
+      libraryData: invalid,
+      soulIndex: indexes.soulIndex,
+      traitIndex: indexes.traitIndex,
+    }),
+    /templateMode universal must not declare traitTemplateIds\./,
   );
 });
