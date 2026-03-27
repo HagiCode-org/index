@@ -50,5 +50,53 @@
   "traitTemplateIds": [
     "01-core-development-mobile-developer",
     "07-specialized-domains-mobile-app-developer"
+  ],
+  "dungeonBindings": [
+    {
+      "scriptKey": "proposal-generate",
+      "matchedTags": [
+        "dart",
+        "developer",
+        "frontend",
+        "kotlin",
+        "mobile",
+        "swift"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 0
+    },
+    {
+      "scriptKey": "proposal-execute",
+      "matchedTags": [
+        "dart",
+        "developer",
+        "frontend",
+        "kotlin",
+        "mobile",
+        "swift"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 1
+    },
+    {
+      "scriptKey": "proposal-archive",
+      "matchedTags": [
+        "frontend",
+        "reviewer"
+      ],
+      "matchedTagGroups": [
+        "domains",
+        "roles"
+      ],
+      "priority": 2
+    }
   ]
 }

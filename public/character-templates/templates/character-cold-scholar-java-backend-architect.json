@@ -48,5 +48,52 @@
   "traitTemplateIds": [
     "01-core-development-backend-developer",
     "02-language-specialists-spring-boot-engineer"
+  ],
+  "dungeonBindings": [
+    {
+      "scriptKey": "proposal-generate",
+      "matchedTags": [
+        "architect",
+        "architecture",
+        "backend",
+        "java"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 0
+    },
+    {
+      "scriptKey": "proposal-execute",
+      "matchedTags": [
+        "backend",
+        "engineer",
+        "java"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 1
+    },
+    {
+      "scriptKey": "proposal-archive",
+      "matchedTags": [
+        "architect",
+        "architecture",
+        "backend",
+        "engineer",
+        "sql"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 2
+    }
   ]
 }

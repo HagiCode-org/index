@@ -46,5 +46,47 @@
   "traitTemplateIds": [
     "02-language-specialists-typescript-pro",
     "04-quality-security-code-reviewer"
+  ],
+  "dungeonBindings": [
+    {
+      "scriptKey": "proposal-generate",
+      "matchedTags": [
+        "frontend",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains"
+      ],
+      "priority": 0
+    },
+    {
+      "scriptKey": "proposal-execute",
+      "matchedTags": [
+        "frontend",
+        "testing",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains"
+      ],
+      "priority": 1
+    },
+    {
+      "scriptKey": "proposal-archive",
+      "matchedTags": [
+        "frontend",
+        "reviewer",
+        "testing",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 2
+    }
   ]
 }

@@ -49,5 +49,46 @@
     "03-infrastructure-security-engineer",
     "04-quality-security-code-reviewer",
     "security-reviewer"
+  ],
+  "dungeonBindings": [
+    {
+      "scriptKey": "proposal-generate",
+      "matchedTags": [
+        "backend"
+      ],
+      "matchedTagGroups": [
+        "domains"
+      ],
+      "priority": 0
+    },
+    {
+      "scriptKey": "proposal-execute",
+      "matchedTags": [
+        "backend",
+        "engineer"
+      ],
+      "matchedTagGroups": [
+        "domains",
+        "roles"
+      ],
+      "priority": 1
+    },
+    {
+      "scriptKey": "proposal-archive",
+      "matchedTags": [
+        "backend",
+        "bash",
+        "engineer",
+        "reviewer",
+        "security",
+        "sql"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 2
+    }
   ]
 }

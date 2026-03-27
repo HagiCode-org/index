@@ -51,5 +51,52 @@
     "03-infrastructure-devops-engineer",
     "03-infrastructure-docker-expert",
     "03-infrastructure-sre-engineer"
+  ],
+  "dungeonBindings": [
+    {
+      "scriptKey": "proposal-generate",
+      "matchedTags": [
+        "backend",
+        "go",
+        "python"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains"
+      ],
+      "priority": 0
+    },
+    {
+      "scriptKey": "proposal-execute",
+      "matchedTags": [
+        "backend",
+        "devops",
+        "engineer",
+        "go",
+        "python"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 1
+    },
+    {
+      "scriptKey": "proposal-archive",
+      "matchedTags": [
+        "backend",
+        "engineer",
+        "python",
+        "reviewer",
+        "sql"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 2
+    }
   ]
 }

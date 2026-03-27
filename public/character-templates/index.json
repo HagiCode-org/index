@@ -71,6 +71,53 @@
         "react-architecture",
         "frontend-refactor",
         "code-review"
+      ],
+      "dungeonBindings": [
+        {
+          "scriptKey": "proposal-generate",
+          "matchedTags": [
+            "developer",
+            "frontend",
+            "react",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 0
+        },
+        {
+          "scriptKey": "proposal-execute",
+          "matchedTags": [
+            "developer",
+            "engineer",
+            "frontend",
+            "react",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 1
+        },
+        {
+          "scriptKey": "proposal-archive",
+          "matchedTags": [
+            "engineer",
+            "frontend",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 2
+        }
       ]
     },
     {
@@ -109,6 +156,53 @@
         "vue-migration",
         "frontend-architecture",
         "design-review"
+      ],
+      "dungeonBindings": [
+        {
+          "scriptKey": "proposal-generate",
+          "matchedTags": [
+            "architect",
+            "architecture",
+            "frontend",
+            "typescript",
+            "vue"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 0
+        },
+        {
+          "scriptKey": "proposal-execute",
+          "matchedTags": [
+            "frontend",
+            "typescript",
+            "vue"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains"
+          ],
+          "priority": 1
+        },
+        {
+          "scriptKey": "proposal-archive",
+          "matchedTags": [
+            "architect",
+            "architecture",
+            "frontend",
+            "reviewer",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 2
+        }
       ]
     },
     {
@@ -145,6 +239,48 @@
         "code-review",
         "type-safety-audit",
         "regression-guard"
+      ],
+      "dungeonBindings": [
+        {
+          "scriptKey": "proposal-generate",
+          "matchedTags": [
+            "frontend",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains"
+          ],
+          "priority": 0
+        },
+        {
+          "scriptKey": "proposal-execute",
+          "matchedTags": [
+            "frontend",
+            "testing",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains"
+          ],
+          "priority": 1
+        },
+        {
+          "scriptKey": "proposal-archive",
+          "matchedTags": [
+            "frontend",
+            "reviewer",
+            "testing",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 2
+        }
       ]
     },
     {
@@ -183,6 +319,53 @@
         "api-design",
         "service-refactor",
         "schema-review"
+      ],
+      "dungeonBindings": [
+        {
+          "scriptKey": "proposal-generate",
+          "matchedTags": [
+            "architect",
+            "architecture",
+            "backend",
+            "java"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 0
+        },
+        {
+          "scriptKey": "proposal-execute",
+          "matchedTags": [
+            "backend",
+            "engineer",
+            "java"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 1
+        },
+        {
+          "scriptKey": "proposal-archive",
+          "matchedTags": [
+            "architect",
+            "architecture",
+            "backend",
+            "engineer",
+            "sql"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 2
+        }
       ]
     },
     {
@@ -219,6 +402,51 @@
         "api-implementation",
         "automation-hardening",
         "data-pipeline-review"
+      ],
+      "dungeonBindings": [
+        {
+          "scriptKey": "proposal-generate",
+          "matchedTags": [
+            "backend",
+            "developer",
+            "python"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 0
+        },
+        {
+          "scriptKey": "proposal-execute",
+          "matchedTags": [
+            "backend",
+            "developer",
+            "python"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 1
+        },
+        {
+          "scriptKey": "proposal-archive",
+          "matchedTags": [
+            "backend",
+            "python",
+            "reviewer",
+            "sql"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 2
+        }
       ]
     },
     {
@@ -257,6 +485,51 @@
         "service-design",
         "integration-hardening",
         "maintenance-window"
+      ],
+      "dungeonBindings": [
+        {
+          "scriptKey": "proposal-generate",
+          "matchedTags": [
+            "architect",
+            "backend",
+            "csharp",
+            "developer"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 0
+        },
+        {
+          "scriptKey": "proposal-execute",
+          "matchedTags": [
+            "backend",
+            "csharp",
+            "developer"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 1
+        },
+        {
+          "scriptKey": "proposal-archive",
+          "matchedTags": [
+            "architect",
+            "backend",
+            "sql"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 2
+        }
       ]
     },
     {
@@ -297,6 +570,54 @@
         "mobile-feature-delivery",
         "cross-platform-review",
         "release-checklist"
+      ],
+      "dungeonBindings": [
+        {
+          "scriptKey": "proposal-generate",
+          "matchedTags": [
+            "dart",
+            "developer",
+            "frontend",
+            "kotlin",
+            "mobile",
+            "swift"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 0
+        },
+        {
+          "scriptKey": "proposal-execute",
+          "matchedTags": [
+            "dart",
+            "developer",
+            "frontend",
+            "kotlin",
+            "mobile",
+            "swift"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 1
+        },
+        {
+          "scriptKey": "proposal-archive",
+          "matchedTags": [
+            "frontend",
+            "reviewer"
+          ],
+          "matchedTagGroups": [
+            "domains",
+            "roles"
+          ],
+          "priority": 2
+        }
       ]
     },
     {
@@ -337,6 +658,53 @@
         "incident-response",
         "deployment-audit",
         "runbook-update"
+      ],
+      "dungeonBindings": [
+        {
+          "scriptKey": "proposal-generate",
+          "matchedTags": [
+            "backend",
+            "go",
+            "python"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains"
+          ],
+          "priority": 0
+        },
+        {
+          "scriptKey": "proposal-execute",
+          "matchedTags": [
+            "backend",
+            "devops",
+            "engineer",
+            "go",
+            "python"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 1
+        },
+        {
+          "scriptKey": "proposal-archive",
+          "matchedTags": [
+            "backend",
+            "engineer",
+            "python",
+            "reviewer",
+            "sql"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 2
+        }
       ]
     },
     {
@@ -375,6 +743,51 @@
         "code-review",
         "test-plan",
         "regression-guard"
+      ],
+      "dungeonBindings": [
+        {
+          "scriptKey": "proposal-generate",
+          "matchedTags": [
+            "python",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages"
+          ],
+          "priority": 0
+        },
+        {
+          "scriptKey": "proposal-execute",
+          "matchedTags": [
+            "engineer",
+            "python",
+            "testing",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 1
+        },
+        {
+          "scriptKey": "proposal-archive",
+          "matchedTags": [
+            "engineer",
+            "python",
+            "reviewer",
+            "security",
+            "testing",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 2
+        }
       ]
     },
     {
@@ -413,6 +826,47 @@
         "threat-model-review",
         "permission-audit",
         "incident-retrospective"
+      ],
+      "dungeonBindings": [
+        {
+          "scriptKey": "proposal-generate",
+          "matchedTags": [
+            "backend"
+          ],
+          "matchedTagGroups": [
+            "domains"
+          ],
+          "priority": 0
+        },
+        {
+          "scriptKey": "proposal-execute",
+          "matchedTags": [
+            "backend",
+            "engineer"
+          ],
+          "matchedTagGroups": [
+            "domains",
+            "roles"
+          ],
+          "priority": 1
+        },
+        {
+          "scriptKey": "proposal-archive",
+          "matchedTags": [
+            "backend",
+            "bash",
+            "engineer",
+            "reviewer",
+            "security",
+            "sql"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 2
+        }
       ]
     }
   ]

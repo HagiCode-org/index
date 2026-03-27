@@ -49,5 +49,52 @@
     "01-core-development-frontend-developer",
     "02-language-specialists-typescript-pro",
     "02-language-specialists-vue-expert"
+  ],
+  "dungeonBindings": [
+    {
+      "scriptKey": "proposal-generate",
+      "matchedTags": [
+        "architect",
+        "architecture",
+        "frontend",
+        "typescript",
+        "vue"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 0
+    },
+    {
+      "scriptKey": "proposal-execute",
+      "matchedTags": [
+        "frontend",
+        "typescript",
+        "vue"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains"
+      ],
+      "priority": 1
+    },
+    {
+      "scriptKey": "proposal-archive",
+      "matchedTags": [
+        "architect",
+        "architecture",
+        "frontend",
+        "reviewer",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 2
+    }
   ]
 }

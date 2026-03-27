@@ -48,5 +48,50 @@
   "traitTemplateIds": [
     "04-quality-security-code-reviewer",
     "04-quality-security-test-automator"
+  ],
+  "dungeonBindings": [
+    {
+      "scriptKey": "proposal-generate",
+      "matchedTags": [
+        "python",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages"
+      ],
+      "priority": 0
+    },
+    {
+      "scriptKey": "proposal-execute",
+      "matchedTags": [
+        "engineer",
+        "python",
+        "testing",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 1
+    },
+    {
+      "scriptKey": "proposal-archive",
+      "matchedTags": [
+        "engineer",
+        "python",
+        "reviewer",
+        "security",
+        "testing",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 2
+    }
   ]
 }

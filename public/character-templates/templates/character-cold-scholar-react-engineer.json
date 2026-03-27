@@ -46,5 +46,52 @@
   "traitTemplateIds": [
     "01-core-development-frontend-developer",
     "02-language-specialists-react-specialist"
+  ],
+  "dungeonBindings": [
+    {
+      "scriptKey": "proposal-generate",
+      "matchedTags": [
+        "developer",
+        "frontend",
+        "react",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 0
+    },
+    {
+      "scriptKey": "proposal-execute",
+      "matchedTags": [
+        "developer",
+        "engineer",
+        "frontend",
+        "react",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 1
+    },
+    {
+      "scriptKey": "proposal-archive",
+      "matchedTags": [
+        "engineer",
+        "frontend",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 2
+    }
   ]
 }
