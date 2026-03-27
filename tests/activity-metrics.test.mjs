@@ -212,8 +212,8 @@ test('buildActivityMetricsSummary and catalog sync reuse the current clarity sna
 
 test('updateActivityMetrics writes the JSON asset, updates catalog summary and keeps the stable shape', async () => {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'index-activity-metrics-'));
-  const filePath = path.join(tempDir, 'activity-metrics.json');
-  const catalogPath = path.join(tempDir, 'index-catalog.json');
+  const filePath = path.join(tempDir, 'src', 'data', 'public', 'activity-metrics.json');
+  const catalogPath = path.join(tempDir, 'src', 'data', 'public', 'index-catalog.json');
   const responses = [
     {
       ok: true,
@@ -231,6 +231,7 @@ test('updateActivityMetrics writes the JSON asset, updates catalog summary and k
   ];
 
   await mkdir(path.join(tempDir, 'presets'), { recursive: true });
+  await mkdir(path.dirname(filePath), { recursive: true });
   await writeFile(path.join(tempDir, 'presets', 'index.json'), JSON.stringify({ presets: [] }), 'utf8');
   await writeFile(
     catalogPath,
@@ -277,8 +278,8 @@ test('updateActivityMetrics writes the JSON asset, updates catalog summary and k
 
 test('updateActivityMetrics keeps same-day dedupe and catalog summary aligned on rerun', async () => {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'index-activity-metrics-'));
-  const filePath = path.join(tempDir, 'activity-metrics.json');
-  const catalogPath = path.join(tempDir, 'index-catalog.json');
+  const filePath = path.join(tempDir, 'src', 'data', 'public', 'activity-metrics.json');
+  const catalogPath = path.join(tempDir, 'src', 'data', 'public', 'index-catalog.json');
   const existing = buildMetrics({
     lastUpdated: '2026-03-24T01:00:00.000Z',
     pullCount: 5,
@@ -286,6 +287,7 @@ test('updateActivityMetrics keeps same-day dedupe and catalog summary aligned on
     activeSessions: 7,
   });
 
+  await mkdir(path.dirname(filePath), { recursive: true });
   await writeFile(filePath, JSON.stringify(existing), 'utf8');
   await writeFile(
     catalogPath,
@@ -339,8 +341,8 @@ test('updateActivityMetrics keeps same-day dedupe and catalog summary aligned on
 
 test('updateActivityMetrics keeps fallback-preserved clarity consistent in catalog summary', async () => {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'index-activity-metrics-'));
-  const filePath = path.join(tempDir, 'activity-metrics.json');
-  const catalogPath = path.join(tempDir, 'index-catalog.json');
+  const filePath = path.join(tempDir, 'src', 'data', 'public', 'activity-metrics.json');
+  const catalogPath = path.join(tempDir, 'src', 'data', 'public', 'index-catalog.json');
   const existing = buildMetrics({
     lastUpdated: '2026-03-23T00:00:00.000Z',
     pullCount: 5,
@@ -348,6 +350,7 @@ test('updateActivityMetrics keeps fallback-preserved clarity consistent in catal
     activeSessions: 84,
   });
 
+  await mkdir(path.dirname(filePath), { recursive: true });
   await writeFile(filePath, JSON.stringify(existing), 'utf8');
   await writeFile(
     catalogPath,

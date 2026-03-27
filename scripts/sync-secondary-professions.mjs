@@ -6,7 +6,7 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const defaultProjectRoot = path.resolve(scriptDir, '..');
 const defaultSourceFile = path.join(defaultProjectRoot, 'src', 'data', 'secondary-professions.catalog.json');
 const defaultPublishedFile = path.join(defaultProjectRoot, 'public', 'secondary-professions', 'index.json');
-const defaultCatalogFile = path.join(defaultProjectRoot, 'public', 'index-catalog.json');
+const defaultCatalogFile = path.join(defaultProjectRoot, 'src', 'data', 'public', 'index-catalog.json');
 const defaultBackendFallbackFile = path.resolve(defaultProjectRoot, '..', 'hagicode-core', 'src', 'PCode.Web', 'Assets', 'secondary-professions.index.json');
 const publishedPath = '/secondary-professions/index.json';
 const catalogEntryId = 'secondary-professions';
@@ -19,7 +19,7 @@ const catalogEntryTemplate = Object.freeze({
   category: 'catalogs',
   sourceRepo: 'repos/index',
   status: 'published',
-  sourceUrl: 'https://github.com/HagiCode-org/site/tree/main/repos/index/public/secondary-professions',
+  sourceUrl: 'https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/secondary-professions.catalog.json',
 });
 
 function assert(condition, message) {

@@ -48,11 +48,10 @@ function createFetchMock(routes) {
 
 async function createFixtureProject() {
   const projectRoot = await mkdtemp(path.join(os.tmpdir(), 'index-sync-test-'));
-  const publicRoot = path.join(projectRoot, 'public');
+  const routeSourceRoot = path.join(projectRoot, 'src', 'data', 'public');
 
-  await mkdir(path.join(publicRoot, 'presets'), { recursive: true });
-  await mkdir(path.join(publicRoot, 'server'), { recursive: true });
-  await mkdir(path.join(publicRoot, 'desktop'), { recursive: true });
+  await mkdir(path.join(routeSourceRoot, 'server'), { recursive: true });
+  await mkdir(path.join(routeSourceRoot, 'desktop'), { recursive: true });
 
   const presetsIndex = {
     version: '1.0.0',
@@ -111,15 +110,13 @@ async function createFixtureProject() {
     ],
   };
 
-  await writeFile(path.join(publicRoot, 'presets', 'index.json'), stableStringify(presetsIndex), 'utf8');
-  await writeFile(path.join(publicRoot, 'presets', 'README.md'), '# presets\n', 'utf8');
-  await writeFile(path.join(publicRoot, 'server', 'index.json'), stableStringify(serverIndex), 'utf8');
-  await writeFile(path.join(publicRoot, 'desktop', 'index.json'), stableStringify(desktopIndex), 'utf8');
-  await writeFile(path.join(publicRoot, 'index-catalog.json'), stableStringify(catalog), 'utf8');
+  await writeFile(path.join(routeSourceRoot, 'server', 'index.json'), stableStringify(serverIndex), 'utf8');
+  await writeFile(path.join(routeSourceRoot, 'desktop', 'index.json'), stableStringify(desktopIndex), 'utf8');
+  await writeFile(path.join(routeSourceRoot, 'index-catalog.json'), stableStringify(catalog), 'utf8');
 
   return {
     projectRoot,
-    publicRoot,
+    routeSourceRoot,
     catalog,
     serverIndex,
     desktopIndex,
@@ -130,9 +127,9 @@ test('syncManagedIndexes leaves files untouched when upstream metadata is unchan
   const fixture = await createFixtureProject();
   t.after(async () => rm(fixture.projectRoot, { recursive: true, force: true }));
 
-  const beforeCatalog = await readFile(path.join(fixture.publicRoot, 'index-catalog.json'), 'utf8');
-  const beforeServer = await readFile(path.join(fixture.publicRoot, 'server', 'index.json'), 'utf8');
-  const beforeDesktop = await readFile(path.join(fixture.publicRoot, 'desktop', 'index.json'), 'utf8');
+  const beforeCatalog = await readFile(path.join(fixture.routeSourceRoot, 'index-catalog.json'), 'utf8');
+  const beforeServer = await readFile(path.join(fixture.routeSourceRoot, 'server', 'index.json'), 'utf8');
+  const beforeDesktop = await readFile(path.join(fixture.routeSourceRoot, 'desktop', 'index.json'), 'utf8');
 
   const fetchImpl = createFetchMock(
     new Map([
@@ -163,9 +160,9 @@ test('syncManagedIndexes leaves files untouched when upstream metadata is unchan
 
   assert.equal(result.outcome, 'no-change');
   assert.deepEqual(result.wroteFiles, []);
-  assert.equal(await readFile(path.join(fixture.publicRoot, 'index-catalog.json'), 'utf8'), beforeCatalog);
-  assert.equal(await readFile(path.join(fixture.publicRoot, 'server', 'index.json'), 'utf8'), beforeServer);
-  assert.equal(await readFile(path.join(fixture.publicRoot, 'desktop', 'index.json'), 'utf8'), beforeDesktop);
+  assert.equal(await readFile(path.join(fixture.routeSourceRoot, 'index-catalog.json'), 'utf8'), beforeCatalog);
+  assert.equal(await readFile(path.join(fixture.routeSourceRoot, 'server', 'index.json'), 'utf8'), beforeServer);
+  assert.equal(await readFile(path.join(fixture.routeSourceRoot, 'desktop', 'index.json'), 'utf8'), beforeDesktop);
 });
 
 test('syncManagedIndexes publishes changed mirrors together and refreshes managed catalog entries', async (t) => {
@@ -229,21 +226,21 @@ test('syncManagedIndexes publishes changed mirrors together and refreshes manage
   assert.equal(result.outcome, 'changed');
   assert.deepEqual(result.changedSources, ['server', 'desktop']);
   assert.deepEqual(result.wroteFiles.sort(), [
-    'public/desktop/index.json',
-    'public/index-catalog.json',
-    'public/server/index.json',
+    'src/data/public/desktop/index.json',
+    'src/data/public/index-catalog.json',
+    'src/data/public/server/index.json',
   ]);
 
   assert.equal(
-    await readFile(path.join(fixture.publicRoot, 'server', 'index.json'), 'utf8'),
+    await readFile(path.join(fixture.routeSourceRoot, 'server', 'index.json'), 'utf8'),
     stableStringify(nextServer),
   );
   assert.equal(
-    await readFile(path.join(fixture.publicRoot, 'desktop', 'index.json'), 'utf8'),
+    await readFile(path.join(fixture.routeSourceRoot, 'desktop', 'index.json'), 'utf8'),
     stableStringify(nextDesktop),
   );
 
-  const catalog = JSON.parse(await readFile(path.join(fixture.publicRoot, 'index-catalog.json'), 'utf8'));
+  const catalog = JSON.parse(await readFile(path.join(fixture.routeSourceRoot, 'index-catalog.json'), 'utf8'));
   const presetsEntry = catalog.entries.find((entry) => entry.id === 'presets-catalog');
   const serverEntry = catalog.entries.find((entry) => entry.id === 'server-packages');
   const desktopEntry = catalog.entries.find((entry) => entry.id === 'desktop-packages');
@@ -262,8 +259,8 @@ test('publishManagedFiles rolls back every managed file when a later promotion f
   const fixture = await createFixtureProject();
   t.after(async () => rm(fixture.projectRoot, { recursive: true, force: true }));
 
-  const originalServer = await readFile(path.join(fixture.publicRoot, 'server', 'index.json'), 'utf8');
-  const originalCatalog = await readFile(path.join(fixture.publicRoot, 'index-catalog.json'), 'utf8');
+  const originalServer = await readFile(path.join(fixture.routeSourceRoot, 'server', 'index.json'), 'utf8');
+  const originalCatalog = await readFile(path.join(fixture.routeSourceRoot, 'index-catalog.json'), 'utf8');
   let renameCount = 0;
 
   await assert.rejects(
@@ -271,11 +268,11 @@ test('publishManagedFiles rolls back every managed file when a later promotion f
       fixture.projectRoot,
       [
         {
-          relativePath: 'public/server/index.json',
+          relativePath: 'src/data/public/server/index.json',
           content: stableStringify({ version: '2.0.0', packages: [] }),
         },
         {
-          relativePath: 'public/index-catalog.json',
+          relativePath: 'src/data/public/index-catalog.json',
           content: stableStringify({ version: '2.0.0', generatedAt: '2026-03-24T08:05:00.000Z', entries: [] }),
         },
       ],
@@ -300,8 +297,8 @@ test('publishManagedFiles rolls back every managed file when a later promotion f
     },
   );
 
-  assert.equal(await readFile(path.join(fixture.publicRoot, 'server', 'index.json'), 'utf8'), originalServer);
-  assert.equal(await readFile(path.join(fixture.publicRoot, 'index-catalog.json'), 'utf8'), originalCatalog);
+  assert.equal(await readFile(path.join(fixture.routeSourceRoot, 'server', 'index.json'), 'utf8'), originalServer);
+  assert.equal(await readFile(path.join(fixture.routeSourceRoot, 'index-catalog.json'), 'utf8'), originalCatalog);
 });
 
 test('syncManagedIndexes fails fast when required sync metadata is missing', async (t) => {
@@ -326,8 +323,8 @@ test('syncManagedIndexes aborts on invalid JSON without mutating published files
   const fixture = await createFixtureProject();
   t.after(async () => rm(fixture.projectRoot, { recursive: true, force: true }));
 
-  const beforeServer = await readFile(path.join(fixture.publicRoot, 'server', 'index.json'), 'utf8');
-  const beforeCatalog = await readFile(path.join(fixture.publicRoot, 'index-catalog.json'), 'utf8');
+  const beforeServer = await readFile(path.join(fixture.routeSourceRoot, 'server', 'index.json'), 'utf8');
+  const beforeCatalog = await readFile(path.join(fixture.routeSourceRoot, 'index-catalog.json'), 'utf8');
 
   const fetchImpl = createFetchMock(
     new Map([
@@ -370,8 +367,8 @@ test('syncManagedIndexes aborts on invalid JSON without mutating published files
     },
   );
 
-  assert.equal(await readFile(path.join(fixture.publicRoot, 'server', 'index.json'), 'utf8'), beforeServer);
-  assert.equal(await readFile(path.join(fixture.publicRoot, 'index-catalog.json'), 'utf8'), beforeCatalog);
+  assert.equal(await readFile(path.join(fixture.routeSourceRoot, 'server', 'index.json'), 'utf8'), beforeServer);
+  assert.equal(await readFile(path.join(fixture.routeSourceRoot, 'index-catalog.json'), 'utf8'), beforeCatalog);
 });
 
 test('syncManagedIndexes returns a download failure code when a managed source cannot be fetched', async (t) => {

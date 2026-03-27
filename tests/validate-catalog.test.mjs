@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
-import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { access, mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import { promisify } from 'node:util';
 import path from 'node:path';
@@ -324,6 +324,8 @@ async function createValidationFixture({
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'index-validate-catalog-'));
   const scriptsDir = path.join(tempDir, 'scripts');
   const publicDir = path.join(tempDir, 'public');
+  const distDir = path.join(tempDir, 'dist');
+  const routeSourceDir = path.join(tempDir, 'src', 'data', 'public');
   const srcDataDir = path.join(tempDir, 'src', 'data');
   const validateScriptPath = path.join(projectRoot, 'scripts', 'validate-catalog.mjs');
   const updateScriptPath = path.join(projectRoot, 'scripts', 'update-activity-metrics.mjs');
@@ -338,10 +340,16 @@ async function createValidationFixture({
 
   await mkdir(scriptsDir, { recursive: true });
   await mkdir(publicDir, { recursive: true });
+  await mkdir(distDir, { recursive: true });
+  await mkdir(routeSourceDir, { recursive: true });
   await mkdir(srcDataDir, { recursive: true });
-  await mkdir(path.join(publicDir, 'agent-templates', 'trait', 'templates'), { recursive: true });
-  await mkdir(path.join(publicDir, 'agent-templates', 'soul', 'templates'), { recursive: true });
-  await mkdir(path.join(publicDir, 'character-templates', 'templates'), { recursive: true });
+  await mkdir(path.join(distDir, 'agent-templates', 'trait', 'templates'), { recursive: true });
+  await mkdir(path.join(distDir, 'agent-templates', 'soul', 'templates'), { recursive: true });
+  await mkdir(path.join(distDir, 'character-templates', 'templates'), { recursive: true });
+  await mkdir(path.join(routeSourceDir, 'server'), { recursive: true });
+  await mkdir(path.join(routeSourceDir, 'desktop'), { recursive: true });
+  await mkdir(path.join(distDir, 'server'), { recursive: true });
+  await mkdir(path.join(distDir, 'desktop'), { recursive: true });
   await writeFile(
     path.join(scriptsDir, 'validate-catalog.mjs'),
     await readFile(validateScriptPath, 'utf8'),
@@ -357,14 +365,25 @@ async function createValidationFixture({
     await readFile(buildScriptPath, 'utf8'),
     'utf8',
   );
+  const managedIndexFixture = JSON.stringify({
+    generatedAt: catalog.generatedAt,
+    packages: [{ version: '1.0.0' }],
+  });
+
   await writeFile(
     path.join(srcDataDir, 'agent-preset-library.json'),
     JSON.stringify(libraryData),
     'utf8',
   );
-  await writeFile(path.join(publicDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
-  await writeFile(path.join(publicDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
-  await writeFile(path.join(publicDir, 'agent-templates', 'index.json'), JSON.stringify({
+  await writeFile(path.join(routeSourceDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
+  await writeFile(path.join(routeSourceDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
+  await writeFile(path.join(distDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
+  await writeFile(path.join(distDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
+  await writeFile(path.join(distDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
+  await writeFile(path.join(distDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
+  await writeFile(path.join(distDir, 'agent-templates', 'index.json'), JSON.stringify({
     version: '1.0.0',
     generatedAt: catalog.generatedAt,
     types: [
@@ -384,38 +403,38 @@ async function createValidationFixture({
       },
     ],
   }), 'utf8');
-  await writeFile(path.join(publicDir, 'agent-templates', 'trait', 'index.json'), JSON.stringify(traitIndexFixture), 'utf8');
-  await writeFile(path.join(publicDir, 'agent-templates', 'soul', 'index.json'), JSON.stringify(soulIndexFixture), 'utf8');
-  await writeFile(path.join(publicDir, 'agent-templates', 'trait', 'templates', 'trait-one.json'), JSON.stringify({
+  await writeFile(path.join(distDir, 'agent-templates', 'trait', 'index.json'), JSON.stringify(traitIndexFixture), 'utf8');
+  await writeFile(path.join(distDir, 'agent-templates', 'soul', 'index.json'), JSON.stringify(soulIndexFixture), 'utf8');
+  await writeFile(path.join(distDir, 'agent-templates', 'trait', 'templates', 'trait-one.json'), JSON.stringify({
     id: 'trait-one',
     templateType: 'trait',
     name: 'Trait One',
     summary: 'Trait summary',
   }), 'utf8');
-  await writeFile(path.join(publicDir, 'agent-templates', 'soul', 'templates', 'soul-one.json'), JSON.stringify({
+  await writeFile(path.join(distDir, 'agent-templates', 'soul', 'templates', 'soul-one.json'), JSON.stringify({
     id: 'soul-one',
     templateType: 'soul',
     name: 'Soul One',
     summary: 'Soul summary',
   }), 'utf8');
-  await writeFile(path.join(publicDir, 'agent-templates', 'soul', 'templates', 'soul-two.json'), JSON.stringify({
+  await writeFile(path.join(distDir, 'agent-templates', 'soul', 'templates', 'soul-two.json'), JSON.stringify({
     id: 'soul-two',
     templateType: 'soul',
     name: 'Soul Two',
     summary: 'Soul summary two',
   }), 'utf8');
   await writeFile(
-    path.join(publicDir, 'character-templates', 'README.md'),
+    path.join(distDir, 'character-templates', 'README.md'),
     '# Character Templates\n',
     'utf8',
   );
   await writeFile(
-    path.join(publicDir, 'character-templates', 'index.json'),
+    path.join(distDir, 'character-templates', 'index.json'),
     JSON.stringify(characterLibraryFixture.manifest),
     'utf8',
   );
   await writeFile(
-    path.join(publicDir, 'character-templates', 'templates', 'character-one.json'),
+    path.join(distDir, 'character-templates', 'templates', 'character-one.json'),
     JSON.stringify(characterLibraryFixture.details[0]),
     'utf8',
   );
@@ -423,12 +442,23 @@ async function createValidationFixture({
   return tempDir;
 }
 
-test('catalog validation script succeeds', async () => {
-  const { stdout } = await execFileAsync('node', ['./scripts/validate-catalog.mjs'], {
-    cwd: projectRoot,
-  });
+test('catalog validation script succeeds', async (t) => {
+  const publishedRoot = path.resolve(projectRoot, process.env.INDEX_BUILD_ROOT ?? 'dist');
 
-  assert.match(stdout, /Validated \d+ catalog entries\./);
+  try {
+    await access(path.join(publishedRoot, 'index-catalog.json'));
+  } catch {
+    t.skip('缺少已构建的 Astro JSON 路由输出。');
+    return;
+  }
+
+  const { stdout } = await execFileAsync(
+    'node',
+    ['./scripts/validate-catalog.mjs', '--published-root', path.relative(projectRoot, publishedRoot)],
+    { cwd: projectRoot },
+  );
+
+  assert.match(stdout, /Validated \d+ catalog entries and 4 route-mapped JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
@@ -517,7 +547,7 @@ test('character template library rejects duplicate dungeon binding script keys',
 });
 
 test('catalog exposes managed server and desktop entries', async () => {
-  const catalogPath = path.join(projectRoot, 'public', 'index-catalog.json');
+  const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
   const entryIds = catalog.entries.map((entry) => entry.id);
 
@@ -525,7 +555,7 @@ test('catalog exposes managed server and desktop entries', async () => {
 });
 
 test('managed package entries expose stable history page paths', async () => {
-  const catalogPath = path.join(projectRoot, 'public', 'index-catalog.json');
+  const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
   const serverEntry = catalog.entries.find((entry) => entry.id === 'server-packages');
   const desktopEntry = catalog.entries.find((entry) => entry.id === 'desktop-packages');
@@ -535,8 +565,8 @@ test('managed package entries expose stable history page paths', async () => {
 });
 
 test('activity metrics catalog entry mirrors the current raw snapshot summary', async () => {
-  const catalogPath = path.join(projectRoot, 'public', 'index-catalog.json');
-  const activityMetricsPath = path.join(projectRoot, 'public', 'activity-metrics.json');
+  const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
+  const activityMetricsPath = path.join(projectRoot, 'src', 'data', 'public', 'activity-metrics.json');
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
   const activityMetrics = JSON.parse(await readFile(activityMetricsPath, 'utf8'));
   const activityEntry = catalog.entries.find((entry) => entry.id === 'activity-metrics');
@@ -551,7 +581,7 @@ test('activity metrics catalog entry mirrors the current raw snapshot summary', 
 });
 
 test('catalog exposes agent template discovery entry with the public manifest path', async () => {
-  const catalogPath = path.join(projectRoot, 'public', 'index-catalog.json');
+  const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
   const manifestPath = path.join(projectRoot, 'public', 'agent-templates', 'index.json');
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
   const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
@@ -563,7 +593,7 @@ test('catalog exposes agent template discovery entry with the public manifest pa
 });
 
 test('catalog exposes character template discovery entry with the public manifest path', async () => {
-  const catalogPath = path.join(projectRoot, 'public', 'index-catalog.json');
+  const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
   const manifestPath = path.join(projectRoot, 'public', 'character-templates', 'index.json');
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
   const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
@@ -614,7 +644,7 @@ test('catalog validation fails when the activity metrics catalog entry drifts fr
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs'], {
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -627,6 +657,30 @@ test('catalog validation fails when the activity metrics catalog entry drifts fr
   );
 });
 
+test('catalog validation fails when a route-mapped JSON output is pretty printed', async () => {
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+  });
+
+  await writeFile(
+    path.join(tempDir, 'dist', 'index-catalog.json'),
+    JSON.stringify(buildCatalogFixture(), null, 2),
+    'utf8',
+  );
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /index-catalog\.json must be published as stable minified JSON\./);
+      return true;
+    },
+  );
+});
+
 test('catalog validation fails when a character template references an unknown soul template', async () => {
   const activityMetrics = buildActivityMetricsFixture();
   const tempDir = await createValidationFixture({
@@ -634,7 +688,7 @@ test('catalog validation fails when a character template references an unknown s
     activityMetrics,
   });
 
-  const detailPath = path.join(tempDir, 'public', 'character-templates', 'templates', 'character-one.json');
+  const detailPath = path.join(tempDir, 'dist', 'character-templates', 'templates', 'character-one.json');
   await writeFile(
     detailPath,
     JSON.stringify(buildCharacterTemplateDetailFixture({
@@ -646,7 +700,7 @@ test('catalog validation fails when a character template references an unknown s
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs'], {
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -670,7 +724,7 @@ test('catalog validation fails when a universal character template still control
     }),
   });
 
-  const detailPath = path.join(tempDir, 'public', 'character-templates', 'templates', 'character-one.json');
+  const detailPath = path.join(tempDir, 'dist', 'character-templates', 'templates', 'character-one.json');
   await writeFile(
     detailPath,
     JSON.stringify({
@@ -686,7 +740,7 @@ test('catalog validation fails when a universal character template still control
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs'], {
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {

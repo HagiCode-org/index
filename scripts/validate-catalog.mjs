@@ -20,6 +20,13 @@ const requiredFields = [
   'status',
 ];
 
+const routeMappedJsonPaths = [
+  '/index-catalog.json',
+  '/activity-metrics.json',
+  '/server/index.json',
+  '/desktop/index.json',
+];
+
 const expectedHistoryPaths = new Map([
   ['server-packages', '/server/history/'],
   ['desktop-packages', '/desktop/history/'],
@@ -31,8 +38,7 @@ const supportedCharacterTemplateModes = ['curated', 'universal'];
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
-const publicRoot = path.join(projectRoot, 'public');
-const catalogFile = path.join(publicRoot, 'index-catalog.json');
+const routeSourceRoot = path.join(projectRoot, 'src', 'data', 'public');
 
 function assert(condition, message) {
   if (!condition) {
@@ -40,13 +46,56 @@ function assert(condition, message) {
   }
 }
 
-function resolvePublicPath(sitePath) {
-  return path.join(publicRoot, sitePath.replace(/^\//, ''));
+function resolvePublishedRoot(input = process.env.INDEX_BUILD_ROOT ?? 'dist') {
+  return path.resolve(projectRoot, input);
+}
+
+function getCliOption(name) {
+  const index = process.argv.indexOf(name);
+
+  if (index === -1) {
+    return null;
+  }
+
+  return process.argv[index + 1] ?? null;
+}
+
+function resolveSourcePath(sitePath) {
+  return path.join(routeSourceRoot, sitePath.replace(/^\//, ''));
+}
+
+function resolvePublishedPath(sitePath, publishedRoot) {
+  return path.join(publishedRoot, sitePath.replace(/^\//, ''));
 }
 
 function resolvePagePath(sitePath) {
   const normalizedPath = sitePath.replace(/^\//, '').replace(/\/$/, '');
   return path.join(projectRoot, 'src', 'pages', `${normalizedPath}.astro`);
+}
+
+async function readJson(filePath) {
+  return JSON.parse(await readFile(filePath, 'utf8'));
+}
+
+async function assertPublishedRoute(sitePath, publishedRoot) {
+  const sourceFile = resolveSourcePath(sitePath);
+  const publishedFile = resolvePublishedPath(sitePath, publishedRoot);
+  const sourceValue = await readJson(sourceFile);
+
+  await access(publishedFile);
+  const publishedRaw = await readFile(publishedFile, 'utf8');
+  const publishedValue = JSON.parse(publishedRaw);
+
+  assert(
+    isDeepStrictEqual(publishedValue, sourceValue),
+    `Published JSON drift detected for ${sitePath}.`,
+  );
+  assert(
+    publishedRaw === JSON.stringify(publishedValue),
+    `${sitePath} must be published as stable minified JSON.`,
+  );
+
+  return publishedValue;
 }
 
 function validateActivitySummary(value, fieldName) {
@@ -88,10 +137,7 @@ function validateStringArray(value, fieldName, { minLength = 0 } = {}) {
     value.every((entry) => typeof entry === 'string' && entry.trim().length > 0),
     `${fieldName} entries must be non-empty strings.`,
   );
-  assert(
-    new Set(value).size === value.length,
-    `${fieldName} entries must be unique.`,
-  );
+  assert(new Set(value).size === value.length, `${fieldName} entries must be unique.`);
 }
 
 function validateDungeonBindings(value, fieldName) {
@@ -121,10 +167,7 @@ function validateDungeonBindings(value, fieldName) {
       Number.isInteger(binding.priority) && binding.priority >= 0,
       `${fieldName}[${index}].priority must be a non-negative integer.`,
     );
-    assert(
-      binding.priority >= previousPriority,
-      `${fieldName} must keep stable priority ordering.`,
-    );
+    assert(binding.priority >= previousPriority, `${fieldName} must keep stable priority ordering.`);
     previousPriority = binding.priority;
   });
 }
@@ -154,23 +197,10 @@ function validateCharacterTemplateModeAndScope(templateMode, applyScope, fieldNa
   );
 }
 
-async function loadPublishedAgentTemplateIds(templateType) {
-  const typeIndex = JSON.parse(await readFile(
-    resolvePublicPath(`/agent-templates/${templateType}/index.json`),
-    'utf8',
-  ));
-
-  return new Set(
-    (typeIndex.templates ?? [])
-      .map((template) => (typeof template?.id === 'string' ? template.id.trim() : ''))
-      .filter(Boolean),
-  );
-}
-
-async function validateAgentTemplateManifest(entry) {
+async function validateAgentTemplateManifest(entry, publishedRoot) {
   assert(entry.path === '/agent-templates/index.json', 'Agent templates entry path must be /agent-templates/index.json.');
 
-  const manifest = JSON.parse(await readFile(resolvePublicPath(entry.path), 'utf8'));
+  const manifest = JSON.parse(await readFile(resolvePublishedPath(entry.path, publishedRoot), 'utf8'));
   assert(Array.isArray(manifest.types), 'Agent templates manifest must define a types array.');
 
   for (const [index, typeEntry] of manifest.types.entries()) {
@@ -178,7 +208,7 @@ async function validateAgentTemplateManifest(entry) {
     assert(typeof typeEntry.templateType === 'string' && typeEntry.templateType.trim().length > 0, `Agent template type ${index} templateType is required.`);
     assert(typeof typeEntry.path === 'string' && typeEntry.path.startsWith('/agent-templates/'), `Agent template type ${index} path must stay within /agent-templates/.`);
 
-    const typeIndexPath = resolvePublicPath(typeEntry.path);
+    const typeIndexPath = resolvePublishedPath(typeEntry.path, publishedRoot);
     await access(typeIndexPath);
     const typeIndex = JSON.parse(await readFile(typeIndexPath, 'utf8'));
 
@@ -189,21 +219,21 @@ async function validateAgentTemplateManifest(entry) {
     for (const [templateIndex, template] of typeIndex.templates.entries()) {
       assert(typeof template.path === 'string' && template.path.startsWith(`/agent-templates/${typeEntry.templateType}/templates/`), `Agent template ${typeEntry.templateType}[${templateIndex}] path must match the public template directory.`);
       validateTemplateTagGroups(template.tagGroups, `Agent template ${typeEntry.templateType}[${templateIndex}] tagGroups`);
-      await access(resolvePublicPath(template.path));
-      JSON.parse(await readFile(resolvePublicPath(template.path), 'utf8'));
+      await access(resolvePublishedPath(template.path, publishedRoot));
+      JSON.parse(await readFile(resolvePublishedPath(template.path, publishedRoot), 'utf8'));
     }
   }
 }
 
-async function validateCharacterTemplateManifest(entry) {
+async function validateCharacterTemplateManifest(entry, publishedRoot) {
   assert(entry.path === '/character-templates/index.json', 'Character templates entry path must be /character-templates/index.json.');
 
-  const manifest = JSON.parse(await readFile(resolvePublicPath(entry.path), 'utf8'));
+  const manifest = JSON.parse(await readFile(resolvePublishedPath(entry.path, publishedRoot), 'utf8'));
   assert(Array.isArray(manifest.templates), 'Character templates manifest must define a templates array.');
   validateTemplateTagGroups(manifest.availableTagGroups, 'Character templates availableTagGroups');
 
-  const soulIndex = JSON.parse(await readFile(resolvePublicPath('/agent-templates/soul/index.json'), 'utf8'));
-  const traitIndex = JSON.parse(await readFile(resolvePublicPath('/agent-templates/trait/index.json'), 'utf8'));
+  const soulIndex = JSON.parse(await readFile(resolvePublishedPath('/agent-templates/soul/index.json', publishedRoot), 'utf8'));
+  const traitIndex = JSON.parse(await readFile(resolvePublishedPath('/agent-templates/trait/index.json', publishedRoot), 'utf8'));
   const publishedSoulIds = new Set((soulIndex.templates ?? []).map((template) => template.id));
   const publishedTraitIds = new Set((traitIndex.templates ?? []).map((template) => template.id));
   const libraryData = await loadAgentPresetLibrary(projectRoot);
@@ -212,12 +242,8 @@ async function validateCharacterTemplateManifest(entry) {
     soulIndex,
     traitIndex,
   });
-  const expectedSummaries = new Map(
-    expectedLibrary.manifest.templates.map((template) => [template.id, template]),
-  );
-  const expectedDetails = new Map(
-    expectedLibrary.details.map((detail) => [detail.id, detail]),
-  );
+  const expectedSummaries = new Map(expectedLibrary.manifest.templates.map((template) => [template.id, template]));
+  const expectedDetails = new Map(expectedLibrary.details.map((detail) => [detail.id, detail]));
 
   assert(
     isDeepStrictEqual(manifest, expectedLibrary.manifest),
@@ -244,7 +270,7 @@ async function validateCharacterTemplateManifest(entry) {
       `Character template ${summary.id} summary must match the generated library output.`,
     );
 
-    const detailPath = resolvePublicPath(summary.path);
+    const detailPath = resolvePublishedPath(summary.path, publishedRoot);
     await access(detailPath);
     const detail = JSON.parse(await readFile(detailPath, 'utf8'));
 
@@ -257,17 +283,12 @@ async function validateCharacterTemplateManifest(entry) {
       `Character template ${summary.id} detail applyScope must match its summary.`,
     );
     validateStringArray(detail.soulTemplateIds, `Character template ${summary.id} soulTemplateIds`, { minLength: 1 });
-    validateStringArray(
-      detail.traitTemplateIds,
-      `Character template ${summary.id} traitTemplateIds`,
-      { minLength: detail.templateMode === 'curated' ? 1 : 0 },
-    );
+    validateStringArray(detail.traitTemplateIds, `Character template ${summary.id} traitTemplateIds`, {
+      minLength: detail.templateMode === 'curated' ? 1 : 0,
+    });
     validateDungeonBindings(detail.dungeonBindings ?? [], `Character template ${summary.id} detail dungeonBindings`);
     validateCharacterTemplateModeAndScope(detail.templateMode, detail.applyScope, `Character template ${summary.id} detail`);
-    assert(
-      detail.soulSelection && typeof detail.soulSelection === 'object',
-      `Character template ${summary.id} detail soulSelection is required.`,
-    );
+    assert(detail.soulSelection && typeof detail.soulSelection === 'object', `Character template ${summary.id} detail soulSelection is required.`);
     assert(
       detail.soulSelection.personalityId === detail.soulTemplateIds[0],
       `Character template ${summary.id} personality SOUL must be the first soulTemplateIds entry.`,
@@ -305,97 +326,112 @@ async function validateCharacterTemplateManifest(entry) {
   }
 }
 
-const raw = await readFile(catalogFile, 'utf8');
-const catalog = JSON.parse(raw);
-const activityMetricsAsset = await loadActivityMetrics(resolvePublicPath('/activity-metrics.json'));
+export async function validateCatalog({ publishedRoot = resolvePublishedRoot() } = {}) {
+  await access(publishedRoot);
 
-assert(typeof catalog.version === 'string' && catalog.version.length > 0, 'Catalog version is required.');
-assert(typeof catalog.generatedAt === 'string' && catalog.generatedAt.length > 0, 'Catalog generatedAt is required.');
-assert(Array.isArray(catalog.entries), 'Catalog entries must be an array.');
-assert(activityMetricsAsset, 'Activity metrics asset is required.');
+  const publishedCatalog = await assertPublishedRoute('/index-catalog.json', publishedRoot);
+  await assertPublishedRoute('/activity-metrics.json', publishedRoot);
+  await assertPublishedRoute('/server/index.json', publishedRoot);
+  await assertPublishedRoute('/desktop/index.json', publishedRoot);
 
-let sawActivityEntry = false;
-let sawAgentTemplatesEntry = false;
-let sawCharacterTemplatesEntry = false;
+  const catalog = publishedCatalog;
+  const activityMetricsAsset = await loadActivityMetrics(resolveSourcePath('/activity-metrics.json'));
 
-for (const [index, entry] of catalog.entries.entries()) {
-  assert(entry && typeof entry === 'object', `Entry ${index} must be an object.`);
+  assert(typeof catalog.version === 'string' && catalog.version.length > 0, 'Catalog version is required.');
+  assert(typeof catalog.generatedAt === 'string' && catalog.generatedAt.length > 0, 'Catalog generatedAt is required.');
+  assert(Array.isArray(catalog.entries), 'Catalog entries must be an array.');
+  assert(activityMetricsAsset, 'Activity metrics asset is required.');
 
-  for (const field of requiredFields) {
-    assert(typeof entry[field] === 'string' && entry[field].trim().length > 0, `Entry ${index} is missing field ${field}.`);
-  }
+  let sawActivityEntry = false;
+  let sawAgentTemplatesEntry = false;
+  let sawCharacterTemplatesEntry = false;
 
-  assert(entry.path.startsWith('/'), `Entry ${entry.id} path must start with /.`);
-  assert(entry.path.endsWith('.json'), `Entry ${entry.id} path must point to a JSON asset.`);
+  for (const [index, entry] of catalog.entries.entries()) {
+    assert(entry && typeof entry === 'object', `Entry ${index} must be an object.`);
 
-  await access(resolvePublicPath(entry.path));
-  JSON.parse(await readFile(resolvePublicPath(entry.path), 'utf8'));
+    for (const field of requiredFields) {
+      assert(typeof entry[field] === 'string' && entry[field].trim().length > 0, `Entry ${index} is missing field ${field}.`);
+    }
 
-  if (entry.readmePath) {
-    assert(typeof entry.readmePath === 'string', `Entry ${entry.id} readmePath must be a string.`);
-    await access(resolvePublicPath(entry.readmePath));
-  }
+    assert(entry.path.startsWith('/'), `Entry ${entry.id} path must start with /.`);
+    assert(entry.path.endsWith('.json'), `Entry ${entry.id} path must point to a JSON asset.`);
 
-  if (entry.activityMetrics !== undefined) {
-    validateActivitySummary(entry.activityMetrics, `Entry ${entry.id} activityMetrics`);
-  }
+    await access(resolvePublishedPath(entry.path, publishedRoot));
+    JSON.parse(await readFile(resolvePublishedPath(entry.path, publishedRoot), 'utf8'));
 
-  if (entry.historyPagePath !== undefined) {
-    assert(typeof entry.historyPagePath === 'string', `Entry ${entry.id} historyPagePath must be a string.`);
-    assert(entry.category === 'packages', `Entry ${entry.id} historyPagePath is only allowed for package entries.`);
-    assert(entry.historyPagePath.startsWith('/'), `Entry ${entry.id} historyPagePath must start with /.`);
-    assert(entry.historyPagePath.endsWith('/'), `Entry ${entry.id} historyPagePath must end with /.`);
-    assert(!entry.historyPagePath.endsWith('.json'), `Entry ${entry.id} historyPagePath must point to a page route.`);
-    await access(resolvePagePath(entry.historyPagePath));
+    if (entry.readmePath) {
+      assert(typeof entry.readmePath === 'string', `Entry ${entry.id} readmePath must be a string.`);
+      await access(resolvePublishedPath(entry.readmePath, publishedRoot));
+    }
 
-    const expectedPath = expectedHistoryPaths.get(entry.id);
-    if (expectedPath) {
+    if (entry.activityMetrics !== undefined) {
+      validateActivitySummary(entry.activityMetrics, `Entry ${entry.id} activityMetrics`);
+    }
+
+    if (entry.historyPagePath !== undefined) {
+      assert(typeof entry.historyPagePath === 'string', `Entry ${entry.id} historyPagePath must be a string.`);
+      assert(entry.category === 'packages', `Entry ${entry.id} historyPagePath is only allowed for package entries.`);
+      assert(entry.historyPagePath.startsWith('/'), `Entry ${entry.id} historyPagePath must start with /.`);
+      assert(entry.historyPagePath.endsWith('/'), `Entry ${entry.id} historyPagePath must end with /.`);
+      assert(!entry.historyPagePath.endsWith('.json'), `Entry ${entry.id} historyPagePath must point to a page route.`);
+      await access(resolvePagePath(entry.historyPagePath));
+
+      const expectedPath = expectedHistoryPaths.get(entry.id);
+      if (expectedPath) {
+        assert(
+          entry.historyPagePath === expectedPath,
+          `Entry ${entry.id} historyPagePath must be ${expectedPath}.`,
+        );
+      }
+    }
+
+    if (entry.id === activityEntryId) {
+      sawActivityEntry = true;
+      assert(entry.path === '/activity-metrics.json', 'Activity metrics entry path must be /activity-metrics.json.');
+      const summary = validateActivitySummary(entry.activityMetrics, `Entry ${entry.id} activityMetrics`);
+
       assert(
-        entry.historyPagePath === expectedPath,
-        `Entry ${entry.id} historyPagePath must be ${expectedPath}.`,
+        entry.lastUpdated === activityMetricsAsset.lastUpdated,
+        'Activity metrics entry lastUpdated must match /activity-metrics.json.',
       );
+      assert(
+        summary.activeUsers === activityMetricsAsset.clarity.activeUsers,
+        'Activity metrics entry activeUsers must match /activity-metrics.json.',
+      );
+      assert(
+        summary.activeSessions === activityMetricsAsset.clarity.activeSessions,
+        'Activity metrics entry activeSessions must match /activity-metrics.json.',
+      );
+      assert(
+        summary.dateRange === activityMetricsAsset.clarity.dateRange,
+        'Activity metrics entry dateRange must match /activity-metrics.json.',
+      );
+    }
+
+    if (entry.id === agentTemplatesEntryId) {
+      sawAgentTemplatesEntry = true;
+      await validateAgentTemplateManifest(entry, publishedRoot);
+    }
+
+    if (entry.id === characterTemplatesEntryId) {
+      sawCharacterTemplatesEntry = true;
+      await validateCharacterTemplateManifest(entry, publishedRoot);
     }
   }
 
-  if (entry.id === activityEntryId) {
-    sawActivityEntry = true;
-    assert(entry.path === '/activity-metrics.json', 'Activity metrics entry path must be /activity-metrics.json.');
-    const summary = validateActivitySummary(
-      entry.activityMetrics,
-      `Entry ${entry.id} activityMetrics`,
-    );
+  assert(sawActivityEntry, 'Catalog must include an activity-metrics entry.');
+  assert(sawAgentTemplatesEntry, 'Catalog must include an agent-templates entry.');
+  assert(sawCharacterTemplatesEntry, 'Catalog must include a character-templates entry.');
 
-    assert(
-      entry.lastUpdated === activityMetricsAsset.lastUpdated,
-      'Activity metrics entry lastUpdated must match /activity-metrics.json.',
-    );
-    assert(
-      summary.activeUsers === activityMetricsAsset.clarity.activeUsers,
-      'Activity metrics entry activeUsers must match /activity-metrics.json.',
-    );
-    assert(
-      summary.activeSessions === activityMetricsAsset.clarity.activeSessions,
-      'Activity metrics entry activeSessions must match /activity-metrics.json.',
-    );
-    assert(
-      summary.dateRange === activityMetricsAsset.clarity.dateRange,
-      'Activity metrics entry dateRange must match /activity-metrics.json.',
-    );
-  }
-
-  if (entry.id === agentTemplatesEntryId) {
-    sawAgentTemplatesEntry = true;
-    await validateAgentTemplateManifest(entry);
-  }
-
-  if (entry.id === characterTemplatesEntryId) {
-    sawCharacterTemplatesEntry = true;
-    await validateCharacterTemplateManifest(entry);
-  }
+  console.log(`Validated ${catalog.entries.length} catalog entries and ${routeMappedJsonPaths.length} route-mapped JSON assets.`);
 }
 
-assert(sawActivityEntry, 'Catalog must include an activity-metrics entry.');
-assert(sawAgentTemplatesEntry, 'Catalog must include an agent-templates entry.');
-assert(sawCharacterTemplatesEntry, 'Catalog must include a character-templates entry.');
+const publishedRootArg = getCliOption('--published-root');
+const entryPath = process.argv[1] ? path.resolve(process.argv[1]) : null;
 
-console.log(`Validated ${catalog.entries.length} catalog entries.`);
+if (entryPath && entryPath === fileURLToPath(import.meta.url)) {
+  validateCatalog({ publishedRoot: resolvePublishedRoot(publishedRootArg ?? undefined) }).catch((error) => {
+    console.error(error instanceof Error ? error.stack ?? error.message : error);
+    process.exitCode = 1;
+  });
+}

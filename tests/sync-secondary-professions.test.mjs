@@ -16,7 +16,7 @@ test('syncSecondaryProfessions publishes the stable asset, backend fallback snap
   const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'secondary-professions-sync-'));
   const sourceFile = path.join(tempRoot, 'src', 'data', 'secondary-professions.catalog.json');
   const publishedFile = path.join(tempRoot, 'public', 'secondary-professions', 'index.json');
-  const catalogFile = path.join(tempRoot, 'public', 'index-catalog.json');
+  const catalogFile = path.join(tempRoot, 'src', 'data', 'public', 'index-catalog.json');
   const backendFallbackFile = path.join(tempRoot, 'backend', 'Assets', 'secondary-professions.index.json');
 
   t.after(async () => rm(tempRoot, { recursive: true, force: true }));
@@ -132,7 +132,7 @@ test('syncSecondaryProfessions check mode detects drift across published asset, 
   const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'secondary-professions-check-'));
   const sourceFile = path.join(tempRoot, 'src', 'data', 'secondary-professions.catalog.json');
   const publishedFile = path.join(tempRoot, 'public', 'secondary-professions', 'index.json');
-  const catalogFile = path.join(tempRoot, 'public', 'index-catalog.json');
+  const catalogFile = path.join(tempRoot, 'src', 'data', 'public', 'index-catalog.json');
   const backendFallbackFile = path.join(tempRoot, 'backend', 'Assets', 'secondary-professions.index.json');
 
   t.after(async () => rm(tempRoot, { recursive: true, force: true }));

@@ -14,7 +14,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const defaultProjectRoot = path.resolve(scriptDir, '..');
-const catalogRelativePath = path.join('public', 'index-catalog.json');
+const routeSourceRoot = path.join('src', 'data', 'public');
+const catalogRelativePath = path.join(routeSourceRoot, 'index-catalog.json');
 
 export const EXIT_CODES = Object.freeze({
   SUCCESS: 0,
@@ -153,7 +154,7 @@ function resolveSourceRegistry(env) {
     return {
       ...source,
       remoteUrl,
-      relativeTargetFile: path.join('public', source.targetPath.replace(/^\//, '')),
+      relativeTargetFile: path.join(routeSourceRoot, source.targetPath.replace(/^\//, '')),
     };
   });
 }
@@ -171,7 +172,7 @@ function normalizeJsonContent(raw, sourceId) {
 }
 
 async function readCatalog(projectRoot) {
-  const raw = await readFile(path.join(projectRoot, 'public', 'index-catalog.json'), 'utf8');
+  const raw = await readFile(path.join(projectRoot, catalogRelativePath), 'utf8');
 
   try {
     const parsed = JSON.parse(raw);

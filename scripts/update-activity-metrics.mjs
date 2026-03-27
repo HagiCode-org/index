@@ -9,6 +9,7 @@ const ACTIVITY_CATALOG_ENTRY_ID = 'activity-metrics';
 const REQUIRED_TOP_LEVEL_FIELDS = ['lastUpdated', 'dockerHub', 'clarity', 'history'];
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
+const routeSourceRoot = path.join(projectRoot, 'src', 'data', 'public');
 
 export class MetricsUpdateError extends Error {
   constructor(message, options = {}) {
@@ -399,8 +400,8 @@ export async function writeCatalogSnapshot(catalogPath, catalog) {
 
 export async function updateActivityMetrics({
   now = new Date(),
-  filePath = path.join(projectRoot, 'public', 'activity-metrics.json'),
-  catalogPath = path.join(path.dirname(filePath), 'index-catalog.json'),
+  filePath = path.join(routeSourceRoot, 'activity-metrics.json'),
+  catalogPath = path.join(routeSourceRoot, 'index-catalog.json'),
   env = process.env,
   fetchImpl = globalThis.fetch,
 } = {}) {

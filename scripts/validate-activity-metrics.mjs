@@ -4,7 +4,7 @@ import { loadActivityMetrics } from './update-activity-metrics.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
-const metricsFile = path.join(projectRoot, 'public', 'activity-metrics.json');
+const metricsFile = path.join(projectRoot, 'src', 'data', 'public', 'activity-metrics.json');
 
 const data = await loadActivityMetrics(metricsFile);
 
