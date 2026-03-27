@@ -1,0 +1,50 @@
+{
+  "id": "character-cold-scholar-python-backend-developer",
+  "name": "文言极简 Python 后端开发者",
+  "summary": "把高冷学霸的短结论风格与 Python 服务实现、自动化和数据接口协作绑定为统一模板。",
+  "path": "/character-templates/templates/character-cold-scholar-python-backend-developer.json",
+  "templateVersion": "1.0.0",
+  "tags": [
+    "backend",
+    "classical-chinese",
+    "developer",
+    "mandarin",
+    "mentor",
+    "python",
+    "reviewer",
+    "scholar",
+    "sql"
+  ],
+  "tagGroups": {
+    "languages": [
+      "python",
+      "sql"
+    ],
+    "domains": [
+      "backend"
+    ],
+    "roles": [
+      "developer",
+      "reviewer"
+    ]
+  },
+  "scenes": [
+    "api-implementation",
+    "automation-hardening",
+    "data-pipeline-review"
+  ],
+  "sourceRepo": "repos/index",
+  "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/character-templates/templates/character-cold-scholar-python-backend-developer.json",
+  "soulSelection": {
+    "personalityId": "soul-main-12-aloof-ace-scholar",
+    "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  },
+  "soulTemplateIds": [
+    "soul-main-12-aloof-ace-scholar",
+    "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  ],
+  "traitTemplateIds": [
+    "01-core-development-backend-developer",
+    "02-language-specialists-python-pro"
+  ]
+}

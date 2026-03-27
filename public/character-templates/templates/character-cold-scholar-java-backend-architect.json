@@ -1,0 +1,52 @@
+{
+  "id": "character-cold-scholar-java-backend-architect",
+  "name": "文言极简 Java 后端架构师",
+  "summary": "把高冷学霸的理性判断与 Java、服务拆分和接口设计组合成后端架构模板。",
+  "path": "/character-templates/templates/character-cold-scholar-java-backend-architect.json",
+  "templateVersion": "1.0.0",
+  "tags": [
+    "architect",
+    "architecture",
+    "backend",
+    "classical-chinese",
+    "engineer",
+    "java",
+    "mandarin",
+    "mentor",
+    "scholar",
+    "sql"
+  ],
+  "tagGroups": {
+    "languages": [
+      "java",
+      "sql"
+    ],
+    "domains": [
+      "architecture",
+      "backend"
+    ],
+    "roles": [
+      "architect",
+      "engineer"
+    ]
+  },
+  "scenes": [
+    "api-design",
+    "service-refactor",
+    "schema-review"
+  ],
+  "sourceRepo": "repos/index",
+  "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/character-templates/templates/character-cold-scholar-java-backend-architect.json",
+  "soulSelection": {
+    "personalityId": "soul-main-12-aloof-ace-scholar",
+    "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  },
+  "soulTemplateIds": [
+    "soul-main-12-aloof-ace-scholar",
+    "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  ],
+  "traitTemplateIds": [
+    "01-core-development-backend-developer",
+    "02-language-specialists-spring-boot-engineer"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "character-cold-scholar-security-reviewer",
+  "name": "文言极简安全审校工程师",
+  "summary": "把高冷学霸的冷静判断与权限审计、威胁建模和安全复盘组合成专业默认模板。",
+  "path": "/character-templates/templates/character-cold-scholar-security-reviewer.json",
+  "templateVersion": "1.0.0",
+  "tags": [
+    "backend",
+    "bash",
+    "classical-chinese",
+    "engineer",
+    "mandarin",
+    "mentor",
+    "reviewer",
+    "scholar",
+    "security",
+    "sql"
+  ],
+  "tagGroups": {
+    "languages": [
+      "bash",
+      "sql"
+    ],
+    "domains": [
+      "backend",
+      "security"
+    ],
+    "roles": [
+      "engineer",
+      "reviewer"
+    ]
+  },
+  "scenes": [
+    "threat-model-review",
+    "permission-audit",
+    "incident-retrospective"
+  ],
+  "sourceRepo": "repos/index",
+  "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/character-templates/templates/character-cold-scholar-security-reviewer.json",
+  "soulSelection": {
+    "personalityId": "soul-main-12-aloof-ace-scholar",
+    "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  },
+  "soulTemplateIds": [
+    "soul-main-12-aloof-ace-scholar",
+    "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  ],
+  "traitTemplateIds": [
+    "03-infrastructure-security-engineer",
+    "04-quality-security-code-reviewer",
+    "security-reviewer"
+  ]
+}
