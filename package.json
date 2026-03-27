@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "astro dev --host 0.0.0.0 --port ${PORT_INDEX:-31266}",
     "start": "astro dev --host 0.0.0.0",
-    "build": "npm run sync:secondary-professions && npm run validate && astro build",
+    "build": "npm run sync:secondary-professions && npm run sync:character-templates && npm run validate && astro build",
     "preview": "astro preview --port ${PORT_INDEX:-31266}",
     "astro": "astro",
     "sync:presets": "node ./scripts/sync-presets.mjs",
