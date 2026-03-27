@@ -1,0 +1,89 @@
+{
+  "id": "character-cold-scholar-universal-template",
+  "name": "文言极简高冷学霸通用模板",
+  "summary": "只锁定高冷学霸主气质与文言极简表达，Trait 保持开放，宜作通用起手模板。",
+  "path": "/character-templates/templates/character-cold-scholar-universal-template.json",
+  "templateVersion": "1.0.0",
+  "templateMode": "universal",
+  "applyScope": [
+    "soul"
+  ],
+  "tags": [
+    "classical-chinese",
+    "developer",
+    "frontend",
+    "mandarin",
+    "mentor",
+    "scholar",
+    "typescript"
+  ],
+  "tagGroups": {
+    "languages": [
+      "typescript"
+    ],
+    "domains": [
+      "frontend"
+    ],
+    "roles": [
+      "developer"
+    ]
+  },
+  "scenes": [
+    "hero-bootstrap",
+    "custom-trait-composition",
+    "soul-only-start"
+  ],
+  "sourceRepo": "repos/index",
+  "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/character-templates/templates/character-cold-scholar-universal-template.json",
+  "soulSelection": {
+    "personalityId": "soul-main-12-aloof-ace-scholar",
+    "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  },
+  "soulTemplateIds": [
+    "soul-main-12-aloof-ace-scholar",
+    "soul-orth-11-classical-chinese-ultra-minimal-mode"
+  ],
+  "traitTemplateIds": [],
+  "dungeonBindings": [
+    {
+      "scriptKey": "proposal-generate",
+      "matchedTags": [
+        "developer",
+        "frontend",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 0
+    },
+    {
+      "scriptKey": "proposal-execute",
+      "matchedTags": [
+        "developer",
+        "frontend",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains",
+        "roles"
+      ],
+      "priority": 1
+    },
+    {
+      "scriptKey": "proposal-archive",
+      "matchedTags": [
+        "frontend",
+        "typescript"
+      ],
+      "matchedTagGroups": [
+        "languages",
+        "domains"
+      ],
+      "priority": 2
+    }
+  ]
+}
