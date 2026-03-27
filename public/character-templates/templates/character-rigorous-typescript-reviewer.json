@@ -4,6 +4,11 @@
   "summary": "强调结论先行、类型边界和回归纪律的 TypeScript 审校角色模板。",
   "path": "/character-templates/templates/character-rigorous-typescript-reviewer.json",
   "templateVersion": "1.0.0",
+  "templateMode": "curated",
+  "applyScope": [
+    "soul",
+    "trait"
+  ],
   "tags": [
     "classical-chinese",
     "frontend",

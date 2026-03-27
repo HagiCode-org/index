@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "generatedAt": "2026-03-27T00:00:00.000Z",
   "title": "Character Templates",
-  "description": "Count-driven character templates that bind professional SOUL personality and language-style combinations to curated Trait bundles for one-click Hero draft initialization.",
+  "description": "Count-driven character templates that publish curated SOUL-plus-Trait bundles and universal SOUL-only starting points for one-click Hero draft initialization.",
   "availableTagGroups": {
     "languages": [
       "bash",
@@ -43,6 +43,11 @@
       "summary": "把高冷学霸主气质、文言极简表达和 React 工程实践组合为统一角色模板。",
       "path": "/character-templates/templates/character-cold-scholar-react-engineer.json",
       "templateVersion": "1.0.0",
+      "templateMode": "curated",
+      "applyScope": [
+        "soul",
+        "trait"
+      ],
       "tags": [
         "classical-chinese",
         "developer",
@@ -126,6 +131,11 @@
       "summary": "把高冷学霸的克制表达、Vue 实践和前端架构判断整合成稳定的升级模板。",
       "path": "/character-templates/templates/character-cold-scholar-vue-architect.json",
       "templateVersion": "1.0.0",
+      "templateMode": "curated",
+      "applyScope": [
+        "soul",
+        "trait"
+      ],
       "tags": [
         "architect",
         "architecture",
@@ -211,6 +221,11 @@
       "summary": "强调结论先行、类型边界和回归纪律的 TypeScript 审校角色模板。",
       "path": "/character-templates/templates/character-rigorous-typescript-reviewer.json",
       "templateVersion": "1.0.0",
+      "templateMode": "curated",
+      "applyScope": [
+        "soul",
+        "trait"
+      ],
       "tags": [
         "classical-chinese",
         "frontend",
@@ -289,6 +304,11 @@
       "summary": "把高冷学霸的理性判断与 Java、服务拆分和接口设计组合成后端架构模板。",
       "path": "/character-templates/templates/character-cold-scholar-java-backend-architect.json",
       "templateVersion": "1.0.0",
+      "templateMode": "curated",
+      "applyScope": [
+        "soul",
+        "trait"
+      ],
       "tags": [
         "architect",
         "architecture",
@@ -374,6 +394,11 @@
       "summary": "把高冷学霸的短结论风格与 Python 服务实现、自动化和数据接口协作绑定为统一模板。",
       "path": "/character-templates/templates/character-cold-scholar-python-backend-developer.json",
       "templateVersion": "1.0.0",
+      "templateMode": "curated",
+      "applyScope": [
+        "soul",
+        "trait"
+      ],
       "tags": [
         "backend",
         "classical-chinese",
@@ -455,6 +480,11 @@
       "summary": "把高冷学霸的理性表达与 C# 服务拆解、集成边界和维护纪律组合成稳定模板。",
       "path": "/character-templates/templates/character-cold-scholar-csharp-service-developer.json",
       "templateVersion": "1.0.0",
+      "templateMode": "curated",
+      "applyScope": [
+        "soul",
+        "trait"
+      ],
       "tags": [
         "architect",
         "automation",
@@ -538,6 +568,11 @@
       "summary": "把高冷学霸的克制风格与移动端交付、跨端协作和发布前校验组合成稳定角色模板。",
       "path": "/character-templates/templates/character-focused-mobile-developer.json",
       "templateVersion": "1.0.0",
+      "templateMode": "curated",
+      "applyScope": [
+        "soul",
+        "trait"
+      ],
       "tags": [
         "classical-chinese",
         "dart",
@@ -626,6 +661,11 @@
       "summary": "把高冷学霸的克制表达与 DevOps、Docker、SRE 能力组合成稳定的值守角色。",
       "path": "/character-templates/templates/character-efficient-devops-engineer.json",
       "templateVersion": "1.0.0",
+      "templateMode": "curated",
+      "applyScope": [
+        "soul",
+        "trait"
+      ],
       "tags": [
         "backend",
         "classical-chinese",
@@ -713,6 +753,11 @@
       "summary": "强调结论优先、短句审校和回归测试纪律的质量保障角色模板。",
       "path": "/character-templates/templates/character-rigorous-test-reviewer.json",
       "templateVersion": "1.0.0",
+      "templateMode": "curated",
+      "applyScope": [
+        "soul",
+        "trait"
+      ],
       "tags": [
         "classical-chinese",
         "engineer",
@@ -796,6 +841,11 @@
       "summary": "把高冷学霸的冷静判断与权限审计、威胁建模和安全复盘组合成专业默认模板。",
       "path": "/character-templates/templates/character-cold-scholar-security-reviewer.json",
       "templateVersion": "1.0.0",
+      "templateMode": "curated",
+      "applyScope": [
+        "soul",
+        "trait"
+      ],
       "tags": [
         "backend",
         "bash",
@@ -864,6 +914,84 @@
             "languages",
             "domains",
             "roles"
+          ],
+          "priority": 2
+        }
+      ]
+    },
+    {
+      "id": "character-cold-scholar-universal-template",
+      "name": "文言极简高冷学霸通用模板",
+      "summary": "只锁定高冷学霸主气质与文言极简表达，Trait 保持开放，宜作通用起手模板。",
+      "path": "/character-templates/templates/character-cold-scholar-universal-template.json",
+      "templateVersion": "1.0.0",
+      "templateMode": "universal",
+      "applyScope": [
+        "soul"
+      ],
+      "tags": [
+        "classical-chinese",
+        "developer",
+        "frontend",
+        "mandarin",
+        "mentor",
+        "scholar",
+        "typescript"
+      ],
+      "tagGroups": {
+        "languages": [
+          "typescript"
+        ],
+        "domains": [
+          "frontend"
+        ],
+        "roles": [
+          "developer"
+        ]
+      },
+      "scenes": [
+        "hero-bootstrap",
+        "custom-trait-composition",
+        "soul-only-start"
+      ],
+      "dungeonBindings": [
+        {
+          "scriptKey": "proposal-generate",
+          "matchedTags": [
+            "developer",
+            "frontend",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 0
+        },
+        {
+          "scriptKey": "proposal-execute",
+          "matchedTags": [
+            "developer",
+            "frontend",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains",
+            "roles"
+          ],
+          "priority": 1
+        },
+        {
+          "scriptKey": "proposal-archive",
+          "matchedTags": [
+            "frontend",
+            "typescript"
+          ],
+          "matchedTagGroups": [
+            "languages",
+            "domains"
           ],
           "priority": 2
         }

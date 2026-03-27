@@ -375,7 +375,8 @@
       "traitTemplateIds": [
         "01-core-development-frontend-developer",
         "02-language-specialists-react-specialist"
-      ]
+      ],
+      "templateMode": "curated"
     },
     {
       "id": "character-cold-scholar-vue-architect",
@@ -414,7 +415,8 @@
         "01-core-development-frontend-developer",
         "02-language-specialists-typescript-pro",
         "02-language-specialists-vue-expert"
-      ]
+      ],
+      "templateMode": "curated"
     },
     {
       "id": "character-rigorous-typescript-reviewer",
@@ -451,7 +453,8 @@
       "traitTemplateIds": [
         "02-language-specialists-typescript-pro",
         "04-quality-security-code-reviewer"
-      ]
+      ],
+      "templateMode": "curated"
     },
     {
       "id": "character-cold-scholar-java-backend-architect",
@@ -489,7 +492,8 @@
       "traitTemplateIds": [
         "01-core-development-backend-developer",
         "02-language-specialists-spring-boot-engineer"
-      ]
+      ],
+      "templateMode": "curated"
     },
     {
       "id": "character-cold-scholar-python-backend-developer",
@@ -526,7 +530,8 @@
       "traitTemplateIds": [
         "01-core-development-backend-developer",
         "02-language-specialists-python-pro"
-      ]
+      ],
+      "templateMode": "curated"
     },
     {
       "id": "character-cold-scholar-csharp-service-developer",
@@ -564,7 +569,8 @@
       "traitTemplateIds": [
         "01-core-development-backend-developer",
         "02-language-specialists-csharp-developer"
-      ]
+      ],
+      "templateMode": "curated"
     },
     {
       "id": "character-focused-mobile-developer",
@@ -603,7 +609,8 @@
       "traitTemplateIds": [
         "01-core-development-mobile-developer",
         "07-specialized-domains-mobile-app-developer"
-      ]
+      ],
+      "templateMode": "curated"
     },
     {
       "id": "character-efficient-devops-engineer",
@@ -643,7 +650,8 @@
         "03-infrastructure-devops-engineer",
         "03-infrastructure-docker-expert",
         "03-infrastructure-sre-engineer"
-      ]
+      ],
+      "templateMode": "curated"
     },
     {
       "id": "character-rigorous-test-reviewer",
@@ -681,7 +689,8 @@
       "traitTemplateIds": [
         "04-quality-security-code-reviewer",
         "04-quality-security-test-automator"
-      ]
+      ],
+      "templateMode": "curated"
     },
     {
       "id": "character-cold-scholar-security-reviewer",
@@ -720,7 +729,41 @@
         "03-infrastructure-security-engineer",
         "04-quality-security-code-reviewer",
         "security-reviewer"
-      ]
+      ],
+      "templateMode": "curated"
+    },
+    {
+      "id": "character-cold-scholar-universal-template",
+      "name": "文言极简高冷学霸通用模板",
+      "summary": "只锁定高冷学霸主气质与文言极简表达，Trait 保持开放，宜作通用起手模板。",
+      "templateMode": "universal",
+      "styleTags": [
+        "classical-chinese",
+        "mandarin",
+        "mentor",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "typescript"
+        ],
+        "domains": [
+          "frontend"
+        ],
+        "roles": [
+          "developer"
+        ]
+      },
+      "scenes": [
+        "hero-bootstrap",
+        "custom-trait-composition",
+        "soul-only-start"
+      ],
+      "soulSelection": {
+        "personalityId": "soul-main-12-aloof-ace-scholar",
+        "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      },
+      "traitTemplateIds": []
     }
   ]
 }

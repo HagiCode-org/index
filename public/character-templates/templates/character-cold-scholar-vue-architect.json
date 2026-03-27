@@ -4,6 +4,11 @@
   "summary": "把高冷学霸的克制表达、Vue 实践和前端架构判断整合成稳定的升级模板。",
   "path": "/character-templates/templates/character-cold-scholar-vue-architect.json",
   "templateVersion": "1.0.0",
+  "templateMode": "curated",
+  "applyScope": [
+    "soul",
+    "trait"
+  ],
   "tags": [
     "architect",
     "architecture",

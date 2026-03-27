@@ -4,6 +4,11 @@
   "summary": "把高冷学霸的理性判断与 Java、服务拆分和接口设计组合成后端架构模板。",
   "path": "/character-templates/templates/character-cold-scholar-java-backend-architect.json",
   "templateVersion": "1.0.0",
+  "templateMode": "curated",
+  "applyScope": [
+    "soul",
+    "trait"
+  ],
   "tags": [
     "architect",
     "architecture",

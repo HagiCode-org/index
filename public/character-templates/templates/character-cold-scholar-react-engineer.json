@@ -4,6 +4,11 @@
   "summary": "把高冷学霸主气质、文言极简表达和 React 工程实践组合为统一角色模板。",
   "path": "/character-templates/templates/character-cold-scholar-react-engineer.json",
   "templateVersion": "1.0.0",
+  "templateMode": "curated",
+  "applyScope": [
+    "soul",
+    "trait"
+  ],
   "tags": [
     "classical-chinese",
     "developer",

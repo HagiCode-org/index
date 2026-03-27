@@ -4,6 +4,11 @@
   "summary": "把高冷学霸的理性表达与 C# 服务拆解、集成边界和维护纪律组合成稳定模板。",
   "path": "/character-templates/templates/character-cold-scholar-csharp-service-developer.json",
   "templateVersion": "1.0.0",
+  "templateMode": "curated",
+  "applyScope": [
+    "soul",
+    "trait"
+  ],
   "tags": [
     "architect",
     "automation",

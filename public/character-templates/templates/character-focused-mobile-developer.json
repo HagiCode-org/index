@@ -4,6 +4,11 @@
   "summary": "把高冷学霸的克制风格与移动端交付、跨端协作和发布前校验组合成稳定角色模板。",
   "path": "/character-templates/templates/character-focused-mobile-developer.json",
   "templateVersion": "1.0.0",
+  "templateMode": "curated",
+  "applyScope": [
+    "soul",
+    "trait"
+  ],
   "tags": [
     "classical-chinese",
     "dart",

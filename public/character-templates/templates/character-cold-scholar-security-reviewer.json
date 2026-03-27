@@ -4,6 +4,11 @@
   "summary": "把高冷学霸的冷静判断与权限审计、威胁建模和安全复盘组合成专业默认模板。",
   "path": "/character-templates/templates/character-cold-scholar-security-reviewer.json",
   "templateVersion": "1.0.0",
+  "templateMode": "curated",
+  "applyScope": [
+    "soul",
+    "trait"
+  ],
   "tags": [
     "backend",
     "bash",

@@ -4,6 +4,11 @@
   "summary": "把高冷学霸的克制表达与 DevOps、Docker、SRE 能力组合成稳定的值守角色。",
   "path": "/character-templates/templates/character-efficient-devops-engineer.json",
   "templateVersion": "1.0.0",
+  "templateMode": "curated",
+  "applyScope": [
+    "soul",
+    "trait"
+  ],
   "tags": [
     "backend",
     "classical-chinese",

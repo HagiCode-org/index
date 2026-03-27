@@ -4,6 +4,11 @@
   "summary": "把高冷学霸的短结论风格与 Python 服务实现、自动化和数据接口协作绑定为统一模板。",
   "path": "/character-templates/templates/character-cold-scholar-python-backend-developer.json",
   "templateVersion": "1.0.0",
+  "templateMode": "curated",
+  "applyScope": [
+    "soul",
+    "trait"
+  ],
   "tags": [
     "backend",
     "classical-chinese",
