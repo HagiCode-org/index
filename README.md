@@ -98,6 +98,15 @@ node --env-file=.env ./scripts/update-activity-metrics.mjs
 - 发布镜像：`public/presets`
 - 维护原则：常规更新应在 monorepo 的 `repos/docs` 完成。再同步到本仓库。不要把这里作为 presets 的主编辑位置。
 
+## Agent templates 来源与边界
+
+- Hero 模板链路是固定的：`repos/trait` / `repos/soul` 生成 canonical 快照，`repos/index` 只负责镜像发布，`repos/hagicode-core` 代理同源读取，`repos/web` 负责消费并写入本地 Hero 草稿。
+- Trait canonical 输出目录：`../trait/src/data/generated/agent-templates/`
+- SOUL canonical 输出目录：`../soul/src/data/generated/agent-templates/`
+- Index 发布目录：`public/agent-templates/`
+- 根清单：`public/agent-templates/index.json`
+- 维护原则：不要在 `repos/index/public/agent-templates/` 手工编辑模板正文；这里是发布镜像，不是 source-of-truth。
+
 ## 开发命令
 
 ```bash
@@ -158,6 +167,14 @@ npm run build
 2. 确认 `public/index-catalog.json` 中的 managed package 条目仍包含正确的 `historyPagePath`。
 3. 若上游索引结构演进。同步更新 `src/lib/load-package-history.ts` 的归一化规则。
 4. 同步更新 `tests/version-history-pages.test.mjs` 与 `tests/validate-catalog.test.mjs`。
+5. 执行 `npm run validate`、`npm test`、`npm run build`。
+
+### Agent template 资产
+
+1. 在 monorepo 的 `repos/trait` 执行 `npm run sync:agent-templates`，生成 Trait 模板快照。
+2. 在 monorepo 的 `repos/soul` 执行 `npm run sync:agent-templates`，生成 SOUL 模板快照。
+3. 在本仓库执行 `npm run sync:agent-templates`，把两侧 canonical 输出镜像到 `public/agent-templates/`。
+4. 检查 `public/index-catalog.json` 中 `agent-templates` 条目仍指向 `/agent-templates/index.json`。
 5. 执行 `npm run validate`、`npm test`、`npm run build`。
 
 ### 活动数据资产
