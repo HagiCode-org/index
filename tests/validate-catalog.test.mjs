@@ -159,7 +159,7 @@ function buildCharacterTemplateLibraryFixtureData({
     },
     dungeonBindingPresetSources: [
       {
-        scriptKey: 'proposal-archive',
+        scriptKey: 'proposal.archive',
         tagGroups: {
           languages: ['react'],
           domains: ['frontend'],
@@ -167,7 +167,7 @@ function buildCharacterTemplateLibraryFixtureData({
         },
       },
       {
-        scriptKey: 'proposal-generate',
+        scriptKey: 'proposal.generate',
         tagGroups: {
           languages: ['react'],
           domains: ['frontend'],
@@ -175,7 +175,7 @@ function buildCharacterTemplateLibraryFixtureData({
         },
       },
       {
-        scriptKey: 'proposal-execute',
+        scriptKey: 'proposal.execute',
         tagGroups: {
           languages: [],
           domains: [],
@@ -440,19 +440,19 @@ test('character template library materializes stable dungeon bindings for summar
 
   assert.deepEqual(library.manifest.templates[0].dungeonBindings, [
     {
-      scriptKey: 'proposal-generate',
+      scriptKey: 'proposal.generate',
       matchedTags: ['frontend', 'react'],
       matchedTagGroups: ['languages', 'domains'],
       priority: 0,
     },
     {
-      scriptKey: 'proposal-execute',
+      scriptKey: 'proposal.execute',
       matchedTags: ['engineer'],
       matchedTagGroups: ['roles'],
       priority: 1,
     },
     {
-      scriptKey: 'proposal-archive',
+      scriptKey: 'proposal.archive',
       matchedTags: ['engineer', 'frontend', 'react'],
       matchedTagGroups: ['languages', 'domains', 'roles'],
       priority: 2,
@@ -498,7 +498,7 @@ test('character template library rejects unknown dungeon binding tags', () => {
 test('character template library rejects duplicate dungeon binding script keys', () => {
   const fixture = buildCharacterTemplateLibraryFixtureData();
   fixture.dungeonBindingPresetSources.push({
-    scriptKey: 'proposal-generate',
+    scriptKey: 'proposal.generate',
     tagGroups: {
       languages: ['react'],
       domains: [],
@@ -512,7 +512,7 @@ test('character template library rejects duplicate dungeon binding script keys',
       soulIndex: buildSoulIndexFixture(),
       traitIndex: buildTraitIndexFixture(),
     }),
-    /contains duplicate scriptKey proposal-generate\./,
+    /contains duplicate scriptKey proposal\.generate\./,
   );
 });
 

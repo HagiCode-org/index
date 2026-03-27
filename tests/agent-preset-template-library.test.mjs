@@ -85,7 +85,7 @@ test('generated library keeps the expected template count and priority coverage'
   assert(
     library.manifest.templates.every((template) =>
       template.dungeonBindings.every((binding, index, bindings) => (
-        ['proposal-generate', 'proposal-execute', 'proposal-archive'].includes(binding.scriptKey)
+        ['proposal.generate', 'proposal.execute', 'proposal.archive'].includes(binding.scriptKey)
         && binding.priority === index
         && bindings.findIndex((candidate) => candidate.scriptKey === binding.scriptKey) === index
       ))),
@@ -115,7 +115,7 @@ test('published character templates expose stable core-flow bindings in summarie
 
   assert.deepEqual(
     reactEngineer?.dungeonBindings.map((binding) => binding.scriptKey),
-    ['proposal-generate', 'proposal-execute', 'proposal-archive'],
+    ['proposal.generate', 'proposal.execute', 'proposal.archive'],
   );
   assert.deepEqual(reactEngineerDetail?.dungeonBindings, reactEngineer?.dungeonBindings);
   assert.deepEqual(

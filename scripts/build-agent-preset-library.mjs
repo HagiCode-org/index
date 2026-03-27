@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 export const defaultProjectRoot = path.resolve(scriptDir, '..');
 export const agentPresetLibraryPath = path.join(defaultProjectRoot, 'src', 'data', 'agent-preset-library.json');
-export const coreDungeonScriptKeys = ['proposal-generate', 'proposal-execute', 'proposal-archive'];
+export const coreDungeonScriptKeys = ['proposal.generate', 'proposal.execute', 'proposal.archive'];
 const templateTagGroupKeys = ['languages', 'domains', 'roles'];
 const supportedTemplateModes = ['curated', 'universal'];
 
