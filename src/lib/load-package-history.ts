@@ -1,5 +1,4 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
+import { loadRouteMappedJson } from './json-publication.ts';
 
 export type PackageHistorySource = 'server' | 'desktop';
 
@@ -333,11 +332,8 @@ export function normalizePackageHistoryIndex(
 
 export async function loadPackageHistory(
   source: PackageHistorySource,
-  projectRoot = process.cwd(),
 ): Promise<PackageHistoryPageModel> {
-  const sourceJsonPath = path.join(projectRoot, 'public', source, 'index.json');
-  const raw = await readFile(sourceJsonPath, 'utf8');
-  const parsed = JSON.parse(raw);
+  const parsed = await loadRouteMappedJson(`/${source}/index.json`);
 
   return normalizePackageHistoryIndex(source, parsed);
 }

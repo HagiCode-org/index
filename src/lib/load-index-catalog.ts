@@ -1,5 +1,4 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
+import { loadRouteMappedJson } from './json-publication.ts';
 
 export interface IndexCatalogEntry {
   id: string;
@@ -115,9 +114,7 @@ function normalizeEntry(rawEntry: unknown): IndexCatalogEntry {
 }
 
 export async function loadIndexCatalog(): Promise<IndexCatalog> {
-  const catalogPath = path.join(process.cwd(), 'public', 'index-catalog.json');
-  const raw = await readFile(catalogPath, 'utf8');
-  const parsed = JSON.parse(raw) as Partial<IndexCatalog>;
+  const parsed = await loadRouteMappedJson<Partial<IndexCatalog>>('/index-catalog.json');
 
   if (typeof parsed.version !== 'string' || parsed.version.trim().length === 0) {
     throw new Error('Catalog must define a version string.');
