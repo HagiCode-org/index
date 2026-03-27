@@ -1,0 +1,646 @@
+{
+  "version": "1.0.0",
+  "templateVersion": "1.0.0",
+  "generatedAt": "2026-03-27T00:00:00.000Z",
+  "baseline": {
+    "publishedCounts": {
+      "soulTemplates": 61,
+      "traitTemplates": 307,
+      "characterTemplatesBeforeExpansion": 3
+    },
+    "soulCoverageSnapshot": {
+      "domains": {
+        "persona-archetype": 20,
+        "orthogonal-dimension": 11,
+        "professional-identity": 10,
+        "professional-role": 10,
+        "technology": 2,
+        "productivity": 1
+      },
+      "languages": {
+        "mandarin": 61,
+        "classical-chinese": 6,
+        "anime-slang": 8,
+        "english-mix": 1
+      },
+      "roles": {
+        "companion": 28,
+        "mentor": 10,
+        "scholar": 7,
+        "coach": 5,
+        "commander": 3
+      }
+    },
+    "traitCoverageSnapshot": {
+      "domains": {
+        "testing": 293,
+        "frontend": 292,
+        "documentation": 277,
+        "data-ai": 239,
+        "backend": 233,
+        "automation": 217,
+        "devops": 178,
+        "architecture": 177,
+        "mobile": 117
+      },
+      "languages": {
+        "sql": 109,
+        "swift": 61,
+        "typescript": 48,
+        "javascript": 44,
+        "java": 39,
+        "python": 25,
+        "react": 24,
+        "vue": 7,
+        "csharp": 5
+      },
+      "roles": {
+        "reviewer": 198,
+        "expert": 174,
+        "architect": 46,
+        "specialist": 34,
+        "engineer": 28,
+        "developer": 20
+      }
+    },
+    "characterCoverageBeforeExpansion": {
+      "domains": {
+        "frontend": 1,
+        "testing": 1,
+        "devops": 1,
+        "backend": 0,
+        "architecture": 0,
+        "security": 0,
+        "mobile": 0
+      },
+      "languages": {
+        "react": 1,
+        "typescript": 1,
+        "vue": 0,
+        "java": 0,
+        "python": 0,
+        "csharp": 0,
+        "dart": 0
+      },
+      "roles": {
+        "engineer": 2,
+        "reviewer": 1,
+        "architect": 0,
+        "developer": 0
+      }
+    }
+  },
+  "gapPriorities": {
+    "domains": [
+      {
+        "tag": "backend",
+        "reason": "\u73b0\u6709\u89d2\u8272\u6a21\u677f\u5728\u540e\u7aef\u65b9\u5411\u4ecd\u4e3a\u7a7a\u767d\uff0c\u9700\u8981\u5148\u8865 API\u3001\u670d\u52a1\u4e0e\u6570\u636e\u5c42\u573a\u666f\u3002"
+      },
+      {
+        "tag": "mobile",
+        "reason": "\u79fb\u52a8\u7aef\u65b9\u5411\u5728\u5df2\u6709\u89d2\u8272\u6a21\u677f\u91cc\u5b8c\u5168\u7f3a\u5e2d\uff0c\u4f46 Trait \u8d44\u4ea7\u5df2\u7ecf\u8db3\u591f\u652f\u6491\u76f4\u63a5\u6269\u5145\u3002"
+      },
+      {
+        "tag": "architecture",
+        "reason": "\u67b6\u6784\u51b3\u7b56\u7c7b Trait \u6570\u91cf\u5145\u8db3\uff0c\u4f46\u89d2\u8272\u6a21\u677f\u5c1a\u672a\u5f62\u6210\u7a33\u5b9a\u8f93\u51fa\u3002"
+      },
+      {
+        "tag": "security",
+        "reason": "\u5b89\u5168\u5ba1\u6821\u7c7b Trait \u5df2\u53d1\u5e03\uff0c\u89d2\u8272\u6a21\u677f\u4ecd\u7f3a\u5931\u4e13\u4e1a\u9ed8\u8ba4\u7ec4\u5408\u3002"
+      },
+      {
+        "tag": "frontend",
+        "reason": "\u524d\u7aef\u53ea\u6709\u5355\u4e00 React \u7ec4\u5408\uff0c\u9700\u8981\u8865\u66f4\u5b8c\u6574\u7684\u6280\u672f\u77e9\u9635\u3002"
+      },
+      {
+        "tag": "devops",
+        "reason": "DevOps \u5df2\u6709\u5355\u4e2a\u6a21\u677f\uff0c\u4f46\u8fd8\u7f3a\u66f4\u660e\u786e\u7684\u503c\u5b88\u4e0e\u5e73\u53f0\u5de5\u7a0b\u8986\u76d6\u3002"
+      },
+      {
+        "tag": "testing",
+        "reason": "\u6d4b\u8bd5\u573a\u666f\u5df2\u6709\u57fa\u7840\u6a21\u677f\uff0c\u4f46\u4ecd\u9700\u4fdd\u6301\u56de\u5f52\u4e0e\u5ba1\u6821\u65b9\u5411\u7684\u7a33\u5b9a\u4f9b\u7ed9\u3002"
+      }
+    ],
+    "languages": [
+      {
+        "tag": "vue",
+        "reason": "\u524d\u7aef\u77e9\u9635\u7f3a\u5c11 Vue \u65b9\u5411\u6a21\u677f\u3002"
+      },
+      {
+        "tag": "java",
+        "reason": "\u540e\u7aef\u6a21\u677f\u5c1a\u672a\u8986\u76d6 Java / Spring \u7ec4\u5408\u3002"
+      },
+      {
+        "tag": "python",
+        "reason": "\u6570\u636e\u4e0e\u670d\u52a1\u81ea\u52a8\u5316\u65b9\u5411\u9700\u8981 Python \u89d2\u8272\u6a21\u677f\u3002"
+      },
+      {
+        "tag": "csharp",
+        "reason": "C# Trait \u6570\u91cf\u504f\u5c11\u4f46\u4e1a\u52a1\u91cd\u8981\uff0c\u9700\u8981\u4f18\u5148\u8865\u4e00\u6761\u9ed8\u8ba4\u6a21\u677f\u94fe\u8def\u3002"
+      },
+      {
+        "tag": "dart",
+        "reason": "\u79fb\u52a8\u7aef\u6a21\u677f\u9700\u8981\u663e\u5f0f\u8986\u76d6 Dart / Flutter \u751f\u6001\u3002"
+      },
+      {
+        "tag": "react",
+        "reason": "React \u5df2\u6709\u57fa\u7840\u6a21\u677f\uff0c\u4f46\u4ecd\u662f\u89d2\u8272\u5e93\u91cc\u6700\u53ef\u590d\u7528\u7684\u524d\u7aef\u5165\u53e3\u3002"
+      },
+      {
+        "tag": "typescript",
+        "reason": "TypeScript \u4ecd\u662f\u524d\u7aef\u4e0e\u5de5\u5177\u94fe\u6a21\u677f\u7684\u516c\u5171\u6280\u672f\u5e95\u5ea7\u3002"
+      }
+    ],
+    "roles": [
+      {
+        "tag": "architect",
+        "reason": "\u5f53\u524d\u89d2\u8272\u6a21\u677f\u91cc\u8fd8\u6ca1\u6709\u67b6\u6784\u5e08\u5b9a\u4f4d\u7684\u7a33\u5b9a\u9884\u8bbe\u3002"
+      },
+      {
+        "tag": "developer",
+        "reason": "\u5f00\u53d1\u8005\u5411\u89d2\u8272\u6a21\u677f\u4ecd\u4e0d\u8db3\uff0c\u65e0\u6cd5\u8986\u76d6\u4e3b\u8981\u5b9e\u73b0\u8def\u5f84\u3002"
+      },
+      {
+        "tag": "reviewer",
+        "reason": "\u5ba1\u6821\u89d2\u8272\u5df2\u6709\u57fa\u7840\u6a21\u677f\uff0c\u4f46\u9700\u8981\u6269\u5230\u5b89\u5168\u4e0e\u7c7b\u578b\u7cfb\u7edf\u573a\u666f\u3002"
+      },
+      {
+        "tag": "engineer",
+        "reason": "\u5de5\u7a0b\u5e08\u6a21\u677f\u6570\u91cf\u76f8\u5bf9\u8f83\u9ad8\uff0c\u4f46\u4ecd\u627f\u62c5\u5e73\u53f0\u3001\u79fb\u52a8\u4e0e DevOps \u4e3b\u529b\u573a\u666f\u3002"
+      }
+    ]
+  },
+  "soulFilters": {
+    "personality": {
+      "preferredIds": [
+        "soul-main-12-aloof-ace-scholar"
+      ],
+      "allowedStyleTypes": [
+        "persona-archetype"
+      ],
+      "allowedRoles": [
+        "mentor",
+        "scholar"
+      ],
+      "blockedRoles": [
+        "romantic",
+        "companion",
+        "performer",
+        "comedian",
+        "caretaker"
+      ],
+      "blockedDomains": [
+        "gaming",
+        "companionship",
+        "emotional-support",
+        "roleplay",
+        "subculture",
+        "subculture-scene",
+        "music"
+      ],
+      "blockedLanguages": [
+        "anime-slang",
+        "japanese-cues",
+        "cantonese"
+      ]
+    },
+    "languageStyle": {
+      "preferredIds": [
+        "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      ],
+      "allowedStyleTypes": [
+        "orthogonal-dimension"
+      ],
+      "allowedLanguages": [
+        "mandarin",
+        "classical-chinese"
+      ],
+      "blockedRoles": [],
+      "blockedDomains": [
+        "gaming",
+        "companionship",
+        "emotional-support",
+        "roleplay",
+        "subculture",
+        "subculture-scene",
+        "music"
+      ],
+      "blockedLanguages": [
+        "anime-slang",
+        "japanese-cues",
+        "cantonese"
+      ]
+    }
+  },
+  "expansionTargets": {
+    "minimumCharacterTemplates": 10,
+    "priorityDomains": [
+      "backend",
+      "mobile",
+      "architecture",
+      "security",
+      "frontend",
+      "devops",
+      "testing"
+    ],
+    "priorityLanguages": [
+      "vue",
+      "java",
+      "python",
+      "csharp",
+      "dart",
+      "react",
+      "typescript"
+    ],
+    "priorityRoles": [
+      "architect",
+      "developer",
+      "reviewer",
+      "engineer"
+    ]
+  },
+  "templateMatrix": [
+    {
+      "id": "character-cold-scholar-react-engineer",
+      "name": "\u6587\u8a00\u6781\u7b80 React \u5b66\u9738\u5de5\u7a0b\u5e08",
+      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u4e3b\u6c14\u8d28\u3001\u6587\u8a00\u6781\u7b80\u8868\u8fbe\u548c React \u5de5\u7a0b\u5b9e\u8df5\u7ec4\u5408\u4e3a\u7edf\u4e00\u89d2\u8272\u6a21\u677f\u3002",
+      "styleTags": [
+        "classical-chinese",
+        "mandarin",
+        "mentor",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "react",
+          "typescript"
+        ],
+        "domains": [
+          "frontend"
+        ],
+        "roles": [
+          "developer",
+          "engineer"
+        ]
+      },
+      "scenes": [
+        "react-architecture",
+        "frontend-refactor",
+        "code-review"
+      ],
+      "soulSelection": {
+        "personalityId": "soul-main-12-aloof-ace-scholar",
+        "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      },
+      "traitTemplateIds": [
+        "01-core-development-frontend-developer",
+        "02-language-specialists-react-specialist"
+      ]
+    },
+    {
+      "id": "character-cold-scholar-vue-architect",
+      "name": "\u6587\u8a00\u6781\u7b80 Vue \u524d\u7aef\u67b6\u6784\u5e08",
+      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u514b\u5236\u8868\u8fbe\u3001Vue \u5b9e\u8df5\u548c\u524d\u7aef\u67b6\u6784\u5224\u65ad\u6574\u5408\u6210\u7a33\u5b9a\u7684\u5347\u7ea7\u6a21\u677f\u3002",
+      "styleTags": [
+        "classical-chinese",
+        "mandarin",
+        "mentor",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "typescript",
+          "vue"
+        ],
+        "domains": [
+          "architecture",
+          "frontend"
+        ],
+        "roles": [
+          "architect",
+          "reviewer"
+        ]
+      },
+      "scenes": [
+        "vue-migration",
+        "frontend-architecture",
+        "design-review"
+      ],
+      "soulSelection": {
+        "personalityId": "soul-main-12-aloof-ace-scholar",
+        "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      },
+      "traitTemplateIds": [
+        "01-core-development-frontend-developer",
+        "02-language-specialists-typescript-pro",
+        "02-language-specialists-vue-expert"
+      ]
+    },
+    {
+      "id": "character-rigorous-typescript-reviewer",
+      "name": "\u6587\u8a00\u6781\u7b80 TypeScript \u5ba1\u6821\u5e08",
+      "summary": "\u5f3a\u8c03\u7ed3\u8bba\u5148\u884c\u3001\u7c7b\u578b\u8fb9\u754c\u548c\u56de\u5f52\u7eaa\u5f8b\u7684 TypeScript \u5ba1\u6821\u89d2\u8272\u6a21\u677f\u3002",
+      "styleTags": [
+        "classical-chinese",
+        "mandarin",
+        "mentor",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "javascript",
+          "typescript"
+        ],
+        "domains": [
+          "frontend",
+          "testing"
+        ],
+        "roles": [
+          "reviewer"
+        ]
+      },
+      "scenes": [
+        "code-review",
+        "type-safety-audit",
+        "regression-guard"
+      ],
+      "soulSelection": {
+        "personalityId": "soul-main-12-aloof-ace-scholar",
+        "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      },
+      "traitTemplateIds": [
+        "02-language-specialists-typescript-pro",
+        "04-quality-security-code-reviewer"
+      ]
+    },
+    {
+      "id": "character-cold-scholar-java-backend-architect",
+      "name": "\u6587\u8a00\u6781\u7b80 Java \u540e\u7aef\u67b6\u6784\u5e08",
+      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u7406\u6027\u5224\u65ad\u4e0e Java\u3001\u670d\u52a1\u62c6\u5206\u548c\u63a5\u53e3\u8bbe\u8ba1\u7ec4\u5408\u6210\u540e\u7aef\u67b6\u6784\u6a21\u677f\u3002",
+      "styleTags": [
+        "classical-chinese",
+        "mandarin",
+        "mentor",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "java",
+          "sql"
+        ],
+        "domains": [
+          "architecture",
+          "backend"
+        ],
+        "roles": [
+          "architect",
+          "engineer"
+        ]
+      },
+      "scenes": [
+        "api-design",
+        "service-refactor",
+        "schema-review"
+      ],
+      "soulSelection": {
+        "personalityId": "soul-main-12-aloof-ace-scholar",
+        "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      },
+      "traitTemplateIds": [
+        "01-core-development-backend-developer",
+        "02-language-specialists-spring-boot-engineer"
+      ]
+    },
+    {
+      "id": "character-cold-scholar-python-backend-developer",
+      "name": "\u6587\u8a00\u6781\u7b80 Python \u540e\u7aef\u5f00\u53d1\u8005",
+      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u77ed\u7ed3\u8bba\u98ce\u683c\u4e0e Python \u670d\u52a1\u5b9e\u73b0\u3001\u81ea\u52a8\u5316\u548c\u6570\u636e\u63a5\u53e3\u534f\u4f5c\u7ed1\u5b9a\u4e3a\u7edf\u4e00\u6a21\u677f\u3002",
+      "styleTags": [
+        "classical-chinese",
+        "mandarin",
+        "mentor",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "python",
+          "sql"
+        ],
+        "domains": [
+          "backend"
+        ],
+        "roles": [
+          "developer",
+          "reviewer"
+        ]
+      },
+      "scenes": [
+        "api-implementation",
+        "automation-hardening",
+        "data-pipeline-review"
+      ],
+      "soulSelection": {
+        "personalityId": "soul-main-12-aloof-ace-scholar",
+        "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      },
+      "traitTemplateIds": [
+        "01-core-development-backend-developer",
+        "02-language-specialists-python-pro"
+      ]
+    },
+    {
+      "id": "character-cold-scholar-csharp-service-developer",
+      "name": "\u6587\u8a00\u6781\u7b80 C# \u670d\u52a1\u5f00\u53d1\u8005",
+      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u7406\u6027\u8868\u8fbe\u4e0e C# \u670d\u52a1\u62c6\u89e3\u3001\u96c6\u6210\u8fb9\u754c\u548c\u7ef4\u62a4\u7eaa\u5f8b\u7ec4\u5408\u6210\u7a33\u5b9a\u6a21\u677f\u3002",
+      "styleTags": [
+        "classical-chinese",
+        "mandarin",
+        "mentor",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "csharp",
+          "sql"
+        ],
+        "domains": [
+          "automation",
+          "backend"
+        ],
+        "roles": [
+          "architect",
+          "developer"
+        ]
+      },
+      "scenes": [
+        "service-design",
+        "integration-hardening",
+        "maintenance-window"
+      ],
+      "soulSelection": {
+        "personalityId": "soul-main-12-aloof-ace-scholar",
+        "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      },
+      "traitTemplateIds": [
+        "01-core-development-backend-developer",
+        "02-language-specialists-csharp-developer"
+      ]
+    },
+    {
+      "id": "character-focused-mobile-developer",
+      "name": "\u6587\u8a00\u6781\u7b80\u79fb\u52a8\u7aef\u4ea4\u4ed8\u5f00\u53d1\u8005",
+      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u514b\u5236\u98ce\u683c\u4e0e\u79fb\u52a8\u7aef\u4ea4\u4ed8\u3001\u8de8\u7aef\u534f\u4f5c\u548c\u53d1\u5e03\u524d\u6821\u9a8c\u7ec4\u5408\u6210\u7a33\u5b9a\u89d2\u8272\u6a21\u677f\u3002",
+      "styleTags": [
+        "classical-chinese",
+        "mandarin",
+        "mentor",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "dart",
+          "kotlin",
+          "swift"
+        ],
+        "domains": [
+          "frontend",
+          "mobile"
+        ],
+        "roles": [
+          "developer",
+          "reviewer"
+        ]
+      },
+      "scenes": [
+        "mobile-feature-delivery",
+        "cross-platform-review",
+        "release-checklist"
+      ],
+      "soulSelection": {
+        "personalityId": "soul-main-12-aloof-ace-scholar",
+        "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      },
+      "traitTemplateIds": [
+        "01-core-development-mobile-developer",
+        "07-specialized-domains-mobile-app-developer"
+      ]
+    },
+    {
+      "id": "character-efficient-devops-engineer",
+      "name": "\u6587\u8a00\u6781\u7b80 DevOps \u503c\u5b88\u5de5\u7a0b\u5e08",
+      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u514b\u5236\u8868\u8fbe\u4e0e DevOps\u3001Docker\u3001SRE \u80fd\u529b\u7ec4\u5408\u6210\u7a33\u5b9a\u7684\u503c\u5b88\u89d2\u8272\u3002",
+      "styleTags": [
+        "classical-chinese",
+        "mandarin",
+        "mentor",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "go",
+          "python",
+          "sql"
+        ],
+        "domains": [
+          "backend",
+          "devops"
+        ],
+        "roles": [
+          "engineer",
+          "reviewer"
+        ]
+      },
+      "scenes": [
+        "incident-response",
+        "deployment-audit",
+        "runbook-update"
+      ],
+      "soulSelection": {
+        "personalityId": "soul-main-12-aloof-ace-scholar",
+        "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      },
+      "traitTemplateIds": [
+        "03-infrastructure-devops-engineer",
+        "03-infrastructure-docker-expert",
+        "03-infrastructure-sre-engineer"
+      ]
+    },
+    {
+      "id": "character-rigorous-test-reviewer",
+      "name": "\u6587\u8a00\u6781\u7b80\u6d4b\u8bd5\u5ba1\u6821\u5de5\u7a0b\u5e08",
+      "summary": "\u5f3a\u8c03\u7ed3\u8bba\u4f18\u5148\u3001\u77ed\u53e5\u5ba1\u6821\u548c\u56de\u5f52\u6d4b\u8bd5\u7eaa\u5f8b\u7684\u8d28\u91cf\u4fdd\u969c\u89d2\u8272\u6a21\u677f\u3002",
+      "styleTags": [
+        "classical-chinese",
+        "mandarin",
+        "mentor",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "python",
+          "typescript"
+        ],
+        "domains": [
+          "security",
+          "testing"
+        ],
+        "roles": [
+          "engineer",
+          "reviewer"
+        ]
+      },
+      "scenes": [
+        "code-review",
+        "test-plan",
+        "regression-guard"
+      ],
+      "soulSelection": {
+        "personalityId": "soul-main-12-aloof-ace-scholar",
+        "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      },
+      "traitTemplateIds": [
+        "04-quality-security-code-reviewer",
+        "04-quality-security-test-automator"
+      ]
+    },
+    {
+      "id": "character-cold-scholar-security-reviewer",
+      "name": "\u6587\u8a00\u6781\u7b80\u5b89\u5168\u5ba1\u6821\u5de5\u7a0b\u5e08",
+      "summary": "\u628a\u9ad8\u51b7\u5b66\u9738\u7684\u51b7\u9759\u5224\u65ad\u4e0e\u6743\u9650\u5ba1\u8ba1\u3001\u5a01\u80c1\u5efa\u6a21\u548c\u5b89\u5168\u590d\u76d8\u7ec4\u5408\u6210\u4e13\u4e1a\u9ed8\u8ba4\u6a21\u677f\u3002",
+      "styleTags": [
+        "classical-chinese",
+        "mandarin",
+        "mentor",
+        "scholar"
+      ],
+      "tagGroups": {
+        "languages": [
+          "bash",
+          "sql"
+        ],
+        "domains": [
+          "backend",
+          "security"
+        ],
+        "roles": [
+          "engineer",
+          "reviewer"
+        ]
+      },
+      "scenes": [
+        "threat-model-review",
+        "permission-audit",
+        "incident-retrospective"
+      ],
+      "soulSelection": {
+        "personalityId": "soul-main-12-aloof-ace-scholar",
+        "languageStyleId": "soul-orth-11-classical-chinese-ultra-minimal-mode"
+      },
+      "traitTemplateIds": [
+        "03-infrastructure-security-engineer",
+        "04-quality-security-code-reviewer",
+        "security-reviewer"
+      ]
+    }
+  ]
+}
