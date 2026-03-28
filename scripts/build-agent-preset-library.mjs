@@ -6,6 +6,7 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 export const defaultProjectRoot = path.resolve(scriptDir, '..');
 export const agentPresetLibraryPath = path.join(defaultProjectRoot, 'src', 'data', 'agent-preset-library.json');
 export const coreDungeonScriptKeys = ['proposal.generate', 'proposal.execute', 'proposal.archive'];
+export const universalTemplateTag = 'universal';
 const templateTagGroupKeys = ['languages', 'domains', 'roles'];
 const supportedTemplateModes = ['curated', 'universal'];
 
@@ -91,6 +92,16 @@ function buildApplyScope(templateMode, templateId) {
     `Character template ${templateId} templateMode ${templateMode} is not supported.`,
   );
   return templateMode === 'curated' ? ['soul', 'trait'] : ['soul'];
+}
+
+function buildTemplateTags(templateDefinition, tagGroups, templateMode) {
+  return sortUniqueStrings([
+    ...templateDefinition.styleTags,
+    ...tagGroups.languages,
+    ...tagGroups.domains,
+    ...tagGroups.roles,
+    ...(templateMode === universalTemplateTag ? [universalTemplateTag] : []),
+  ]);
 }
 
 function assertNoIntersection(values, blockedValues, fieldName, templateId) {
@@ -387,12 +398,7 @@ export function buildCharacterTemplateLibrary({ libraryData, soulIndex, traitInd
     ensureArray(tagGroups.domains, `Character template ${templateDefinition.id} tagGroups.domains`, { minLength: 1 });
     ensureArray(tagGroups.roles, `Character template ${templateDefinition.id} tagGroups.roles`, { minLength: 1 });
 
-    const tags = sortUniqueStrings([
-      ...templateDefinition.styleTags,
-      ...tagGroups.languages,
-      ...tagGroups.domains,
-      ...tagGroups.roles,
-    ]);
+    const tags = buildTemplateTags(templateDefinition, tagGroups, templateMode);
     ensureFlatTagsContainGroupTags(tags, tagGroups, templateDefinition.id);
     const dungeonBindings = buildDungeonBindings(tagGroups, dungeonBindingPresetSources, templateDefinition.id);
 

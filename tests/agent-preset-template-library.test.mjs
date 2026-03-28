@@ -99,13 +99,34 @@ test('universal character templates publish soul-only apply scope in manifest an
 
   assert.equal(summary?.templateMode, 'universal');
   assert.deepEqual(summary?.applyScope, ['soul']);
+  assert(summary?.tags.includes('universal'));
   assert.equal(detail?.templateMode, 'universal');
   assert.deepEqual(detail?.applyScope, ['soul']);
+  assert(detail?.tags.includes('universal'));
   assert.deepEqual(detail?.traitTemplateIds, []);
   assert.deepEqual(detail?.soulTemplateIds, [
     'soul-main-12-aloof-ace-scholar',
     'soul-orth-11-classical-chinese-ultra-minimal-mode',
   ]);
+});
+
+test('universal character templates keep the universal tag in published output even if source style tags omit it', async () => {
+  const { libraryData, indexes } = await loadCurrentLibrary();
+  const fixture = structuredClone(libraryData);
+  const universalTemplate = fixture.templateMatrix.find((template) => template.id === 'character-cold-scholar-universal-template');
+
+  universalTemplate.styleTags = universalTemplate.styleTags.filter((tag) => tag !== 'universal');
+
+  const library = buildCharacterTemplateLibrary({
+    libraryData: fixture,
+    soulIndex: indexes.soulIndex,
+    traitIndex: indexes.traitIndex,
+  });
+  const summary = library.manifest.templates.find((template) => template.id === 'character-cold-scholar-universal-template');
+  const detail = library.details.find((template) => template.id === 'character-cold-scholar-universal-template');
+
+  assert(summary?.tags.includes('universal'));
+  assert(detail?.tags.includes('universal'));
 });
 
 test('published character templates expose stable core-flow bindings in summaries and details', async () => {
