@@ -52,10 +52,16 @@
 历史页当前的归一化边界如下：
 
 - 优先读取 `packages[]`。若不存在则回退到 `versions[]`。
+- `Server` 历史页当前只展示带可下载地址的 `.zip` 文件；其他产物通过版本级 `原始 JSON` 追溯。
+- `Desktop` 历史页继续展示全部已知文件。
 - 发布日期候选字段：`publishedAt`、`releaseDate`、`updatedAt`、`createdAt` 及其下划线变体。
-- 下载入口候选字段：`downloadUrl`、`url`、`files[]`、`assets[]`、`downloads[]`、`artifacts[]`。
+- 每个版本页块会完整暴露该版本的全部已知文件，而不是只展示单一主要资源。
+- 结构化资源优先级：`assets[]`、`downloads[]`、`artifacts[]`；若都不存在，再回退到 `files[]`；最后才回退到 release 顶层 `directUrl` / `downloadUrl`。
+- 文件下载地址候选字段：`directUrl`、`downloadUrl`、`url`、`downloadURL`、`download_url`、`assetUrl`、`browserDownloadUrl`、`href`、`path`。
+- 相对 `path` 会基于对应的 `/server/index.json` 或 `/desktop/index.json` 归一化为稳定站内链接。
 - 缺少发布日期时显示 `发布日期未知`。
-- 缺少下载入口时显示 `无直接下载`，同时保留 `原始 JSON` 兜底动作。
+- 文件缺少下载入口时仍会显示该条目，并以不可下载状态呈现；版本分组继续保留 `原始 JSON` 兜底动作。
+- 当前页面不做运行时筛选、折叠或搜索，维护边界仅限静态归一化与可读展示。
 
 ## 活动数据模型
 
@@ -199,7 +205,7 @@ npm run build
 
 1. 运行 `npm run sync:index`，或更新 `src/data/public/server/index.json`、`src/data/public/desktop/index.json`。
 2. 确认 `src/data/public/index-catalog.json` 中 managed package 条目仍包含正确的 `historyPagePath`。
-3. 若上游索引结构演进，同步更新 `src/lib/load-package-history.ts`、`tests/version-history-pages.test.mjs` 与 `tests/route-mapped-loaders.test.mjs`。
+3. 若上游索引结构演进，同步更新 `src/lib/load-package-history.ts`、`src/components/VersionHistoryPage.astro`、`tests/version-history-pages.test.mjs` 与 `tests/route-mapped-loaders.test.mjs`。
 4. 执行 `npm run validate`、`npm test`、`npm run build`。
 
 ### Agent templates
@@ -233,7 +239,7 @@ npm run build
 ## 验证说明
 
 - `npm run validate`：构建临时 Astro 输出，并校验 source/build 语义一致、公开路由存在且 JSON 已 minify。
-- `npm test`：覆盖版本历史归一化、route-mapped loader 契约、catalog 漂移检测、活动摘要同步、同日重跑、90 天滚动与 pretty JSON 拒绝场景。
+- `npm test`：覆盖版本历史归一化、按版本分组文件清单、`files[]` 回退、不可下载文件可见性、route-mapped loader 契约、catalog 漂移检测、活动摘要同步、同日重跑、90 天滚动与 pretty JSON 拒绝场景。
 - `npm run build`：生成最终静态站点，并再次验证 route-mapped JSON 输出。
 
 ## 维护边界
@@ -242,4 +248,4 @@ npm run build
 - `src/data/public/**` 是 route-mapped JSON 的 source-of-truth；不要手改 `dist/**`，也不要把这些文件重新放回 `public/` 作为源码。
 - `public/agent-templates/**`、`public/character-templates/**`、`public/presets/**`、`public/secondary-professions/index.json` 仍是发布镜像或生成结果，但不属于 Astro JSON 路由源目录。
 - Index 只负责读取并发布镜像好的包索引，不负责生成上游发布数据。
-- 当 `/server/index.json` 或 `/desktop/index.json` 的结构发生演进时，必须同步更新 loader 与回归测试，不要只改页面文案。
+- 当 `/server/index.json` 或 `/desktop/index.json` 的结构发生演进时，必须同步更新 loader、历史页模板与回归测试，不要只改页面文案。
