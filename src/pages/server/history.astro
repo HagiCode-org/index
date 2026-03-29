@@ -7,7 +7,7 @@ import '@/styles/global.css';
 
 const page = await loadPackageHistory('server');
 const pageTitle = `${page.title} | HagiCode Index`;
-const pageDescription = 'HagiCode Server 的可人工浏览版本历史页，基于 /server/index.json 静态生成。';
+const pageDescription = 'HagiCode Server 的按版本分组历史页，仅展示 /server/index.json 中各版本可下载的 ZIP 包。';
 const canonicalUrl = 'https://index.hagicode.com/server/history/';
 ---
 
@@ -18,6 +18,7 @@ const canonicalUrl = 'https://index.hagicode.com/server/history/';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
@@ -30,7 +31,7 @@ const canonicalUrl = 'https://index.hagicode.com/server/history/';
         <a class="brand-mark" href="/">H</a>
         <div>
           <p class="brand-name">HagiCode Index</p>
-          <p class="brand-subtitle">Server package history</p>
+          <p class="brand-subtitle">Server grouped zip history</p>
         </div>
       </header>
 
