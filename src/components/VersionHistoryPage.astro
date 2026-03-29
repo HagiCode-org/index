@@ -1,5 +1,5 @@
 ---
-import type { PackageHistoryPageModel } from '@/lib/load-package-history';
+import type { PackageHistoryPageModel, VersionHistoryFileEntry } from '@/lib/load-package-history';
 
 interface Props {
   page: PackageHistoryPageModel;
@@ -9,6 +9,31 @@ const { page } = Astro.props;
 const totalReleases = page.releases.length;
 const latestRelease = page.latestRelease;
 const updatedSummary = page.generatedAt ? `索引快照更新时间：${page.generatedAtLabel}` : '索引快照更新时间未知';
+const historyKicker = page.source === 'server' ? '按版本分组的 ZIP 下载记录' : '按版本分组的完整发布记录';
+const historyIntro =
+  page.source === 'server'
+    ? '每个版本只展示可直接下载的 ZIP 包；其余产物仍可通过原始 JSON 追溯。'
+    : '每个版本单独成组，完整展示全部已知文件；缺失下载地址时仍保留可见条目与原始 JSON 入口。';
+const sourceKindLabels: Record<VersionHistoryFileEntry['sourceKind'], string> = {
+  release: 'release',
+  assets: 'assets',
+  downloads: 'downloads',
+  artifacts: 'artifacts',
+  files: 'files',
+};
+
+function formatFileMeta(file: VersionHistoryFileEntry): string {
+  const parts = [sourceKindLabels[file.sourceKind]];
+
+  if (file.sizeLabel) {
+    parts.push(file.sizeLabel);
+  } else {
+    parts.push('大小未知');
+  }
+
+  parts.push(file.publishedAt ? file.publishedLabel : '时间未知');
+  return parts.join(' · ');
+}
 ---
 
 <section class="history-shell">
@@ -17,7 +42,7 @@ const updatedSummary = page.generatedAt ? `索引快照更新时间：${page.gen
       <div class="history-copy">
         <p class="eyebrow">{page.sourceLabel} history</p>
         <div>
-          <p class="hero-kicker">可人工浏览的发布记录</p>
+          <p class="hero-kicker">{historyKicker}</p>
           <h1 id="history-heading">{page.title}</h1>
         </div>
         <p class="hero-lede">{page.description}</p>
@@ -35,7 +60,7 @@ const updatedSummary = page.generatedAt ? `索引快照更新时间：${page.gen
         <article class="history-summary-card">
           <p class="history-summary-label">版本总数</p>
           <p class="history-summary-value">{totalReleases}</p>
-          <p class="history-summary-note">当前页面只依赖仓库内静态索引。</p>
+          <p class="history-summary-note">静态构建直读仓库索引，不依赖运行时 API。</p>
         </article>
         <article class="history-summary-card">
           <p class="history-summary-label">最新发布</p>
@@ -43,7 +68,7 @@ const updatedSummary = page.generatedAt ? `索引快照更新时间：${page.gen
             {latestRelease ? latestRelease.version : '暂无发布'}
           </p>
           <p class="history-summary-note">
-            {latestRelease ? latestRelease.publishedLabel : '当前索引还没有可展示的版本记录。'}
+            {latestRelease ? `${latestRelease.publishedLabel} · ${latestRelease.fileCount} 个文件` : '当前索引还没有可展示的版本记录。'}
           </p>
         </article>
         <article class="history-summary-card">
@@ -59,7 +84,7 @@ const updatedSummary = page.generatedAt ? `索引快照更新时间：${page.gen
     {latestRelease ? (
       <article class="history-latest-card" aria-label="最新发布摘要">
         <div>
-          <p class="card-category">最新发布</p>
+          <p class="card-category">Latest grouped release</p>
           <h2>{latestRelease.version}</h2>
         </div>
         <dl class="history-latest-meta">
@@ -68,7 +93,15 @@ const updatedSummary = page.generatedAt ? `索引快照更新时间：${page.gen
             <dd>{latestRelease.publishedLabel}</dd>
           </div>
           <div>
-            <dt>主要资源</dt>
+            <dt>文件数</dt>
+            <dd>{latestRelease.fileCount}</dd>
+          </div>
+          <div>
+            <dt>可下载文件</dt>
+            <dd>{latestRelease.downloadableFileCount}</dd>
+          </div>
+          <div>
+            <dt>首个文件</dt>
             <dd>{latestRelease.primaryArtifactLabel}</dd>
           </div>
         </dl>
@@ -88,56 +121,71 @@ const updatedSummary = page.generatedAt ? `索引快照更新时间：${page.gen
     ) : null}
   </section>
 
-  <section class="catalog-section history-table-section" aria-labelledby="history-table-heading">
+  <section class="catalog-section history-release-section" aria-labelledby="history-release-heading">
     <div class="section-heading">
       <div>
         <p class="eyebrow">Release ledger</p>
-        <h2 id="history-table-heading">历史版本</h2>
-        <p>按最新优先排序，缺少日期或下载链接时显示回退文案并保留原始 JSON 入口。</p>
+        <h2 id="history-release-heading">历史版本</h2>
+        <p>{historyIntro}</p>
       </div>
     </div>
 
     {totalReleases > 0 ? (
-      <div class="history-table-wrap">
-        <table class="history-table">
-          <thead>
-            <tr>
-              <th scope="col">版本号</th>
-              <th scope="col">发布日期</th>
-              <th scope="col">主要资源</th>
-              <th scope="col">操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            {page.releases.map((release) => (
-              <tr>
-                <td data-label="版本号">
-                  <strong>{release.version}</strong>
-                </td>
-                <td data-label="发布日期">{release.publishedLabel}</td>
-                <td data-label="主要资源">
-                  <span class={release.hasDirectDownload ? 'history-artifact' : 'history-artifact history-artifact-muted'}>
-                    {release.primaryArtifactLabel}
-                  </span>
-                </td>
-                <td data-label="操作">
-                  <div class="history-row-actions" aria-label={`${release.version} 操作`}>
-                    {release.actions.map((action) => (
-                      <a
-                        class={`button ${action.kind === 'download' ? 'button-primary' : 'button-secondary'}`}
-                        href={action.href}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {action.label}
+      <div class="history-release-list">
+        {page.releases.map((release) => (
+          <article class="history-release-card" aria-labelledby={`release-${release.version}`}>
+            <div class="history-release-head">
+              <div class="history-release-copy">
+                <p class="card-category">{page.sourceLabel} release group</p>
+                <h3 id={`release-${release.version}`} class="history-release-title">
+                  {release.version}
+                </h3>
+                <p class="history-release-summary">
+                  {release.publishedLabel} · {release.fileCount} 个{page.source === 'server' ? ' ZIP 包' : '文件'} · {release.downloadableFileCount} 个可下载
+                </p>
+              </div>
+              <div class="history-release-actions" aria-label={`${release.version} 分组操作`}>
+                {release.actions.map((action) => (
+                  <a
+                    class={`button ${action.kind === 'download' ? 'button-tertiary' : 'button-secondary'}`}
+                    href={action.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {action.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {release.fileCount > 0 ? (
+              <ul class="history-file-list">
+                {release.files.map((file) => (
+                  <li class="history-file-item">
+                    <div class="history-file-copy">
+                      <p class="history-file-name">{file.label}</p>
+                      <p class="history-file-meta">{formatFileMeta(file)}</p>
+                    </div>
+                    {file.href ? (
+                      <a class="button button-primary history-file-action" href={file.href} target="_blank" rel="noreferrer">
+                        下载
                       </a>
-                    ))}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    ) : (
+                      <span class="button button-disabled history-file-action" aria-disabled="true">
+                        仅索引可见
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div class="history-release-empty" role="status">
+                <p>当前版本未提供可解析文件清单。</p>
+                <p>仍可通过 <code>{page.sourceJsonPath}</code> 追溯原始记录。</p>
+              </div>
+            )}
+          </article>
+        ))}
       </div>
     ) : (
       <div class="empty-state history-empty-state" role="status" aria-live="polite">

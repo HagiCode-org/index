@@ -1,11 +1,22 @@
 import { loadRouteMappedJson } from './json-publication.ts';
 
 export type PackageHistorySource = 'server' | 'desktop';
+export type VersionHistoryFileSourceKind = 'release' | 'assets' | 'downloads' | 'artifacts' | 'files';
 
 export interface VersionHistoryAction {
   kind: 'download' | 'raw-json';
   label: string;
   href: string;
+}
+
+export interface VersionHistoryFileEntry {
+  label: string;
+  href: string | null;
+  sizeBytes: number | null;
+  sizeLabel: string | null;
+  publishedAt: string | null;
+  publishedLabel: string;
+  sourceKind: VersionHistoryFileSourceKind;
 }
 
 export interface VersionHistoryRecord {
@@ -14,6 +25,9 @@ export interface VersionHistoryRecord {
   publishedLabel: string;
   primaryArtifactLabel: string;
   hasDirectDownload: boolean;
+  fileCount: number;
+  downloadableFileCount: number;
+  files: VersionHistoryFileEntry[];
   actions: VersionHistoryAction[];
 }
 
@@ -52,9 +66,31 @@ const releaseDateCandidateKeys = [
   'created_at',
 ] as const;
 
-const directDownloadKeys = ['downloadUrl', 'url', 'downloadURL', 'download_url', 'assetUrl'] as const;
-const artifactCollectionKeys = ['files', 'assets', 'downloads', 'artifacts'] as const;
+const directDownloadKeys = [
+  'directUrl',
+  'downloadUrl',
+  'url',
+  'downloadURL',
+  'download_url',
+  'assetUrl',
+  'browserDownloadUrl',
+  'href',
+  'path',
+] as const;
+const structuredArtifactCollectionKeys = ['assets', 'downloads', 'artifacts'] as const;
 const artifactLabelKeys = ['displayName', 'name', 'fileName', 'filename', 'label', 'path'] as const;
+const artifactDateCandidateKeys = [
+  'lastModified',
+  'publishedAt',
+  'releaseDate',
+  'updatedAt',
+  'createdAt',
+  'published_at',
+  'release_date',
+  'updated_at',
+  'created_at',
+] as const;
+const artifactSizeCandidateKeys = ['size', 'fileSize', 'contentLength', 'length', 'bytes'] as const;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
@@ -65,7 +101,7 @@ function getSourceMeta(source: PackageHistorySource): SourceMeta {
     return {
       sourceLabel: 'Server',
       title: 'HagiCode Server 版本历史',
-      description: '基于 /server/index.json 渲染的静态版本历史页。',
+      description: '基于 /server/index.json 渲染，按版本分组展示 Server 可下载 ZIP 包。',
       sourceJsonPath: '/server/index.json',
     };
   }
@@ -73,7 +109,7 @@ function getSourceMeta(source: PackageHistorySource): SourceMeta {
   return {
     sourceLabel: 'Desktop',
     title: 'HagiCode Desktop 版本历史',
-    description: '基于 /desktop/index.json 渲染的静态版本历史页。',
+    description: '基于 /desktop/index.json 渲染，按版本分组展示 Desktop 发布文件清单。',
     sourceJsonPath: '/desktop/index.json',
   };
 }
@@ -84,6 +120,26 @@ function getStringCandidate(record: Record<string, unknown>, keys: readonly stri
 
     if (typeof value === 'string' && value.trim().length > 0) {
       return value.trim();
+    }
+  }
+
+  return null;
+}
+
+function getNumberCandidate(record: Record<string, unknown>, keys: readonly string[]): number | null {
+  for (const key of keys) {
+    const value = record[key];
+
+    if (typeof value === 'number' && Number.isFinite(value)) {
+      return value;
+    }
+
+    if (typeof value === 'string' && value.trim().length > 0) {
+      const parsed = Number(value);
+
+      if (Number.isFinite(parsed)) {
+        return parsed;
+      }
     }
   }
 
@@ -123,6 +179,24 @@ function formatGeneratedAtLabel(value: string | null): string {
   }).format(new Date(timestamp));
 }
 
+function formatBytes(value: number | null): string | null {
+  if (value === null || value < 0) {
+    return null;
+  }
+
+  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+  let current = value;
+  let unitIndex = 0;
+
+  while (current >= 1024 && unitIndex < units.length - 1) {
+    current /= 1024;
+    unitIndex += 1;
+  }
+
+  const fractionDigits = current >= 100 || unitIndex === 0 ? 0 : current >= 10 ? 1 : 2;
+  return `${current.toFixed(fractionDigits)} ${units[unitIndex]}`;
+}
+
 function normalizeHref(rawHref: string, sourceJsonPath: string): string {
   if (/^https?:\/\//i.test(rawHref)) {
     return rawHref;
@@ -132,7 +206,8 @@ function normalizeHref(rawHref: string, sourceJsonPath: string): string {
     return rawHref;
   }
 
-  return new URL(rawHref, `https://index.hagicode.com${sourceJsonPath}`).pathname;
+  const resolved = new URL(rawHref, `https://index.hagicode.com${sourceJsonPath}`);
+  return `${resolved.pathname}${resolved.search}${resolved.hash}`;
 }
 
 function deriveArtifactLabel(record: Record<string, unknown>, fallbackHref: string | null): string {
@@ -149,45 +224,115 @@ function deriveArtifactLabel(record: Record<string, unknown>, fallbackHref: stri
   return '无直接下载';
 }
 
-function deriveDownloadAction(
-  release: Record<string, unknown>,
+function normalizeArtifactRecord(
+  artifact: Record<string, unknown>,
+  sourceKind: VersionHistoryFileSourceKind,
   sourceJsonPath: string,
-): { label: string; href: string } | null {
-  const directHref = getStringCandidate(release, directDownloadKeys);
+  fallbackPublishedAt: string | null,
+): VersionHistoryFileEntry {
+  const artifactHref = getStringCandidate(artifact, directDownloadKeys);
+  const publishedAt = getStringCandidate(artifact, artifactDateCandidateKeys) ?? fallbackPublishedAt;
+  const sizeBytes = getNumberCandidate(artifact, artifactSizeCandidateKeys);
 
-  if (directHref) {
+  return {
+    label: deriveArtifactLabel(artifact, artifactHref),
+    href: artifactHref ? normalizeHref(artifactHref, sourceJsonPath) : null,
+    sizeBytes,
+    sizeLabel: formatBytes(sizeBytes),
+    publishedAt,
+    publishedLabel: formatDateLabel(publishedAt),
+    sourceKind,
+  };
+}
+
+function normalizeFileArrayEntry(
+  artifact: unknown,
+  sourceJsonPath: string,
+  fallbackPublishedAt: string | null,
+): VersionHistoryFileEntry | null {
+  if (typeof artifact === 'string') {
+    const trimmed = artifact.trim();
+
+    if (!trimmed) {
+      return null;
+    }
+
     return {
-      label: deriveArtifactLabel(release, directHref),
-      href: normalizeHref(directHref, sourceJsonPath),
+      label: trimmed.split('/').at(-1) ?? trimmed,
+      href: normalizeHref(trimmed, sourceJsonPath),
+      sizeBytes: null,
+      sizeLabel: null,
+      publishedAt: fallbackPublishedAt,
+      publishedLabel: formatDateLabel(fallbackPublishedAt),
+      sourceKind: 'files',
     };
   }
 
-  for (const key of artifactCollectionKeys) {
-    const collection = release[key];
+  if (!isRecord(artifact)) {
+    return null;
+  }
+
+  return normalizeArtifactRecord(artifact, 'files', sourceJsonPath, fallbackPublishedAt);
+}
+
+function normalizeReleaseArtifacts(
+  release: Record<string, unknown>,
+  sourceJsonPath: string,
+  fallbackPublishedAt: string | null,
+): VersionHistoryFileEntry[] {
+  const structuredArtifacts = structuredArtifactCollectionKeys.flatMap((collectionKey) => {
+    const collection = release[collectionKey];
 
     if (!Array.isArray(collection)) {
-      continue;
+      return [];
     }
 
-    for (const item of collection) {
-      if (!isRecord(item)) {
-        continue;
-      }
+    return collection
+      .filter(isRecord)
+      .map((artifact) => normalizeArtifactRecord(artifact, collectionKey, sourceJsonPath, fallbackPublishedAt));
+  });
 
-      const artifactHref = getStringCandidate(item, directDownloadKeys) ?? getStringCandidate(item, ['path']);
+  if (structuredArtifacts.length > 0) {
+    return structuredArtifacts;
+  }
 
-      if (!artifactHref) {
-        continue;
-      }
+  if (Array.isArray(release.files)) {
+    const normalizedFiles = release.files
+      .map((artifact) => normalizeFileArrayEntry(artifact, sourceJsonPath, fallbackPublishedAt))
+      .filter((artifact): artifact is VersionHistoryFileEntry => artifact !== null);
 
-      return {
-        label: deriveArtifactLabel(item, artifactHref),
-        href: normalizeHref(artifactHref, sourceJsonPath),
-      };
+    if (normalizedFiles.length > 0) {
+      return normalizedFiles;
     }
   }
 
-  return null;
+  const releaseDownload = getStringCandidate(release, directDownloadKeys);
+
+  if (!releaseDownload) {
+    return [];
+  }
+
+  const releaseSize = getNumberCandidate(release, artifactSizeCandidateKeys);
+
+  return [
+    {
+      label: deriveArtifactLabel(release, releaseDownload),
+      href: normalizeHref(releaseDownload, sourceJsonPath),
+      sizeBytes: releaseSize,
+      sizeLabel: formatBytes(releaseSize),
+      publishedAt: fallbackPublishedAt,
+      publishedLabel: formatDateLabel(fallbackPublishedAt),
+      sourceKind: 'release',
+    },
+  ];
+}
+
+function shouldDisplayFile(source: PackageHistorySource, file: VersionHistoryFileEntry): boolean {
+  if (source !== 'server') {
+    return true;
+  }
+
+  return Boolean(file.href) && file.label.toLowerCase().endsWith('.zip');
 }
 
 function compareSemverLikeDescending(leftVersion: string, rightVersion: string): number {
@@ -266,6 +411,7 @@ function getReleaseCollection(indexPayload: unknown): unknown[] {
 }
 
 function normalizeReleaseRecord(
+  source: PackageHistorySource,
   release: unknown,
   originalIndex: number,
   sourceJsonPath: string,
@@ -273,21 +419,28 @@ function normalizeReleaseRecord(
   const releaseRecord = isRecord(release) ? release : {};
   const version = getStringCandidate(releaseRecord, ['version', 'tag', 'name']) ?? `未命名版本 ${originalIndex + 1}`;
   const publishedAt = getStringCandidate(releaseRecord, releaseDateCandidateKeys);
-  const downloadAction = deriveDownloadAction(releaseRecord, sourceJsonPath);
+  const files = normalizeReleaseArtifacts(releaseRecord, sourceJsonPath, publishedAt).filter((file) =>
+    shouldDisplayFile(source, file),
+  );
+  const primaryFile = files.find((file) => file.href) ?? files[0] ?? null;
+  const downloadableFileCount = files.filter((file) => file.href).length;
 
   return {
     version,
     publishedAt,
     publishedLabel: formatDateLabel(publishedAt),
-    primaryArtifactLabel: downloadAction?.label ?? '无直接下载',
-    hasDirectDownload: Boolean(downloadAction),
+    primaryArtifactLabel: primaryFile?.label ?? (source === 'server' ? '无 ZIP 下载' : '无文件记录'),
+    hasDirectDownload: Boolean(files.find((file) => file.href)),
+    fileCount: files.length,
+    downloadableFileCount,
+    files,
     actions: [
-      ...(downloadAction
+      ...(primaryFile?.href
         ? [
             {
               kind: 'download' as const,
               label: '下载',
-              href: downloadAction.href,
+              href: primaryFile.href,
             },
           ]
         : []),
@@ -313,7 +466,7 @@ export function normalizePackageHistoryIndex(
       ? indexRecord.generatedAt
       : null;
   const releases = getReleaseCollection(indexPayload)
-    .map((release, index) => normalizeReleaseRecord(release, index, meta.sourceJsonPath))
+    .map((release, index) => normalizeReleaseRecord(source, release, index, meta.sourceJsonPath))
     .sort(compareReleaseRecords)
     .map(({ sortTimestamp: _sortTimestamp, originalIndex: _originalIndex, ...release }) => release);
 
