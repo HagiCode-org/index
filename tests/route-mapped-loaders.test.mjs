@@ -24,4 +24,12 @@ test('loadPackageHistory keeps the existing raw JSON contract for server and des
   assert.equal(desktopPage.sourceJsonPath, '/desktop/index.json');
   assert.equal(serverPage.releases.length > 0, true);
   assert.equal(desktopPage.releases.length > 0, true);
+  assert.equal(serverPage.releases[0].fileCount > 0, true);
+  assert.equal(desktopPage.releases[0].fileCount > 0, true);
+  assert.equal(serverPage.releases[0].files.length, serverPage.releases[0].fileCount);
+  assert.equal(desktopPage.releases[0].files.length, desktopPage.releases[0].fileCount);
+  assert.equal(serverPage.releases[0].actions.at(-1)?.href, '/server/index.json');
+  assert.equal(desktopPage.releases[0].actions.at(-1)?.href, '/desktop/index.json');
+  assert.equal(serverPage.releases[0].files[0].href?.startsWith('/server/'), true);
+  assert.equal(desktopPage.releases[0].files[0].href?.startsWith('https://desktop.dl.hagicode.com/'), true);
 });
