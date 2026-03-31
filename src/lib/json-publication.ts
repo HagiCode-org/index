@@ -4,6 +4,7 @@ import path from 'node:path';
 export const routeMappedJsonPaths = [
   '/index-catalog.json',
   '/activity-metrics.json',
+  '/live-broadcast.json',
   '/server/index.json',
   '/desktop/index.json',
 ] as const;
