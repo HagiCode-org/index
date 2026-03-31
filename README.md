@@ -16,17 +16,21 @@
 
 ### 1. Route-mapped JSON：source 在 `src`，公开路由由 Astro 输出
 
-| 公开路由 | 权威源文件 | 生成方式 |
-| --- | --- | --- |
-| `/index-catalog.json` | `src/data/public/index-catalog.json` | `src/pages/index-catalog.json.ts` |
-| `/activity-metrics.json` | `src/data/public/activity-metrics.json` | `src/pages/activity-metrics.json.ts` |
-| `/server/index.json` | `src/data/public/server/index.json` | `src/pages/server/index.json.ts` |
-| `/desktop/index.json` | `src/data/public/desktop/index.json` | `src/pages/desktop/index.json.ts` |
+| 公开路由 | 权威源 | 路由实现 | 类型 |
+| --- | --- | --- | --- |
+| `/index-catalog.json` | `src/data/public/index-catalog.json` | `src/pages/index-catalog.json.ts` | file-backed |
+| `/activity-metrics.json` | `src/data/public/activity-metrics.json` | `src/pages/activity-metrics.json.ts` | file-backed |
+| `/live-broadcast.json` | `src/data/public/live-broadcast.json` | `src/pages/live-broadcast.json.ts` | file-backed |
+| `/server/index.json` | `src/data/public/server/index.json` | `src/pages/server/index.json.ts` | file-backed |
+| `/desktop/index.json` | `src/data/public/desktop/index.json` | `src/pages/desktop/index.json.ts` | file-backed |
+| `/about.json` | `src/data/about/about-source.ts` + `src/assets/about/*` | `src/pages/about.json.ts` | generated |
 
 规则很明确：
 
 - 不要手改 `dist/**` 或尝试在 `public/` 下补这些路由文件。
 - producer 脚本只更新 `src/data/public/**`。
+- `/about.json` 的文字 source-of-truth 固定在 `src/data/about/about-source.ts`，图片 source-of-truth 固定在 `src/assets/about/*`。
+- about 图片必须通过 Astro import 进入 `/about.json`；不要直接写 `/about/*.png`、`/about/*.jpg` 或任何 staging 路径。
 - Astro 构建负责输出稳定、minified 的公开 JSON。
 
 ### 2. 非 route-mapped JSON：仍以 `public/` 或其他 source 目录驱动
@@ -158,6 +162,7 @@ npm install
 npm run sync:presets
 npm run sync:secondary-professions
 npm run sync:character-templates
+npm run verify:json-routes
 npm run validate
 npm test
 npm run update-activity-metrics
@@ -193,6 +198,17 @@ npm run build
 - `activityMetrics` 当前用于 `activity-metrics` 条目，并与 `/activity-metrics.json` 当前快照保持同步
 
 ## 同步流程
+
+### About JSON
+
+1. 在 `src/data/about/about-source.ts` 更新 about 文本、链接、条目 id/type 与图片绑定。
+2. 在 `src/assets/about/` 替换二维码或账号图片资源。
+3. 执行 `npm run validate`、`npm test`、`npm run build`，确认 `/about.json`、图片哈希 URL 与 route 校验全部通过。
+
+约束：
+
+- 不要恢复 `repos/index/about/` 作为影子 source。
+- 不要在 JSON 中手写源图片文件名；公开 `imageUrl` 必须来自 Astro 构建产物。
 
 ### 目录资产（presets）
 
@@ -238,8 +254,9 @@ npm run build
 
 ## 验证说明
 
+- `npm run verify:json-routes`：校验 route-mapped JSON 的公开输出、minify 状态与生成路由契约（含 `/about.json`）。
 - `npm run validate`：构建临时 Astro 输出，并校验 source/build 语义一致、公开路由存在且 JSON 已 minify。
-- `npm test`：覆盖版本历史归一化、按版本分组文件清单、`files[]` 回退、不可下载文件可见性、route-mapped loader 契约、catalog 漂移检测、活动摘要同步、同日重跑、90 天滚动与 pretty JSON 拒绝场景。
+- `npm test`：覆盖版本历史归一化、按版本分组文件清单、`files[]` 回退、不可下载文件可见性、route-mapped loader 契约、catalog 漂移检测、活动摘要同步、同日重跑、90 天滚动、pretty JSON 拒绝与 `/about.json` 结构校验。
 - `npm run build`：生成最终静态站点，并再次验证 route-mapped JSON 输出。
 
 ## 维护边界
