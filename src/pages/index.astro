@@ -1,12 +1,15 @@
 ---
 import Analytics51LA from '@/components/51LAAnalytics.astro';
+import AboutSection from '@/components/AboutSection.astro';
 import IndexCard from '@/components/IndexCard.astro';
 import IndexFooter from '@/components/IndexFooter.astro';
 import IndexHero from '@/components/IndexHero.astro';
+import { loadAboutPayload } from '@/lib/load-about';
 import { loadIndexCatalog } from '@/lib/load-index-catalog';
 import '@/styles/global.css';
 
 const catalog = await loadIndexCatalog();
+const about = loadAboutPayload();
 const pageTitle = 'HagiCode Index';
 const pageDescription = 'index.hagicode.com 的公开 JSON 索引目录，集中托管 presets 等静态清单。';
 const canonicalUrl = 'https://index.hagicode.com/';
@@ -66,6 +69,8 @@ const firstPublishedPath = catalog.entries.find((entry) => entry.status === 'pub
             </div>
           )}
         </section>
+
+        <AboutSection about={about} />
       </main>
 
       <IndexFooter />

@@ -1,0 +1,164 @@
+---
+import type { AboutEntry, AboutPayload } from '@/lib/about-data';
+
+interface Props {
+  about: AboutPayload;
+}
+
+const { about } = Astro.props;
+
+const linkEntries = about.entries.filter((entry): entry is Extract<AboutEntry, { type: 'link' }> => entry.type === 'link');
+const contactEntries = about.entries.filter(
+  (entry): entry is Extract<AboutEntry, { type: 'contact' }> => entry.type === 'contact',
+);
+const imageEntries = about.entries.filter(
+  (entry): entry is Extract<AboutEntry, { type: 'qr' | 'image' }> => entry.type === 'qr' || entry.type === 'image',
+);
+
+const updatedDateLabel = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+}).format(new Date(about.updatedAt));
+
+function getUrlHostLabel(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./u, '');
+  } catch {
+    return url;
+  }
+}
+---
+
+<section class="about-section" aria-labelledby="about-heading">
+  <div class="section-heading">
+    <p class="eyebrow">About Mirror</p>
+    <div>
+      <h2 id="about-heading">联系与社区</h2>
+      <p>首页直接消费与 <code>/about.json</code> 同源的数据，便于人工查看，也便于程序核对镜像是否更新。</p>
+    </div>
+  </div>
+
+  <div class="about-layout">
+    <article class="about-overview-card">
+      <p class="eyebrow">Structured About</p>
+      <div class="about-overview-copy">
+        <p class="about-overview-kicker">主页已接入</p>
+        <p class="about-overview-title">同一份 about 数据，同时供 JSON 与首页使用。</p>
+        <p class="about-overview-text">
+          外部程序仍可读取 <code>/about.json</code>，而维护者现在可直接在首页核对账号、联系方式与二维码资产。
+        </p>
+      </div>
+
+      <dl class="about-summary-grid" aria-label="about 数据概览">
+        <div>
+          <dt>总条目</dt>
+          <dd>{about.entries.length}</dd>
+        </div>
+        <div>
+          <dt>二维码资产</dt>
+          <dd>{imageEntries.length}</dd>
+        </div>
+        <div>
+          <dt>更新日期</dt>
+          <dd>{updatedDateLabel}</dd>
+        </div>
+      </dl>
+
+      <div class="hero-actions">
+        <a class="button button-primary" href="/about.json" target="_blank" rel="noreferrer">
+          打开 about JSON
+        </a>
+        <a class="button button-secondary" href="#about-qrs">
+          查看二维码
+        </a>
+      </div>
+    </article>
+
+    <div class="about-detail-stack">
+      <article class="about-group-card">
+        <div class="about-group-head">
+          <div>
+            <p class="eyebrow">Links</p>
+            <p class="about-group-title">平台入口</p>
+          </div>
+          <p>公开账号与内容分发页，直接跳转原始站点。</p>
+        </div>
+
+        <div class="about-link-grid">
+          {linkEntries.map((entry) => (
+            <a class="about-link-chip" href={entry.url} target="_blank" rel="noreferrer">
+              <span class="about-link-title">{entry.label}</span>
+              <span class="about-link-domain">{getUrlHostLabel(entry.url)}</span>
+            </a>
+          ))}
+        </div>
+      </article>
+
+      <article class="about-group-card">
+        <div class="about-group-head">
+          <div>
+            <p class="eyebrow">Contacts</p>
+            <p class="about-group-title">联络方式</p>
+          </div>
+          <p>账号名、群号与直接加入入口。</p>
+        </div>
+
+        <div class="about-contact-grid">
+          {contactEntries.map((entry) => (
+            <div class="about-contact-card">
+              <p class="about-card-label">{entry.label}</p>
+              <p class="about-contact-value">{entry.value}</p>
+              {entry.description ? <p class="about-card-description">{entry.description}</p> : null}
+              {entry.url ? (
+                <a class="button button-secondary about-inline-action" href={entry.url} target="_blank" rel="noreferrer">
+                  打开入口
+                </a>
+              ) : (
+                <p class="about-inline-note">仅展示账号信息</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </article>
+
+      <article class="about-group-card" id="about-qrs">
+        <div class="about-group-head">
+          <div>
+            <p class="eyebrow">QR Assets</p>
+            <p class="about-group-title">二维码与图片资产</p>
+          </div>
+          <p>与 JSON 中一致的哈希图片 URL，首页可直接预览。</p>
+        </div>
+
+        <div class="about-qr-grid">
+          {imageEntries.map((entry) => (
+            <article class="about-qr-card">
+              <div class="about-qr-frame">
+                <img
+                  src={entry.imageUrl}
+                  width={entry.width}
+                  height={entry.height}
+                  loading="lazy"
+                  alt={entry.alt}
+                />
+              </div>
+              <div class="about-qr-copy">
+                <p class="about-card-label">{entry.label}</p>
+                <p class="about-card-description">{entry.description ?? entry.alt}</p>
+                <p class="about-qr-meta">
+                  {entry.width} x {entry.height}
+                </p>
+              </div>
+              {entry.url ? (
+                <a class="button button-secondary about-inline-action" href={entry.url} target="_blank" rel="noreferrer">
+                  打开链接
+                </a>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

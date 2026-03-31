@@ -59,6 +59,7 @@
   body,
   h1,
   h2,
+  h3,
   p,
   dl,
   dd,
@@ -122,6 +123,9 @@
   .site-header,
   .hero-panel,
   .catalog-section,
+  .about-section,
+  .about-overview-card,
+  .about-group-card,
   .site-footer,
   .index-card,
   .empty-state {
@@ -304,6 +308,7 @@
   }
 
   .catalog-section,
+  .about-section,
   .site-footer,
   .empty-state,
   .index-card {
@@ -312,6 +317,12 @@
 
   .catalog-section {
     padding: 24px;
+  }
+
+  .about-section {
+    padding: 24px;
+    display: grid;
+    gap: 18px;
   }
 
   .section-heading {
@@ -335,6 +346,213 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 18px;
+  }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: 18px;
+    align-items: start;
+  }
+
+  .about-overview-card,
+  .about-group-card {
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(15, 118, 110, 0.14);
+    background: var(--panel-strong);
+  }
+
+  .about-overview-card {
+    padding: 24px;
+    display: grid;
+    gap: 18px;
+    background:
+      radial-gradient(circle at top right, rgba(15, 118, 110, 0.14), transparent 36%),
+      linear-gradient(145deg, rgba(255, 252, 247, 0.98), rgba(234, 244, 241, 0.9));
+  }
+
+  .about-overview-copy {
+    display: grid;
+    gap: 12px;
+  }
+
+  .about-overview-kicker,
+  .about-group-title,
+  .about-link-title,
+  .about-contact-value {
+    font-family: var(--font-display);
+  }
+
+  .about-overview-kicker {
+    font-size: 1.18rem;
+  }
+
+  .about-overview-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 0.98;
+  }
+
+  .about-overview-text,
+  .about-group-head > p,
+  .about-card-description,
+  .about-inline-note,
+  .about-link-domain,
+  .about-qr-meta {
+    color: var(--muted);
+  }
+
+  .about-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .about-summary-grid div,
+  .about-contact-card,
+  .about-link-chip,
+  .about-qr-card {
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(17, 67, 63, 0.1);
+    background: rgba(255, 255, 255, 0.72);
+  }
+
+  .about-summary-grid div {
+    padding: 14px 16px;
+  }
+
+  .about-summary-grid dt,
+  .about-card-label {
+    color: var(--muted);
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .about-summary-grid dd {
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-size: 1.36rem;
+    line-height: 1.1;
+  }
+
+  .about-detail-stack {
+    display: grid;
+    gap: 16px;
+  }
+
+  .about-group-card {
+    padding: 20px;
+    display: grid;
+    gap: 16px;
+  }
+
+  .about-group-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: end;
+  }
+
+  .about-group-head > div {
+    display: grid;
+    gap: 8px;
+  }
+
+  .about-group-title {
+    font-size: 1.55rem;
+    line-height: 1;
+  }
+
+  .about-link-grid,
+  .about-contact-grid,
+  .about-qr-grid {
+    display: grid;
+    gap: 12px;
+  }
+
+  .about-link-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .about-link-chip {
+    display: grid;
+    gap: 6px;
+    padding: 14px 16px;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .about-link-chip:hover,
+  .about-link-chip:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgba(15, 118, 110, 0.24);
+    background: rgba(223, 242, 238, 0.92);
+  }
+
+  .about-link-chip:focus-visible {
+    outline: 2px solid rgba(15, 118, 110, 0.28);
+    outline-offset: 3px;
+  }
+
+  .about-link-title {
+    font-size: 1.08rem;
+  }
+
+  .about-link-domain {
+    font-size: 0.84rem;
+    overflow-wrap: anywhere;
+  }
+
+  .about-contact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .about-contact-card,
+  .about-qr-card {
+    padding: 16px;
+    display: grid;
+    gap: 12px;
+  }
+
+  .about-contact-value {
+    font-size: 1.42rem;
+    line-height: 1.04;
+    overflow-wrap: anywhere;
+  }
+
+  .about-inline-action {
+    width: fit-content;
+  }
+
+  .about-qr-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .about-qr-frame {
+    aspect-ratio: 1;
+    padding: 12px;
+    display: grid;
+    place-items: center;
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at top left, rgba(15, 118, 110, 0.16), transparent 42%),
+      linear-gradient(160deg, rgba(255, 252, 247, 0.96), rgba(218, 240, 236, 0.9));
+  }
+
+  .about-qr-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    box-shadow: 0 16px 30px rgba(47, 34, 24, 0.12);
+  }
+
+  .about-qr-copy {
+    display: grid;
+    gap: 8px;
   }
 
   .index-card {
@@ -703,6 +921,7 @@
 
     .hero-panel,
     .catalog-section,
+    .about-section,
     .site-footer,
     .index-card,
     .empty-state {
@@ -722,6 +941,8 @@
       grid-template-columns: 1fr;
     }
 
+    .about-layout,
+    .about-summary-grid,
     .history-hero-grid,
     .history-latest-meta,
     .activity-summary-grid {
@@ -729,6 +950,11 @@
     }
 
     .section-heading {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .about-group-head {
       align-items: start;
       flex-direction: column;
     }
