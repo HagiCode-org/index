@@ -99,6 +99,75 @@ function buildLiveBroadcastFixture() {
   };
 }
 
+function buildAboutFixture() {
+  return {
+    version: '1.0.0',
+    updatedAt: '2026-03-31T00:00:00.000Z',
+    entries: [
+      {
+        id: 'bilibili',
+        type: 'link',
+        label: 'Bilibili',
+        url: 'https://space.bilibili.com/272265720',
+      },
+      {
+        id: 'xiaohongshu',
+        type: 'contact',
+        label: '小红书',
+        value: '11671904293',
+        url: 'https://www.xiaohongshu.com/user/profile/665e764800000000030320b6',
+      },
+      {
+        id: 'douyin-account',
+        type: 'contact',
+        label: '抖音',
+        value: 'hagicode',
+      },
+      {
+        id: 'douyin-qr',
+        type: 'qr',
+        label: '抖音二维码',
+        imageUrl: '/_astro/douyin.ABC123.png',
+        width: 1061,
+        height: 1059,
+        alt: 'HagiCode 抖音二维码',
+      },
+      {
+        id: 'qq-group',
+        type: 'contact',
+        label: 'QQ群',
+        value: '610394020',
+        url: 'https://qm.qq.com/q/ZWPYvrYRYQ',
+      },
+      {
+        id: 'feishu-group',
+        type: 'qr',
+        label: '飞书群',
+        imageUrl: '/_astro/feishu.XYZ789.png',
+        width: 778,
+        height: 724,
+        alt: 'HagiCode 飞书群二维码',
+        url: 'https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=238gb3f7-6820-43b8-9f1f-e0f2e704a000',
+      },
+      {
+        id: 'discord',
+        type: 'link',
+        label: 'Discord',
+        url: 'https://discord.gg/b5kDHUcUZY',
+      },
+      {
+        id: 'wechat-account',
+        type: 'qr',
+        label: '微信公众号',
+        imageUrl: '/_astro/wechat-account.ZZZ999.jpg',
+        width: 430,
+        height: 430,
+        alt: 'HagiCode 微信公众号二维码',
+      },
+    ],
+  };
+}
+
 function buildCatalogFixture({
   lastUpdated = '2026-03-24T10:00:00.000Z',
   activityMetrics = {
@@ -374,6 +443,7 @@ async function createValidationFixture({
   catalog,
   activityMetrics,
   liveBroadcast = buildLiveBroadcastFixture(),
+  about = buildAboutFixture(),
   libraryData = buildCharacterTemplateLibraryFixtureData(),
 } = {}) {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'index-validate-catalog-'));
@@ -438,6 +508,7 @@ async function createValidationFixture({
   await writeFile(path.join(distDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
   await writeFile(path.join(distDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
   await writeFile(path.join(distDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
+  await writeFile(path.join(distDir, 'about.json'), JSON.stringify(about), 'utf8');
   await writeFile(path.join(distDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'agent-templates', 'index.json'), JSON.stringify({
@@ -515,7 +586,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries and 5 route-mapped JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries and 6 route-mapped JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
@@ -746,6 +817,56 @@ test('catalog validation fails when the live broadcast payload publishes a QR as
       }),
     (error) => {
       assert.match(error.stderr, /Live broadcast qrCode must not publish imageUrl; each site hosts its own QR asset path\./);
+      return true;
+    },
+  );
+});
+
+test('catalog validation fails when the about payload leaks a raw source filename', async () => {
+  const about = buildAboutFixture();
+  const douyinQrEntry = about.entries.find((entry) => entry.id === 'douyin-qr');
+
+  assert.ok(douyinQrEntry, 'douyin-qr fixture entry is required.');
+  douyinQrEntry.imageUrl = '/_astro/douyin.png';
+
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+    about,
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /About entry douyin-qr imageUrl must not leak raw source filenames\./);
+      return true;
+    },
+  );
+});
+
+test('catalog validation fails when the about payload misses required image metadata', async () => {
+  const about = buildAboutFixture();
+  const wechatEntry = about.entries.find((entry) => entry.id === 'wechat-account');
+
+  assert.ok(wechatEntry, 'wechat-account fixture entry is required.');
+  delete wechatEntry.width;
+
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+    about,
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /About entry wechat-account width must be a positive integer\./);
       return true;
     },
   );

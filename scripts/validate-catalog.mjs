@@ -20,13 +20,30 @@ const requiredFields = [
   'status',
 ];
 
-const routeMappedJsonPaths = [
+const fileBackedRouteMappedJsonPaths = [
   '/index-catalog.json',
   '/activity-metrics.json',
   '/live-broadcast.json',
   '/server/index.json',
   '/desktop/index.json',
 ];
+const generatedRouteMappedJsonPaths = ['/about.json'];
+const routeMappedJsonPaths = [
+  ...fileBackedRouteMappedJsonPaths,
+  ...generatedRouteMappedJsonPaths,
+];
+const requiredAboutEntryIds = [
+  'bilibili',
+  'xiaohongshu',
+  'douyin-account',
+  'douyin-qr',
+  'qq-group',
+  'feishu-group',
+  'discord',
+  'wechat-account',
+];
+const aboutSourcePathFragments = ['/about/', 'src/assets/about/'];
+const aboutRawFilenamePattern = /(?:^|\/)(?:douyin\.png|feishu\.png|wechat_account\.jpg|wechat-account\.jpg)$/i;
 
 const expectedHistoryPaths = new Map([
   ['server-packages', '/server/history/'],
@@ -79,6 +96,14 @@ async function readJson(filePath) {
 }
 
 async function assertPublishedRoute(sitePath, publishedRoot) {
+  if (fileBackedRouteMappedJsonPaths.includes(sitePath)) {
+    return assertPublishedFileBackedRoute(sitePath, publishedRoot);
+  }
+
+  return assertPublishedGeneratedRoute(sitePath, publishedRoot);
+}
+
+async function assertPublishedFileBackedRoute(sitePath, publishedRoot) {
   const sourceFile = resolveSourcePath(sitePath);
   const publishedFile = resolvePublishedPath(sitePath, publishedRoot);
   const sourceValue = await readJson(sourceFile);
@@ -91,6 +116,21 @@ async function assertPublishedRoute(sitePath, publishedRoot) {
     isDeepStrictEqual(publishedValue, sourceValue),
     `Published JSON drift detected for ${sitePath}.`,
   );
+  assert(
+    publishedRaw === JSON.stringify(publishedValue),
+    `${sitePath} must be published as stable minified JSON.`,
+  );
+
+  return publishedValue;
+}
+
+async function assertPublishedGeneratedRoute(sitePath, publishedRoot) {
+  const publishedFile = resolvePublishedPath(sitePath, publishedRoot);
+
+  await access(publishedFile);
+  const publishedRaw = await readFile(publishedFile, 'utf8');
+  const publishedValue = JSON.parse(publishedRaw);
+
   assert(
     publishedRaw === JSON.stringify(publishedValue),
     `${sitePath} must be published as stable minified JSON.`,
@@ -142,6 +182,72 @@ function validateLiveBroadcastContract(payload) {
       assert(typeof bundle.time?.[field] === 'string' && bundle.time[field].trim().length > 0, `Live broadcast locale ${locale} time ${field} is required.`);
     }
   }
+}
+
+function validateAboutImageEntry(entry, fieldName) {
+  assert(typeof entry.imageUrl === 'string' && entry.imageUrl.trim().length > 0, `${fieldName} imageUrl is required.`);
+  assert(entry.imageUrl.startsWith('/_astro/'), `${fieldName} imageUrl must point to a published Astro asset URL.`);
+  assert(
+    !aboutSourcePathFragments.some((fragment) => entry.imageUrl.includes(fragment)),
+    `${fieldName} imageUrl must not leak source paths.`,
+  );
+  assert(
+    !aboutRawFilenamePattern.test(entry.imageUrl),
+    `${fieldName} imageUrl must not leak raw source filenames.`,
+  );
+  assert(Number.isInteger(entry.width) && entry.width > 0, `${fieldName} width must be a positive integer.`);
+  assert(Number.isInteger(entry.height) && entry.height > 0, `${fieldName} height must be a positive integer.`);
+  assert(typeof entry.alt === 'string' && entry.alt.trim().length > 0, `${fieldName} alt is required.`);
+}
+
+function validateAboutContract(payload) {
+  assert(payload && typeof payload === 'object' && !Array.isArray(payload), 'About payload must be an object.');
+  assert(payload.version === '1.0.0', 'About payload version must be 1.0.0.');
+  assert(typeof payload.updatedAt === 'string' && payload.updatedAt.trim().length > 0, 'About payload updatedAt is required.');
+  assert(Array.isArray(payload.entries) && payload.entries.length > 0, 'About payload entries must be a non-empty array.');
+
+  const remainingIds = new Set(requiredAboutEntryIds);
+  const seenIds = new Set();
+
+  payload.entries.forEach((entry, index) => {
+    const fieldName = typeof entry?.id === 'string' && entry.id.trim().length > 0
+      ? `About entry ${entry.id}`
+      : `About entry[${index}]`;
+
+    assert(entry && typeof entry === 'object' && !Array.isArray(entry), `${fieldName} must be an object.`);
+    assert(typeof entry.id === 'string' && entry.id.trim().length > 0, `${fieldName} id is required.`);
+    assert(!seenIds.has(entry.id), `About entry ${entry.id} must be unique.`);
+    seenIds.add(entry.id);
+    remainingIds.delete(entry.id);
+    assert(typeof entry.label === 'string' && entry.label.trim().length > 0, `${fieldName} label is required.`);
+    assert(
+      ['link', 'contact', 'qr', 'image'].includes(entry.type),
+      `${fieldName} type must be link, contact, qr, or image.`,
+    );
+
+    if (entry.type === 'link') {
+      assert(typeof entry.url === 'string' && entry.url.trim().length > 0, `${fieldName} url is required.`);
+      return;
+    }
+
+    if (entry.type === 'contact') {
+      assert(typeof entry.value === 'string' && entry.value.trim().length > 0, `${fieldName} value is required.`);
+      if ('url' in entry && entry.url !== undefined) {
+        assert(typeof entry.url === 'string' && entry.url.trim().length > 0, `${fieldName} url must be a non-empty string when present.`);
+      }
+      return;
+    }
+
+    validateAboutImageEntry(entry, fieldName);
+    if ('url' in entry && entry.url !== undefined) {
+      assert(typeof entry.url === 'string' && entry.url.trim().length > 0, `${fieldName} url must be a non-empty string when present.`);
+    }
+  });
+
+  assert(
+    remainingIds.size === 0,
+    `About payload is missing required entries: ${Array.from(remainingIds).join(', ')}.`,
+  );
 }
 
 function validateActivitySummary(value, fieldName) {
@@ -380,6 +486,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   validateLiveBroadcastContract(await assertPublishedRoute('/live-broadcast.json', publishedRoot));
   await assertPublishedRoute('/server/index.json', publishedRoot);
   await assertPublishedRoute('/desktop/index.json', publishedRoot);
+  validateAboutContract(await assertPublishedRoute('/about.json', publishedRoot));
 
   const catalog = publishedCatalog;
   const activityMetricsAsset = await loadActivityMetrics(resolveSourcePath('/activity-metrics.json'));
