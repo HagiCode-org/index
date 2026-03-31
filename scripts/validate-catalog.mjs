@@ -50,6 +50,7 @@ const expectedHistoryPaths = new Map([
   ['desktop-packages', '/desktop/history/'],
 ]);
 const activityEntryId = 'activity-metrics';
+const aboutEntryId = 'about';
 const agentTemplatesEntryId = 'agent-templates';
 const characterTemplatesEntryId = 'character-templates';
 const supportedCharacterTemplateModes = ['curated', 'universal'];
@@ -497,6 +498,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   assert(activityMetricsAsset, 'Activity metrics asset is required.');
 
   let sawActivityEntry = false;
+  let sawAboutEntry = false;
   let sawAgentTemplatesEntry = false;
   let sawCharacterTemplatesEntry = false;
 
@@ -562,6 +564,11 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
       );
     }
 
+    if (entry.id === aboutEntryId) {
+      sawAboutEntry = true;
+      assert(entry.path === '/about.json', 'About entry path must be /about.json.');
+    }
+
     if (entry.id === agentTemplatesEntryId) {
       sawAgentTemplatesEntry = true;
       await validateAgentTemplateManifest(entry, publishedRoot);
@@ -574,6 +581,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   }
 
   assert(sawActivityEntry, 'Catalog must include an activity-metrics entry.');
+  assert(sawAboutEntry, 'Catalog must include an about entry.');
   assert(sawAgentTemplatesEntry, 'Catalog must include an agent-templates entry.');
   assert(sawCharacterTemplatesEntry, 'Catalog must include a character-templates entry.');
 

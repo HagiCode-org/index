@@ -77,6 +77,17 @@
       }
     },
     {
+      "id": "about",
+      "title": "About",
+      "description": "发布 HagiCode 对外联系渠道、社区入口与二维码资源的 canonical JSON 入口。",
+      "path": "/about.json",
+      "category": "contacts",
+      "sourceRepo": "repos/index",
+      "lastUpdated": "2026-03-31T00:00:00.000Z",
+      "status": "published",
+      "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/about"
+    },
+    {
       "id": "secondary-professions",
       "title": "Secondary Profession Catalog",
       "description": "镜像发布系统默认副职业目录的稳定 JSON 入口。",

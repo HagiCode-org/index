@@ -9,12 +9,15 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   const catalog = await loadIndexCatalog();
   const serverEntry = catalog.entries.find((entry) => entry.id === 'server-packages');
   const activityEntry = catalog.entries.find((entry) => entry.id === 'activity-metrics');
+  const aboutEntry = catalog.entries.find((entry) => entry.id === 'about');
 
   assert.ok(serverEntry, 'server-packages entry is required.');
   assert.ok(activityEntry, 'activity-metrics entry is required.');
+  assert.ok(aboutEntry, 'about entry is required.');
   assert.equal(serverEntry.path, '/server/index.json');
   assert.equal(serverEntry.historyPagePath, '/server/history/');
   assert.equal(activityEntry.path, '/activity-metrics.json');
+  assert.equal(aboutEntry.path, '/about.json');
 });
 
 test('loadPackageHistory keeps the existing raw JSON contract for server and desktop history pages', async () => {

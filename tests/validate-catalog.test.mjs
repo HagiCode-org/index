@@ -202,6 +202,17 @@ function buildCatalogFixture({
         activityMetrics,
       },
       {
+        id: 'about',
+        title: 'About',
+        description: '发布 HagiCode 对外联系渠道、社区入口与二维码资源的 canonical JSON 入口。',
+        path: '/about.json',
+        category: 'contacts',
+        sourceRepo: 'repos/index',
+        lastUpdated,
+        status: 'published',
+        sourceUrl: 'https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/about',
+      },
+      {
         id: 'character-templates',
         title: 'Character Templates',
         description: '镜像发布角色模板目录。',
@@ -679,7 +690,17 @@ test('catalog exposes managed server and desktop entries', async () => {
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
   const entryIds = catalog.entries.map((entry) => entry.id);
 
-  assert.deepEqual(entryIds, ['presets-catalog', 'server-packages', 'desktop-packages', 'agent-templates', 'character-templates', 'activity-metrics', 'secondary-professions']);
+  assert.deepEqual(entryIds, ['presets-catalog', 'server-packages', 'desktop-packages', 'agent-templates', 'character-templates', 'activity-metrics', 'about', 'secondary-professions']);
+});
+
+test('catalog exposes about entry at the canonical JSON route', async () => {
+  const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
+  const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
+  const aboutEntry = catalog.entries.find((entry) => entry.id === 'about');
+
+  assert.ok(aboutEntry, 'about entry is required.');
+  assert.equal(aboutEntry.path, '/about.json');
+  assert.equal(aboutEntry.category, 'contacts');
 });
 
 test('managed package entries expose stable history page paths', async () => {
