@@ -23,6 +23,7 @@ const requiredFields = [
 const routeMappedJsonPaths = [
   '/index-catalog.json',
   '/activity-metrics.json',
+  '/live-broadcast.json',
   '/server/index.json',
   '/desktop/index.json',
 ];
@@ -96,6 +97,51 @@ async function assertPublishedRoute(sitePath, publishedRoot) {
   );
 
   return publishedValue;
+}
+
+function validateLiveBroadcastContract(payload) {
+  assert(payload && typeof payload === 'object' && !Array.isArray(payload), 'Live broadcast payload must be an object.');
+  assert(payload.version === '1.0.0', 'Live broadcast payload version must be 1.0.0.');
+  assert(typeof payload.updatedAt === 'string' && payload.updatedAt.length > 0, 'Live broadcast payload updatedAt is required.');
+
+  assert(payload.timezone && typeof payload.timezone === 'object', 'Live broadcast timezone must be an object.');
+  assert(payload.timezone.iana === 'Asia/Shanghai', 'Live broadcast timezone must stay on Asia/Shanghai.');
+  assert(payload.timezone.utcOffsetMinutes === 480, 'Live broadcast timezone offset must stay on UTC+8.');
+
+  assert(payload.schedule && typeof payload.schedule === 'object', 'Live broadcast schedule must be an object.');
+  assert(Array.isArray(payload.schedule.activeWeekdays), 'Live broadcast activeWeekdays must be an array.');
+  assert(Array.isArray(payload.schedule.excludedWeekdays), 'Live broadcast excludedWeekdays must be an array.');
+  assert(payload.schedule.previewStartTime === '18:00', 'Live broadcast previewStartTime must stay 18:00.');
+  assert(payload.schedule.startTime === '20:00', 'Live broadcast startTime must stay 20:00.');
+  assert(payload.schedule.endTime === '21:00', 'Live broadcast endTime must stay 21:00.');
+  assert(payload.schedule.activeWeekdays.includes(0), 'Live broadcast must include Sunday.');
+  assert(payload.schedule.activeWeekdays.includes(6), 'Live broadcast must include Saturday.');
+  assert(payload.schedule.excludedWeekdays.length === 1 && payload.schedule.excludedWeekdays[0] === 4, 'Live broadcast must exclude Thursday only.');
+
+  assert(payload.qrCode && typeof payload.qrCode === 'object', 'Live broadcast qrCode must be an object.');
+  assert(!('imageUrl' in payload.qrCode), 'Live broadcast qrCode must not publish imageUrl; each site hosts its own QR asset path.');
+  assert(Number.isInteger(payload.qrCode.width) && payload.qrCode.width > 0, 'Live broadcast qrCode width must be a positive integer.');
+  assert(Number.isInteger(payload.qrCode.height) && payload.qrCode.height > 0, 'Live broadcast qrCode height must be a positive integer.');
+
+  assert(payload.locales && typeof payload.locales === 'object', 'Live broadcast locales must be an object.');
+
+  for (const locale of ['zh-CN', 'en']) {
+    const bundle = payload.locales[locale];
+    assert(bundle && typeof bundle === 'object', `Live broadcast locale ${locale} must be an object.`);
+    for (const field of ['eyebrow', 'title', 'description']) {
+      assert(typeof bundle[field] === 'string' && bundle[field].trim().length > 0, `Live broadcast locale ${locale} ${field} is required.`);
+    }
+    for (const state of ['upcoming', 'live', 'offline']) {
+      assert(typeof bundle.status?.[state] === 'string' && bundle.status[state].trim().length > 0, `Live broadcast locale ${locale} status ${state} is required.`);
+      assert(typeof bundle.stateCopy?.[state] === 'string' && bundle.stateCopy[state].trim().length > 0, `Live broadcast locale ${locale} stateCopy ${state} is required.`);
+    }
+    for (const field of ['preview', 'live', 'cta']) {
+      assert(typeof bundle.reminder?.[field] === 'string' && bundle.reminder[field].trim().length > 0, `Live broadcast locale ${locale} reminder ${field} is required.`);
+    }
+    for (const field of ['beijingLabel', 'localLabel', 'nextLabel', 'thursdayNote']) {
+      assert(typeof bundle.time?.[field] === 'string' && bundle.time[field].trim().length > 0, `Live broadcast locale ${locale} time ${field} is required.`);
+    }
+  }
 }
 
 function validateActivitySummary(value, fieldName) {
@@ -331,6 +377,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
 
   const publishedCatalog = await assertPublishedRoute('/index-catalog.json', publishedRoot);
   await assertPublishedRoute('/activity-metrics.json', publishedRoot);
+  validateLiveBroadcastContract(await assertPublishedRoute('/live-broadcast.json', publishedRoot));
   await assertPublishedRoute('/server/index.json', publishedRoot);
   await assertPublishedRoute('/desktop/index.json', publishedRoot);
 

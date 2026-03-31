@@ -45,6 +45,60 @@ function buildActivityMetricsFixture({
   };
 }
 
+function buildLiveBroadcastFixture() {
+  return {
+    version: '1.0.0',
+    updatedAt: '2026-03-31T00:00:00.000Z',
+    timezone: {
+      iana: 'Asia/Shanghai',
+      utcOffsetMinutes: 480,
+      label: {
+        'zh-CN': '北京时间（UTC+8）',
+        en: 'Beijing Time (UTC+8)',
+      },
+    },
+    schedule: {
+      activeWeekdays: [0, 1, 2, 3, 5, 6],
+      excludedWeekdays: [4],
+      previewStartTime: '18:00',
+      startTime: '20:00',
+      endTime: '21:00',
+    },
+    qrCode: {
+      width: 201,
+      height: 213,
+      alt: {
+        'zh-CN': 'Hagicode 抖音直播二维码',
+        en: 'Douyin QR code for the Hagicode live broadcast',
+      },
+      fallbackLabel: {
+        'zh-CN': '二维码暂时不可用',
+        en: 'QR image unavailable',
+      },
+    },
+    locales: {
+      'zh-CN': {
+        eyebrow: '直播预告',
+        title: 'Hagicode 每日直播编程间',
+        description: '每天 20:00 按北京时间开播，扫码进入抖音直播间。周四固定停播。',
+        status: { upcoming: '即将开始', live: '正在直播', offline: '暂未开播' },
+        stateCopy: { upcoming: '今晚 20:00 开播，18:00 起会显示直播提醒。', live: '直播已开始，扫码即可进入抖音直播间。', offline: '当前不在直播窗口，页面会自动显示下一场时间。' },
+        reminder: { preview: '直播即将开始', live: '正在直播，扫码观看', cta: '打开二维码' },
+        time: { beijingLabel: '北京时间', localLabel: '你的本地时间', nextLabel: '下一场', thursdayNote: '周四固定停播' },
+      },
+      en: {
+        eyebrow: 'Live Broadcast',
+        title: 'Daily Hagi Live Coding Room',
+        description: 'The recurring Hagi coding stream starts at 20:00 Beijing time. Scan the Douyin QR code to join. Thursday stays offline.',
+        status: { upcoming: 'Upcoming', live: 'Live now', offline: 'Offline' },
+        stateCopy: { upcoming: 'The room starts at 20:00 Beijing time and shows a reminder from 18:00.', live: 'The stream is live right now. Scan the QR code to join the room.', offline: 'The room is outside its active window right now. The next start time stays visible below.' },
+        reminder: { preview: 'Live starts soon', live: 'Now live, scan to watch', cta: 'Open QR' },
+        time: { beijingLabel: 'Beijing time', localLabel: 'Your local time', nextLabel: 'Next stream', thursdayNote: 'Thursday is the weekly off day' },
+      },
+    },
+  };
+}
+
 function buildCatalogFixture({
   lastUpdated = '2026-03-24T10:00:00.000Z',
   activityMetrics = {
@@ -319,6 +373,7 @@ function buildTraitIndexFixture() {
 async function createValidationFixture({
   catalog,
   activityMetrics,
+  liveBroadcast = buildLiveBroadcastFixture(),
   libraryData = buildCharacterTemplateLibraryFixtureData(),
 } = {}) {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'index-validate-catalog-'));
@@ -377,10 +432,12 @@ async function createValidationFixture({
   );
   await writeFile(path.join(routeSourceDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
   await writeFile(path.join(routeSourceDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(routeSourceDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(routeSourceDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
   await writeFile(path.join(distDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
+  await writeFile(path.join(distDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(distDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'agent-templates', 'index.json'), JSON.stringify({
@@ -458,7 +515,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries and 4 route-mapped JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries and 5 route-mapped JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
@@ -580,6 +637,18 @@ test('activity metrics catalog entry mirrors the current raw snapshot summary', 
   });
 });
 
+test('live broadcast source-side contract keeps the stable QR asset and Thursday exclusion', async () => {
+  const liveBroadcastPath = path.join(projectRoot, 'src', 'data', 'public', 'live-broadcast.json');
+  const liveBroadcast = JSON.parse(await readFile(liveBroadcastPath, 'utf8'));
+
+  assert.equal('imageUrl' in liveBroadcast.qrCode, false);
+  assert.deepEqual(liveBroadcast.schedule.excludedWeekdays, [4]);
+  assert.equal(liveBroadcast.schedule.previewStartTime, '18:00');
+  assert.equal(liveBroadcast.schedule.startTime, '20:00');
+  assert.equal(liveBroadcast.schedule.endTime, '21:00');
+  assert.equal(liveBroadcast.locales.en.title, 'Daily Hagi Live Coding Room');
+});
+
 test('catalog exposes agent template discovery entry with the public manifest path', async () => {
   const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
   const manifestPath = path.join(projectRoot, 'public', 'agent-templates', 'index.json');
@@ -652,6 +721,31 @@ test('catalog validation fails when the activity metrics catalog entry drifts fr
         error.stderr,
         /Activity metrics entry lastUpdated must match \/activity-metrics\.json\./,
       );
+      return true;
+    },
+  );
+});
+
+test('catalog validation fails when the live broadcast payload publishes a QR asset URL', async () => {
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+    liveBroadcast: {
+      ...buildLiveBroadcastFixture(),
+      qrCode: {
+        ...buildLiveBroadcastFixture().qrCode,
+        imageUrl: '/live/temporary.png',
+      },
+    },
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /Live broadcast qrCode must not publish imageUrl; each site hosts its own QR asset path\./);
       return true;
     },
   );
