@@ -1,10 +1,14 @@
 export const aboutImageIds = ['douyin', 'feishu', 'wechat-account'] as const;
 
 export type AboutImageId = (typeof aboutImageIds)[number];
+export const aboutRegionPriorities = ['china-first', 'international-first'] as const;
+
+export type AboutRegionPriority = (typeof aboutRegionPriorities)[number];
 
 type AboutBaseEntry = {
   readonly id: string;
   readonly label: string;
+  readonly regionPriority: AboutRegionPriority;
   readonly description?: string;
 };
 
@@ -36,30 +40,41 @@ export interface AboutSourceDocument {
 
 export const aboutSource = {
   version: '1.0.0',
-  updatedAt: '2026-03-31T00:00:00.000Z',
+  updatedAt: '2026-04-01T00:00:00.000Z',
   entries: [
+    {
+      id: 'youtube',
+      type: 'link',
+      label: 'YouTube',
+      regionPriority: 'international-first',
+      url: 'https://www.youtube.com/@hagicode',
+    },
     {
       id: 'bilibili',
       type: 'link',
       label: 'Bilibili',
+      regionPriority: 'china-first',
       url: 'https://space.bilibili.com/272265720',
     },
     {
       id: 'xiaoheihe',
       type: 'link',
       label: '小黑盒',
+      regionPriority: 'china-first',
       url: 'https://www.xiaoheihe.cn/app/user/profile/92527604',
     },
     {
       id: 'infoq',
       type: 'link',
       label: 'InfoQ',
+      regionPriority: 'china-first',
       url: 'https://www.infoq.cn/u/newbe36524/publish',
     },
     {
       id: 'xiaohongshu',
       type: 'contact',
       label: '小红书',
+      regionPriority: 'china-first',
       value: '11671904293',
       url: 'https://www.xiaohongshu.com/user/profile/665e764800000000030320b6',
     },
@@ -67,54 +82,63 @@ export const aboutSource = {
       id: 'segmentfault',
       type: 'link',
       label: '思否',
+      regionPriority: 'china-first',
       url: 'https://segmentfault.com/u/newbe36524',
     },
     {
       id: 'csdn',
       type: 'link',
       label: 'CSDN',
+      regionPriority: 'china-first',
       url: 'https://blog.csdn.net/pianzide1117',
     },
     {
       id: 'tencent-cloud',
       type: 'link',
       label: '腾讯云',
+      regionPriority: 'china-first',
       url: 'https://cloud.tencent.com/developer/user/1583778',
     },
     {
       id: 'oschina',
       type: 'link',
       label: 'OSCHINA',
+      regionPriority: 'china-first',
       url: 'https://my.oschina.net/newbe36524',
     },
     {
       id: 'juejin',
       type: 'link',
       label: '掘金',
+      regionPriority: 'china-first',
       url: 'https://juejin.cn/user/2682464104098654',
     },
     {
       id: 'cnblogs',
       type: 'link',
       label: '博客园',
+      regionPriority: 'china-first',
       url: 'https://www.cnblogs.com/newbe36524',
     },
     {
       id: 'zhihu',
       type: 'link',
       label: '知乎',
+      regionPriority: 'china-first',
       url: 'https://www.zhihu.com/people/newbe36524',
     },
     {
       id: 'douyin-account',
       type: 'contact',
       label: '抖音',
+      regionPriority: 'china-first',
       value: 'hagicode',
     },
     {
       id: 'douyin-qr',
       type: 'qr',
       label: '抖音二维码',
+      regionPriority: 'china-first',
       description: '扫码查看 Hagicode 抖音账号。',
       imageId: 'douyin',
       alt: 'HagiCode 抖音二维码',
@@ -123,6 +147,7 @@ export const aboutSource = {
       id: 'qq-group',
       type: 'contact',
       label: 'QQ群',
+      regionPriority: 'china-first',
       description: '点击链接加入群聊【HagiCode】。',
       value: '610394020',
       url: 'https://qm.qq.com/q/ZWPYvrYRYQ',
@@ -131,6 +156,7 @@ export const aboutSource = {
       id: 'feishu-group',
       type: 'qr',
       label: '飞书群',
+      regionPriority: 'china-first',
       description: 'newbe36524 邀请你加入飞书群。',
       imageId: 'feishu',
       alt: 'HagiCode 飞书群二维码',
@@ -140,36 +166,42 @@ export const aboutSource = {
       id: 'discord',
       type: 'link',
       label: 'Discord',
+      regionPriority: 'international-first',
       url: 'https://discord.gg/b5kDHUcUZY',
     },
     {
       id: 'devto',
       type: 'link',
       label: 'Dev.to',
+      regionPriority: 'international-first',
       url: 'https://dev.to/newbe36524',
     },
     {
       id: 'x',
       type: 'link',
       label: 'X',
+      regionPriority: 'international-first',
       url: 'https://x.com/newbe36524',
     },
     {
       id: 'linkedin',
       type: 'link',
       label: 'LinkedIn',
+      regionPriority: 'international-first',
       url: 'https://www.linkedin.com/in/newbe36524/',
     },
     {
       id: 'facebook',
       type: 'link',
       label: 'Facebook',
+      regionPriority: 'international-first',
       url: 'https://www.facebook.com/people/Justin-Yu/pfbid033bU66WV6A8LHVUp1sDTGFHo6io5NdRQ7ThCj6Euo56FMx76WcVdJ3dMbGbtcoLgCl/',
     },
     {
       id: 'wechat-account',
       type: 'qr',
       label: '微信公众号',
+      regionPriority: 'china-first',
       description: '扫描二维码即可在微信中查看 NEWBE 账号。',
       imageId: 'wechat-account',
       alt: 'HagiCode 微信公众号二维码',

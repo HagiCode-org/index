@@ -102,18 +102,27 @@ function buildLiveBroadcastFixture() {
 function buildAboutFixture() {
   return {
     version: '1.0.0',
-    updatedAt: '2026-03-31T00:00:00.000Z',
+    updatedAt: '2026-04-01T00:00:00.000Z',
     entries: [
+      {
+        id: 'youtube',
+        type: 'link',
+        label: 'YouTube',
+        regionPriority: 'international-first',
+        url: 'https://www.youtube.com/@hagicode',
+      },
       {
         id: 'bilibili',
         type: 'link',
         label: 'Bilibili',
+        regionPriority: 'china-first',
         url: 'https://space.bilibili.com/272265720',
       },
       {
         id: 'xiaohongshu',
         type: 'contact',
         label: '小红书',
+        regionPriority: 'china-first',
         value: '11671904293',
         url: 'https://www.xiaohongshu.com/user/profile/665e764800000000030320b6',
       },
@@ -121,12 +130,14 @@ function buildAboutFixture() {
         id: 'douyin-account',
         type: 'contact',
         label: '抖音',
+        regionPriority: 'china-first',
         value: 'hagicode',
       },
       {
         id: 'douyin-qr',
         type: 'qr',
         label: '抖音二维码',
+        regionPriority: 'china-first',
         imageUrl: '/_astro/douyin.ABC123.png',
         width: 1061,
         height: 1059,
@@ -136,6 +147,7 @@ function buildAboutFixture() {
         id: 'qq-group',
         type: 'contact',
         label: 'QQ群',
+        regionPriority: 'china-first',
         value: '610394020',
         url: 'https://qm.qq.com/q/ZWPYvrYRYQ',
       },
@@ -143,6 +155,7 @@ function buildAboutFixture() {
         id: 'feishu-group',
         type: 'qr',
         label: '飞书群',
+        regionPriority: 'china-first',
         imageUrl: '/_astro/feishu.XYZ789.png',
         width: 778,
         height: 724,
@@ -153,12 +166,14 @@ function buildAboutFixture() {
         id: 'discord',
         type: 'link',
         label: 'Discord',
+        regionPriority: 'international-first',
         url: 'https://discord.gg/b5kDHUcUZY',
       },
       {
         id: 'wechat-account',
         type: 'qr',
         label: '微信公众号',
+        regionPriority: 'china-first',
         imageUrl: '/_astro/wechat-account.ZZZ999.jpg',
         width: 430,
         height: 430,
@@ -888,6 +903,31 @@ test('catalog validation fails when the about payload misses required image meta
       }),
     (error) => {
       assert.match(error.stderr, /About entry wechat-account width must be a positive integer\./);
+      return true;
+    },
+  );
+});
+
+test('catalog validation fails when the about payload misses a region priority marker', async () => {
+  const about = buildAboutFixture();
+  const discordEntry = about.entries.find((entry) => entry.id === 'discord');
+
+  assert.ok(discordEntry, 'discord fixture entry is required.');
+  delete discordEntry.regionPriority;
+
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+    about,
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /About entry discord regionPriority must be china-first or international-first\./);
       return true;
     },
   );

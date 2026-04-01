@@ -51,6 +51,7 @@ test('live broadcast route-mapped JSON keeps the canonical schedule contract', a
 
 test('about route-mapped JSON loads the canonical structured about contract', async () => {
   const about = await loadRouteMappedJson('/about.json');
+  const youtubeEntry = about.entries.find((entry) => entry.id === 'youtube');
   const xiaohongshuEntry = about.entries.find((entry) => entry.id === 'xiaohongshu');
   const douyinQrEntry = about.entries.find((entry) => entry.id === 'douyin-qr');
   const wechatEntry = about.entries.find((entry) => entry.id === 'wechat-account');
@@ -58,15 +59,23 @@ test('about route-mapped JSON loads the canonical structured about contract', as
   assert.equal(about.version, '1.0.0');
   assert.equal(typeof about.updatedAt, 'string');
   assert.equal(Array.isArray(about.entries), true);
+  assert.ok(youtubeEntry, 'youtube entry is required.');
   assert.ok(xiaohongshuEntry, 'xiaohongshu entry is required.');
   assert.ok(douyinQrEntry, 'douyin-qr entry is required.');
   assert.ok(wechatEntry, 'wechat-account entry is required.');
+  assert.equal(youtubeEntry.type, 'link');
+  assert.equal(youtubeEntry.label, 'YouTube');
+  assert.equal(youtubeEntry.regionPriority, 'international-first');
+  assert.equal(youtubeEntry.url, 'https://www.youtube.com/@hagicode');
   assert.equal(xiaohongshuEntry.type, 'contact');
+  assert.equal(xiaohongshuEntry.regionPriority, 'china-first');
   assert.equal(xiaohongshuEntry.value, '11671904293');
   assert.equal(douyinQrEntry.type, 'qr');
+  assert.equal(douyinQrEntry.regionPriority, 'china-first');
   assert.match(douyinQrEntry.imageUrl, /^\/_astro\/.+\.(png|jpg)$/);
   assert.equal(Number.isInteger(douyinQrEntry.width) && douyinQrEntry.width > 0, true);
   assert.equal(Number.isInteger(douyinQrEntry.height) && douyinQrEntry.height > 0, true);
   assert.equal(typeof douyinQrEntry.alt, 'string');
   assert.equal(wechatEntry.type, 'qr');
+  assert.equal(wechatEntry.regionPriority, 'china-first');
 });

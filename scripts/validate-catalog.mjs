@@ -33,6 +33,7 @@ const routeMappedJsonPaths = [
   ...generatedRouteMappedJsonPaths,
 ];
 const requiredAboutEntryIds = [
+  'youtube',
   'bilibili',
   'xiaohongshu',
   'douyin-account',
@@ -42,6 +43,7 @@ const requiredAboutEntryIds = [
   'discord',
   'wechat-account',
 ];
+const aboutRegionPriorities = ['china-first', 'international-first'];
 const aboutSourcePathFragments = ['/about/', 'src/assets/about/'];
 const aboutRawFilenamePattern = /(?:^|\/)(?:douyin\.png|feishu\.png|wechat_account\.jpg|wechat-account\.jpg)$/i;
 
@@ -221,6 +223,10 @@ function validateAboutContract(payload) {
     seenIds.add(entry.id);
     remainingIds.delete(entry.id);
     assert(typeof entry.label === 'string' && entry.label.trim().length > 0, `${fieldName} label is required.`);
+    assert(
+      typeof entry.regionPriority === 'string' && aboutRegionPriorities.includes(entry.regionPriority),
+      `${fieldName} regionPriority must be ${aboutRegionPriorities.join(' or ')}.`,
+    );
     assert(
       ['link', 'contact', 'qr', 'image'].includes(entry.type),
       `${fieldName} type must be link, contact, qr, or image.`,

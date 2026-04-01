@@ -1,4 +1,10 @@
-import { aboutSource, type AboutImageId, type AboutSourceEntry } from '@/data/about/about-source';
+import {
+  aboutRegionPriorities,
+  aboutSource,
+  type AboutImageId,
+  type AboutRegionPriority,
+  type AboutSourceEntry,
+} from '@/data/about/about-source';
 
 export interface AboutImageAsset {
   readonly src: string;
@@ -12,6 +18,7 @@ type AboutBaseEntry = {
   readonly id: string;
   readonly type: AboutSourceEntry['type'];
   readonly label: string;
+  readonly regionPriority: AboutRegionPriority;
   readonly description?: string;
 };
 
@@ -52,6 +59,13 @@ function assertNonEmptyString(value: unknown, fieldName: string): asserts value 
 
 function assertPositiveInteger(value: unknown, fieldName: string): asserts value is number {
   assert(Number.isInteger(value) && Number(value) > 0, `${fieldName} must be a positive integer.`);
+}
+
+function assertRegionPriority(value: unknown, fieldName: string): asserts value is AboutRegionPriority {
+  assert(
+    typeof value === 'string' && aboutRegionPriorities.includes(value as AboutRegionPriority),
+    `${fieldName} must be one of ${aboutRegionPriorities.join(', ')}.`,
+  );
 }
 
 function withOptionalDescription<T extends object>(entry: T, fieldName: string) {
@@ -96,6 +110,7 @@ function normalizeImageEntry(
     id: entry.id,
     type: entry.type,
     label: entry.label,
+    regionPriority: entry.regionPriority,
     ...withOptionalDescription(entry, entry.id),
     ...withOptionalUrl(entry, entry.id),
     imageUrl: imageAsset.src,
@@ -114,6 +129,7 @@ export function buildAboutPayload(imageAssets: AboutImageAssets): AboutPayload {
   const entries = aboutSource.entries.map((entry, index): AboutEntry => {
     assertNonEmptyString(entry.id, `about.entries[${index}].id`);
     assertNonEmptyString(entry.label, `about.entries[${index}].label`);
+    assertRegionPriority(entry.regionPriority, `${entry.id}.regionPriority`);
     assert(!seenIds.has(entry.id), `Duplicate about entry id detected: ${entry.id}.`);
     seenIds.add(entry.id);
 
@@ -123,6 +139,7 @@ export function buildAboutPayload(imageAssets: AboutImageAssets): AboutPayload {
         id: entry.id,
         type: entry.type,
         label: entry.label,
+        regionPriority: entry.regionPriority,
         ...withOptionalDescription(entry, entry.id),
         url: entry.url,
       };
@@ -134,6 +151,7 @@ export function buildAboutPayload(imageAssets: AboutImageAssets): AboutPayload {
         id: entry.id,
         type: entry.type,
         label: entry.label,
+        regionPriority: entry.regionPriority,
         ...withOptionalDescription(entry, entry.id),
         ...withOptionalUrl(entry, entry.id),
         value: entry.value,
