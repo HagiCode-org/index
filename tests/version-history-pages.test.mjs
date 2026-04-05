@@ -7,6 +7,36 @@ import { normalizePackageHistoryIndex } from '../src/lib/load-package-history.ts
 
 const projectRoot = path.resolve(import.meta.dirname, '..');
 const publishedRoot = path.resolve(projectRoot, process.env.INDEX_BUILD_ROOT ?? 'dist');
+const structuredSourceLabels = {
+  official: '官网下载',
+  'github-release': 'GitHub Release',
+};
+
+function collectStructuredSourceLabels(indexPayload) {
+  const labels = new Set();
+  const versions = Array.isArray(indexPayload?.versions) ? indexPayload.versions : [];
+
+  for (const version of versions) {
+    const assets = Array.isArray(version?.assets) ? version.assets : [];
+    for (const asset of assets) {
+      const downloadSources = Array.isArray(asset?.downloadSources) ? asset.downloadSources : [];
+      for (const source of downloadSources) {
+        if (!source || typeof source !== 'object') {
+          continue;
+        }
+
+        const kind = typeof source.kind === 'string' ? source.kind.toLowerCase() : '';
+        const fallbackLabel = typeof source.label === 'string' ? source.label : null;
+        const resolvedLabel = structuredSourceLabels[kind] ?? fallbackLabel;
+        if (resolvedLabel) {
+          labels.add(resolvedLabel);
+        }
+      }
+    }
+  }
+
+  return [...labels];
+}
 
 test('server history page normalization only keeps downloadable zip files while preserving newest-first ordering', () => {
   const page = normalizePackageHistoryIndex('server', {
@@ -206,12 +236,23 @@ test('history page normalization keeps one file row while exposing multiple stru
   );
 });
 
-test('history page build renders multi-source buttons without inflating file counts', async () => {
+test('history page build reflects current structured source labels when present', async () => {
   const serverHistory = await readFile(path.join(publishedRoot, 'server', 'history', 'index.html'), 'utf8');
   const desktopHistory = await readFile(path.join(publishedRoot, 'desktop', 'history', 'index.html'), 'utf8');
+  const serverIndex = JSON.parse(await readFile(path.join(projectRoot, 'src', 'data', 'public', 'server', 'index.json'), 'utf8'));
+  const desktopIndex = JSON.parse(await readFile(path.join(projectRoot, 'src', 'data', 'public', 'desktop', 'index.json'), 'utf8'));
+  const serverStructuredLabels = collectStructuredSourceLabels(serverIndex);
+  const desktopStructuredLabels = collectStructuredSourceLabels(desktopIndex);
 
-  assert.match(serverHistory, /GitHub Release/);
-  assert.match(serverHistory, /官网下载/);
   assert.match(serverHistory, /个 ZIP 包/);
-  assert.match(desktopHistory, /GitHub Release/);
+  assert.match(serverHistory, /多下载源/);
+  assert.match(desktopHistory, /多下载源/);
+
+  for (const label of serverStructuredLabels) {
+    assert.match(serverHistory, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+
+  for (const label of desktopStructuredLabels) {
+    assert.match(desktopHistory, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
 });
