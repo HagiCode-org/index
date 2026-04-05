@@ -12,8 +12,8 @@ const updatedSummary = page.generatedAt ? `索引快照更新时间：${page.gen
 const historyKicker = page.source === 'server' ? '按版本分组的 ZIP 下载记录' : '按版本分组的完整发布记录';
 const historyIntro =
   page.source === 'server'
-    ? '每个版本只展示可直接下载的 ZIP 包；其余产物仍可通过原始 JSON 追溯。'
-    : '每个版本单独成组，完整展示全部已知文件；缺失下载地址时仍保留可见条目与原始 JSON 入口。';
+    ? '每个版本只展示可直接下载的 ZIP 包；若索引提供多下载源，会在同一文件行展示多个入口。'
+    : '每个版本单独成组，完整展示全部已知文件；若索引提供多下载源，会按同一文件分组展示。';
 const sourceKindLabels: Record<VersionHistoryFileEntry['sourceKind'], string> = {
   release: 'release',
   assets: 'assets',
@@ -33,6 +33,14 @@ function formatFileMeta(file: VersionHistoryFileEntry): string {
 
   parts.push(file.publishedAt ? file.publishedLabel : '时间未知');
   return parts.join(' · ');
+}
+
+function getPrimaryFileActionLabel(file: VersionHistoryFileEntry): string {
+  if (file.sources.length === 1) {
+    return file.sources[0].label;
+  }
+
+  return '下载';
 }
 ---
 
@@ -166,9 +174,22 @@ function formatFileMeta(file: VersionHistoryFileEntry): string {
                       <p class="history-file-name">{file.label}</p>
                       <p class="history-file-meta">{formatFileMeta(file)}</p>
                     </div>
-                    {file.href ? (
+                    {file.sources.length > 0 ? (
+                      <div class="history-row-actions history-file-actions" aria-label={`${file.label} 下载来源`}>
+                        {file.sources.map((source, index) => (
+                          <a
+                            class={`button ${index === 0 ? 'button-primary' : 'button-secondary'} history-file-action`}
+                            href={source.href}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {source.label}
+                          </a>
+                        ))}
+                      </div>
+                    ) : file.href ? (
                       <a class="button button-primary history-file-action" href={file.href} target="_blank" rel="noreferrer">
-                        下载
+                        {getPrimaryFileActionLabel(file)}
                       </a>
                     ) : (
                       <span class="button button-disabled history-file-action" aria-disabled="true">

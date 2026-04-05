@@ -9,6 +9,13 @@ export interface VersionHistoryAction {
   href: string;
 }
 
+export interface VersionHistoryDownloadSource {
+  kind: string;
+  label: string;
+  href: string;
+  primary: boolean;
+}
+
 export interface VersionHistoryFileEntry {
   label: string;
   href: string | null;
@@ -17,6 +24,7 @@ export interface VersionHistoryFileEntry {
   publishedAt: string | null;
   publishedLabel: string;
   sourceKind: VersionHistoryFileSourceKind;
+  sources: VersionHistoryDownloadSource[];
 }
 
 export interface VersionHistoryRecord {
@@ -91,6 +99,10 @@ const artifactDateCandidateKeys = [
   'created_at',
 ] as const;
 const artifactSizeCandidateKeys = ['size', 'fileSize', 'contentLength', 'length', 'bytes'] as const;
+const structuredDownloadSourceLabels: Record<string, string> = {
+  official: '官网下载',
+  'github-release': 'GitHub Release',
+};
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
@@ -140,6 +152,18 @@ function getNumberCandidate(record: Record<string, unknown>, keys: readonly stri
       if (Number.isFinite(parsed)) {
         return parsed;
       }
+    }
+  }
+
+  return null;
+}
+
+function getBooleanCandidate(record: Record<string, unknown>, keys: readonly string[]): boolean | null {
+  for (const key of keys) {
+    const value = record[key];
+
+    if (typeof value === 'boolean') {
+      return value;
     }
   }
 
@@ -230,18 +254,22 @@ function normalizeArtifactRecord(
   sourceJsonPath: string,
   fallbackPublishedAt: string | null,
 ): VersionHistoryFileEntry {
-  const artifactHref = getStringCandidate(artifact, directDownloadKeys);
+  const structuredSources = normalizeStructuredDownloadSources(artifact, sourceJsonPath);
+  const primaryStructuredSource = structuredSources.find((source) => source.primary) ?? structuredSources[0] ?? null;
+  const fallbackHref = getStringCandidate(artifact, directDownloadKeys);
   const publishedAt = getStringCandidate(artifact, artifactDateCandidateKeys) ?? fallbackPublishedAt;
   const sizeBytes = getNumberCandidate(artifact, artifactSizeCandidateKeys);
+  const artifactHref = primaryStructuredSource?.href ?? (fallbackHref ? normalizeHref(fallbackHref, sourceJsonPath) : null);
 
   return {
     label: deriveArtifactLabel(artifact, artifactHref),
-    href: artifactHref ? normalizeHref(artifactHref, sourceJsonPath) : null,
+    href: artifactHref,
     sizeBytes,
     sizeLabel: formatBytes(sizeBytes),
     publishedAt,
     publishedLabel: formatDateLabel(publishedAt),
     sourceKind,
+    sources: structuredSources,
   };
 }
 
@@ -265,6 +293,7 @@ function normalizeFileArrayEntry(
       publishedAt: fallbackPublishedAt,
       publishedLabel: formatDateLabel(fallbackPublishedAt),
       sourceKind: 'files',
+      sources: [],
     };
   }
 
@@ -323,8 +352,57 @@ function normalizeReleaseArtifacts(
       publishedAt: fallbackPublishedAt,
       publishedLabel: formatDateLabel(fallbackPublishedAt),
       sourceKind: 'release',
+      sources: [],
     },
   ];
+}
+
+function normalizeStructuredDownloadSources(
+  artifact: Record<string, unknown>,
+  sourceJsonPath: string,
+): VersionHistoryDownloadSource[] {
+  const rawSources = artifact.downloadSources;
+  if (!Array.isArray(rawSources)) {
+    return [];
+  }
+
+  const deduped = new Map<string, VersionHistoryDownloadSource>();
+  for (const rawSource of rawSources) {
+    if (!isRecord(rawSource)) {
+      continue;
+    }
+
+    const href = getStringCandidate(rawSource, ['url', 'href']);
+    if (!href) {
+      continue;
+    }
+
+    const normalizedHref = normalizeHref(href, sourceJsonPath);
+    const kind = getStringCandidate(rawSource, ['kind'])?.toLowerCase() ?? 'download';
+    const label = structuredDownloadSourceLabels[kind]
+      ?? getStringCandidate(rawSource, ['label', 'name'])
+      ?? kind;
+    const normalizedSource: VersionHistoryDownloadSource = {
+      kind,
+      label,
+      href: normalizedHref,
+      primary: getBooleanCandidate(rawSource, ['primary']) ?? false,
+    };
+    const dedupeKey = normalizedHref.toLowerCase();
+    const existing = deduped.get(dedupeKey);
+
+    if (!existing || (!existing.primary && normalizedSource.primary)) {
+      deduped.set(dedupeKey, normalizedSource);
+    }
+  }
+
+  return [...deduped.values()].sort((left, right) => {
+    if (left.primary !== right.primary) {
+      return left.primary ? -1 : 1;
+    }
+
+    return left.label.localeCompare(right.label, 'zh-CN', { sensitivity: 'base' });
+  });
 }
 
 function shouldDisplayFile(source: PackageHistorySource, file: VersionHistoryFileEntry): boolean {

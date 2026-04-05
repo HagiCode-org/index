@@ -864,6 +864,14 @@
     min-width: 124px;
   }
 
+  .history-file-actions {
+    justify-content: flex-end;
+  }
+
+  .history-file-actions .history-file-action {
+    min-width: 140px;
+  }
+
   .history-release-empty {
     display: grid;
     gap: 6px;

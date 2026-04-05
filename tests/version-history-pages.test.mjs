@@ -1,7 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import path from 'node:path';
+import { readFile } from 'node:fs/promises';
 
 import { normalizePackageHistoryIndex } from '../src/lib/load-package-history.ts';
+
+const projectRoot = path.resolve(import.meta.dirname, '..');
+const publishedRoot = path.resolve(projectRoot, process.env.INDEX_BUILD_ROOT ?? 'dist');
 
 test('server history page normalization only keeps downloadable zip files while preserving newest-first ordering', () => {
   const page = normalizePackageHistoryIndex('server', {
@@ -154,4 +159,59 @@ test('history page normalization prefers directUrl over relative path for struct
     page.releases[0].files[0].href,
     'https://desktop.dl.hagicode.com/v4.0.0/Hagicode.Desktop.4.0.0.exe',
   );
+});
+
+test('history page normalization keeps one file row while exposing multiple structured download sources', () => {
+  const page = normalizePackageHistoryIndex('server', {
+    versions: [
+      {
+        version: 'v5.0.0',
+        publishedAt: '2026-04-01T10:00:00.000Z',
+        assets: [
+          {
+            name: 'server-v5.0.0.zip',
+            directUrl: 'https://server.dl.hagicode.com/v5.0.0/server-v5.0.0.zip',
+            downloadSources: [
+              {
+                kind: 'official',
+                label: 'Official',
+                url: 'https://server.dl.hagicode.com/v5.0.0/server-v5.0.0.zip',
+                primary: true,
+                webSeed: true,
+              },
+              {
+                kind: 'github-release',
+                label: 'GitHub Release',
+                url: 'https://github.com/HagiCode-org/releases/releases/download/v5.0.0/server-v5.0.0.zip',
+                primary: false,
+                webSeed: true,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  });
+
+  assert.equal(page.releases[0].fileCount, 1);
+  assert.equal(page.releases[0].downloadableFileCount, 1);
+  assert.equal(page.releases[0].files[0].sources.length, 2);
+  assert.deepEqual(
+    page.releases[0].files[0].sources.map((source) => source.label),
+    ['官网下载', 'GitHub Release'],
+  );
+  assert.equal(
+    page.releases[0].files[0].href,
+    'https://server.dl.hagicode.com/v5.0.0/server-v5.0.0.zip',
+  );
+});
+
+test('history page build renders multi-source buttons without inflating file counts', async () => {
+  const serverHistory = await readFile(path.join(publishedRoot, 'server', 'history', 'index.html'), 'utf8');
+  const desktopHistory = await readFile(path.join(publishedRoot, 'desktop', 'history', 'index.html'), 'utf8');
+
+  assert.match(serverHistory, /GitHub Release/);
+  assert.match(serverHistory, /官网下载/);
+  assert.match(serverHistory, /个 ZIP 包/);
+  assert.match(desktopHistory, /GitHub Release/);
 });
