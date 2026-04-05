@@ -62,6 +62,8 @@
 - 每个版本页块会完整暴露该版本的全部已知文件，而不是只展示单一主要资源。
 - 结构化资源优先级：`assets[]`、`downloads[]`、`artifacts[]`；若都不存在，再回退到 `files[]`；最后才回退到 release 顶层 `directUrl` / `downloadUrl`。
 - 文件下载地址候选字段：`directUrl`、`downloadUrl`、`url`、`downloadURL`、`download_url`、`assetUrl`、`browserDownloadUrl`、`href`、`path`。
+- 若单个文件含 `downloadSources[]`，历史页会在同一文件行渲染多个来源按钮；`fileCount` 与 `downloadableFileCount` 仍按文件而非来源计数。
+- 当前内置来源标签：`official` → `官网下载`，`github-release` → `GitHub Release`。
 - 相对 `path` 会基于对应的 `/server/index.json` 或 `/desktop/index.json` 归一化为稳定站内链接。
 - 缺少发布日期时显示 `发布日期未知`。
 - 文件缺少下载入口时仍会显示该条目，并以不可下载状态呈现；版本分组继续保留 `原始 JSON` 兜底动作。
