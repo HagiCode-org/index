@@ -1,11 +1,14 @@
 # HagiCode Index
 
-这是 `https://index.hagicode.com` 的独立 Astro 静态站点。它负责托管公开 JSON 资产，也负责生成目录首页与版本历史页。
+这是 `https://index.hagicode.com` 的独立 Astro 静态站点。它负责托管公开 JSON 资产、站点门户首页，以及数据镜像页与版本历史页。
 
 ## 站点职责
 
 - 托管公开 JSON 索引与静态资源。不提供服务端 API。
-- 用 `src/data/public/index-catalog.json` 作为首页展示与外部程序发现索引的权威源文件，并由 Astro 在构建期发布为 `/index-catalog.json`。
+- 根路由 `/` 现在是 HagiCode 站点导航门户，集中展示主站、文档、Builder、Soul、Trait 与数据镜像入口。
+- `/data/` 承接旧首页的人类可读数据内容，继续展示 catalog 卡片、about 镜像与原始 JSON 动作。
+- 用 `src/data/public/sites.json` 作为门户站点入口的权威源文件，并由 Astro 在构建期发布为 `/sites.json`。
+- 用 `src/data/public/index-catalog.json` 作为数据镜像页展示与外部程序发现 JSON 资产的权威源文件，并由 Astro 在构建期发布为 `/index-catalog.json`。
 - 为 `HagiCode Server` 与 `HagiCode Desktop` 生成独立版本历史页：`/server/history/` 与 `/desktop/history/`。
 - 维护 `activity-metrics` 快照与 catalog 摘要，并保持 `/activity-metrics.json` 路由稳定。
 - 保持既有 JSON URL 不变，例如 `/index-catalog.json`、`/activity-metrics.json`、`/server/index.json`、`/desktop/index.json`、`/presets/index.json`。
@@ -19,6 +22,7 @@
 | 公开路由 | 权威源 | 路由实现 | 类型 |
 | --- | --- | --- | --- |
 | `/index-catalog.json` | `src/data/public/index-catalog.json` | `src/pages/index-catalog.json.ts` | file-backed |
+| `/sites.json` | `src/data/public/sites.json` | `src/pages/sites.json.ts` | file-backed |
 | `/activity-metrics.json` | `src/data/public/activity-metrics.json` | `src/pages/activity-metrics.json.ts` | file-backed |
 | `/live-broadcast.json` | `src/data/public/live-broadcast.json` | `src/pages/live-broadcast.json.ts` | file-backed |
 | `/server/index.json` | `src/data/public/server/index.json` | `src/pages/server/index.json.ts` | file-backed |
@@ -32,6 +36,11 @@
 - `/about.json` 的文字 source-of-truth 固定在 `src/data/about/about-source.ts`，图片 source-of-truth 固定在 `src/assets/about/*`。
 - about 图片必须通过 Astro import 进入 `/about.json`；不要直接写 `/about/*.png`、`/about/*.jpg` 或任何 staging 路径。
 - Astro 构建负责输出稳定、minified 的公开 JSON。
+
+`/sites.json` 与 `/index-catalog.json` 的职责不同：
+
+- `/sites.json`：门户站点目录。描述用户应该前往哪些生产站点或站内稳定路径。
+- `/index-catalog.json`：公开 JSON 资产目录。描述程序和维护者需要核对的 JSON 入口，不混入外站导航语义。
 
 ### 2. 非 route-mapped JSON：仍以 `public/` 或其他 source 目录驱动
 
@@ -258,7 +267,7 @@ npm run build
 
 - `npm run verify:json-routes`：校验 route-mapped JSON 的公开输出、minify 状态与生成路由契约（含 `/about.json`）。
 - `npm run validate`：构建临时 Astro 输出，并校验 source/build 语义一致、公开路由存在且 JSON 已 minify。
-- `npm test`：覆盖版本历史归一化、按版本分组文件清单、`files[]` 回退、不可下载文件可见性、route-mapped loader 契约、catalog 漂移检测、活动摘要同步、同日重跑、90 天滚动、pretty JSON 拒绝与 `/about.json` 结构校验。
+- `npm test`：覆盖版本历史归一化、按版本分组文件清单、`files[]` 回退、不可下载文件可见性、route-mapped loader 契约、portal/data 页分流、`/sites.json` 与 `/index-catalog.json` 的职责校验、catalog 漂移检测、活动摘要同步、同日重跑、90 天滚动、pretty JSON 拒绝与 `/about.json` 结构校验。
 - `npm run build`：生成最终静态站点，并再次验证 route-mapped JSON 输出。
 
 ## 维护边界
