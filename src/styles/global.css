@@ -122,12 +122,15 @@
 
   .site-header,
   .hero-panel,
+  .portal-section,
+  .portal-group-card,
   .catalog-section,
   .about-section,
   .about-overview-card,
   .about-group-card,
   .site-footer,
   .index-card,
+  .portal-site-card,
   .empty-state {
     backdrop-filter: blur(18px);
     background: var(--panel);
@@ -138,10 +141,10 @@
   .site-header {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 16px;
     padding: 16px 20px;
     border-radius: 999px;
-    max-width: fit-content;
     margin-bottom: 24px;
   }
 
@@ -167,6 +170,40 @@
     font-size: 0.92rem;
   }
 
+  .site-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .header-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(17, 67, 63, 0.12);
+    color: var(--muted);
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .header-link:hover,
+  .header-link:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgba(15, 118, 110, 0.24);
+    background: rgba(223, 242, 238, 0.9);
+  }
+
+  .header-link:focus-visible {
+    outline: 2px solid rgba(15, 118, 110, 0.28);
+    outline-offset: 3px;
+  }
+
   .page-content {
     display: grid;
     gap: 24px;
@@ -189,6 +226,12 @@
     height: 240px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(15, 118, 110, 0.22), transparent 72%);
+  }
+
+  .portal-hero::after {
+    width: 320px;
+    height: 320px;
+    inset: auto -56px -108px auto;
   }
 
   .eyebrow,
@@ -308,14 +351,18 @@
   }
 
   .catalog-section,
+  .portal-section,
   .about-section,
   .site-footer,
   .empty-state,
-  .index-card {
+  .index-card,
+  .portal-site-card,
+  .portal-group-card {
     border-radius: var(--radius-xl);
   }
 
-  .catalog-section {
+  .catalog-section,
+  .portal-section {
     padding: 24px;
   }
 
@@ -346,6 +393,85 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 18px;
+  }
+
+  .portal-group-stack {
+    display: grid;
+    gap: 18px;
+  }
+
+  .portal-group-card {
+    padding: 20px;
+    display: grid;
+    gap: 18px;
+    background: linear-gradient(145deg, rgba(255, 252, 247, 0.96), rgba(234, 244, 241, 0.88));
+  }
+
+  .portal-group-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: end;
+  }
+
+  .portal-group-head > div {
+    display: grid;
+    gap: 8px;
+  }
+
+  .portal-group-head h3,
+  .portal-site-copy h3 {
+    font-family: var(--font-display);
+  }
+
+  .portal-group-head h3 {
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    line-height: 1;
+  }
+
+  .portal-group-head > p,
+  .portal-site-copy p,
+  .portal-site-domain {
+    color: var(--muted);
+  }
+
+  .portal-group-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+  }
+
+  .portal-site-card {
+    padding: 20px;
+    display: grid;
+    gap: 16px;
+    border: 1px solid rgba(15, 118, 110, 0.14);
+    background: var(--panel-strong);
+  }
+
+  .portal-site-topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .portal-site-copy {
+    display: grid;
+    gap: 10px;
+  }
+
+  .portal-site-copy h3 {
+    font-size: 1.8rem;
+    line-height: 0.98;
+  }
+
+  .portal-site-domain code {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(17, 67, 63, 0.08);
+    overflow-wrap: anywhere;
   }
 
   .about-layout {
@@ -928,18 +1054,23 @@
     }
 
     .hero-panel,
+    .portal-section,
+    .portal-group-card,
     .catalog-section,
     .about-section,
     .site-footer,
     .index-card,
+    .portal-site-card,
     .empty-state {
       border-radius: 22px;
     }
 
     .hero-panel,
+    .portal-section,
     .catalog-section,
     .site-footer,
     .index-card,
+    .portal-site-card,
     .empty-state {
       padding-left: 18px;
       padding-right: 18px;
@@ -957,7 +1088,8 @@
       grid-template-columns: 1fr;
     }
 
-    .section-heading {
+    .section-heading,
+    .portal-group-head {
       align-items: start;
       flex-direction: column;
     }
@@ -965,6 +1097,16 @@
     .about-group-head {
       align-items: start;
       flex-direction: column;
+    }
+
+    .site-header-actions {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .header-link {
+      width: 100%;
+      justify-content: center;
     }
 
     .history-release-head,

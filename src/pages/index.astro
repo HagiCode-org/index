@@ -1,19 +1,22 @@
 ---
 import Analytics51LA from '@/components/51LAAnalytics.astro';
-import AboutSection from '@/components/AboutSection.astro';
-import IndexCard from '@/components/IndexCard.astro';
 import IndexFooter from '@/components/IndexFooter.astro';
-import IndexHero from '@/components/IndexHero.astro';
-import { loadAboutPayload } from '@/lib/load-about';
-import { loadIndexCatalog } from '@/lib/load-index-catalog';
+import PortalHero from '@/components/PortalHero.astro';
+import PortalSiteCard from '@/components/PortalSiteCard.astro';
+import { loadSitesCatalog } from '@/lib/load-sites-catalog';
 import '@/styles/global.css';
 
-const catalog = await loadIndexCatalog();
-const about = loadAboutPayload();
-const pageTitle = 'HagiCode Index';
-const pageDescription = 'index.hagicode.com 的公开 JSON 索引目录，集中托管 presets 等静态清单。';
+const sitesCatalog = await loadSitesCatalog();
+const groupedEntries = sitesCatalog.groups.map((group) => ({
+  ...group,
+  entries: sitesCatalog.entries.filter((entry) => entry.groupId === group.id),
+}));
+const featuredEntries = sitesCatalog.entries.filter(
+  (entry) => entry.id === 'hagicode-main' || entry.id === 'hagicode-docs',
+);
+const pageTitle = 'HagiCode Portal';
+const pageDescription = 'HagiCode 站点导航门户，集中收纳主站、文档、数据镜像与独立工具站点。';
 const canonicalUrl = 'https://index.hagicode.com/';
-const firstPublishedPath = catalog.entries.find((entry) => entry.status === 'published')?.path ?? null;
 ---
 
 <!doctype html>
@@ -35,79 +38,59 @@ const firstPublishedPath = catalog.entries.find((entry) => entry.status === 'pub
       <header class="site-header">
         <a class="brand-mark" href="/">H</a>
         <div>
-          <p class="brand-name">HagiCode Index</p>
-          <p class="brand-subtitle">JSON catalog and static asset mirror</p>
+          <p class="brand-name">HagiCode Portal</p>
+          <p class="brand-subtitle">Site navigation and public data handoff</p>
         </div>
+        <nav class="site-header-actions" aria-label="门户快捷入口">
+          <a class="header-link" href="/data/">数据页</a>
+          <a class="header-link" href="/sites.json" target="_blank" rel="noreferrer">站点 JSON</a>
+          <a class="header-link" href="/index-catalog.json" target="_blank" rel="noreferrer">目录 JSON</a>
+        </nav>
       </header>
 
-      <main class="page-content">
-        <IndexHero
-          totalCount={catalog.entries.length}
+      <main class="page-content portal-main">
+        <PortalHero
+          siteCount={sitesCatalog.entries.length}
+          groupCount={sitesCatalog.groups.length}
+          featuredEntries={featuredEntries}
+          dataPagePath="/data/"
+          sitesJsonPath="/sites.json"
           catalogPath="/index-catalog.json"
-          primaryPath={firstPublishedPath}
         />
 
-        <section class="catalog-section" aria-labelledby="catalog-heading">
+        <section class="portal-section" aria-labelledby="portal-sites-heading">
           <div class="section-heading">
-            <p class="eyebrow">Catalog</p>
+            <p class="eyebrow">Portal Sites</p>
             <div>
-              <h2 id="catalog-heading">索引目录</h2>
-              <p>首页与外部程序共用同一份 <code>/index-catalog.json</code>，活动摘要也直接从这里读取。</p>
+              <h2 id="portal-sites-heading">站点入口</h2>
+              <p>首页门户与外部程序共用同一份 <code>/sites.json</code>，卡片目标全部指向生产站点或站内稳定路径。</p>
             </div>
           </div>
 
-          {catalog.entries.length > 0 ? (
-            <div class="card-grid">
-              {catalog.entries.map((entry) => (
-                <IndexCard entry={entry} />
-              ))}
-            </div>
-          ) : (
-            <div class="empty-state" role="status" aria-live="polite">
-              <p>当前还没有已发布索引。</p>
-              <p>先同步静态 JSON，再补充目录清单后重新构建即可。</p>
-            </div>
-          )}
-        </section>
+          <div class="portal-group-stack">
+            {groupedEntries.map((group) => (
+              <section class="portal-group-card" aria-labelledby={`portal-group-${group.id}`}>
+                <div class="portal-group-head">
+                  <div>
+                    <p class="eyebrow">{group.id}</p>
+                    <h3 id={`portal-group-${group.id}`}>{group.label}</h3>
+                  </div>
+                  <p>{group.description}</p>
+                </div>
 
-        <AboutSection about={about} />
+                <div class="portal-group-grid">
+                  {group.entries.map((entry) => (
+                    <PortalSiteCard entry={entry} />
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        </section>
       </main>
 
       <IndexFooter />
-      <p class="sr-only" id="copy-status" aria-live="polite"></p>
     </div>
-
-    <script is:inline>
-      const statusNode = document.getElementById('copy-status');
-      const buttons = document.querySelectorAll('[data-copy-url]');
-
-      const setStatus = (message) => {
-        if (statusNode) {
-          statusNode.textContent = message;
-        }
-      };
-
-      for (const button of buttons) {
-        button.addEventListener('click', async () => {
-          const url = button.getAttribute('data-copy-url');
-          if (!url) {
-            return;
-          }
-
-          try {
-            await navigator.clipboard.writeText(url);
-            setStatus(`已复制链接：${url}`);
-            const previousLabel = button.textContent;
-            button.textContent = '已复制';
-            window.setTimeout(() => {
-              button.textContent = previousLabel;
-            }, 1600);
-          } catch {
-            setStatus('复制失败，请手动复制原始 JSON 链接。');
-          }
-        });
-      }
-    </script>
     <Analytics51LA />
   </body>
 </html>

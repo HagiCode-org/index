@@ -242,6 +242,122 @@ function buildCatalogFixture({
   };
 }
 
+function buildSitesCatalogFixture() {
+  return {
+    version: '1.0.0',
+    generatedAt: '2026-04-07T00:00:00.000Z',
+    groups: [
+      {
+        id: 'core-sites',
+        label: '核心站点',
+        description: '项目官网、正式文档与长期内容站点，适合作为进入 HagiCode 生态的主路径。',
+      },
+      {
+        id: 'data-and-tools',
+        label: '数据与工具',
+        description: '保留公开数据镜像、部署工具、状态页与辅助实验站点，便于核对服务与入口。',
+      },
+      {
+        id: 'creator-studios',
+        label: '创作实验',
+        description: '围绕人格与特质构建的独立体验站点。',
+      },
+    ],
+    entries: [
+      {
+        id: 'hagicode-main',
+        title: 'HagiCode 主站',
+        label: '官网',
+        description: '项目官网、产品介绍与统一入口，适合先了解 HagiCode 的核心定位。',
+        groupId: 'core-sites',
+        url: 'https://hagicode.com/',
+        actionLabel: '进入主站',
+      },
+      {
+        id: 'hagicode-docs',
+        title: 'HagiCode Docs',
+        label: '文档',
+        description: '安装指南、产品文档与博客内容的正式发布站点。',
+        groupId: 'core-sites',
+        url: 'https://docs.hagicode.com/',
+        actionLabel: '查看文档',
+      },
+      {
+        id: 'newbe-blog',
+        title: 'newbe',
+        label: 'newbe',
+        description: '长期文章与技术沉淀站点，适合补充阅读经验总结、工具思路与实践记录。',
+        groupId: 'core-sites',
+        url: 'https://newbe.hagicode.com/',
+        actionLabel: '打开 newbe',
+      },
+      {
+        id: 'index-data',
+        title: 'Index Data Mirror',
+        label: '数据镜像',
+        description: '保留旧首页的人类可读数据页，集中展示 catalog、about 与公开 JSON 入口。',
+        groupId: 'data-and-tools',
+        url: 'https://index.hagicode.com/data/',
+        actionLabel: '打开数据页',
+      },
+      {
+        id: 'compose-builder',
+        title: 'Docker Compose Builder',
+        label: 'Builder',
+        description: '图形化生成 Docker Compose 配置，适合快速搭建 HagiCode 服务。',
+        groupId: 'data-and-tools',
+        url: 'https://builder.hagicode.com/',
+        actionLabel: '打开 Builder',
+      },
+      {
+        id: 'cost-calculator',
+        title: 'AI Replacement Calculator',
+        label: 'Cost',
+        description: '交互式成本测算工具，用于评估 AI agent 引入后的岗位成本结构与替代风险。',
+        groupId: 'data-and-tools',
+        url: 'https://cost.hagicode.com/',
+        actionLabel: '打开 Cost',
+      },
+      {
+        id: 'status-page',
+        title: 'HagiCode Status',
+        label: 'Status',
+        description: '公开状态页，集中展示官网、文档、下载索引与其他公开服务的可用性。',
+        groupId: 'data-and-tools',
+        url: 'https://status.hagicode.com/',
+        actionLabel: '查看状态',
+      },
+      {
+        id: 'awesome-design-gallery',
+        title: 'Awesome Design MD',
+        label: 'Design',
+        description: '设计语言画廊站点，收纳设计条目、预览页与 DESIGN.md 细节，便于查找参考。',
+        groupId: 'data-and-tools',
+        url: 'https://design.hagicode.com/',
+        actionLabel: '打开 Design',
+      },
+      {
+        id: 'soul-builder',
+        title: 'Soul Builder',
+        label: 'Soul',
+        description: '面向角色灵魂设定的独立站点，用于组织可复用的人设草稿。',
+        groupId: 'creator-studios',
+        url: 'https://soul.hagicode.com/',
+        actionLabel: '打开 Soul',
+      },
+      {
+        id: 'trait-builder',
+        title: 'Trait Builder',
+        label: 'Trait',
+        description: '面向特质搜索与组合的独立站点，用于构建可检索的 trait 数据。',
+        groupId: 'creator-studios',
+        url: 'https://trait.hagicode.com/',
+        actionLabel: '打开 Trait',
+      },
+    ],
+  };
+}
+
 function buildCharacterTemplateManifestFixture() {
   const { manifest } = buildCharacterTemplateLibrary({
     libraryData: buildCharacterTemplateLibraryFixtureData(),
@@ -468,6 +584,7 @@ function buildTraitIndexFixture() {
 async function createValidationFixture({
   catalog,
   activityMetrics,
+  sitesCatalog = buildSitesCatalogFixture(),
   liveBroadcast = buildLiveBroadcastFixture(),
   about = buildAboutFixture(),
   libraryData = buildCharacterTemplateLibraryFixtureData(),
@@ -527,11 +644,13 @@ async function createValidationFixture({
     'utf8',
   );
   await writeFile(path.join(routeSourceDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'sites.json'), JSON.stringify(sitesCatalog), 'utf8');
   await writeFile(path.join(routeSourceDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
   await writeFile(path.join(routeSourceDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(routeSourceDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(routeSourceDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
+  await writeFile(path.join(distDir, 'sites.json'), JSON.stringify(sitesCatalog), 'utf8');
   await writeFile(path.join(distDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
   await writeFile(path.join(distDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(distDir, 'about.json'), JSON.stringify(about), 'utf8');
@@ -612,7 +731,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries and 6 route-mapped JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries and 7 route-mapped JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
@@ -716,6 +835,27 @@ test('catalog exposes about entry at the canonical JSON route', async () => {
   assert.ok(aboutEntry, 'about entry is required.');
   assert.equal(aboutEntry.path, '/about.json');
   assert.equal(aboutEntry.category, 'contacts');
+});
+
+test('portal sites catalog exposes the approved production destinations', async () => {
+  const sitesCatalogPath = path.join(projectRoot, 'src', 'data', 'public', 'sites.json');
+  const sitesCatalog = JSON.parse(await readFile(sitesCatalogPath, 'utf8'));
+  const urlById = new Map(sitesCatalog.entries.map((entry) => [entry.id, entry.url]));
+
+  assert.deepEqual(
+    sitesCatalog.groups.map((group) => group.id),
+    ['core-sites', 'data-and-tools', 'creator-studios'],
+  );
+  assert.equal(urlById.get('hagicode-main'), 'https://hagicode.com/');
+  assert.equal(urlById.get('hagicode-docs'), 'https://docs.hagicode.com/');
+  assert.equal(urlById.get('newbe-blog'), 'https://newbe.hagicode.com/');
+  assert.equal(urlById.get('index-data'), 'https://index.hagicode.com/data/');
+  assert.equal(urlById.get('compose-builder'), 'https://builder.hagicode.com/');
+  assert.equal(urlById.get('cost-calculator'), 'https://cost.hagicode.com/');
+  assert.equal(urlById.get('status-page'), 'https://status.hagicode.com/');
+  assert.equal(urlById.get('awesome-design-gallery'), 'https://design.hagicode.com/');
+  assert.equal(urlById.get('soul-builder'), 'https://soul.hagicode.com/');
+  assert.equal(urlById.get('trait-builder'), 'https://trait.hagicode.com/');
 });
 
 test('managed package entries expose stable history page paths', async () => {

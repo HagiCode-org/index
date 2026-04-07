@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { loadIndexCatalog } from '../src/lib/load-index-catalog.ts';
 import { loadPackageHistory } from '../src/lib/load-package-history.ts';
+import { loadSitesCatalog } from '../src/lib/load-sites-catalog.ts';
 import { loadRouteMappedJson } from '../src/lib/json-publication.ts';
 
 test('loadIndexCatalog reads source-side route-mapped catalog with stable published paths', async () => {
@@ -36,6 +37,18 @@ test('loadPackageHistory keeps the existing raw JSON contract for server and des
   assert.equal(desktopPage.releases[0].actions.at(-1)?.href, '/desktop/index.json');
   assert.equal(serverPage.releases[0].files[0].href?.startsWith('https://server.dl.hagicode.com/'), true);
   assert.equal(desktopPage.releases[0].files[0].href?.startsWith('https://desktop.dl.hagicode.com/'), true);
+});
+
+test('loadSitesCatalog reads the source-side route-mapped portal catalog with canonical production URLs', async () => {
+  const sitesCatalog = await loadSitesCatalog();
+  const mainSiteEntry = sitesCatalog.entries.find((entry) => entry.id === 'hagicode-main');
+  const dataMirrorEntry = sitesCatalog.entries.find((entry) => entry.id === 'index-data');
+
+  assert.equal(sitesCatalog.groups.length > 0, true);
+  assert.ok(mainSiteEntry, 'hagicode-main entry is required.');
+  assert.ok(dataMirrorEntry, 'index-data entry is required.');
+  assert.equal(mainSiteEntry.url, 'https://hagicode.com/');
+  assert.equal(dataMirrorEntry.url, 'https://index.hagicode.com/data/');
 });
 
 test('live broadcast route-mapped JSON keeps the canonical schedule contract', async () => {

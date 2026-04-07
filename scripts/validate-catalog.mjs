@@ -22,6 +22,7 @@ const requiredFields = [
 
 const fileBackedRouteMappedJsonPaths = [
   '/index-catalog.json',
+  '/sites.json',
   '/activity-metrics.json',
   '/live-broadcast.json',
   '/server/index.json',
@@ -56,6 +57,18 @@ const aboutEntryId = 'about';
 const agentTemplatesEntryId = 'agent-templates';
 const characterTemplatesEntryId = 'character-templates';
 const supportedCharacterTemplateModes = ['curated', 'universal'];
+const requiredPortalSites = new Map([
+  ['hagicode-main', 'https://hagicode.com/'],
+  ['hagicode-docs', 'https://docs.hagicode.com/'],
+  ['newbe-blog', 'https://newbe.hagicode.com/'],
+  ['index-data', 'https://index.hagicode.com/data/'],
+  ['compose-builder', 'https://builder.hagicode.com/'],
+  ['cost-calculator', 'https://cost.hagicode.com/'],
+  ['status-page', 'https://status.hagicode.com/'],
+  ['awesome-design-gallery', 'https://design.hagicode.com/'],
+  ['soul-builder', 'https://soul.hagicode.com/'],
+  ['trait-builder', 'https://trait.hagicode.com/'],
+]);
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
@@ -279,6 +292,58 @@ function validateActivitySummary(value, fieldName) {
   };
 }
 
+function validateSitesCatalogContract(payload) {
+  assert(payload && typeof payload === 'object' && !Array.isArray(payload), 'Sites catalog payload must be an object.');
+  assert(payload.version === '1.0.0', 'Sites catalog payload version must be 1.0.0.');
+  assert(typeof payload.generatedAt === 'string' && payload.generatedAt.trim().length > 0, 'Sites catalog generatedAt is required.');
+  assert(Array.isArray(payload.groups) && payload.groups.length > 0, 'Sites catalog groups must be a non-empty array.');
+  assert(Array.isArray(payload.entries) && payload.entries.length > 0, 'Sites catalog entries must be a non-empty array.');
+
+  const groupIds = new Set();
+
+  payload.groups.forEach((group, index) => {
+    const fieldName = `Sites group[${index}]`;
+    assert(group && typeof group === 'object' && !Array.isArray(group), `${fieldName} must be an object.`);
+    for (const key of ['id', 'label', 'description']) {
+      assert(typeof group[key] === 'string' && group[key].trim().length > 0, `${fieldName} ${key} is required.`);
+    }
+    assert(!groupIds.has(group.id), `Sites group ${group.id} must be unique.`);
+    groupIds.add(group.id);
+  });
+
+  const remainingRequiredIds = new Map(requiredPortalSites);
+  const entryIds = new Set();
+
+  payload.entries.forEach((entry, index) => {
+    const fieldName = `Sites entry[${index}]`;
+    assert(entry && typeof entry === 'object' && !Array.isArray(entry), `${fieldName} must be an object.`);
+    for (const key of ['id', 'title', 'label', 'description', 'groupId', 'url', 'actionLabel']) {
+      assert(typeof entry[key] === 'string' && entry[key].trim().length > 0, `${fieldName} ${key} is required.`);
+    }
+    assert(!entryIds.has(entry.id), `Sites entry ${entry.id} must be unique.`);
+    entryIds.add(entry.id);
+    assert(groupIds.has(entry.groupId), `Sites entry ${entry.id} references unknown groupId ${entry.groupId}.`);
+
+    const parsedUrl = new URL(entry.url);
+    assert(parsedUrl.protocol === 'https:', `Sites entry ${entry.id} must use https.`);
+    assert(
+      !['localhost', '127.0.0.1', '0.0.0.0'].includes(parsedUrl.hostname),
+      `Sites entry ${entry.id} must not point to a local address.`,
+    );
+
+    const expectedUrl = remainingRequiredIds.get(entry.id);
+    if (expectedUrl) {
+      assert(entry.url === expectedUrl, `Sites entry ${entry.id} must point to ${expectedUrl}.`);
+      remainingRequiredIds.delete(entry.id);
+    }
+  });
+
+  assert(
+    remainingRequiredIds.size === 0,
+    `Sites catalog is missing required entries: ${Array.from(remainingRequiredIds.keys()).join(', ')}.`,
+  );
+}
+
 function validateTemplateTagGroups(value, fieldName) {
   assert(value && typeof value === 'object' && !Array.isArray(value), `${fieldName} must be an object.`);
 
@@ -489,6 +554,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   await access(publishedRoot);
 
   const publishedCatalog = await assertPublishedRoute('/index-catalog.json', publishedRoot);
+  validateSitesCatalogContract(await assertPublishedRoute('/sites.json', publishedRoot));
   await assertPublishedRoute('/activity-metrics.json', publishedRoot);
   validateLiveBroadcastContract(await assertPublishedRoute('/live-broadcast.json', publishedRoot));
   await assertPublishedRoute('/server/index.json', publishedRoot);

@@ -3,20 +3,21 @@ interface Props {
   totalCount: number;
   catalogPath: string;
   primaryPath: string | null;
+  portalPath: string;
 }
 
-const { totalCount, catalogPath, primaryPath } = Astro.props;
+const { totalCount, catalogPath, primaryPath, portalPath } = Astro.props;
 ---
 
 <section class="hero-panel">
-  <p class="eyebrow">index.hagicode.com</p>
+  <p class="eyebrow">index.hagicode.com/data</p>
   <div class="hero-copy">
     <div>
-      <p class="hero-kicker">公开 JSON 边界</p>
-      <h1>HagiCode Index</h1>
+      <p class="hero-kicker">Legacy Data Mirror</p>
+      <h1>HagiCode Index Data</h1>
     </div>
     <p class="hero-lede">
-      面向程序直连，也给维护者一个能快速核对目录、来源与同步状态的首页。
+      原首页内容已迁移到这里。面向程序直连，也给维护者一个能快速核对目录、来源与同步状态的数据镜像页。
     </p>
   </div>
   <dl class="hero-metrics" aria-label="目录概览">
@@ -25,17 +26,20 @@ const { totalCount, catalogPath, primaryPath } = Astro.props;
       <dd>{totalCount}</dd>
     </div>
     <div>
-      <dt>目录清单</dt>
-      <dd>JSON</dd>
+      <dt>页面职责</dt>
+      <dd>镜像</dd>
     </div>
     <div>
-      <dt>交付方式</dt>
-      <dd>静态发布</dd>
+      <dt>返回路径</dt>
+      <dd>门户</dd>
     </div>
   </dl>
   <div class="hero-actions">
+    <a class="button button-primary" href={portalPath}>
+      返回站点门户
+    </a>
     {primaryPath ? (
-      <a class="button button-primary" href={primaryPath} target="_blank" rel="noreferrer">
+      <a class="button button-tertiary" href={primaryPath} target="_blank" rel="noreferrer">
         打开首个索引
       </a>
     ) : (
