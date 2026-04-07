@@ -1,0 +1,32 @@
+---
+import type { SitesCatalogEntry } from '@/lib/load-sites-catalog';
+
+interface Props {
+  entry: SitesCatalogEntry;
+}
+
+const { entry } = Astro.props;
+const hostLabel = new URL(entry.url).hostname;
+---
+
+<article class="portal-site-card">
+  <div class="portal-site-topline">
+    <p class="card-category">{entry.label}</p>
+    <span class="status-badge">production</span>
+  </div>
+
+  <div class="portal-site-copy">
+    <h3>{entry.title}</h3>
+    <p>{entry.description}</p>
+  </div>
+
+  <p class="portal-site-domain">
+    <code>{hostLabel}</code>
+  </p>
+
+  <div class="card-actions" aria-label={`${entry.title} 操作`}>
+    <a class="button button-primary" href={entry.url} target="_blank" rel="noreferrer">
+      {entry.actionLabel}
+    </a>
+  </div>
+</article>

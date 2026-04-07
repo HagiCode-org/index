@@ -1,0 +1,59 @@
+---
+import type { SitesCatalogEntry } from '@/lib/load-sites-catalog';
+
+interface Props {
+  siteCount: number;
+  groupCount: number;
+  featuredEntries: SitesCatalogEntry[];
+  dataPagePath: string;
+  sitesJsonPath: string;
+  catalogPath: string;
+}
+
+const { siteCount, groupCount, featuredEntries, dataPagePath, sitesJsonPath, catalogPath } = Astro.props;
+---
+
+<section class="hero-panel portal-hero" aria-labelledby="portal-hero-heading">
+  <p class="eyebrow">index.hagicode.com</p>
+  <div class="hero-copy">
+    <div>
+      <p class="hero-kicker">Site Portal</p>
+      <h1 id="portal-hero-heading">HagiCode 站点导航门户</h1>
+    </div>
+    <p class="hero-lede">
+      统一收纳主站、文档、数据镜像与独立工具站点。旧首页的数据浏览职责已迁移到 <code>/data/</code>。
+    </p>
+  </div>
+
+  <dl class="hero-metrics" aria-label="门户概览">
+    <div>
+      <dt>门户入口</dt>
+      <dd>{siteCount}</dd>
+    </div>
+    <div>
+      <dt>分组数</dt>
+      <dd>{groupCount}</dd>
+    </div>
+    <div>
+      <dt>交付方式</dt>
+      <dd>静态</dd>
+    </div>
+  </dl>
+
+  <div class="hero-actions">
+    {featuredEntries.map((entry) => (
+      <a class="button button-primary" href={entry.url} target="_blank" rel="noreferrer">
+        {entry.actionLabel}
+      </a>
+    ))}
+    <a class="button button-secondary" href={dataPagePath}>
+      打开数据页
+    </a>
+    <a class="button button-secondary" href={sitesJsonPath} target="_blank" rel="noreferrer">
+      站点清单 JSON
+    </a>
+    <a class="button button-tertiary" href={catalogPath} target="_blank" rel="noreferrer">
+      查看目录 JSON
+    </a>
+  </div>
+</section>
