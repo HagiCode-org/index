@@ -5,6 +5,7 @@ export const fileBackedRouteMappedJsonPaths = [
   '/index-catalog.json',
   '/sites.json',
   '/activity-metrics.json',
+  '/design.json',
   '/live-broadcast.json',
   '/server/index.json',
   '/desktop/index.json',

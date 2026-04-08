@@ -88,6 +88,17 @@
       "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/about"
     },
     {
+      "id": "design-theme-catalog",
+      "title": "Design Theme Catalog",
+      "description": "镜像发布 awesome-design-md 的主题目录、README 截图预览与上游文档链接。",
+      "path": "/design.json",
+      "category": "catalogs",
+      "sourceRepo": "VoltAgent/awesome-design-md",
+      "lastUpdated": "2026-04-08T00:00:00.000Z",
+      "status": "published",
+      "sourceUrl": "https://github.com/VoltAgent/awesome-design-md/tree/main/design-md"
+    },
+    {
       "id": "secondary-professions",
       "title": "Secondary Profession Catalog",
       "description": "镜像发布系统默认副职业目录的稳定 JSON 入口。",

@@ -11,7 +11,7 @@ import '@/styles/global.css';
 const catalog = await loadIndexCatalog();
 const about = loadAboutPayload();
 const pageTitle = 'HagiCode Index Data';
-const pageDescription = 'HagiCode Index 的数据镜像页，集中展示 catalog、about 与公开 JSON 入口。';
+const pageDescription = 'HagiCode Index 的数据镜像页，集中展示 catalog、about、awesome-design-md 主题目录与公开 JSON 入口。';
 const canonicalUrl = 'https://index.hagicode.com/data/';
 const firstPublishedPath = catalog.entries.find((entry) => entry.status === 'published')?.path ?? null;
 ---
@@ -58,7 +58,10 @@ const firstPublishedPath = catalog.entries.find((entry) => entry.status === 'pub
             <p class="eyebrow">Catalog</p>
             <div>
               <h2 id="catalog-heading">索引目录</h2>
-              <p>数据页与外部程序共用同一份 <code>/index-catalog.json</code>，活动摘要也继续从这里读取。</p>
+              <p>
+                数据页与外部程序共用同一份 <code>/index-catalog.json</code>，
+                新增的 <code>/design.json</code> 发布 awesome-design-md 全量主题、README 截图预览与上游文档入口，并继续走现有目录卡片链路。
+              </p>
             </div>
           </div>
 
