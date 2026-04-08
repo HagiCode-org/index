@@ -322,7 +322,7 @@ function validateDesignContract(payload) {
     const fieldName = `Design theme[${index}]`;
     assert(theme && typeof theme === 'object' && !Array.isArray(theme), `${fieldName} must be an object.`);
 
-    for (const key of ['slug', 'title', 'sourceDirectoryUrl', 'readmeUrl', 'designUrl', 'previewLightImageUrl', 'previewLightAlt', 'previewDarkImageUrl', 'previewDarkAlt', 'detailUrl']) {
+    for (const key of ['slug', 'title', 'sourceDirectoryUrl', 'readmeUrl', 'designUrl', 'designDownloadUrl', 'previewLightImageUrl', 'previewLightAlt', 'previewDarkImageUrl', 'previewDarkAlt', 'detailUrl']) {
       assert(typeof theme[key] === 'string' && theme[key].trim().length > 0, `${fieldName} ${key} is required.`);
     }
 
@@ -341,6 +341,11 @@ function validateDesignContract(payload) {
     assert(
       theme.designUrl === `${payload.sourceRepository}/blob/main/design-md/${encodedSlug}/DESIGN.md`,
       `${fieldName} designUrl must point to the upstream DESIGN.md.`,
+    );
+    assert(/^https:\/\//.test(theme.designDownloadUrl), `${fieldName} designDownloadUrl must use https.`);
+    assert(
+      theme.designDownloadUrl === `${payload.detailBaseUrl}${encodedSlug}/DESIGN.md`,
+      `${fieldName} designDownloadUrl must point to the canonical DESIGN.md download route.`,
     );
     assert(!theme.previewLightImageUrl.endsWith('.html'), `${fieldName} previewLightImageUrl must not point to HTML.`);
     assert(!theme.previewDarkImageUrl.endsWith('.html'), `${fieldName} previewDarkImageUrl must not point to HTML.`);
