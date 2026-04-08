@@ -75,6 +75,7 @@ const requiredPortalSites = new Map([
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
 const routeSourceRoot = path.join(projectRoot, 'src', 'data', 'public');
+const designVendorRoot = path.join(projectRoot, 'vendor', 'awesome-design-md', 'design-md');
 
 function assert(condition, message) {
   if (!condition) {
@@ -111,6 +112,16 @@ function resolvePagePath(sitePath) {
 
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'));
+}
+
+async function assertDesignVendorAvailable() {
+  try {
+    await access(designVendorRoot);
+  } catch {
+    throw new Error(
+      `Missing required design vendor submodule at ${designVendorRoot}. Run "git submodule update --init --recursive" locally, or set actions/checkout submodules: recursive in CI.`,
+    );
+  }
 }
 
 async function assertPublishedRoute(sitePath, publishedRoot) {
@@ -649,6 +660,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   await assertPublishedRoute('/activity-metrics.json', publishedRoot);
   const designPayload = await assertPublishedRoute('/design.json', publishedRoot);
   validateDesignContract(designPayload);
+  await assertDesignVendorAvailable();
   validateLiveBroadcastContract(await assertPublishedRoute('/live-broadcast.json', publishedRoot));
   await assertPublishedRoute('/server/index.json', publishedRoot);
   await assertPublishedRoute('/desktop/index.json', publishedRoot);

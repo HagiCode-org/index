@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
-import { access, mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { access, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import { promisify } from 'node:util';
 import path from 'node:path';
@@ -1085,6 +1085,27 @@ test('catalog validation fails when the activity metrics catalog entry drifts fr
         error.stderr,
         /Activity metrics entry lastUpdated must match \/activity-metrics\.json\./,
       );
+      return true;
+    },
+  );
+});
+
+test('catalog validation fails with a clear message when the design vendor submodule is missing', async () => {
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+  });
+
+  await rm(path.join(tempDir, 'vendor'), { recursive: true, force: true });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /Missing required design vendor submodule/);
+      assert.match(error.stderr, /git submodule update --init --recursive/);
       return true;
     },
   );
