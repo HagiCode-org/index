@@ -11,14 +11,17 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   const serverEntry = catalog.entries.find((entry) => entry.id === 'server-packages');
   const activityEntry = catalog.entries.find((entry) => entry.id === 'activity-metrics');
   const aboutEntry = catalog.entries.find((entry) => entry.id === 'about');
+  const designEntry = catalog.entries.find((entry) => entry.id === 'design-theme-catalog');
 
   assert.ok(serverEntry, 'server-packages entry is required.');
   assert.ok(activityEntry, 'activity-metrics entry is required.');
   assert.ok(aboutEntry, 'about entry is required.');
+  assert.ok(designEntry, 'design-theme-catalog entry is required.');
   assert.equal(serverEntry.path, '/server/index.json');
   assert.equal(serverEntry.historyPagePath, '/server/history/');
   assert.equal(activityEntry.path, '/activity-metrics.json');
   assert.equal(aboutEntry.path, '/about.json');
+  assert.equal(designEntry.path, '/design.json');
 });
 
 test('loadPackageHistory keeps the existing raw JSON contract for server and desktop history pages', async () => {
@@ -91,4 +94,27 @@ test('about route-mapped JSON loads the canonical structured about contract', as
   assert.equal(typeof douyinQrEntry.alt, 'string');
   assert.equal(wechatEntry.type, 'qr');
   assert.equal(wechatEntry.regionPriority, 'china-first');
+});
+
+test('design route-mapped JSON loads awesome-design-md themes and README-derived preview screenshots', async () => {
+  const design = await loadRouteMappedJson('/design.json');
+  const linearTheme = design.themes.find((entry) => entry.slug === 'linear.app');
+  const xaiTheme = design.themes.find((entry) => entry.slug === 'x.ai');
+
+  assert.equal(design.version, '1.0.0');
+  assert.equal(design.vendorPath, 'vendor/awesome-design-md');
+  assert.equal(design.sourceRepository, 'https://github.com/VoltAgent/awesome-design-md');
+  assert.equal(design.detailBaseUrl, 'https://design.hagicode.com/designs/');
+  assert.equal(design.themeCount, 58);
+  assert.equal(design.themes.length, 58);
+  assert.ok(linearTheme, 'linear.app theme is required.');
+  assert.ok(xaiTheme, 'x.ai theme is required.');
+  assert.equal(linearTheme.previewLightImageUrl, 'https://pub-2e4ecbcbc9b24e7b93f1a6ab5b2bc71f.r2.dev/designs/linear.app/preview-screenshot.png');
+  assert.equal(linearTheme.previewDarkImageUrl, 'https://pub-2e4ecbcbc9b24e7b93f1a6ab5b2bc71f.r2.dev/designs/linear.app/preview-dark-screenshot.png');
+  assert.equal(linearTheme.previewLightAlt, 'Linear Design System — Light Mode');
+  assert.equal(linearTheme.previewDarkAlt, 'Linear Design System — Dark Mode');
+  assert.equal(xaiTheme.detailUrl, 'https://design.hagicode.com/designs/x.ai/');
+  assert.equal(xaiTheme.designUrl, 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/DESIGN.md');
+  assert.equal(xaiTheme.previewLightImageUrl.endsWith('.html'), false);
+  assert.equal(xaiTheme.previewDarkImageUrl.endsWith('.html'), false);
 });

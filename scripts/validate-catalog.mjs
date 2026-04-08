@@ -24,6 +24,7 @@ const fileBackedRouteMappedJsonPaths = [
   '/index-catalog.json',
   '/sites.json',
   '/activity-metrics.json',
+  '/design.json',
   '/live-broadcast.json',
   '/server/index.json',
   '/desktop/index.json',
@@ -54,6 +55,7 @@ const expectedHistoryPaths = new Map([
 ]);
 const activityEntryId = 'activity-metrics';
 const aboutEntryId = 'about';
+const designEntryId = 'design-theme-catalog';
 const agentTemplatesEntryId = 'agent-templates';
 const characterTemplatesEntryId = 'character-templates';
 const supportedCharacterTemplateModes = ['curated', 'universal'];
@@ -268,6 +270,90 @@ function validateAboutContract(payload) {
     remainingIds.size === 0,
     `About payload is missing required entries: ${Array.from(remainingIds).join(', ')}.`,
   );
+}
+
+async function parseDesignReadmeMetadata(readmePath) {
+  const markdown = await readFile(readmePath, 'utf8');
+  const titleLine = markdown.split(/\r?\n/).find((line) => line.startsWith('# ')) ?? '';
+  const images = Array.from(markdown.matchAll(/!\[([^\]]+)\]\((https?:[^)]+)\)/g)).map((match) => ({
+    alt: match[1],
+    url: match[2],
+  }));
+  const dark = images.find((image) => /dark mode/i.test(image.alt));
+  const light = images.find((image) => /light mode/i.test(image.alt));
+
+  assert(titleLine.length > 0, `Design README ${readmePath} must define a title heading.`);
+  assert(dark, `Design README ${readmePath} must contain a dark mode preview image.`);
+  assert(light, `Design README ${readmePath} must contain a light mode preview image.`);
+
+  return {
+    title: titleLine.replace(/^#\s+/, '').trim(),
+    dark,
+    light,
+  };
+}
+
+function validateDesignContract(payload) {
+  assert(payload && typeof payload === 'object' && !Array.isArray(payload), 'Design payload must be an object.');
+  assert(payload.version === '1.0.0', 'Design payload version must be 1.0.0.');
+  assert(typeof payload.updatedAt === 'string' && payload.updatedAt.trim().length > 0, 'Design payload updatedAt is required.');
+  assert(
+    payload.vendorPath === 'vendor/awesome-design-md',
+    'Design payload vendorPath must stay vendor/awesome-design-md.',
+  );
+  assert(
+    payload.sourceRepository === 'https://github.com/VoltAgent/awesome-design-md',
+    'Design payload sourceRepository must stay on the canonical upstream repository URL.',
+  );
+  assert(
+    payload.detailBaseUrl === 'https://design.hagicode.com/designs/',
+    'Design payload detailBaseUrl must stay on the canonical design detail base URL.',
+  );
+  assert(
+    Number.isInteger(payload.themeCount) && payload.themeCount > 0,
+    'Design payload themeCount must be a positive integer.',
+  );
+  assert(Array.isArray(payload.themes), 'Design payload themes must be an array.');
+  assert(payload.themes.length === payload.themeCount, 'Design payload themeCount must match themes length.');
+
+  const seenSlugs = new Set();
+
+  payload.themes.forEach((theme, index) => {
+    const fieldName = `Design theme[${index}]`;
+    assert(theme && typeof theme === 'object' && !Array.isArray(theme), `${fieldName} must be an object.`);
+
+    for (const key of ['slug', 'title', 'sourceDirectoryUrl', 'readmeUrl', 'designUrl', 'previewLightImageUrl', 'previewLightAlt', 'previewDarkImageUrl', 'previewDarkAlt', 'detailUrl']) {
+      assert(typeof theme[key] === 'string' && theme[key].trim().length > 0, `${fieldName} ${key} is required.`);
+    }
+
+    assert(!seenSlugs.has(theme.slug), `${fieldName} slug ${theme.slug} must be unique.`);
+    seenSlugs.add(theme.slug);
+
+    const encodedSlug = encodeURIComponent(theme.slug);
+    assert(
+      theme.sourceDirectoryUrl === `${payload.sourceRepository}/tree/main/design-md/${encodedSlug}`,
+      `${fieldName} sourceDirectoryUrl must point to the upstream design-md directory.`,
+    );
+    assert(
+      theme.readmeUrl === `${payload.sourceRepository}/blob/main/design-md/${encodedSlug}/README.md`,
+      `${fieldName} readmeUrl must point to the upstream README.md.`,
+    );
+    assert(
+      theme.designUrl === `${payload.sourceRepository}/blob/main/design-md/${encodedSlug}/DESIGN.md`,
+      `${fieldName} designUrl must point to the upstream DESIGN.md.`,
+    );
+    assert(!theme.previewLightImageUrl.endsWith('.html'), `${fieldName} previewLightImageUrl must not point to HTML.`);
+    assert(!theme.previewDarkImageUrl.endsWith('.html'), `${fieldName} previewDarkImageUrl must not point to HTML.`);
+    assert(/^https:\/\//.test(theme.previewLightImageUrl), `${fieldName} previewLightImageUrl must use https.`);
+    assert(/^https:\/\//.test(theme.previewDarkImageUrl), `${fieldName} previewDarkImageUrl must use https.`);
+    assert(
+      theme.detailUrl === `${payload.detailBaseUrl}${encodedSlug}/`,
+      `${fieldName} detailUrl must point to the canonical detail route.`,
+    );
+  });
+
+  assert(payload.themes.some((theme) => theme.slug === 'linear.app'), 'Design payload must include linear.app.');
+  assert(payload.themes.some((theme) => theme.slug === 'x.ai'), 'Design payload must include x.ai.');
 }
 
 function validateActivitySummary(value, fieldName) {
@@ -556,6 +642,8 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   const publishedCatalog = await assertPublishedRoute('/index-catalog.json', publishedRoot);
   validateSitesCatalogContract(await assertPublishedRoute('/sites.json', publishedRoot));
   await assertPublishedRoute('/activity-metrics.json', publishedRoot);
+  const designPayload = await assertPublishedRoute('/design.json', publishedRoot);
+  validateDesignContract(designPayload);
   validateLiveBroadcastContract(await assertPublishedRoute('/live-broadcast.json', publishedRoot));
   await assertPublishedRoute('/server/index.json', publishedRoot);
   await assertPublishedRoute('/desktop/index.json', publishedRoot);
@@ -571,6 +659,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
 
   let sawActivityEntry = false;
   let sawAboutEntry = false;
+  let sawDesignEntry = false;
   let sawAgentTemplatesEntry = false;
   let sawCharacterTemplatesEntry = false;
 
@@ -641,6 +730,30 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
       assert(entry.path === '/about.json', 'About entry path must be /about.json.');
     }
 
+    if (entry.id === designEntryId) {
+      sawDesignEntry = true;
+      assert(entry.path === '/design.json', 'Design entry path must be /design.json.');
+      assert(entry.lastUpdated === designPayload.updatedAt, 'Design entry lastUpdated must match /design.json.');
+      assert(
+        entry.sourceRepo === 'VoltAgent/awesome-design-md',
+        'Design entry sourceRepo must stay VoltAgent/awesome-design-md.',
+      );
+      assert(
+        entry.sourceUrl === 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md',
+        'Design entry sourceUrl must point to the upstream design-md tree.',
+      );
+
+      for (const theme of designPayload.themes) {
+        const readmePath = path.join(projectRoot, 'vendor', 'awesome-design-md', 'design-md', theme.slug, 'README.md');
+        const readmeMetadata = await parseDesignReadmeMetadata(readmePath);
+        assert(theme.title === readmeMetadata.title, `Design theme ${theme.slug} title must match README.md.`);
+        assert(theme.previewLightImageUrl === readmeMetadata.light.url, `Design theme ${theme.slug} previewLightImageUrl must match README.md.`);
+        assert(theme.previewDarkImageUrl === readmeMetadata.dark.url, `Design theme ${theme.slug} previewDarkImageUrl must match README.md.`);
+        assert(theme.previewLightAlt === readmeMetadata.light.alt, `Design theme ${theme.slug} previewLightAlt must match README.md.`);
+        assert(theme.previewDarkAlt === readmeMetadata.dark.alt, `Design theme ${theme.slug} previewDarkAlt must match README.md.`);
+      }
+    }
+
     if (entry.id === agentTemplatesEntryId) {
       sawAgentTemplatesEntry = true;
       await validateAgentTemplateManifest(entry, publishedRoot);
@@ -654,6 +767,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
 
   assert(sawActivityEntry, 'Catalog must include an activity-metrics entry.');
   assert(sawAboutEntry, 'Catalog must include an about entry.');
+  assert(sawDesignEntry, 'Catalog must include a design-theme-catalog entry.');
   assert(sawAgentTemplatesEntry, 'Catalog must include an agent-templates entry.');
   assert(sawCharacterTemplatesEntry, 'Catalog must include a character-templates entry.');
 

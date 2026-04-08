@@ -183,8 +183,65 @@ function buildAboutFixture() {
   };
 }
 
+function buildDesignFixture({
+  updatedAt = '2026-04-08T00:00:00.000Z',
+  sourceRepository = 'https://github.com/VoltAgent/awesome-design-md',
+  detailBaseUrl = 'https://design.hagicode.com/designs/',
+  vendorPath = 'vendor/awesome-design-md',
+  themes = [
+    {
+      slug: 'linear.app',
+      title: 'Linear Inspired Design System',
+      sourceDirectoryUrl: 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/linear.app',
+      readmeUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/README.md',
+      designUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/DESIGN.md',
+      previewLightImageUrl: 'https://cdn.example.com/designs/linear.app/preview-screenshot.png',
+      previewLightAlt: 'Linear Design System — Light Mode',
+      previewDarkImageUrl: 'https://cdn.example.com/designs/linear.app/preview-dark-screenshot.png',
+      previewDarkAlt: 'Linear Design System — Dark Mode',
+      detailUrl: 'https://design.hagicode.com/designs/linear.app/',
+    },
+    {
+      slug: 'x.ai',
+      title: 'xAI Inspired Design System',
+      sourceDirectoryUrl: 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/x.ai',
+      readmeUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/README.md',
+      designUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/DESIGN.md',
+      previewLightImageUrl: 'https://cdn.example.com/designs/x.ai/preview-screenshot.png',
+      previewLightAlt: 'xAI Design System — Light Mode',
+      previewDarkImageUrl: 'https://cdn.example.com/designs/x.ai/preview-dark-screenshot.png',
+      previewDarkAlt: 'xAI Design System — Dark Mode',
+      detailUrl: 'https://design.hagicode.com/designs/x.ai/',
+    },
+  ],
+} = {}) {
+  return {
+    version: '1.0.0',
+    updatedAt,
+    vendorPath,
+    sourceRepository,
+    detailBaseUrl,
+    themeCount: themes.length,
+    themes,
+  };
+}
+
+function buildDesignReadmeFixture(theme) {
+  return `# ${theme.title}
+
+## Preview
+
+### Dark Mode
+![${theme.previewDarkAlt}](${theme.previewDarkImageUrl})
+
+### Light Mode
+![${theme.previewLightAlt}](${theme.previewLightImageUrl})
+`;
+}
+
 function buildCatalogFixture({
   lastUpdated = '2026-03-24T10:00:00.000Z',
+  designUpdatedAt = '2026-04-08T00:00:00.000Z',
   activityMetrics = {
     activeUsers: 7,
     activeSessions: 11,
@@ -226,6 +283,17 @@ function buildCatalogFixture({
         lastUpdated,
         status: 'published',
         sourceUrl: 'https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/about',
+      },
+      {
+        id: 'design-theme-catalog',
+        title: 'Design Theme Catalog',
+        description: '镜像发布 awesome-design-md 的主题目录、README 截图预览与上游文档链接。',
+        path: '/design.json',
+        category: 'catalogs',
+        sourceRepo: 'VoltAgent/awesome-design-md',
+        lastUpdated: designUpdatedAt,
+        status: 'published',
+        sourceUrl: 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md',
       },
       {
         id: 'character-templates',
@@ -587,6 +655,7 @@ async function createValidationFixture({
   sitesCatalog = buildSitesCatalogFixture(),
   liveBroadcast = buildLiveBroadcastFixture(),
   about = buildAboutFixture(),
+  design = buildDesignFixture(),
   libraryData = buildCharacterTemplateLibraryFixtureData(),
 } = {}) {
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'index-validate-catalog-'));
@@ -595,6 +664,7 @@ async function createValidationFixture({
   const distDir = path.join(tempDir, 'dist');
   const routeSourceDir = path.join(tempDir, 'src', 'data', 'public');
   const srcDataDir = path.join(tempDir, 'src', 'data');
+  const designVendorDir = path.join(tempDir, 'vendor', 'awesome-design-md', 'design-md');
   const validateScriptPath = path.join(projectRoot, 'scripts', 'validate-catalog.mjs');
   const updateScriptPath = path.join(projectRoot, 'scripts', 'update-activity-metrics.mjs');
   const buildScriptPath = path.join(projectRoot, 'scripts', 'build-agent-preset-library.mjs');
@@ -611,6 +681,7 @@ async function createValidationFixture({
   await mkdir(distDir, { recursive: true });
   await mkdir(routeSourceDir, { recursive: true });
   await mkdir(srcDataDir, { recursive: true });
+  await mkdir(designVendorDir, { recursive: true });
   await mkdir(path.join(distDir, 'agent-templates', 'trait', 'templates'), { recursive: true });
   await mkdir(path.join(distDir, 'agent-templates', 'soul', 'templates'), { recursive: true });
   await mkdir(path.join(distDir, 'character-templates', 'templates'), { recursive: true });
@@ -646,12 +717,14 @@ async function createValidationFixture({
   await writeFile(path.join(routeSourceDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
   await writeFile(path.join(routeSourceDir, 'sites.json'), JSON.stringify(sitesCatalog), 'utf8');
   await writeFile(path.join(routeSourceDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'design.json'), JSON.stringify(design), 'utf8');
   await writeFile(path.join(routeSourceDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(routeSourceDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(routeSourceDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
   await writeFile(path.join(distDir, 'sites.json'), JSON.stringify(sitesCatalog), 'utf8');
   await writeFile(path.join(distDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
+  await writeFile(path.join(distDir, 'design.json'), JSON.stringify(design), 'utf8');
   await writeFile(path.join(distDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(distDir, 'about.json'), JSON.stringify(about), 'utf8');
   await writeFile(path.join(distDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
@@ -712,6 +785,12 @@ async function createValidationFixture({
     'utf8',
   );
 
+  for (const theme of design.themes) {
+    const themeDir = path.join(designVendorDir, theme.slug);
+    await mkdir(themeDir, { recursive: true });
+    await writeFile(path.join(themeDir, 'README.md'), buildDesignReadmeFixture(theme), 'utf8');
+  }
+
   return tempDir;
 }
 
@@ -731,7 +810,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries and 7 route-mapped JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries and 8 route-mapped JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
@@ -824,7 +903,7 @@ test('catalog exposes managed server and desktop entries', async () => {
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
   const entryIds = catalog.entries.map((entry) => entry.id);
 
-  assert.deepEqual(entryIds, ['presets-catalog', 'server-packages', 'desktop-packages', 'agent-templates', 'character-templates', 'activity-metrics', 'about', 'secondary-professions']);
+  assert.deepEqual(entryIds, ['presets-catalog', 'server-packages', 'desktop-packages', 'agent-templates', 'character-templates', 'activity-metrics', 'about', 'design-theme-catalog', 'secondary-professions']);
 });
 
 test('catalog exposes about entry at the canonical JSON route', async () => {
@@ -835,6 +914,21 @@ test('catalog exposes about entry at the canonical JSON route', async () => {
   assert.ok(aboutEntry, 'about entry is required.');
   assert.equal(aboutEntry.path, '/about.json');
   assert.equal(aboutEntry.category, 'contacts');
+});
+
+test('catalog exposes design theme catalog entry at the canonical JSON route', async () => {
+  const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
+  const designPath = path.join(projectRoot, 'src', 'data', 'public', 'design.json');
+  const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
+  const design = JSON.parse(await readFile(designPath, 'utf8'));
+  const designEntry = catalog.entries.find((entry) => entry.id === 'design-theme-catalog');
+
+  assert.ok(designEntry, 'design-theme-catalog entry is required.');
+  assert.equal(designEntry.path, '/design.json');
+  assert.equal(designEntry.category, 'catalogs');
+  assert.equal(designEntry.lastUpdated, design.updatedAt);
+  assert.equal(designEntry.sourceRepo, 'VoltAgent/awesome-design-md');
+  assert.equal(designEntry.sourceUrl, 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md');
 });
 
 test('portal sites catalog exposes the approved production destinations', async () => {
@@ -894,6 +988,25 @@ test('live broadcast source-side contract keeps the stable QR asset and Thursday
   assert.equal(liveBroadcast.schedule.startTime, '20:00');
   assert.equal(liveBroadcast.schedule.endTime, '21:00');
   assert.equal(liveBroadcast.locales.en.title, 'Daily Hagi Live Coding Room');
+});
+
+test('design source-side contract keeps all theme links aligned with awesome-design-md', async () => {
+  const designPath = path.join(projectRoot, 'src', 'data', 'public', 'design.json');
+  const design = JSON.parse(await readFile(designPath, 'utf8'));
+  const linearTheme = design.themes.find((entry) => entry.slug === 'linear.app');
+  const xaiTheme = design.themes.find((entry) => entry.slug === 'x.ai');
+
+  assert.equal(design.vendorPath, 'vendor/awesome-design-md');
+  assert.equal(design.sourceRepository, 'https://github.com/VoltAgent/awesome-design-md');
+  assert.equal(design.detailBaseUrl, 'https://design.hagicode.com/designs/');
+  assert.equal(design.themeCount, 58);
+  assert.equal(design.themes.length, 58);
+  assert.equal(linearTheme.previewLightImageUrl, 'https://pub-2e4ecbcbc9b24e7b93f1a6ab5b2bc71f.r2.dev/designs/linear.app/preview-screenshot.png');
+  assert.equal(linearTheme.previewDarkImageUrl, 'https://pub-2e4ecbcbc9b24e7b93f1a6ab5b2bc71f.r2.dev/designs/linear.app/preview-dark-screenshot.png');
+  assert.equal(linearTheme.previewLightAlt, 'Linear Design System — Light Mode');
+  assert.equal(xaiTheme.previewDarkAlt, 'xAI Design System — Dark Mode');
+  assert.equal(linearTheme.previewLightImageUrl.endsWith('.html'), false);
+  assert.equal(xaiTheme.previewDarkImageUrl.endsWith('.html'), false);
 });
 
 test('catalog exposes agent template discovery entry with the public manifest path', async () => {
@@ -993,6 +1106,55 @@ test('catalog validation fails when the live broadcast payload publishes a QR as
       }),
     (error) => {
       assert.match(error.stderr, /Live broadcast qrCode must not publish imageUrl; each site hosts its own QR asset path\./);
+      return true;
+    },
+  );
+});
+
+test('catalog validation fails when the design payload drifts from the canonical preview URL pattern', async () => {
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+    design: buildDesignFixture({
+      themes: [
+        {
+          slug: 'linear.app',
+          title: 'Linear Inspired Design System',
+          sourceDirectoryUrl: 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/linear.app',
+          readmeUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/README.md',
+          designUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/DESIGN.md',
+          previewLightImageUrl: 'https://cdn.example.com/designs/linear.app/invalid.html',
+          previewLightAlt: 'Linear Design System — Light Mode',
+          previewDarkImageUrl: 'https://cdn.example.com/designs/linear.app/preview-dark-screenshot.png',
+          previewDarkAlt: 'Linear Design System — Dark Mode',
+          detailUrl: 'https://design.hagicode.com/designs/linear.app/',
+        },
+        {
+          slug: 'x.ai',
+          title: 'xAI Inspired Design System',
+          sourceDirectoryUrl: 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/x.ai',
+          readmeUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/README.md',
+          designUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/DESIGN.md',
+          previewLightImageUrl: 'https://cdn.example.com/designs/x.ai/preview-screenshot.png',
+          previewLightAlt: 'xAI Design System — Light Mode',
+          previewDarkImageUrl: 'https://cdn.example.com/designs/x.ai/preview-dark-screenshot.png',
+          previewDarkAlt: 'xAI Design System — Dark Mode',
+          detailUrl: 'https://design.hagicode.com/designs/x.ai/',
+        },
+      ],
+    }),
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(
+        error.stderr,
+        /Design theme\[0\] previewLightImageUrl must not point to HTML\./,
+      );
       return true;
     },
   );
