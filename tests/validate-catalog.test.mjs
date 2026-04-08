@@ -195,6 +195,7 @@ function buildDesignFixture({
       sourceDirectoryUrl: 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/linear.app',
       readmeUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/README.md',
       designUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/DESIGN.md',
+      designDownloadUrl: 'https://design.hagicode.com/designs/linear.app/DESIGN.md',
       previewLightImageUrl: 'https://cdn.example.com/designs/linear.app/preview-screenshot.png',
       previewLightAlt: 'Linear Design System — Light Mode',
       previewDarkImageUrl: 'https://cdn.example.com/designs/linear.app/preview-dark-screenshot.png',
@@ -207,6 +208,7 @@ function buildDesignFixture({
       sourceDirectoryUrl: 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/x.ai',
       readmeUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/README.md',
       designUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/DESIGN.md',
+      designDownloadUrl: 'https://design.hagicode.com/designs/x.ai/DESIGN.md',
       previewLightImageUrl: 'https://cdn.example.com/designs/x.ai/preview-screenshot.png',
       previewLightAlt: 'xAI Design System — Light Mode',
       previewDarkImageUrl: 'https://cdn.example.com/designs/x.ai/preview-dark-screenshot.png',
@@ -1001,9 +1003,11 @@ test('design source-side contract keeps all theme links aligned with awesome-des
   assert.equal(design.detailBaseUrl, 'https://design.hagicode.com/designs/');
   assert.equal(design.themeCount, 58);
   assert.equal(design.themes.length, 58);
+  assert.equal(linearTheme.designDownloadUrl, 'https://design.hagicode.com/designs/linear.app/DESIGN.md');
   assert.equal(linearTheme.previewLightImageUrl, 'https://pub-2e4ecbcbc9b24e7b93f1a6ab5b2bc71f.r2.dev/designs/linear.app/preview-screenshot.png');
   assert.equal(linearTheme.previewDarkImageUrl, 'https://pub-2e4ecbcbc9b24e7b93f1a6ab5b2bc71f.r2.dev/designs/linear.app/preview-dark-screenshot.png');
   assert.equal(linearTheme.previewLightAlt, 'Linear Design System — Light Mode');
+  assert.equal(xaiTheme.designDownloadUrl, 'https://design.hagicode.com/designs/x.ai/DESIGN.md');
   assert.equal(xaiTheme.previewDarkAlt, 'xAI Design System — Dark Mode');
   assert.equal(linearTheme.previewLightImageUrl.endsWith('.html'), false);
   assert.equal(xaiTheme.previewDarkImageUrl.endsWith('.html'), false);
@@ -1123,6 +1127,7 @@ test('catalog validation fails when the design payload drifts from the canonical
           sourceDirectoryUrl: 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/linear.app',
           readmeUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/README.md',
           designUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/DESIGN.md',
+          designDownloadUrl: 'https://design.hagicode.com/designs/linear.app/DESIGN.md',
           previewLightImageUrl: 'https://cdn.example.com/designs/linear.app/invalid.html',
           previewLightAlt: 'Linear Design System — Light Mode',
           previewDarkImageUrl: 'https://cdn.example.com/designs/linear.app/preview-dark-screenshot.png',
@@ -1135,6 +1140,7 @@ test('catalog validation fails when the design payload drifts from the canonical
           sourceDirectoryUrl: 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/x.ai',
           readmeUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/README.md',
           designUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/DESIGN.md',
+          designDownloadUrl: 'https://design.hagicode.com/designs/x.ai/DESIGN.md',
           previewLightImageUrl: 'https://cdn.example.com/designs/x.ai/preview-screenshot.png',
           previewLightAlt: 'xAI Design System — Light Mode',
           previewDarkImageUrl: 'https://cdn.example.com/designs/x.ai/preview-dark-screenshot.png',
@@ -1154,6 +1160,57 @@ test('catalog validation fails when the design payload drifts from the canonical
       assert.match(
         error.stderr,
         /Design theme\[0\] previewLightImageUrl must not point to HTML\./,
+      );
+      return true;
+    },
+  );
+});
+
+test('catalog validation fails when the design download URL drifts from the canonical route', async () => {
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+    design: buildDesignFixture({
+      themes: [
+        {
+          slug: 'linear.app',
+          title: 'Linear Inspired Design System',
+          sourceDirectoryUrl: 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/linear.app',
+          readmeUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/README.md',
+          designUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/DESIGN.md',
+          designDownloadUrl: 'https://github.com/VoltAgent/awesome-design-md/raw/main/design-md/linear.app/DESIGN.md',
+          previewLightImageUrl: 'https://cdn.example.com/designs/linear.app/preview-screenshot.png',
+          previewLightAlt: 'Linear Design System — Light Mode',
+          previewDarkImageUrl: 'https://cdn.example.com/designs/linear.app/preview-dark-screenshot.png',
+          previewDarkAlt: 'Linear Design System — Dark Mode',
+          detailUrl: 'https://design.hagicode.com/designs/linear.app/',
+        },
+        {
+          slug: 'x.ai',
+          title: 'xAI Inspired Design System',
+          sourceDirectoryUrl: 'https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/x.ai',
+          readmeUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/README.md',
+          designUrl: 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/DESIGN.md',
+          designDownloadUrl: 'https://design.hagicode.com/designs/x.ai/DESIGN.md',
+          previewLightImageUrl: 'https://cdn.example.com/designs/x.ai/preview-screenshot.png',
+          previewLightAlt: 'xAI Design System — Light Mode',
+          previewDarkImageUrl: 'https://cdn.example.com/designs/x.ai/preview-dark-screenshot.png',
+          previewDarkAlt: 'xAI Design System — Dark Mode',
+          detailUrl: 'https://design.hagicode.com/designs/x.ai/',
+        },
+      ],
+    }),
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(
+        error.stderr,
+        /Design theme\[0\] designDownloadUrl must point to the canonical DESIGN\.md download route\./,
       );
       return true;
     },

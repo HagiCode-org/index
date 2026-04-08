@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
+import { loadDesignCatalog } from '../src/lib/load-design-catalog.ts';
 import { loadIndexCatalog } from '../src/lib/load-index-catalog.ts';
 import { loadPackageHistory } from '../src/lib/load-package-history.ts';
 import { loadSitesCatalog } from '../src/lib/load-sites-catalog.ts';
@@ -97,7 +98,7 @@ test('about route-mapped JSON loads the canonical structured about contract', as
 });
 
 test('design route-mapped JSON loads awesome-design-md themes and README-derived preview screenshots', async () => {
-  const design = await loadRouteMappedJson('/design.json');
+  const design = await loadDesignCatalog();
   const linearTheme = design.themes.find((entry) => entry.slug === 'linear.app');
   const xaiTheme = design.themes.find((entry) => entry.slug === 'x.ai');
 
@@ -113,8 +114,10 @@ test('design route-mapped JSON loads awesome-design-md themes and README-derived
   assert.equal(linearTheme.previewDarkImageUrl, 'https://pub-2e4ecbcbc9b24e7b93f1a6ab5b2bc71f.r2.dev/designs/linear.app/preview-dark-screenshot.png');
   assert.equal(linearTheme.previewLightAlt, 'Linear Design System — Light Mode');
   assert.equal(linearTheme.previewDarkAlt, 'Linear Design System — Dark Mode');
+  assert.equal(linearTheme.designDownloadUrl, 'https://design.hagicode.com/designs/linear.app/DESIGN.md');
   assert.equal(xaiTheme.detailUrl, 'https://design.hagicode.com/designs/x.ai/');
   assert.equal(xaiTheme.designUrl, 'https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/x.ai/DESIGN.md');
+  assert.equal(xaiTheme.designDownloadUrl, 'https://design.hagicode.com/designs/x.ai/DESIGN.md');
   assert.equal(xaiTheme.previewLightImageUrl.endsWith('.html'), false);
   assert.equal(xaiTheme.previewDarkImageUrl.endsWith('.html'), false);
 });
