@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-04-09T01:13:55.141Z",
+  "generatedAt": "2026-04-09T14:51:42.961Z",
   "entries": [
     {
       "id": "presets-catalog",
@@ -22,7 +22,7 @@
       "historyPagePath": "/server/history/",
       "category": "packages",
       "sourceRepo": "repos/hagicode-core",
-      "lastUpdated": "2026-04-08T14:55:16.000Z",
+      "lastUpdated": "2026-04-09T14:43:47.000Z",
       "status": "published",
       "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/hagicode-core"
     },
