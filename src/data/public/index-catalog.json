@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-04-13T07:26:00.884Z",
+  "generatedAt": "2026-04-14T01:27:53.756Z",
   "entries": [
     {
       "id": "presets-catalog",
@@ -68,11 +68,11 @@
       "path": "/activity-metrics.json",
       "category": "analytics",
       "sourceRepo": "repos/index",
-      "lastUpdated": "2026-04-13T01:30:12.816Z",
+      "lastUpdated": "2026-04-14T01:27:53.756Z",
       "status": "published",
       "activityMetrics": {
-        "activeUsers": 462,
-        "activeSessions": 255,
+        "activeUsers": 368,
+        "activeSessions": 200,
         "dateRange": "3Days"
       }
     },
