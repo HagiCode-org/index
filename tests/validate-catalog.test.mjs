@@ -183,6 +183,47 @@ function buildAboutFixture() {
   };
 }
 
+function buildLegalDocumentsFixture() {
+  return {
+    schemaVersion: '1.0.0',
+    publishedAt: '2026-04-15T00:00:00.000Z',
+    documents: [
+      {
+        documentType: 'eula',
+        effectiveDate: '2026-04-15',
+        revision: '2026-04-15',
+        canonicalUrl: 'https://docs.hagicode.com/legal/eula/',
+        locales: {
+          'zh-CN': {
+            title: '终端用户许可协议（EULA）',
+            browserOpenUrl: 'https://docs.hagicode.com/legal/eula/',
+          },
+          'en-US': {
+            title: 'End User License Agreement (EULA)',
+            browserOpenUrl: 'https://docs.hagicode.com/en/legal/eula/',
+          },
+        },
+      },
+      {
+        documentType: 'privacy-policy',
+        effectiveDate: '2026-04-15',
+        revision: '2026-04-15',
+        canonicalUrl: 'https://docs.hagicode.com/legal/privacy-policy/',
+        locales: {
+          'zh-CN': {
+            title: '隐私政策',
+            browserOpenUrl: 'https://docs.hagicode.com/legal/privacy-policy/',
+          },
+          'en-US': {
+            title: 'Privacy Policy',
+            browserOpenUrl: 'https://docs.hagicode.com/en/legal/privacy-policy/',
+          },
+        },
+      },
+    ],
+  };
+}
+
 function buildDesignFixture({
   updatedAt = '2026-04-08T00:00:00.000Z',
   sourceRepository = 'https://github.com/VoltAgent/awesome-design-md',
@@ -657,6 +698,7 @@ async function createValidationFixture({
   sitesCatalog = buildSitesCatalogFixture(),
   liveBroadcast = buildLiveBroadcastFixture(),
   about = buildAboutFixture(),
+  legalDocuments = buildLegalDocumentsFixture(),
   design = buildDesignFixture(),
   libraryData = buildCharacterTemplateLibraryFixtureData(),
 } = {}) {
@@ -721,6 +763,7 @@ async function createValidationFixture({
   await writeFile(path.join(routeSourceDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
   await writeFile(path.join(routeSourceDir, 'design.json'), JSON.stringify(design), 'utf8');
   await writeFile(path.join(routeSourceDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
   await writeFile(path.join(routeSourceDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(routeSourceDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
@@ -728,6 +771,7 @@ async function createValidationFixture({
   await writeFile(path.join(distDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
   await writeFile(path.join(distDir, 'design.json'), JSON.stringify(design), 'utf8');
   await writeFile(path.join(distDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
+  await writeFile(path.join(distDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
   await writeFile(path.join(distDir, 'about.json'), JSON.stringify(about), 'utf8');
   await writeFile(path.join(distDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
@@ -812,7 +856,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries and 8 route-mapped JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries and 9 route-mapped JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {

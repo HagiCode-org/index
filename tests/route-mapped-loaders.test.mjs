@@ -66,6 +66,24 @@ test('live broadcast route-mapped JSON keeps the canonical schedule contract', a
   assert.equal(liveBroadcast.locales.en.title, 'Daily Hagi Live Coding Room');
 });
 
+test('legal documents route-mapped JSON keeps the desktop legal metadata contract stable', async () => {
+  const legalDocuments = await loadRouteMappedJson('/legal-documents.json');
+  const eula = legalDocuments.documents.find((entry) => entry.documentType === 'eula');
+  const privacyPolicy = legalDocuments.documents.find((entry) => entry.documentType === 'privacy-policy');
+
+  assert.equal(legalDocuments.schemaVersion, '1.0.0');
+  assert.equal(typeof legalDocuments.publishedAt, 'string');
+  assert.ok(eula, 'eula entry is required.');
+  assert.ok(privacyPolicy, 'privacy-policy entry is required.');
+  assert.equal(eula.revision, '2026-04-15');
+  assert.equal(eula.effectiveDate, '2026-04-15');
+  assert.equal(eula.locales['zh-CN'].browserOpenUrl, 'https://docs.hagicode.com/legal/eula/');
+  assert.equal(eula.locales['en-US'].browserOpenUrl, 'https://docs.hagicode.com/en/legal/eula/');
+  assert.equal(privacyPolicy.revision, '2026-04-15');
+  assert.equal(privacyPolicy.locales['zh-CN'].title, '隐私政策');
+  assert.equal(privacyPolicy.locales['en-US'].title, 'Privacy Policy');
+});
+
 test('about route-mapped JSON loads the canonical structured about contract', async () => {
   const about = await loadRouteMappedJson('/about.json');
   const youtubeEntry = about.entries.find((entry) => entry.id === 'youtube');

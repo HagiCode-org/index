@@ -26,6 +26,7 @@ const fileBackedRouteMappedJsonPaths = [
   '/activity-metrics.json',
   '/design.json',
   '/live-broadcast.json',
+  '/legal-documents.json',
   '/server/index.json',
   '/desktop/index.json',
 ];
@@ -211,6 +212,39 @@ function validateLiveBroadcastContract(payload) {
       assert(typeof bundle.time?.[field] === 'string' && bundle.time[field].trim().length > 0, `Live broadcast locale ${locale} time ${field} is required.`);
     }
   }
+}
+
+function validateLegalDocumentsContract(payload) {
+  assert(payload && typeof payload === 'object' && !Array.isArray(payload), 'Legal documents payload must be an object.');
+  assert(payload.schemaVersion === '1.0.0', 'Legal documents payload schemaVersion must be 1.0.0.');
+  assert(typeof payload.publishedAt === 'string' && payload.publishedAt.trim().length > 0, 'Legal documents payload publishedAt is required.');
+  assert(Array.isArray(payload.documents) && payload.documents.length === 2, 'Legal documents payload must publish exactly two documents.');
+
+  const expectedTypes = new Set(['eula', 'privacy-policy']);
+  const seenTypes = new Set();
+
+  for (const document of payload.documents) {
+    assert(document && typeof document === 'object' && !Array.isArray(document), 'Each legal document entry must be an object.');
+    assert(typeof document.documentType === 'string' && expectedTypes.has(document.documentType), 'Legal document type must be eula or privacy-policy.');
+    assert(!seenTypes.has(document.documentType), `Duplicate legal document entry for ${document.documentType}.`);
+    seenTypes.add(document.documentType);
+    assert(typeof document.effectiveDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(document.effectiveDate), `Legal document ${document.documentType} effectiveDate must use YYYY-MM-DD.`);
+    assert(typeof document.revision === 'string' && document.revision.trim().length > 0, `Legal document ${document.documentType} revision is required.`);
+    assert(typeof document.canonicalUrl === 'string' && document.canonicalUrl.startsWith('https://docs.hagicode.com/'), `Legal document ${document.documentType} canonicalUrl must point to docs.hagicode.com.`);
+    assert(document.locales && typeof document.locales === 'object' && !Array.isArray(document.locales), `Legal document ${document.documentType} locales must be an object.`);
+
+    for (const locale of ['zh-CN', 'en-US']) {
+      const localeEntry = document.locales[locale];
+      assert(localeEntry && typeof localeEntry === 'object' && !Array.isArray(localeEntry), `Legal document ${document.documentType} locale ${locale} must be an object.`);
+      assert(typeof localeEntry.title === 'string' && localeEntry.title.trim().length > 0, `Legal document ${document.documentType} locale ${locale} title is required.`);
+      assert(
+        typeof localeEntry.browserOpenUrl === 'string' && localeEntry.browserOpenUrl.startsWith('https://docs.hagicode.com/'),
+        `Legal document ${document.documentType} locale ${locale} browserOpenUrl must point to docs.hagicode.com.`,
+      );
+    }
+  }
+
+  assert(seenTypes.size === expectedTypes.size, 'Legal documents payload must include eula and privacy-policy entries.');
 }
 
 function validateAboutImageEntry(entry, fieldName) {
@@ -662,6 +696,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   validateDesignContract(designPayload);
   await assertDesignVendorAvailable();
   validateLiveBroadcastContract(await assertPublishedRoute('/live-broadcast.json', publishedRoot));
+  validateLegalDocumentsContract(await assertPublishedRoute('/legal-documents.json', publishedRoot));
   await assertPublishedRoute('/server/index.json', publishedRoot);
   await assertPublishedRoute('/desktop/index.json', publishedRoot);
   validateAboutContract(await assertPublishedRoute('/about.json', publishedRoot));
