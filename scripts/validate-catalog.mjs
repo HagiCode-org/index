@@ -37,6 +37,7 @@ const routeMappedJsonPaths = [
 ];
 const requiredAboutEntryIds = [
   'youtube',
+  'steam',
   'bilibili',
   'xiaohongshu',
   'douyin-account',
