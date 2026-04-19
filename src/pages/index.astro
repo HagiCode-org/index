@@ -14,6 +14,48 @@ const groupedEntries = sitesCatalog.groups.map((group) => ({
 const featuredEntries = sitesCatalog.entries.filter(
   (entry) => entry.id === 'hagicode-main' || entry.id === 'hagicode-docs',
 );
+const dataEntryLinks = [
+  {
+    title: '站点导航 JSON',
+    description: '供其他站点页脚与工具站同步站群清单。',
+    href: '/sites.json',
+  },
+  {
+    title: '目录索引 JSON',
+    description: '公开索引目录与状态元数据。',
+    href: '/index-catalog.json',
+  },
+  {
+    title: '活动指标 JSON',
+    description: '主站运行时消费的首页活动统计数据。',
+    href: '/activity-metrics.json',
+  },
+  {
+    title: '直播入口 JSON',
+    description: '站内直播入口与公开直播元数据。',
+    href: '/live-broadcast.json',
+  },
+  {
+    title: '设计目录 JSON',
+    description: 'awesome-design-md 的公开目录入口。',
+    href: '/design.json',
+  },
+  {
+    title: '法律文档 JSON',
+    description: '公开法律文档元数据与落地页映射。',
+    href: '/legal-documents.json',
+  },
+  {
+    title: 'Desktop 版本历史',
+    description: '可抓取的桌面端历史页与下载入口。',
+    href: '/desktop/history/',
+  },
+  {
+    title: 'Server 版本历史',
+    description: '可抓取的服务端历史页与索引入口。',
+    href: '/server/history/',
+  },
+];
 const pageTitle = 'HagiCode Portal';
 const pageDescription = 'HagiCode 站点导航门户，集中收纳主站、文档、数据镜像与独立工具站点。';
 const canonicalUrl = 'https://index.hagicode.com/';
@@ -57,6 +99,42 @@ const canonicalUrl = 'https://index.hagicode.com/';
           sitesJsonPath="/sites.json"
           catalogPath="/index-catalog.json"
         />
+
+        <section class="portal-section" aria-labelledby="portal-data-heading">
+          <div class="section-heading">
+            <p class="eyebrow">Public Data</p>
+            <div>
+              <h2 id="portal-data-heading">数据入口导航</h2>
+              <p>把首页直接当作稳定数据路由的导航页使用。这里保留对外公开、适合抓取、适合人工核对的 JSON 与历史页入口。</p>
+            </div>
+          </div>
+
+          <div class="portal-group-grid">
+            {dataEntryLinks.map((entry) => (
+              <article class="portal-site-card">
+                <div class="portal-site-topline">
+                  <p class="card-category">data</p>
+                  <span class="status-badge">stable route</span>
+                </div>
+
+                <div class="portal-site-copy">
+                  <h3>{entry.title}</h3>
+                  <p>{entry.description}</p>
+                </div>
+
+                <p class="portal-site-domain">
+                  <code>{entry.href}</code>
+                </p>
+
+                <div class="card-actions" aria-label={`${entry.title} 操作`}>
+                  <a class="button button-primary" href={entry.href}>
+                    打开入口
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <section class="portal-section" aria-labelledby="portal-sites-heading">
           <div class="section-heading">
