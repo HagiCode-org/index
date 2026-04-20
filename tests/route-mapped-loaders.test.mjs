@@ -87,6 +87,7 @@ test('legal documents route-mapped JSON keeps the desktop legal metadata contrac
 test('about route-mapped JSON loads the canonical structured about contract', async () => {
   const about = await loadRouteMappedJson('/about.json');
   const youtubeEntry = about.entries.find((entry) => entry.id === 'youtube');
+  const productHuntEntry = about.entries.find((entry) => entry.id === 'product-hunt');
   const steamEntry = about.entries.find((entry) => entry.id === 'steam');
   const xiaohongshuEntry = about.entries.find((entry) => entry.id === 'xiaohongshu');
   const douyinQrEntry = about.entries.find((entry) => entry.id === 'douyin-qr');
@@ -96,6 +97,7 @@ test('about route-mapped JSON loads the canonical structured about contract', as
   assert.equal(typeof about.updatedAt, 'string');
   assert.equal(Array.isArray(about.entries), true);
   assert.ok(youtubeEntry, 'youtube entry is required.');
+  assert.ok(productHuntEntry, 'product-hunt entry is required.');
   assert.ok(steamEntry, 'steam entry is required.');
   assert.ok(xiaohongshuEntry, 'xiaohongshu entry is required.');
   assert.ok(douyinQrEntry, 'douyin-qr entry is required.');
@@ -104,6 +106,10 @@ test('about route-mapped JSON loads the canonical structured about contract', as
   assert.equal(youtubeEntry.label, 'YouTube');
   assert.equal(youtubeEntry.regionPriority, 'international-first');
   assert.equal(youtubeEntry.url, 'https://www.youtube.com/@hagicode');
+  assert.equal(productHuntEntry.type, 'link');
+  assert.equal(productHuntEntry.label, 'Product Hunt');
+  assert.equal(productHuntEntry.regionPriority, 'international-first');
+  assert.equal(productHuntEntry.url, 'https://www.producthunt.com/products/hagicode');
   assert.equal(steamEntry.type, 'link');
   assert.equal(steamEntry.label, 'Steam');
   assert.equal(steamEntry.regionPriority, 'international-first');

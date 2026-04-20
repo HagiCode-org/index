@@ -40,7 +40,7 @@ export interface AboutSourceDocument {
 
 export const aboutSource = {
   version: '1.0.0',
-  updatedAt: '2026-04-16T00:00:00.000Z',
+  updatedAt: '2026-04-20T00:00:00.000Z',
   entries: [
     {
       id: 'youtube',
@@ -48,6 +48,13 @@ export const aboutSource = {
       label: 'YouTube',
       regionPriority: 'international-first',
       url: 'https://www.youtube.com/@hagicode',
+    },
+    {
+      id: 'product-hunt',
+      type: 'link',
+      label: 'Product Hunt',
+      regionPriority: 'international-first',
+      url: 'https://www.producthunt.com/products/hagicode',
     },
     {
       id: 'steam',
