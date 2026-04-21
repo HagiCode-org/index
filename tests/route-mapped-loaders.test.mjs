@@ -13,16 +13,19 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   const activityEntry = catalog.entries.find((entry) => entry.id === 'activity-metrics');
   const aboutEntry = catalog.entries.find((entry) => entry.id === 'about');
   const designEntry = catalog.entries.find((entry) => entry.id === 'design-theme-catalog');
+  const steamDataEntry = catalog.entries.find((entry) => entry.id === 'steam-data');
 
   assert.ok(serverEntry, 'server-packages entry is required.');
   assert.ok(activityEntry, 'activity-metrics entry is required.');
   assert.ok(aboutEntry, 'about entry is required.');
   assert.ok(designEntry, 'design-theme-catalog entry is required.');
+  assert.ok(steamDataEntry, 'steam-data entry is required.');
   assert.equal(serverEntry.path, '/server/index.json');
   assert.equal(serverEntry.historyPagePath, '/server/history/');
   assert.equal(activityEntry.path, '/activity-metrics.json');
   assert.equal(aboutEntry.path, '/about.json');
   assert.equal(designEntry.path, '/design.json');
+  assert.equal(steamDataEntry.path, '/steam/index.json');
 });
 
 test('loadPackageHistory keeps the existing raw JSON contract for server and desktop history pages', async () => {
@@ -150,4 +153,28 @@ test('design route-mapped JSON loads awesome-design-md themes and README-derived
   assert.equal(xaiTheme.designDownloadUrl, 'https://design.hagicode.com/designs/x.ai/DESIGN.md');
   assert.equal(xaiTheme.previewLightImageUrl.endsWith('.html'), false);
   assert.equal(xaiTheme.previewDarkImageUrl.endsWith('.html'), false);
+});
+
+test('steam route-mapped JSON publishes the canonical application mapping for Hagicode and Turbo Engine', async () => {
+  const steamData = await loadRouteMappedJson('/steam/index.json');
+  const hagicodeEntry = steamData.applications.find((entry) => entry.key === 'hagicode');
+  const turboEngineEntry = steamData.applications.find((entry) => entry.key === 'turbo-engine');
+
+  assert.equal(steamData.version, '1.0.0');
+  assert.equal(typeof steamData.updatedAt, 'string');
+  assert.equal(Array.isArray(steamData.applications), true);
+  assert.ok(hagicodeEntry, 'hagicode entry is required.');
+  assert.ok(turboEngineEntry, 'turbo-engine entry is required.');
+  assert.equal(hagicodeEntry.kind, 'application');
+  assert.equal(hagicodeEntry.storeAppId, '4625540');
+  assert.equal(hagicodeEntry.platformAppIds.windows, '4625541');
+  assert.equal(hagicodeEntry.platformAppIds.linux, '4625542');
+  assert.equal(hagicodeEntry.platformAppIds.macos, '4625543');
+  assert.equal(hagicodeEntry.storeUrl, 'https://store.steampowered.com/app/4625540/Hagicode/');
+  assert.equal(turboEngineEntry.kind, 'dlc');
+  assert.equal(turboEngineEntry.parentKey, 'hagicode');
+  assert.equal(turboEngineEntry.storeAppId, '4635480');
+  assert.equal(turboEngineEntry.platformAppIds.windows, '4635480');
+  assert.equal(turboEngineEntry.platformAppIds.linux, '4635482');
+  assert.equal(turboEngineEntry.platformAppIds.macos, '4635481');
 });

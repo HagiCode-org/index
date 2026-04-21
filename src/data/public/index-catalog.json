@@ -108,6 +108,17 @@
       "status": "published",
       "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/secondary-professions.catalog.json",
       "lastUpdated": "2026-03-27T00:00:00.000Z"
+    },
+    {
+      "id": "steam-data",
+      "title": "Steam Data",
+      "description": "公开 HagiCode 本体与 DLC 的共享 Steam 数据集入口，首轮覆盖 applications[] 的稳定 appKey 与跨平台 AppId 映射。",
+      "path": "/steam/index.json",
+      "category": "catalogs",
+      "sourceRepo": "repos/index",
+      "lastUpdated": "2026-04-21T00:00:00.000Z",
+      "status": "published",
+      "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/public/steam"
     }
   ]
 }

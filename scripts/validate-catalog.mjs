@@ -29,6 +29,7 @@ const fileBackedRouteMappedJsonPaths = [
   '/legal-documents.json',
   '/server/index.json',
   '/desktop/index.json',
+  '/steam/index.json',
 ];
 const generatedRouteMappedJsonPaths = ['/about.json'];
 const routeMappedJsonPaths = [

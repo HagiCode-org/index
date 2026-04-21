@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-04-21T00:00:00.000Z",
+  "applications": [
+    {
+      "key": "hagicode",
+      "displayName": "HagiCode",
+      "kind": "application",
+      "parentKey": null,
+      "storeAppId": "4625540",
+      "storeUrl": "https://store.steampowered.com/app/4625540/Hagicode/",
+      "platformAppIds": {
+        "windows": "4625541",
+        "linux": "4625542",
+        "macos": "4625543"
+      }
+    },
+    {
+      "key": "turbo-engine",
+      "displayName": "Turbo Engine",
+      "kind": "dlc",
+      "parentKey": "hagicode",
+      "storeAppId": "4635480",
+      "storeUrl": "https://store.steampowered.com/app/4635480/Turbo_Engine/",
+      "platformAppIds": {
+        "windows": "4635480",
+        "linux": "4635482",
+        "macos": "4635481"
+      }
+    }
+  ]
+}

@@ -10,6 +10,7 @@ export const fileBackedRouteMappedJsonPaths = [
   '/legal-documents.json',
   '/server/index.json',
   '/desktop/index.json',
+  '/steam/index.json',
 ] as const;
 
 export const generatedRouteMappedJsonPaths = ['/about.json'] as const;

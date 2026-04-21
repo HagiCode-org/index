@@ -870,7 +870,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries and 9 route-mapped JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries and 10 route-mapped JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
@@ -963,7 +963,18 @@ test('catalog exposes managed server and desktop entries', async () => {
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
   const entryIds = catalog.entries.map((entry) => entry.id);
 
-  assert.deepEqual(entryIds, ['presets-catalog', 'server-packages', 'desktop-packages', 'agent-templates', 'character-templates', 'activity-metrics', 'about', 'design-theme-catalog', 'secondary-professions']);
+  assert.deepEqual(entryIds, [
+    'presets-catalog',
+    'server-packages',
+    'desktop-packages',
+    'agent-templates',
+    'character-templates',
+    'activity-metrics',
+    'about',
+    'design-theme-catalog',
+    'secondary-professions',
+    'steam-data',
+  ]);
 });
 
 test('catalog exposes about entry at the canonical JSON route', async () => {
