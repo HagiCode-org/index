@@ -8,6 +8,8 @@ export const fileBackedRouteMappedJsonPaths = [
   '/design.json',
   '/live-broadcast.json',
   '/legal-documents.json',
+  '/promote.json',
+  '/promote_content.json',
   '/server/index.json',
   '/desktop/index.json',
   '/steam/index.json',

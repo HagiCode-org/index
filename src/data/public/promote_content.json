@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-04-23T00:00:00.000Z",
+  "contents": [
+    {
+      "id": "main-game-2026-04-29",
+      "title": {
+        "zh": "立即添加到愿望单",
+        "en": "Wishlist Now"
+      },
+      "description": {
+        "zh": "游戏将于 2026-04-29 发售，立即前往 Steam 添加愿望单。",
+        "en": "Coming April 29, 2026. Add to your Steam wishlist now!"
+      },
+      "link": "https://store.steampowered.com/app/4625540/Hagicode/",
+      "targetPlatform": "steam"
+    }
+  ]
+}
