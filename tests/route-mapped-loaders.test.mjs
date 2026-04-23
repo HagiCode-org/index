@@ -14,18 +14,24 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   const aboutEntry = catalog.entries.find((entry) => entry.id === 'about');
   const designEntry = catalog.entries.find((entry) => entry.id === 'design-theme-catalog');
   const steamDataEntry = catalog.entries.find((entry) => entry.id === 'steam-data');
+  const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
+  const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
 
   assert.ok(serverEntry, 'server-packages entry is required.');
   assert.ok(activityEntry, 'activity-metrics entry is required.');
   assert.ok(aboutEntry, 'about entry is required.');
   assert.ok(designEntry, 'design-theme-catalog entry is required.');
   assert.ok(steamDataEntry, 'steam-data entry is required.');
+  assert.ok(promotionFlagsEntry, 'promotion-flags entry is required.');
+  assert.ok(promotionContentEntry, 'promotion-content entry is required.');
   assert.equal(serverEntry.path, '/server/index.json');
   assert.equal(serverEntry.historyPagePath, '/server/history/');
   assert.equal(activityEntry.path, '/activity-metrics.json');
   assert.equal(aboutEntry.path, '/about.json');
   assert.equal(designEntry.path, '/design.json');
   assert.equal(steamDataEntry.path, '/steam/index.json');
+  assert.equal(promotionFlagsEntry.path, '/promote.json');
+  assert.equal(promotionContentEntry.path, '/promote_content.json');
 });
 
 test('loadPackageHistory keeps the existing raw JSON contract for server and desktop history pages', async () => {
@@ -170,6 +176,7 @@ test('steam route-mapped JSON publishes the canonical application mapping for Ha
   assert.equal(hagicodeEntry.platformAppIds.windows, '4625541');
   assert.equal(hagicodeEntry.platformAppIds.linux, '4625542');
   assert.equal(hagicodeEntry.platformAppIds.macos, '4625543');
+  assert.equal(hagicodeEntry.promoteId, 'main-game-2026-04-29');
   assert.equal(hagicodeEntry.storeUrl, 'https://store.steampowered.com/app/4625540/Hagicode/');
   assert.equal(turboEngineEntry.kind, 'dlc');
   assert.equal(turboEngineEntry.parentKey, 'hagicode');
@@ -177,4 +184,27 @@ test('steam route-mapped JSON publishes the canonical application mapping for Ha
   assert.equal(turboEngineEntry.platformAppIds.windows, '4635480');
   assert.equal(turboEngineEntry.platformAppIds.linux, '4635482');
   assert.equal(turboEngineEntry.platformAppIds.macos, '4635481');
+  assert.equal(turboEngineEntry.storeUrl, 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/');
+});
+
+test('promotion route-mapped JSON publishes stable flags and localized content contracts', async () => {
+  const promote = await loadRouteMappedJson('/promote.json');
+  const promoteContent = await loadRouteMappedJson('/promote_content.json');
+  const mainPromotion = promote.promotes.find((entry) => entry.id === 'main-game-2026-04-29');
+  const mainPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-2026-04-29');
+
+  assert.equal(promote.version, '1.0.0');
+  assert.equal(typeof promote.updatedAt, 'string');
+  assert.ok(mainPromotion, 'main-game promotion flag is required.');
+  assert.equal(mainPromotion.on, true);
+
+  assert.equal(promoteContent.version, '1.0.0');
+  assert.equal(typeof promoteContent.updatedAt, 'string');
+  assert.ok(mainPromotionContent, 'main-game promotion content is required.');
+  assert.equal(mainPromotionContent.title.zh, '立即添加到愿望单');
+  assert.equal(mainPromotionContent.title.en, 'Wishlist Now');
+  assert.match(mainPromotionContent.description.zh, /2026-04-29/);
+  assert.match(mainPromotionContent.description.en, /April 29, 2026/);
+  assert.equal(mainPromotionContent.link, 'https://store.steampowered.com/app/4625540/Hagicode/');
+  assert.equal(mainPromotionContent.targetPlatform, 'steam');
 });

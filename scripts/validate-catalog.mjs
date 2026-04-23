@@ -27,6 +27,8 @@ const fileBackedRouteMappedJsonPaths = [
   '/design.json',
   '/live-broadcast.json',
   '/legal-documents.json',
+  '/promote.json',
+  '/promote_content.json',
   '/server/index.json',
   '/desktop/index.json',
   '/steam/index.json',
@@ -61,6 +63,8 @@ const aboutEntryId = 'about';
 const designEntryId = 'design-theme-catalog';
 const agentTemplatesEntryId = 'agent-templates';
 const characterTemplatesEntryId = 'character-templates';
+const promotionFlagsEntryId = 'promotion-flags';
+const promotionContentEntryId = 'promotion-content';
 const supportedCharacterTemplateModes = ['curated', 'universal'];
 const requiredPortalSites = new Map([
   ['hagicode-main', 'https://hagicode.com/'],
@@ -247,6 +251,78 @@ function validateLegalDocumentsContract(payload) {
   }
 
   assert(seenTypes.size === expectedTypes.size, 'Legal documents payload must include eula and privacy-policy entries.');
+}
+
+function validatePromoteContract(payload) {
+  assert(payload && typeof payload === 'object' && !Array.isArray(payload), 'Promote payload must be an object.');
+  assert(payload.version === '1.0.0', 'Promote payload version must be 1.0.0.');
+  assert(typeof payload.updatedAt === 'string' && payload.updatedAt.trim().length > 0, 'Promote payload updatedAt is required.');
+  assert(Array.isArray(payload.promotes), 'Promote payload promotes must be an array.');
+
+  const seenIds = new Set();
+
+  payload.promotes.forEach((entry, index) => {
+    const fieldName = `Promote entry[${index}]`;
+    assert(entry && typeof entry === 'object' && !Array.isArray(entry), `${fieldName} must be an object.`);
+    assert(typeof entry.id === 'string' && entry.id.trim().length > 0, `${fieldName} id is required.`);
+    assert(!seenIds.has(entry.id), `Duplicate promote id ${entry.id}.`);
+    seenIds.add(entry.id);
+    assert(typeof entry.on === 'boolean', `${fieldName} on must be a boolean.`);
+  });
+}
+
+function validatePromoteContentContract(payload) {
+  assert(payload && typeof payload === 'object' && !Array.isArray(payload), 'Promote content payload must be an object.');
+  assert(payload.version === '1.0.0', 'Promote content payload version must be 1.0.0.');
+  assert(typeof payload.updatedAt === 'string' && payload.updatedAt.trim().length > 0, 'Promote content payload updatedAt is required.');
+  assert(Array.isArray(payload.contents), 'Promote content payload contents must be an array.');
+
+  const seenIds = new Set();
+
+  payload.contents.forEach((entry, index) => {
+    const fieldName = `Promote content[${index}]`;
+    assert(entry && typeof entry === 'object' && !Array.isArray(entry), `${fieldName} must be an object.`);
+    assert(typeof entry.id === 'string' && entry.id.trim().length > 0, `${fieldName} id is required.`);
+    assert(!seenIds.has(entry.id), `Duplicate promote content id ${entry.id}.`);
+    seenIds.add(entry.id);
+
+    assert(entry.title && typeof entry.title === 'object' && !Array.isArray(entry.title), `${fieldName} title must be an object.`);
+    assert(entry.description && typeof entry.description === 'object' && !Array.isArray(entry.description), `${fieldName} description must be an object.`);
+
+    for (const locale of ['zh', 'en']) {
+      assert(typeof entry.title[locale] === 'string' && entry.title[locale].trim().length > 0, `${fieldName} title.${locale} is required.`);
+      assert(typeof entry.description[locale] === 'string' && entry.description[locale].trim().length > 0, `${fieldName} description.${locale} is required.`);
+    }
+
+    assert(typeof entry.link === 'string' && entry.link.trim().length > 0, `${fieldName} link is required.`);
+    assert(typeof entry.targetPlatform === 'string' && entry.targetPlatform.trim().length > 0, `${fieldName} targetPlatform is required.`);
+
+    if ('imageUrl' in entry && entry.imageUrl !== undefined) {
+      assert(typeof entry.imageUrl === 'string' && entry.imageUrl.trim().length > 0, `${fieldName} imageUrl must be a non-empty string when present.`);
+    }
+  });
+}
+
+function validateSteamContract(payload) {
+  assert(payload && typeof payload === 'object' && !Array.isArray(payload), 'Steam payload must be an object.');
+  assert(payload.version === '1.0.0', 'Steam payload version must be 1.0.0.');
+  assert(typeof payload.updatedAt === 'string' && payload.updatedAt.trim().length > 0, 'Steam payload updatedAt is required.');
+  assert(Array.isArray(payload.applications), 'Steam payload applications must be an array.');
+
+  payload.applications.forEach((entry, index) => {
+    const fieldName = `Steam application[${index}]`;
+    assert(entry && typeof entry === 'object' && !Array.isArray(entry), `${fieldName} must be an object.`);
+
+    for (const key of ['key', 'displayName', 'kind', 'storeAppId', 'storeUrl']) {
+      assert(typeof entry[key] === 'string' && entry[key].trim().length > 0, `${fieldName} ${key} is required.`);
+    }
+
+    assert(entry.platformAppIds && typeof entry.platformAppIds === 'object' && !Array.isArray(entry.platformAppIds), `${fieldName} platformAppIds must be an object.`);
+
+    if ('promoteId' in entry && entry.promoteId !== undefined) {
+      assert(typeof entry.promoteId === 'string' && entry.promoteId.trim().length > 0, `${fieldName} promoteId must be a non-empty string when present.`);
+    }
+  });
 }
 
 function validateAboutImageEntry(entry, fieldName) {
@@ -699,9 +775,35 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   await assertDesignVendorAvailable();
   validateLiveBroadcastContract(await assertPublishedRoute('/live-broadcast.json', publishedRoot));
   validateLegalDocumentsContract(await assertPublishedRoute('/legal-documents.json', publishedRoot));
+  const promotePayload = await assertPublishedRoute('/promote.json', publishedRoot);
+  validatePromoteContract(promotePayload);
+  const promoteContentPayload = await assertPublishedRoute('/promote_content.json', publishedRoot);
+  validatePromoteContentContract(promoteContentPayload);
   await assertPublishedRoute('/server/index.json', publishedRoot);
   await assertPublishedRoute('/desktop/index.json', publishedRoot);
+  const steamPayload = await assertPublishedRoute('/steam/index.json', publishedRoot);
+  validateSteamContract(steamPayload);
   validateAboutContract(await assertPublishedRoute('/about.json', publishedRoot));
+
+  const publishedPromotionContentIds = new Set(promoteContentPayload.contents.map((entry) => entry.id));
+
+  for (const promote of promotePayload.promotes) {
+    if (promote.on) {
+      assert(
+        publishedPromotionContentIds.has(promote.id),
+        `Enabled promote id ${promote.id} must resolve to a promote_content.json entry.`,
+      );
+    }
+  }
+
+  for (const application of steamPayload.applications) {
+    if (application.promoteId) {
+      assert(
+        publishedPromotionContentIds.has(application.promoteId),
+        `Steam application ${application.key} promoteId ${application.promoteId} must resolve to a promote_content.json entry.`,
+      );
+    }
+  }
 
   const catalog = publishedCatalog;
   const activityMetricsAsset = await loadActivityMetrics(resolveSourcePath('/activity-metrics.json'));
@@ -716,6 +818,8 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   let sawDesignEntry = false;
   let sawAgentTemplatesEntry = false;
   let sawCharacterTemplatesEntry = false;
+  let sawPromotionFlagsEntry = false;
+  let sawPromotionContentEntry = false;
 
   for (const [index, entry] of catalog.entries.entries()) {
     assert(entry && typeof entry === 'object', `Entry ${index} must be an object.`);
@@ -817,6 +921,20 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
       sawCharacterTemplatesEntry = true;
       await validateCharacterTemplateManifest(entry, publishedRoot);
     }
+
+    if (entry.id === promotionFlagsEntryId) {
+      sawPromotionFlagsEntry = true;
+      assert(entry.path === '/promote.json', 'Promotion flags entry path must be /promote.json.');
+      assert(entry.sourceRepo === 'repos/index', 'Promotion flags entry sourceRepo must be repos/index.');
+      assert(entry.status === 'published', 'Promotion flags entry status must be published.');
+    }
+
+    if (entry.id === promotionContentEntryId) {
+      sawPromotionContentEntry = true;
+      assert(entry.path === '/promote_content.json', 'Promotion content entry path must be /promote_content.json.');
+      assert(entry.sourceRepo === 'repos/index', 'Promotion content entry sourceRepo must be repos/index.');
+      assert(entry.status === 'published', 'Promotion content entry status must be published.');
+    }
   }
 
   assert(sawActivityEntry, 'Catalog must include an activity-metrics entry.');
@@ -824,6 +942,8 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   assert(sawDesignEntry, 'Catalog must include a design-theme-catalog entry.');
   assert(sawAgentTemplatesEntry, 'Catalog must include an agent-templates entry.');
   assert(sawCharacterTemplatesEntry, 'Catalog must include a character-templates entry.');
+  assert(sawPromotionFlagsEntry, 'Catalog must include a promotion-flags entry.');
+  assert(sawPromotionContentEntry, 'Catalog must include a promotion-content entry.');
 
   console.log(`Validated ${catalog.entries.length} catalog entries and ${routeMappedJsonPaths.length} route-mapped JSON assets.`);
 }

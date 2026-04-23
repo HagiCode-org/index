@@ -116,9 +116,31 @@
       "path": "/steam/index.json",
       "category": "catalogs",
       "sourceRepo": "repos/index",
-      "lastUpdated": "2026-04-21T00:00:00.000Z",
+      "lastUpdated": "2026-04-23T00:00:00.000Z",
       "status": "published",
       "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/public/steam"
+    },
+    {
+      "id": "promotion-flags",
+      "title": "Promotion Flags",
+      "description": "公开跨站点复用的促销启停数据入口，用于切换当前有效的推广卡片。",
+      "path": "/promote.json",
+      "category": "catalogs",
+      "sourceRepo": "repos/index",
+      "lastUpdated": "2026-04-23T00:00:00.000Z",
+      "status": "published",
+      "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/public/promote.json"
+    },
+    {
+      "id": "promotion-content",
+      "title": "Promotion Content",
+      "description": "公开中英文促销标题、描述与跳转链接，供各站点按 promoteId 渲染推广卡片。",
+      "path": "/promote_content.json",
+      "category": "catalogs",
+      "sourceRepo": "repos/index",
+      "lastUpdated": "2026-04-23T00:00:00.000Z",
+      "status": "published",
+      "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/public/promote_content.json"
     }
   ]
 }

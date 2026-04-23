@@ -238,6 +238,77 @@ function buildLegalDocumentsFixture() {
   };
 }
 
+function buildPromoteFixture() {
+  return {
+    version: '1.0.0',
+    updatedAt: '2026-04-23T00:00:00.000Z',
+    promotes: [
+      {
+        id: 'main-game-2026-04-29',
+        on: true,
+      },
+    ],
+  };
+}
+
+function buildPromoteContentFixture() {
+  return {
+    version: '1.0.0',
+    updatedAt: '2026-04-23T00:00:00.000Z',
+    contents: [
+      {
+        id: 'main-game-2026-04-29',
+        title: {
+          zh: '立即添加到愿望单',
+          en: 'Wishlist Now',
+        },
+        description: {
+          zh: '游戏将于 2026-04-29 发售，立即前往 Steam 添加愿望单。',
+          en: 'Coming April 29, 2026. Add to your Steam wishlist now!',
+        },
+        link: 'https://store.steampowered.com/app/4625540/Hagicode/',
+        targetPlatform: 'steam',
+      },
+    ],
+  };
+}
+
+function buildSteamFixture() {
+  return {
+    version: '1.0.0',
+    updatedAt: '2026-04-23T00:00:00.000Z',
+    applications: [
+      {
+        key: 'hagicode',
+        displayName: 'HagiCode',
+        kind: 'application',
+        parentKey: null,
+        promoteId: 'main-game-2026-04-29',
+        storeAppId: '4625540',
+        storeUrl: 'https://store.steampowered.com/app/4625540/Hagicode/',
+        platformAppIds: {
+          windows: '4625541',
+          linux: '4625542',
+          macos: '4625543',
+        },
+      },
+      {
+        key: 'turbo-engine',
+        displayName: 'Turbo Engine',
+        kind: 'dlc',
+        parentKey: 'hagicode',
+        storeAppId: '4635480',
+        storeUrl: 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/',
+        platformAppIds: {
+          windows: '4635480',
+          linux: '4635482',
+          macos: '4635481',
+        },
+      },
+    ],
+  };
+}
+
 function buildDesignFixture({
   updatedAt = '2026-04-08T00:00:00.000Z',
   sourceRepository = 'https://github.com/VoltAgent/awesome-design-md',
@@ -362,6 +433,26 @@ function buildCatalogFixture({
         lastUpdated,
         status: 'published',
         readmePath: '/character-templates/README.md',
+      },
+      {
+        id: 'promotion-flags',
+        title: 'Promotion Flags',
+        description: '公开跨站点复用的促销启停数据入口，用于切换当前有效的推广卡片。',
+        path: '/promote.json',
+        category: 'catalogs',
+        sourceRepo: 'repos/index',
+        lastUpdated: '2026-04-23T00:00:00.000Z',
+        status: 'published',
+      },
+      {
+        id: 'promotion-content',
+        title: 'Promotion Content',
+        description: '公开中英文促销标题、描述与跳转链接，供各站点按 promoteId 渲染推广卡片。',
+        path: '/promote_content.json',
+        category: 'catalogs',
+        sourceRepo: 'repos/index',
+        lastUpdated: '2026-04-23T00:00:00.000Z',
+        status: 'published',
       },
     ],
   };
@@ -713,6 +804,9 @@ async function createValidationFixture({
   liveBroadcast = buildLiveBroadcastFixture(),
   about = buildAboutFixture(),
   legalDocuments = buildLegalDocumentsFixture(),
+  promote = buildPromoteFixture(),
+  promoteContent = buildPromoteContentFixture(),
+  steam = buildSteamFixture(),
   design = buildDesignFixture(),
   libraryData = buildCharacterTemplateLibraryFixtureData(),
 } = {}) {
@@ -745,8 +839,10 @@ async function createValidationFixture({
   await mkdir(path.join(distDir, 'character-templates', 'templates'), { recursive: true });
   await mkdir(path.join(routeSourceDir, 'server'), { recursive: true });
   await mkdir(path.join(routeSourceDir, 'desktop'), { recursive: true });
+  await mkdir(path.join(routeSourceDir, 'steam'), { recursive: true });
   await mkdir(path.join(distDir, 'server'), { recursive: true });
   await mkdir(path.join(distDir, 'desktop'), { recursive: true });
+  await mkdir(path.join(distDir, 'steam'), { recursive: true });
   await writeFile(
     path.join(scriptsDir, 'validate-catalog.mjs'),
     await readFile(validateScriptPath, 'utf8'),
@@ -778,17 +874,23 @@ async function createValidationFixture({
   await writeFile(path.join(routeSourceDir, 'design.json'), JSON.stringify(design), 'utf8');
   await writeFile(path.join(routeSourceDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(routeSourceDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'promote.json'), JSON.stringify(promote), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'promote_content.json'), JSON.stringify(promoteContent), 'utf8');
   await writeFile(path.join(routeSourceDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(routeSourceDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
+  await writeFile(path.join(routeSourceDir, 'steam', 'index.json'), JSON.stringify(steam), 'utf8');
   await writeFile(path.join(distDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
   await writeFile(path.join(distDir, 'sites.json'), JSON.stringify(sitesCatalog), 'utf8');
   await writeFile(path.join(distDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
   await writeFile(path.join(distDir, 'design.json'), JSON.stringify(design), 'utf8');
   await writeFile(path.join(distDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(distDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
+  await writeFile(path.join(distDir, 'promote.json'), JSON.stringify(promote), 'utf8');
+  await writeFile(path.join(distDir, 'promote_content.json'), JSON.stringify(promoteContent), 'utf8');
   await writeFile(path.join(distDir, 'about.json'), JSON.stringify(about), 'utf8');
   await writeFile(path.join(distDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
+  await writeFile(path.join(distDir, 'steam', 'index.json'), JSON.stringify(steam), 'utf8');
   await writeFile(path.join(distDir, 'agent-templates', 'index.json'), JSON.stringify({
     version: '1.0.0',
     generatedAt: catalog.generatedAt,
@@ -870,7 +972,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries and 10 route-mapped JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries and 12 route-mapped JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
@@ -974,6 +1076,8 @@ test('catalog exposes managed server and desktop entries', async () => {
     'design-theme-catalog',
     'secondary-professions',
     'steam-data',
+    'promotion-flags',
+    'promotion-content',
   ]);
 });
 
@@ -1031,6 +1135,66 @@ test('managed package entries expose stable history page paths', async () => {
 
   assert.equal(serverEntry.historyPagePath, '/server/history/');
   assert.equal(desktopEntry.historyPagePath, '/desktop/history/');
+});
+
+test('catalog exposes promotion discovery entries at canonical JSON routes', async () => {
+  const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
+  const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
+  const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
+  const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
+
+  assert.ok(promotionFlagsEntry, 'promotion-flags entry is required.');
+  assert.ok(promotionContentEntry, 'promotion-content entry is required.');
+  assert.equal(promotionFlagsEntry.path, '/promote.json');
+  assert.equal(promotionFlagsEntry.sourceRepo, 'repos/index');
+  assert.equal(promotionFlagsEntry.status, 'published');
+  assert.equal(promotionContentEntry.path, '/promote_content.json');
+  assert.equal(promotionContentEntry.sourceRepo, 'repos/index');
+  assert.equal(promotionContentEntry.status, 'published');
+});
+
+test('catalog validation fails when an enabled promotion flag does not resolve to content', async () => {
+  const promote = buildPromoteFixture();
+  promote.promotes[0].id = 'missing-promotion-id';
+
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+    promote,
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /Enabled promote id missing-promotion-id must resolve to a promote_content\.json entry\./);
+      return true;
+    },
+  );
+});
+
+test('catalog validation fails when a Steam promoteId does not resolve to promotion content', async () => {
+  const steam = buildSteamFixture();
+  steam.applications[0].promoteId = 'missing-promotion-id';
+
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+    steam,
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /Steam application hagicode promoteId missing-promotion-id must resolve to a promote_content\.json entry\./);
+      return true;
+    },
+  );
 });
 
 test('activity metrics catalog entry mirrors the current raw snapshot summary', async () => {
