@@ -65,6 +65,7 @@ const agentTemplatesEntryId = 'agent-templates';
 const characterTemplatesEntryId = 'character-templates';
 const promotionFlagsEntryId = 'promotion-flags';
 const promotionContentEntryId = 'promotion-content';
+const explicitTimezoneIsoPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/;
 const supportedCharacterTemplateModes = ['curated', 'universal'];
 const requiredPortalSites = new Map([
   ['hagicode-main', 'https://hagicode.com/'],
@@ -268,7 +269,23 @@ function validatePromoteContract(payload) {
     assert(!seenIds.has(entry.id), `Duplicate promote id ${entry.id}.`);
     seenIds.add(entry.id);
     assert(typeof entry.on === 'boolean', `${fieldName} on must be a boolean.`);
+
+    for (const field of ['startTime', 'endTime']) {
+      if (field in entry && entry[field] !== undefined) {
+        assert(typeof entry[field] === 'string', `${fieldName} ${field} must be a string when present.`);
+        assert(explicitTimezoneIsoPattern.test(entry[field]), `${fieldName} ${field} must be an ISO 8601 timestamp with an explicit timezone.`);
+        assert(!Number.isNaN(Date.parse(entry[field])), `${fieldName} ${field} must be a valid timestamp.`);
+      }
+    }
+
+    if (entry.startTime !== undefined && entry.endTime !== undefined) {
+      assert(Date.parse(entry.startTime) < Date.parse(entry.endTime), `${fieldName} startTime must be before endTime.`);
+    }
   });
+}
+
+function hasPromotionSchedule(promote) {
+  return promote.startTime !== undefined || promote.endTime !== undefined;
 }
 
 function validatePromoteContentContract(payload) {
@@ -818,10 +835,10 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   const publishedPromotionContentIds = new Set(promoteContentPayload.contents.map((entry) => entry.id));
 
   for (const promote of promotePayload.promotes) {
-    if (promote.on) {
+    if (promote.on || hasPromotionSchedule(promote)) {
       assert(
         publishedPromotionContentIds.has(promote.id),
-        `Enabled promote id ${promote.id} must resolve to a promote_content.json entry.`,
+        `Promote id ${promote.id} must resolve to a promote_content.json entry when enabled or scheduled.`,
       );
     }
   }
