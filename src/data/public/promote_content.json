@@ -16,6 +16,19 @@
       "targetPlatform": "steam"
     },
     {
+      "id": "main-game-steam-ea-2026-04-29",
+      "title": {
+        "zh": "终于上架 EA 啦",
+        "en": "Early Access Is Finally Here"
+      },
+      "description": {
+        "zh": "全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 已经在 steam 开启 EA 抢先体验啦，快来看看吧，呜呜呜，求求了",
+        "en": "Hagicode, the not-globally-unique but super handy Vibe Coding software, is now in Steam Early Access. Please come take a look. Sob. Pretty please."
+      },
+      "link": "https://store.steampowered.com/app/4625540/Hagicode/",
+      "targetPlatform": "steam"
+    },
+    {
       "id": "hagicode-plus-bundle",
       "title": {
         "zh": "Hagicode Plus 套装",

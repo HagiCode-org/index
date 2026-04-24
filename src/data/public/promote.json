@@ -4,7 +4,13 @@
   "promotes": [
     {
       "id": "main-game-2026-04-29",
-      "on": true
+      "on": true,
+      "endTime": "2026-04-29T00:00:00+08:00"
+    },
+    {
+      "id": "main-game-steam-ea-2026-04-29",
+      "on": true,
+      "startTime": "2026-04-29T00:00:00+08:00"
     },
     {
       "id": "hagicode-plus-bundle",
