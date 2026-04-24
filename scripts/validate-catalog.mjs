@@ -308,6 +308,9 @@ function validateSteamContract(payload) {
   assert(payload.version === '1.0.0', 'Steam payload version must be 1.0.0.');
   assert(typeof payload.updatedAt === 'string' && payload.updatedAt.trim().length > 0, 'Steam payload updatedAt is required.');
   assert(Array.isArray(payload.applications), 'Steam payload applications must be an array.');
+  assert(Array.isArray(payload.bundles), 'Steam payload bundles must be an array.');
+
+  const applicationKeys = new Set();
 
   payload.applications.forEach((entry, index) => {
     const fieldName = `Steam application[${index}]`;
@@ -322,6 +325,33 @@ function validateSteamContract(payload) {
     if ('promoteId' in entry && entry.promoteId !== undefined) {
       assert(typeof entry.promoteId === 'string' && entry.promoteId.trim().length > 0, `${fieldName} promoteId must be a non-empty string when present.`);
     }
+
+    applicationKeys.add(entry.key);
+  });
+
+  payload.bundles.forEach((entry, index) => {
+    const fieldName = `Steam bundle[${index}]`;
+    assert(entry && typeof entry === 'object' && !Array.isArray(entry), `${fieldName} must be an object.`);
+
+    for (const key of ['key', 'displayName', 'storeBundleId', 'storeUrl']) {
+      assert(typeof entry[key] === 'string' && entry[key].trim().length > 0, `${fieldName} ${key} is required.`);
+    }
+
+    assert(
+      Array.isArray(entry.includedApplicationKeys) && entry.includedApplicationKeys.length > 0,
+      `${fieldName} includedApplicationKeys must be a non-empty array.`,
+    );
+
+    entry.includedApplicationKeys.forEach((applicationKey, applicationIndex) => {
+      assert(
+        typeof applicationKey === 'string' && applicationKey.trim().length > 0,
+        `${fieldName} includedApplicationKeys[${applicationIndex}] must be a non-empty string.`,
+      );
+      assert(
+        applicationKeys.has(applicationKey),
+        `${fieldName} includedApplicationKeys[${applicationIndex}] must reference a published Steam application key.`,
+      );
+    });
   });
 }
 

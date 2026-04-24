@@ -306,6 +306,15 @@ function buildSteamFixture() {
         },
       },
     ],
+    bundles: [
+      {
+        key: 'hagicode-plus',
+        displayName: 'Hagicode Plus',
+        storeBundleId: '73989',
+        storeUrl: 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/',
+        includedApplicationKeys: ['hagicode', 'turbo-engine'],
+      },
+    ],
   };
 }
 
@@ -1192,6 +1201,28 @@ test('catalog validation fails when a Steam promoteId does not resolve to promot
       }),
     (error) => {
       assert.match(error.stderr, /Steam application hagicode promoteId missing-promotion-id must resolve to a promote_content\.json entry\./);
+      return true;
+    },
+  );
+});
+
+test('catalog validation fails when a Steam bundle references an unknown application key', async () => {
+  const steam = buildSteamFixture();
+  steam.bundles[0].includedApplicationKeys = ['hagicode', 'missing-app'];
+
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+    steam,
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /Steam bundle\[0\] includedApplicationKeys\[1\] must reference a published Steam application key\./);
       return true;
     },
   );

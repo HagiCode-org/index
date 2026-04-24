@@ -29,5 +29,17 @@
         "macos": "4635481"
       }
     }
+  ],
+  "bundles": [
+    {
+      "key": "hagicode-plus",
+      "displayName": "Hagicode Plus",
+      "storeBundleId": "73989",
+      "storeUrl": "https://store.steampowered.com/bundle/73989/Hagicode_Plus/",
+      "includedApplicationKeys": [
+        "hagicode",
+        "turbo-engine"
+      ]
+    }
   ]
 }

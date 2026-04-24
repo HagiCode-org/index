@@ -161,16 +161,19 @@ test('design route-mapped JSON loads awesome-design-md themes and README-derived
   assert.equal(xaiTheme.previewDarkImageUrl.endsWith('.html'), false);
 });
 
-test('steam route-mapped JSON publishes the canonical application mapping for Hagicode and Turbo Engine', async () => {
+test('steam route-mapped JSON publishes the canonical application mapping for Hagicode, Turbo Engine, and Hagicode Plus', async () => {
   const steamData = await loadRouteMappedJson('/steam/index.json');
   const hagicodeEntry = steamData.applications.find((entry) => entry.key === 'hagicode');
   const turboEngineEntry = steamData.applications.find((entry) => entry.key === 'turbo-engine');
+  const hagicodePlusBundle = steamData.bundles.find((entry) => entry.key === 'hagicode-plus');
 
   assert.equal(steamData.version, '1.0.0');
   assert.equal(typeof steamData.updatedAt, 'string');
   assert.equal(Array.isArray(steamData.applications), true);
+  assert.equal(Array.isArray(steamData.bundles), true);
   assert.ok(hagicodeEntry, 'hagicode entry is required.');
   assert.ok(turboEngineEntry, 'turbo-engine entry is required.');
+  assert.ok(hagicodePlusBundle, 'hagicode-plus bundle entry is required.');
   assert.equal(hagicodeEntry.kind, 'application');
   assert.equal(hagicodeEntry.storeAppId, '4625540');
   assert.equal(hagicodeEntry.platformAppIds.windows, '4625541');
@@ -185,6 +188,10 @@ test('steam route-mapped JSON publishes the canonical application mapping for Ha
   assert.equal(turboEngineEntry.platformAppIds.linux, '4635482');
   assert.equal(turboEngineEntry.platformAppIds.macos, '4635481');
   assert.equal(turboEngineEntry.storeUrl, 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/');
+  assert.equal(hagicodePlusBundle.displayName, 'Hagicode Plus');
+  assert.equal(hagicodePlusBundle.storeBundleId, '73989');
+  assert.equal(hagicodePlusBundle.storeUrl, 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/');
+  assert.deepEqual(hagicodePlusBundle.includedApplicationKeys, ['hagicode', 'turbo-engine']);
 });
 
 test('promotion route-mapped JSON publishes stable flags and localized content contracts', async () => {
