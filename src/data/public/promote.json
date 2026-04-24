@@ -5,6 +5,14 @@
     {
       "id": "main-game-2026-04-29",
       "on": true
+    },
+    {
+      "id": "hagicode-plus-bundle",
+      "on": false
+    },
+    {
+      "id": "hagicode-turbo-engine-dlc",
+      "on": false
     }
   ]
 }

@@ -9,10 +9,36 @@
         "en": "Wishlist Now"
       },
       "description": {
-        "zh": "游戏将于 2026-04-29 发售，立即前往 Steam 添加愿望单。",
+        "zh": "Hagicode 将于 2026-04-29 发售，立即前往 Steam 添加愿望单。",
         "en": "Coming April 29, 2026. Add to your Steam wishlist now!"
       },
       "link": "https://store.steampowered.com/app/4625540/Hagicode/",
+      "targetPlatform": "steam"
+    },
+    {
+      "id": "hagicode-plus-bundle",
+      "title": {
+        "zh": "Hagicode Plus 套装",
+        "en": "Hagicode Plus Bundle"
+      },
+      "description": {
+        "zh": "Hagicode Plus 现享 15% off，组合本体与 Turbo Engine DLC，带来更完整体验。",
+        "en": "Get 15% off with Hagicode Plus, bundling the base game and Turbo Engine DLC for the complete experience."
+      },
+      "link": "https://store.steampowered.com/bundle/73989/Hagicode_Plus/",
+      "targetPlatform": "steam"
+    },
+    {
+      "id": "hagicode-turbo-engine-dlc",
+      "title": {
+        "zh": "Turbo Engine DLC",
+        "en": "Turbo Engine DLC"
+      },
+      "description": {
+        "zh": "解锁 32 个并发上线，获得更多自定义选项，让 Hagicode 工作流更适合你的团队。",
+        "en": "Unlock up to 32 concurrent online sessions and more customization options for your Hagicode workflow."
+      },
+      "link": "https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/",
       "targetPlatform": "steam"
     }
   ]
