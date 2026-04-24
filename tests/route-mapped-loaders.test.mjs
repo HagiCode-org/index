@@ -195,23 +195,67 @@ test('steam route-mapped JSON publishes the canonical application mapping for Ha
 });
 
 test('promotion route-mapped JSON publishes stable flags and localized content contracts', async () => {
+  const catalog = await loadIndexCatalog();
   const promote = await loadRouteMappedJson('/promote.json');
   const promoteContent = await loadRouteMappedJson('/promote_content.json');
+  const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
+  const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
   const mainPromotion = promote.promotes.find((entry) => entry.id === 'main-game-2026-04-29');
+  const plusPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-plus-bundle');
+  const turboPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
   const mainPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-2026-04-29');
+  const plusPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-plus-bundle');
+  const turboPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
+
+  assert.ok(promotionFlagsEntry, 'promotion-flags catalog entry is required for multi-site consumers.');
+  assert.ok(promotionContentEntry, 'promotion-content catalog entry is required for multi-site consumers.');
+  assert.equal(promotionFlagsEntry.path, '/promote.json');
+  assert.equal(promotionContentEntry.path, '/promote_content.json');
+  assert.equal(promotionFlagsEntry.status, 'published');
+  assert.equal(promotionContentEntry.status, 'published');
 
   assert.equal(promote.version, '1.0.0');
   assert.equal(typeof promote.updatedAt, 'string');
+  assert.equal(Array.isArray(promote.promotes), true);
   assert.ok(mainPromotion, 'main-game promotion flag is required.');
+  assert.ok(plusPromotion, 'hagicode-plus promotion flag is required.');
+  assert.ok(turboPromotion, 'turbo-engine promotion flag is required.');
   assert.equal(mainPromotion.on, true);
+  assert.equal(plusPromotion.on, false);
+  assert.equal(turboPromotion.on, false);
+  assert.deepEqual(promote.promotes.map((entry) => Object.keys(entry).sort()), [
+    ['id', 'on'],
+    ['id', 'on'],
+    ['id', 'on'],
+  ]);
 
   assert.equal(promoteContent.version, '1.0.0');
   assert.equal(typeof promoteContent.updatedAt, 'string');
+  assert.equal(Array.isArray(promoteContent.contents), true);
   assert.ok(mainPromotionContent, 'main-game promotion content is required.');
+  assert.ok(plusPromotionContent, 'hagicode-plus promotion content is required.');
+  assert.ok(turboPromotionContent, 'turbo-engine promotion content is required.');
+  assert.deepEqual(Object.keys(mainPromotionContent).sort(), ['description', 'id', 'link', 'targetPlatform', 'title']);
   assert.equal(mainPromotionContent.title.zh, '立即添加到愿望单');
   assert.equal(mainPromotionContent.title.en, 'Wishlist Now');
+  assert.match(mainPromotionContent.description.zh, /Hagicode/);
   assert.match(mainPromotionContent.description.zh, /2026-04-29/);
+  assert.doesNotMatch(mainPromotionContent.description.zh, /游戏将于/);
   assert.match(mainPromotionContent.description.en, /April 29, 2026/);
   assert.equal(mainPromotionContent.link, 'https://store.steampowered.com/app/4625540/Hagicode/');
   assert.equal(mainPromotionContent.targetPlatform, 'steam');
+  assert.deepEqual(Object.keys(plusPromotionContent).sort(), ['description', 'id', 'link', 'targetPlatform', 'title']);
+  assert.equal(plusPromotionContent.title.zh.length > 0, true);
+  assert.equal(plusPromotionContent.title.en.length > 0, true);
+  assert.match(plusPromotionContent.description.zh, /15% off/);
+  assert.match(plusPromotionContent.description.zh, /更完整体验/);
+  assert.equal(plusPromotionContent.link, 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/');
+  assert.equal(plusPromotionContent.targetPlatform, 'steam');
+  assert.deepEqual(Object.keys(turboPromotionContent).sort(), ['description', 'id', 'link', 'targetPlatform', 'title']);
+  assert.equal(turboPromotionContent.title.zh.length > 0, true);
+  assert.equal(turboPromotionContent.title.en.length > 0, true);
+  assert.match(turboPromotionContent.description.zh, /32/);
+  assert.match(turboPromotionContent.description.zh, /更多自定义选项/);
+  assert.equal(turboPromotionContent.link, 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/');
+  assert.equal(turboPromotionContent.targetPlatform, 'steam');
 });

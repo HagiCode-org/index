@@ -247,6 +247,14 @@ function buildPromoteFixture() {
         id: 'main-game-2026-04-29',
         on: true,
       },
+      {
+        id: 'hagicode-plus-bundle',
+        on: false,
+      },
+      {
+        id: 'hagicode-turbo-engine-dlc',
+        on: false,
+      },
     ],
   };
 }
@@ -263,10 +271,36 @@ function buildPromoteContentFixture() {
           en: 'Wishlist Now',
         },
         description: {
-          zh: '游戏将于 2026-04-29 发售，立即前往 Steam 添加愿望单。',
+          zh: 'Hagicode 将于 2026-04-29 发售，立即前往 Steam 添加愿望单。',
           en: 'Coming April 29, 2026. Add to your Steam wishlist now!',
         },
         link: 'https://store.steampowered.com/app/4625540/Hagicode/',
+        targetPlatform: 'steam',
+      },
+      {
+        id: 'hagicode-plus-bundle',
+        title: {
+          zh: 'Hagicode Plus 套装',
+          en: 'Hagicode Plus Bundle',
+        },
+        description: {
+          zh: 'Hagicode Plus 现享 15% off，组合本体与 Turbo Engine DLC，带来更完整体验。',
+          en: 'Get 15% off with Hagicode Plus, bundling the base game and Turbo Engine DLC for the complete experience.',
+        },
+        link: 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/',
+        targetPlatform: 'steam',
+      },
+      {
+        id: 'hagicode-turbo-engine-dlc',
+        title: {
+          zh: 'Turbo Engine DLC',
+          en: 'Turbo Engine DLC',
+        },
+        description: {
+          zh: '解锁 32 个并发上线，获得更多自定义选项，让 Hagicode 工作流更适合你的团队。',
+          en: 'Unlock up to 32 concurrent online sessions and more customization options for your Hagicode workflow.',
+        },
+        link: 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/',
         targetPlatform: 'steam',
       },
     ],
@@ -1149,8 +1183,18 @@ test('managed package entries expose stable history page paths', async () => {
 test('catalog exposes promotion discovery entries at canonical JSON routes', async () => {
   const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
+  const promotePath = path.join(projectRoot, 'src', 'data', 'public', 'promote.json');
+  const promoteContentPath = path.join(projectRoot, 'src', 'data', 'public', 'promote_content.json');
+  const promote = JSON.parse(await readFile(promotePath, 'utf8'));
+  const promoteContent = JSON.parse(await readFile(promoteContentPath, 'utf8'));
   const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
   const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
+  const mainPromotion = promote.promotes.find((entry) => entry.id === 'main-game-2026-04-29');
+  const plusPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-plus-bundle');
+  const turboPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
+  const mainPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-2026-04-29');
+  const plusPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-plus-bundle');
+  const turboPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
 
   assert.ok(promotionFlagsEntry, 'promotion-flags entry is required.');
   assert.ok(promotionContentEntry, 'promotion-content entry is required.');
@@ -1160,6 +1204,17 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.equal(promotionContentEntry.path, '/promote_content.json');
   assert.equal(promotionContentEntry.sourceRepo, 'repos/index');
   assert.equal(promotionContentEntry.status, 'published');
+  assert.equal(mainPromotion?.on, true);
+  assert.equal(plusPromotion?.on, false);
+  assert.equal(turboPromotion?.on, false);
+  assert.match(mainPromotionContent?.description.zh, /Hagicode/);
+  assert.doesNotMatch(mainPromotionContent?.description.zh ?? '', /游戏将于/);
+  assert.match(plusPromotionContent?.description.zh, /15% off/);
+  assert.match(plusPromotionContent?.description.zh, /更完整体验/);
+  assert.equal(plusPromotionContent?.link, 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/');
+  assert.match(turboPromotionContent?.description.zh, /32/);
+  assert.match(turboPromotionContent?.description.zh, /更多自定义选项/);
+  assert.equal(turboPromotionContent?.link, 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/');
 });
 
 test('catalog validation fails when an enabled promotion flag does not resolve to content', async () => {
