@@ -880,6 +880,7 @@ async function createValidationFixture({
   const srcDataDir = path.join(tempDir, 'src', 'data');
   const designVendorDir = path.join(tempDir, 'vendor', 'awesome-design-md', 'design-md');
   const validateScriptPath = path.join(projectRoot, 'scripts', 'validate-catalog.mjs');
+  const minifyScriptPath = path.join(projectRoot, 'scripts', 'minify-published-json.mjs');
   const updateScriptPath = path.join(projectRoot, 'scripts', 'update-activity-metrics.mjs');
   const buildScriptPath = path.join(projectRoot, 'scripts', 'build-agent-preset-library.mjs');
   const soulIndexFixture = buildSoulIndexFixture();
@@ -899,6 +900,7 @@ async function createValidationFixture({
   await mkdir(path.join(distDir, 'agent-templates', 'trait', 'templates'), { recursive: true });
   await mkdir(path.join(distDir, 'agent-templates', 'soul', 'templates'), { recursive: true });
   await mkdir(path.join(distDir, 'character-templates', 'templates'), { recursive: true });
+  await mkdir(path.join(distDir, 'secondary-professions'), { recursive: true });
   await mkdir(path.join(routeSourceDir, 'server'), { recursive: true });
   await mkdir(path.join(routeSourceDir, 'desktop'), { recursive: true });
   await mkdir(path.join(routeSourceDir, 'steam'), { recursive: true });
@@ -908,6 +910,11 @@ async function createValidationFixture({
   await writeFile(
     path.join(scriptsDir, 'validate-catalog.mjs'),
     await readFile(validateScriptPath, 'utf8'),
+    'utf8',
+  );
+  await writeFile(
+    path.join(scriptsDir, 'minify-published-json.mjs'),
+    await readFile(minifyScriptPath, 'utf8'),
     'utf8',
   );
   await writeFile(
@@ -994,6 +1001,11 @@ async function createValidationFixture({
     summary: 'Soul summary two',
   }), 'utf8');
   await writeFile(
+    path.join(distDir, 'secondary-professions', 'index.json'),
+    JSON.stringify({ version: '1.0.0', professions: [{ id: 'prompt-engineer', title: 'Prompt Engineer' }] }),
+    'utf8',
+  );
+  await writeFile(
     path.join(distDir, 'character-templates', 'README.md'),
     '# Character Templates\n',
     'utf8',
@@ -1019,14 +1031,12 @@ async function createValidationFixture({
 }
 
 test('catalog validation script succeeds', async (t) => {
-  const publishedRoot = path.resolve(projectRoot, process.env.INDEX_BUILD_ROOT ?? 'dist');
-
-  try {
-    await access(path.join(publishedRoot, 'index-catalog.json'));
-  } catch {
-    t.skip('缺少已构建的 Astro JSON 路由输出。');
+  if (!process.env.INDEX_BUILD_ROOT) {
+    t.skip('INDEX_BUILD_ROOT is required so this test validates a fresh build output instead of stale dist/.');
     return;
   }
+
+  const publishedRoot = path.resolve(projectRoot, process.env.INDEX_BUILD_ROOT ?? 'dist');
 
   const { stdout } = await execFileAsync(
     'node',
@@ -1034,7 +1044,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries and 12 route-mapped JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries, 12 route-mapped JSON assets, and \d+ published JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
@@ -1766,9 +1776,109 @@ test('catalog validation fails when a route-mapped JSON output is pretty printed
     () =>
       execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
+    }),
+    (error) => {
+      assert.match(error.stderr, /Published JSON \/index-catalog\.json must be stable minified JSON\./);
+      return true;
+    },
+  );
+});
+
+test('catalog validation fails when copied public JSON output is pretty printed', async () => {
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+  });
+
+  await writeFile(
+    path.join(tempDir, 'dist', 'secondary-professions', 'index.json'),
+    JSON.stringify({ version: '1.0.0', professions: [{ id: 'prompt-engineer', title: 'Prompt Engineer' }] }, null, 2),
+    'utf8',
+  );
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
       }),
     (error) => {
-      assert.match(error.stderr, /index-catalog\.json must be published as stable minified JSON\./);
+      assert.match(error.stderr, /Published JSON \/secondary-professions\/index\.json must be stable minified JSON\./);
+      return true;
+    },
+  );
+});
+
+test('catalog validation reports invalid copied public JSON with the published path', async () => {
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+  });
+
+  await writeFile(
+    path.join(tempDir, 'dist', 'secondary-professions', 'index.json'),
+    '{"version":"1.0.0",',
+    'utf8',
+  );
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /Published JSON \/secondary-professions\/index\.json is invalid JSON:/);
+      return true;
+    },
+  );
+});
+
+test('published JSON minifier preserves semantics and public paths while leaving sources readable', async () => {
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+  });
+  const sourcePublicPath = path.join(tempDir, 'public', 'secondary-professions', 'index.json');
+  const copiedPublishedPath = path.join(tempDir, 'dist', 'secondary-professions', 'index.json');
+  const routeMappedPublishedPath = path.join(tempDir, 'dist', 'index-catalog.json');
+  const sourcePayload = { version: '1.0.0', professions: [{ id: 'source-readable', title: 'Source Readable' }] };
+  const copiedPayload = { version: '1.0.0', professions: [{ id: 'published-copy', title: 'Published Copy' }] };
+  const routePayload = buildCatalogFixture();
+
+  await mkdir(path.dirname(sourcePublicPath), { recursive: true });
+  await writeFile(sourcePublicPath, JSON.stringify(sourcePayload, null, 2), 'utf8');
+  await writeFile(copiedPublishedPath, JSON.stringify(copiedPayload, null, 2), 'utf8');
+  await writeFile(routeMappedPublishedPath, JSON.stringify(routePayload, null, 2), 'utf8');
+
+  const beforeCopied = JSON.parse(await readFile(copiedPublishedPath, 'utf8'));
+  const beforeRoute = JSON.parse(await readFile(routeMappedPublishedPath, 'utf8'));
+
+  await execFileAsync('node', ['./scripts/minify-published-json.mjs', '--published-root', 'dist'], {
+    cwd: tempDir,
+  });
+
+  assert.deepEqual(JSON.parse(await readFile(copiedPublishedPath, 'utf8')), beforeCopied);
+  assert.deepEqual(JSON.parse(await readFile(routeMappedPublishedPath, 'utf8')), beforeRoute);
+  assert.equal(await readFile(copiedPublishedPath, 'utf8'), JSON.stringify(copiedPayload));
+  assert.equal(await readFile(routeMappedPublishedPath, 'utf8'), JSON.stringify(routePayload));
+  assert.equal(await readFile(sourcePublicPath, 'utf8'), JSON.stringify(sourcePayload, null, 2));
+
+  await access(copiedPublishedPath);
+  await access(routeMappedPublishedPath);
+});
+
+test('published JSON minifier refuses source-of-truth directories', async () => {
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/minify-published-json.mjs', '--published-root', 'public'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /Refusing to minify source-of-truth JSON under public\//);
       return true;
     },
   );

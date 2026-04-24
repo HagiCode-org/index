@@ -1,4 +1,4 @@
-import { access, readFile } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
@@ -120,6 +120,62 @@ function resolvePagePath(sitePath) {
 
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'));
+}
+
+async function collectPublishedJsonFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    const entryPath = path.join(directory, entry.name);
+
+    if (entry.isDirectory()) {
+      files.push(...await collectPublishedJsonFiles(entryPath));
+      continue;
+    }
+
+    if (entry.isFile() && entry.name.endsWith('.json')) {
+      files.push(entryPath);
+    }
+  }
+
+  return files.sort((left, right) => left.localeCompare(right));
+}
+
+function toPublishedJsonPath(filePath, publishedRoot) {
+  return `/${path.relative(publishedRoot, filePath).split(path.sep).join('/')}`;
+}
+
+async function assertAllPublishedJsonMinified(publishedRoot) {
+  const jsonFiles = await collectPublishedJsonFiles(publishedRoot);
+
+  for (const filePath of jsonFiles) {
+    const publishedPath = toPublishedJsonPath(filePath, publishedRoot);
+    const raw = await readFile(filePath, 'utf8');
+    let parsed;
+
+    try {
+      parsed = JSON.parse(raw);
+    } catch (error) {
+      throw new Error(
+        `Published JSON ${publishedPath} is invalid JSON: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+
+    const stable = JSON.stringify(parsed);
+
+    assert(
+      raw === stable,
+      `Published JSON ${publishedPath} must be stable minified JSON. Run npm run build so scripts/minify-published-json.mjs rewrites build output only.`,
+    );
+
+    assert(
+      isDeepStrictEqual(JSON.parse(stable), parsed),
+      `Published JSON ${publishedPath} changed semantics during stable minification validation.`,
+    );
+  }
+
+  return jsonFiles.length;
 }
 
 async function assertDesignVendorAvailable() {
@@ -814,6 +870,8 @@ async function validateCharacterTemplateManifest(entry, publishedRoot) {
 export async function validateCatalog({ publishedRoot = resolvePublishedRoot() } = {}) {
   await access(publishedRoot);
 
+  const publishedJsonCount = await assertAllPublishedJsonMinified(publishedRoot);
+
   const publishedCatalog = await assertPublishedRoute('/index-catalog.json', publishedRoot);
   validateSitesCatalogContract(await assertPublishedRoute('/sites.json', publishedRoot));
   await assertPublishedRoute('/activity-metrics.json', publishedRoot);
@@ -992,7 +1050,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   assert(sawPromotionFlagsEntry, 'Catalog must include a promotion-flags entry.');
   assert(sawPromotionContentEntry, 'Catalog must include a promotion-content entry.');
 
-  console.log(`Validated ${catalog.entries.length} catalog entries and ${routeMappedJsonPaths.length} route-mapped JSON assets.`);
+  console.log(`Validated ${catalog.entries.length} catalog entries, ${routeMappedJsonPaths.length} route-mapped JSON assets, and ${publishedJsonCount} published JSON assets.`);
 }
 
 const publishedRootArg = getCliOption('--published-root');
