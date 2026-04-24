@@ -13,6 +13,14 @@
 - 维护 `activity-metrics` 快照与 catalog 摘要，并保持 `/activity-metrics.json` 路由稳定。
 - 保持既有 JSON URL 不变，例如 `/index-catalog.json`、`/activity-metrics.json`、`/server/index.json`、`/desktop/index.json`、`/presets/index.json`。
 
+## JSON 发布格式
+
+生产构建遵循“源文件可读、发布产物压缩”的规则：`src/**`、`public/**` 和同步脚本生成的 source-of-truth JSON 可以保留缩进与换行，`npm run build`、`npm run validate` 和 `npm test` 会在 Astro 输出后运行 `scripts/minify-published-json.mjs`，只递归改写发布目录里的 `*.json`。
+
+发布目录中的所有 JSON 都必须等于 `JSON.stringify(JSON.parse(raw))` 的稳定压缩结果。该约束同时覆盖 route-mapped JSON（例如 `/index-catalog.json`、`/server/index.json`）和由 `public/**` 复制进入产物的 JSON（例如 `/presets/**`、`/agent-templates/**`、`/character-templates/**`、`/secondary-professions/index.json`）。`scripts/validate-catalog.mjs` 会扫描发布目录下的全部 `.json` 文件；如果产物不是稳定压缩格式或不是合法 JSON，会输出具体公开路径并失败。
+
+维护者不需要、也不应该为了线上体积手工压缩源 JSON。请继续把可维护性放在 source 文件里，把发布格式交给构建后的 minify 与 verify 步骤。
+
 ## Source / Public 边界
 
 当前仓库明确区分两类 JSON：
@@ -35,7 +43,7 @@
 - producer 脚本只更新 `src/data/public/**`。
 - `/about.json` 的文字 source-of-truth 固定在 `src/data/about/about-source.ts`，图片 source-of-truth 固定在 `src/assets/about/*`。
 - about 图片必须通过 Astro import 进入 `/about.json`；不要直接写 `/about/*.png`、`/about/*.jpg` 或任何 staging 路径。
-- Astro 构建负责输出稳定、minified 的公开 JSON。
+- Astro 构建负责输出 route-mapped JSON；生产构建随后统一压缩发布目录中的所有 JSON 产物。
 
 `/sites.json` 与 `/index-catalog.json` 的职责不同：
 
@@ -44,7 +52,7 @@
 
 ### 2. 非 route-mapped JSON：仍以 `public/` 或其他 source 目录驱动
 
-这些资产当前**暂不纳入** Astro JSON 路由模型：
+这些资产当前**暂不纳入** Astro JSON 路由模型，但它们复制到发布目录后同样受稳定压缩 JSON 约束：
 
 - `public/presets/**`
 - `public/agent-templates/**`
@@ -52,7 +60,7 @@
 - `public/secondary-professions/index.json`
 - `../hagicode-core/src/PCode.Web/Assets/secondary-professions.index.json`
 
-它们各自仍由同步脚本或生成脚本维护，但不应被误认为 route-mapped JSON 的权威源。
+它们各自仍由同步脚本或生成脚本维护，但不应被误认为 route-mapped JSON 的权威源。源文件可以保持格式化；只有构建产物会被压缩。
 
 ## 版本历史页面
 
