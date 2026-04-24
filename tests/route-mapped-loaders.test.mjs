@@ -201,9 +201,11 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
   const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
   const mainPromotion = promote.promotes.find((entry) => entry.id === 'main-game-2026-04-29');
+  const eaPromotion = promote.promotes.find((entry) => entry.id === 'main-game-steam-ea-2026-04-29');
   const plusPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-plus-bundle');
   const turboPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
   const mainPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-2026-04-29');
+  const eaPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-steam-ea-2026-04-29');
   const plusPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-plus-bundle');
   const turboPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
 
@@ -218,13 +220,19 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.equal(typeof promote.updatedAt, 'string');
   assert.equal(Array.isArray(promote.promotes), true);
   assert.ok(mainPromotion, 'main-game promotion flag is required.');
+  assert.ok(eaPromotion, 'main-game Steam EA promotion flag is required.');
   assert.ok(plusPromotion, 'hagicode-plus promotion flag is required.');
   assert.ok(turboPromotion, 'turbo-engine promotion flag is required.');
   assert.equal(mainPromotion.on, true);
+  assert.equal(mainPromotion.endTime, '2026-04-29T00:00:00+08:00');
+  assert.equal(eaPromotion.on, true);
+  assert.equal(eaPromotion.startTime, '2026-04-29T00:00:00+08:00');
+  assert.equal(Date.parse(mainPromotion.endTime), Date.parse(eaPromotion.startTime));
   assert.equal(plusPromotion.on, false);
   assert.equal(turboPromotion.on, false);
   assert.deepEqual(promote.promotes.map((entry) => Object.keys(entry).sort()), [
-    ['id', 'on'],
+    ['endTime', 'id', 'on'],
+    ['id', 'on', 'startTime'],
     ['id', 'on'],
     ['id', 'on'],
   ]);
@@ -233,6 +241,7 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.equal(typeof promoteContent.updatedAt, 'string');
   assert.equal(Array.isArray(promoteContent.contents), true);
   assert.ok(mainPromotionContent, 'main-game promotion content is required.');
+  assert.ok(eaPromotionContent, 'main-game Steam EA promotion content is required.');
   assert.ok(plusPromotionContent, 'hagicode-plus promotion content is required.');
   assert.ok(turboPromotionContent, 'turbo-engine promotion content is required.');
   assert.deepEqual(Object.keys(mainPromotionContent).sort(), ['description', 'id', 'link', 'targetPlatform', 'title']);
@@ -245,6 +254,19 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.match(mainPromotionContent.description.en, /April 29/);
   assert.equal(mainPromotionContent.link, 'https://store.steampowered.com/app/4625540/Hagicode/');
   assert.equal(mainPromotionContent.targetPlatform, 'steam');
+  assert.deepEqual(Object.keys(eaPromotionContent).sort(), ['description', 'id', 'link', 'targetPlatform', 'title']);
+  assert.equal(eaPromotionContent.title.zh, '终于上架 EA 啦');
+  assert.equal(eaPromotionContent.title.en, 'Early Access Is Finally Here');
+  assert.match(eaPromotionContent.description.zh, /steam/i);
+  assert.match(eaPromotionContent.description.zh, /EA|抢先体验/);
+  assert.match(eaPromotionContent.description.zh, /呜呜呜/);
+  assert.match(eaPromotionContent.description.zh, /求求了/);
+  assert.match(eaPromotionContent.description.en, /Steam/);
+  assert.match(eaPromotionContent.description.en, /Early Access|EA/);
+  assert.match(eaPromotionContent.description.en, /Sob/);
+  assert.match(eaPromotionContent.description.en, /Pretty please/);
+  assert.equal(eaPromotionContent.link, 'https://store.steampowered.com/app/4625540/Hagicode/');
+  assert.equal(eaPromotionContent.targetPlatform, 'steam');
   assert.deepEqual(Object.keys(plusPromotionContent).sort(), ['description', 'id', 'link', 'targetPlatform', 'title']);
   assert.equal(plusPromotionContent.title.zh.length > 0, true);
   assert.equal(plusPromotionContent.title.en.length > 0, true);

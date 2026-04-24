@@ -246,6 +246,12 @@ function buildPromoteFixture() {
       {
         id: 'main-game-2026-04-29',
         on: true,
+        endTime: '2026-04-29T00:00:00+08:00',
+      },
+      {
+        id: 'main-game-steam-ea-2026-04-29',
+        on: true,
+        startTime: '2026-04-29T00:00:00+08:00',
       },
       {
         id: 'hagicode-plus-bundle',
@@ -273,6 +279,19 @@ function buildPromoteContentFixture() {
         description: {
           zh: '全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 将于 4月29日发售，快来 steam 加入愿望单吧，呜呜呜，求求了',
           en: 'Hagicode, the not-globally-unique but super handy Vibe Coding software, launches on April 29. Please add it to your Steam wishlist. Sob. Pretty please.',
+        },
+        link: 'https://store.steampowered.com/app/4625540/Hagicode/',
+        targetPlatform: 'steam',
+      },
+      {
+        id: 'main-game-steam-ea-2026-04-29',
+        title: {
+          zh: '终于上架 EA 啦',
+          en: 'Early Access Is Finally Here',
+        },
+        description: {
+          zh: '全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 已经在 steam 开启 EA 抢先体验啦，快来看看吧，呜呜呜，求求了',
+          en: 'Hagicode, the not-globally-unique but super handy Vibe Coding software, is now in Steam Early Access. Please come take a look. Sob. Pretty please.',
         },
         link: 'https://store.steampowered.com/app/4625540/Hagicode/',
         targetPlatform: 'steam',
@@ -1190,9 +1209,11 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
   const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
   const mainPromotion = promote.promotes.find((entry) => entry.id === 'main-game-2026-04-29');
+  const eaPromotion = promote.promotes.find((entry) => entry.id === 'main-game-steam-ea-2026-04-29');
   const plusPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-plus-bundle');
   const turboPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
   const mainPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-2026-04-29');
+  const eaPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-steam-ea-2026-04-29');
   const plusPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-plus-bundle');
   const turboPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
 
@@ -1205,11 +1226,27 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.equal(promotionContentEntry.sourceRepo, 'repos/index');
   assert.equal(promotionContentEntry.status, 'published');
   assert.equal(mainPromotion?.on, true);
+  assert.equal(mainPromotion?.endTime, '2026-04-29T00:00:00+08:00');
+  assert.equal(eaPromotion?.on, true);
+  assert.equal(eaPromotion?.startTime, '2026-04-29T00:00:00+08:00');
+  assert.equal(Date.parse(mainPromotion.endTime), Date.parse(eaPromotion.startTime));
   assert.equal(plusPromotion?.on, false);
   assert.equal(turboPromotion?.on, false);
   assert.match(mainPromotionContent?.description.zh, /Vibe Coding/);
   assert.match(mainPromotionContent?.description.zh, /求求了/);
   assert.doesNotMatch(mainPromotionContent?.description.zh ?? '', /游戏将于/);
+  assert.equal(eaPromotionContent?.title.zh, '终于上架 EA 啦');
+  assert.equal(eaPromotionContent?.title.en, 'Early Access Is Finally Here');
+  assert.match(eaPromotionContent?.description.zh ?? '', /steam/i);
+  assert.match(eaPromotionContent?.description.zh ?? '', /EA|抢先体验/);
+  assert.match(eaPromotionContent?.description.zh ?? '', /呜呜呜/);
+  assert.match(eaPromotionContent?.description.zh ?? '', /求求了/);
+  assert.match(eaPromotionContent?.description.en ?? '', /Steam/);
+  assert.match(eaPromotionContent?.description.en ?? '', /Early Access|EA/);
+  assert.match(eaPromotionContent?.description.en ?? '', /Sob/);
+  assert.match(eaPromotionContent?.description.en ?? '', /Pretty please/);
+  assert.equal(eaPromotionContent?.link, 'https://store.steampowered.com/app/4625540/Hagicode/');
+  assert.equal(eaPromotionContent?.targetPlatform, 'steam');
   assert.match(plusPromotionContent?.description.zh, /15% off/);
   assert.match(plusPromotionContent?.description.zh, /呜呜呜/);
   assert.equal(plusPromotionContent?.link, 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/');
@@ -1234,10 +1271,90 @@ test('catalog validation fails when an enabled promotion flag does not resolve t
         cwd: tempDir,
       }),
     (error) => {
-      assert.match(error.stderr, /Enabled promote id missing-promotion-id must resolve to a promote_content\.json entry\./);
+      assert.match(error.stderr, /Promote id missing-promotion-id must resolve to a promote_content\.json entry when enabled or scheduled\./);
       return true;
     },
   );
+});
+
+test('catalog validation fails when a scheduled promotion flag does not resolve to content', async () => {
+  const promote = buildPromoteFixture();
+  promote.promotes[1] = {
+    id: 'missing-future-promotion-id',
+    on: false,
+    startTime: '2026-04-29T00:00:00+08:00',
+  };
+
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+    promote,
+  });
+
+  await assert.rejects(
+    () =>
+      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        cwd: tempDir,
+      }),
+    (error) => {
+      assert.match(error.stderr, /Promote id missing-future-promotion-id must resolve to a promote_content\.json entry when enabled or scheduled\./);
+      return true;
+    },
+  );
+});
+
+test('catalog validation rejects invalid promotion schedule metadata', async () => {
+  const invalidCases = [
+    {
+      label: 'non-string startTime',
+      mutate(promote) {
+        promote.promotes[0].startTime = 123;
+      },
+      expected: /Promote entry\[0\] startTime must be a string when present\./,
+    },
+    {
+      label: 'timestamp without explicit timezone',
+      mutate(promote) {
+        promote.promotes[0].startTime = '2026-04-29T00:00:00';
+      },
+      expected: /Promote entry\[0\] startTime must be an ISO 8601 timestamp with an explicit timezone\./,
+    },
+    {
+      label: 'startTime equal to endTime',
+      mutate(promote) {
+        promote.promotes[0].startTime = '2026-04-29T00:00:00+08:00';
+      },
+      expected: /Promote entry\[0\] startTime must be before endTime\./,
+    },
+    {
+      label: 'duplicate ids',
+      mutate(promote) {
+        promote.promotes[1].id = 'main-game-2026-04-29';
+      },
+      expected: /Duplicate promote id main-game-2026-04-29\./,
+    },
+  ];
+
+  for (const testCase of invalidCases) {
+    const promote = buildPromoteFixture();
+    testCase.mutate(promote);
+    const tempDir = await createValidationFixture({
+      catalog: buildCatalogFixture(),
+      activityMetrics: buildActivityMetricsFixture(),
+      promote,
+    });
+
+    await assert.rejects(
+      () =>
+        execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+          cwd: tempDir,
+        }),
+      (error) => {
+        assert.match(error.stderr, testCase.expected, testCase.label);
+        return true;
+      },
+    );
+  }
 });
 
 test('catalog validation fails when a Steam promoteId does not resolve to promotion content', async () => {
