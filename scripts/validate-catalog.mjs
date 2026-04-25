@@ -367,6 +367,14 @@ function validatePromoteContentContract(payload) {
       assert(typeof entry.description[locale] === 'string' && entry.description[locale].trim().length > 0, `${fieldName} description.${locale} is required.`);
     }
 
+    if ('cta' in entry && entry.cta !== undefined) {
+      assert(entry.cta && typeof entry.cta === 'object' && !Array.isArray(entry.cta), `${fieldName} cta must be an object when present.`);
+      for (const [locale, label] of Object.entries(entry.cta)) {
+        assert(typeof locale === 'string' && locale.trim().length > 0, `${fieldName} cta locale keys must be non-empty strings.`);
+        assert(typeof label === 'string' && label.trim().length > 0, `${fieldName} cta.${locale} must be a non-empty string when present.`);
+      }
+    }
+
     assert(typeof entry.link === 'string' && entry.link.trim().length > 0, `${fieldName} link is required.`);
     assert(typeof entry.targetPlatform === 'string' && entry.targetPlatform.trim().length > 0, `${fieldName} targetPlatform is required.`);
 

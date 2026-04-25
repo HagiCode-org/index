@@ -280,6 +280,10 @@ function buildPromoteContentFixture() {
           zh: '全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 将于 4月29日发售，快来 steam 加入愿望单吧，呜呜呜，求求了',
           en: 'Hagicode, the not-globally-unique but super handy Vibe Coding software, launches on April 29. Please add it to your Steam wishlist. Sob. Pretty please.',
         },
+        cta: {
+          zh: '加入愿望单',
+          en: 'Wishlist on Steam',
+        },
         link: 'https://store.steampowered.com/app/4625540/Hagicode/',
         targetPlatform: 'steam',
       },
@@ -292,6 +296,10 @@ function buildPromoteContentFixture() {
         description: {
           zh: '全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 已经在 steam 开启 EA 抢先体验啦，快来看看吧，呜呜呜，求求了',
           en: 'Hagicode, the not-globally-unique but super handy Vibe Coding software, is now in Steam Early Access. Please come take a look. Sob. Pretty please.',
+        },
+        cta: {
+          zh: '查看抢先体验',
+          en: 'View Early Access',
         },
         link: 'https://store.steampowered.com/app/4625540/Hagicode/',
         targetPlatform: 'steam',
@@ -306,6 +314,10 @@ function buildPromoteContentFixture() {
           zh: '全球不唯一但是很会打包的 Hagicode Plus 现享 15% off，组合本体与 Turbo Engine DLC，一口气补齐体验，快来 steam 看看吧，呜呜呜，求求了',
           en: 'Hagicode Plus, the not-globally-unique but impressively bundled option, is 15% off with the base game and Turbo Engine DLC. Come check it out on Steam. Sob. Pretty please.',
         },
+        cta: {
+          zh: '查看套装',
+          en: 'View Bundle',
+        },
         link: 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/',
         targetPlatform: 'steam',
       },
@@ -318,6 +330,10 @@ function buildPromoteContentFixture() {
         description: {
           zh: '全球不唯一但是真的很能跑的 Turbo Engine DLC 可解锁 32 个并发上线和更多自定义选项，让 Hagicode 工作流更顺手，快来 steam 看看吧，呜呜呜，求求了',
           en: 'Turbo Engine DLC is not globally unique, but it really can run: unlock up to 32 concurrent online sessions and more customization options for your Hagicode workflow. Come peek on Steam. Sob. Pretty please.',
+        },
+        cta: {
+          zh: '查看 DLC',
+          en: 'View DLC',
         },
         link: 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/',
         targetPlatform: 'steam',
@@ -1255,14 +1271,79 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.match(eaPromotionContent?.description.en ?? '', /Early Access|EA/);
   assert.match(eaPromotionContent?.description.en ?? '', /Sob/);
   assert.match(eaPromotionContent?.description.en ?? '', /Pretty please/);
+  assert.equal(mainPromotionContent?.cta.zh, '加入愿望单');
+  assert.equal(mainPromotionContent?.cta.en, 'Wishlist on Steam');
+  assert.equal(eaPromotionContent?.cta.zh, '查看抢先体验');
+  assert.equal(eaPromotionContent?.cta.en, 'View Early Access');
   assert.equal(eaPromotionContent?.link, 'https://store.steampowered.com/app/4625540/Hagicode/');
   assert.equal(eaPromotionContent?.targetPlatform, 'steam');
   assert.match(plusPromotionContent?.description.zh, /15% off/);
   assert.match(plusPromotionContent?.description.zh, /呜呜呜/);
+  assert.equal(plusPromotionContent?.cta.zh, '查看套装');
+  assert.equal(plusPromotionContent?.cta.en, 'View Bundle');
   assert.equal(plusPromotionContent?.link, 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/');
   assert.match(turboPromotionContent?.description.zh, /32/);
   assert.match(turboPromotionContent?.description.zh, /求求了/);
+  assert.equal(turboPromotionContent?.cta.zh, '查看 DLC');
+  assert.equal(turboPromotionContent?.cta.en, 'View DLC');
   assert.equal(turboPromotionContent?.link, 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/');
+});
+
+test('catalog validation keeps legacy promotion content without cta parseable', async () => {
+  const promoteContent = buildPromoteContentFixture();
+  for (const entry of promoteContent.contents) {
+    delete entry.cta;
+  }
+
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    activityMetrics: buildActivityMetricsFixture(),
+    promoteContent,
+  });
+
+  await execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+    cwd: tempDir,
+  });
+});
+
+test('catalog validation rejects malformed promotion cta maps', async () => {
+  const invalidCases = [
+    {
+      label: 'non-object cta',
+      mutate(promoteContent) {
+        promoteContent.contents[0].cta = 'Wishlist';
+      },
+      expected: /Promote content\[0\] cta must be an object when present\./,
+    },
+    {
+      label: 'blank cta value',
+      mutate(promoteContent) {
+        promoteContent.contents[0].cta.zh = '   ';
+      },
+      expected: /Promote content\[0\] cta\.zh must be a non-empty string when present\./,
+    },
+  ];
+
+  for (const testCase of invalidCases) {
+    const promoteContent = buildPromoteContentFixture();
+    testCase.mutate(promoteContent);
+    const tempDir = await createValidationFixture({
+      catalog: buildCatalogFixture(),
+      activityMetrics: buildActivityMetricsFixture(),
+      promoteContent,
+    });
+
+    await assert.rejects(
+      () =>
+        execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+          cwd: tempDir,
+        }),
+      (error) => {
+        assert.match(error.stderr, testCase.expected, testCase.label);
+        return true;
+      },
+    );
+  }
 });
 
 test('catalog validation fails when an enabled promotion flag does not resolve to content', async () => {
