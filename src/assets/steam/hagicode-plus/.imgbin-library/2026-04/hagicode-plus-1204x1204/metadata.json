@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 2,
+  "assetId": "hagicode-plus-1204x1204",
+  "slug": "hagicode-plus-1204x1204",
+  "title": "HagiCode Plus",
+  "tags": [],
+  "source": {
+    "type": "generated"
+  },
+  "paths": {
+    "assetDir": "/home/newbe36524/repos/newbe36524/hagicode-mono/steam/hagicode-plus/.imgbin-library/2026-04/hagicode-plus-1204x1204",
+    "original": "original.png"
+  },
+  "generated": {
+    "prompt": "Whimsical children's book watercolor illustration with soft paper grain, hand-painted ink outlines, pastel clouds, and warm sunlit colors. Create a polished but playful composition that feels like a premium HagiCode poster: friendly, imaginative, and coding-themed. Use a sky-blue, cream, peach, orange, teal, and leaf-green palette. No photorealism, no glossy 3D, no dark cyberpunk, no watermark, no UI screenshot realism, no extra brand names.\n\nSquare poster composition with a large title centered in the middle, surrounded by charming coding symbols and helper characters. Keep the layout balanced and readable at social-post size.\n\nUse the visual mood of a watercolor educational poster similar to the provided reference: bright blue sky wash, fluffy clouds, a dreamy path into the distance, a cute AI helper robot, one cheerful young coder, one paper planning sheet, light bulbs, gears, plus signs, sparkles, and playful productivity icons arranged around the center. The middle title must be the clear focal point and must contain the exact readable text \"HagiCode Plus\". Spell it exactly H-a-g-i-C-o-d-e space P-l-u-s. Render the title as hand-painted cream letters with a warm orange outline and soft shadow, integrated into the artwork rather than added as a flat overlay. Do not include any other readable words anywhere else in the image. Keep the title large, centered, and easy to read.",
+    "provider": "azure-openai-image-api",
+    "model": "gpt-image-1.5",
+    "tags": [],
+    "title": "HagiCode Plus",
+    "promptSource": {
+      "type": "docs-prompt-file",
+      "path": "/home/newbe36524/repos/newbe36524/hagicode-mono/repos/media-console/doc-banner/hagicode-plus/hagicode-plus-1204x1204.prompt.json",
+      "context": "hagicode-plus-square-watercolor-poster",
+      "generationParams": {
+        "size": "1024x1024",
+        "quality": "high",
+        "format": "png"
+      },
+      "metadata": {
+        "source": "media-console-custom-square-banner",
+        "defaultStyle": "watercolor-hand-drawn-premium-poster",
+        "platform": "generic-square",
+        "physicalSize": "1204x1204",
+        "requiredAiTextTitle": "HagiCode Plus"
+      }
+    },
+    "generationParams": {
+      "size": "1024x1024",
+      "quality": "high",
+      "format": "png"
+    }
+  },
+  "status": {
+    "generation": "succeeded",
+    "recognition": "pending",
+    "thumbnail": "skipped"
+  },
+  "providerPayload": {
+    "image": {
+      "created": 1776954640,
+      "background": "opaque",
+      "output_format": "png",
+      "quality": "high",
+      "size": "1024x1024",
+      "usage": {
+        "input_tokens": 295,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 295
+        },
+        "output_tokens": 4586,
+        "output_tokens_details": {
+          "image_tokens": 4160,
+          "text_tokens": 426
+        },
+        "total_tokens": 4881
+      },
+      "data": [
+        {}
+      ]
+    }
+  },
+  "timestamps": {
+    "createdAt": "2026-04-23T14:29:58.409Z",
+    "updatedAt": "2026-04-23T14:29:58.409Z"
+  }
+}
