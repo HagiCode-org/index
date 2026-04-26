@@ -3,10 +3,12 @@ import Analytics51LA from '@/components/51LAAnalytics.astro';
 import IndexFooter from '@/components/IndexFooter.astro';
 import PortalHero from '@/components/PortalHero.astro';
 import PortalSiteCard from '@/components/PortalSiteCard.astro';
+import { loadIndexCatalog } from '@/lib/load-index-catalog';
 import { loadSitesCatalog } from '@/lib/load-sites-catalog';
 import '@/styles/global.css';
 
 const sitesCatalog = await loadSitesCatalog();
+const indexCatalog = await loadIndexCatalog();
 const groupedEntries = sitesCatalog.groups.map((group) => ({
   ...group,
   entries: sitesCatalog.entries.filter((entry) => entry.groupId === group.id),
@@ -14,6 +16,11 @@ const groupedEntries = sitesCatalog.groups.map((group) => ({
 const featuredEntries = sitesCatalog.entries.filter(
   (entry) => entry.id === 'hagicode-main' || entry.id === 'hagicode-docs',
 );
+const portalGeneratedLabel = new Intl.DateTimeFormat('zh-CN', {
+  dateStyle: 'medium',
+  timeStyle: 'short',
+  timeZone: 'UTC',
+}).format(new Date(sitesCatalog.generatedAt));
 const dataEntryLinks = [
   {
     title: '站点导航 JSON',
@@ -56,6 +63,42 @@ const dataEntryLinks = [
     href: '/server/history/',
   },
 ];
+const operatingSurfaces = [
+  {
+    title: '门户入口',
+    href: '/',
+    label: 'portal',
+  },
+  {
+    title: '数据镜像',
+    href: '/data/',
+    label: 'mirror',
+  },
+  {
+    title: '版本历史',
+    href: '/desktop/history/',
+    label: 'history',
+  },
+  {
+    title: '运营检查',
+    href: '/promoto',
+    label: 'review',
+  },
+] as const;
+const routeSignals = [
+  {
+    title: '站点清单快照',
+    value: portalGeneratedLabel,
+  },
+  {
+    title: '公开索引规模',
+    value: String(indexCatalog.entries.length),
+  },
+  {
+    title: '稳定入口总数',
+    value: String(dataEntryLinks.length),
+  },
+] as const;
 const pageTitle = 'HagiCode Portal';
 const pageDescription = 'HagiCode 站点导航门户，集中收纳主站、文档、数据镜像与独立工具站点。';
 const canonicalUrl = 'https://index.hagicode.com/';
@@ -94,18 +137,57 @@ const canonicalUrl = 'https://index.hagicode.com/';
         <PortalHero
           siteCount={sitesCatalog.entries.length}
           groupCount={sitesCatalog.groups.length}
+          publicIndexCount={indexCatalog.entries.length}
+          routeCount={dataEntryLinks.length}
+          generatedAtLabel={portalGeneratedLabel}
           featuredEntries={featuredEntries}
           dataPagePath="/data/"
           sitesJsonPath="/sites.json"
           catalogPath="/index-catalog.json"
         />
 
+        <section class="portal-section portal-surface-section" aria-labelledby="portal-surface-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Control surface</p>
+              <h2 id="portal-surface-heading">把 Index 划成四条主线</h2>
+            </div>
+          </div>
+
+          <div class="portal-surface-grid">
+            {operatingSurfaces.map((surface) => (
+              <article class="portal-surface-card">
+                <div class="portal-site-topline">
+                  <p class="card-category">{surface.label}</p>
+                  <span class="status-badge">always on</span>
+                </div>
+                <div class="portal-site-copy">
+                  <h3>{surface.title}</h3>
+                </div>
+                <div class="card-actions">
+                  <a class="button button-secondary" href={surface.href}>
+                    打开入口
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div class="portal-snapshot-grid" aria-label="门户快照">
+            {routeSignals.map((signal) => (
+              <article class="snapshot-card">
+                <p class="card-category">{signal.title}</p>
+                <p class="snapshot-value">{signal.value}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <section class="portal-section" aria-labelledby="portal-data-heading">
           <div class="section-heading">
-            <p class="eyebrow">Public Data</p>
             <div>
+              <p class="eyebrow">Public data</p>
               <h2 id="portal-data-heading">数据入口导航</h2>
-              <p>把首页直接当作稳定数据路由的导航页使用。这里保留对外公开、适合抓取、适合人工核对的 JSON 与历史页入口。</p>
             </div>
           </div>
 
@@ -119,7 +201,6 @@ const canonicalUrl = 'https://index.hagicode.com/';
 
                 <div class="portal-site-copy">
                   <h3>{entry.title}</h3>
-                  <p>{entry.description}</p>
                 </div>
 
                 <p class="portal-site-domain">
@@ -138,10 +219,9 @@ const canonicalUrl = 'https://index.hagicode.com/';
 
         <section class="portal-section" aria-labelledby="portal-sites-heading">
           <div class="section-heading">
-            <p class="eyebrow">Portal Sites</p>
             <div>
+              <p class="eyebrow">Portal sites</p>
               <h2 id="portal-sites-heading">站点入口</h2>
-              <p>首页门户与外部程序共用同一份 <code>/sites.json</code>，卡片目标全部指向生产站点或站内稳定路径。</p>
             </div>
           </div>
 
@@ -153,7 +233,6 @@ const canonicalUrl = 'https://index.hagicode.com/';
                     <p class="eyebrow">{group.id}</p>
                     <h3 id={`portal-group-${group.id}`}>{group.label}</h3>
                   </div>
-                  <p>{group.description}</p>
                 </div>
 
                 <div class="portal-group-grid">

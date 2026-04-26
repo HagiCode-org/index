@@ -10,10 +10,39 @@ import '@/styles/global.css';
 
 const catalog = await loadIndexCatalog();
 const about = loadAboutPayload();
+const publishedEntries = catalog.entries.filter((entry) => entry.status === 'published').length;
+const categoryCount = new Set(catalog.entries.map((entry) => entry.category)).size;
+const generatedAtLabel = new Intl.DateTimeFormat('zh-CN', {
+  dateStyle: 'medium',
+  timeStyle: 'short',
+  timeZone: 'UTC',
+}).format(new Date(catalog.generatedAt));
 const pageTitle = 'HagiCode Index Data';
 const pageDescription = 'HagiCode Index 的数据镜像页，集中展示 catalog、about、awesome-design-md 主题目录与公开 JSON 入口。';
 const canonicalUrl = 'https://index.hagicode.com/data/';
 const firstPublishedPath = catalog.entries.find((entry) => entry.status === 'published')?.path ?? null;
+const dataSurfaces = [
+  {
+    title: '索引目录',
+    href: '/index-catalog.json',
+    label: 'catalog',
+  },
+  {
+    title: '联系与社区',
+    href: '/about.json',
+    label: 'about',
+  },
+  {
+    title: '设计目录',
+    href: '/design.json',
+    label: 'design',
+  },
+  {
+    title: '推广内容',
+    href: '/promote_content.json',
+    label: 'promotion',
+  },
+] as const;
 ---
 
 <!doctype html>
@@ -48,20 +77,49 @@ const firstPublishedPath = catalog.entries.find((entry) => entry.status === 'pub
       <main class="page-content">
         <IndexHero
           totalCount={catalog.entries.length}
+          publishedCount={publishedEntries}
+          categoryCount={categoryCount}
+          generatedAtLabel={generatedAtLabel}
           catalogPath="/index-catalog.json"
           primaryPath={firstPublishedPath}
           portalPath="/"
+          aboutPath="/about.json"
+          designPath="/design.json"
         />
+
+        <section class="catalog-section data-surface-section" aria-labelledby="data-surface-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Mirror lanes</p>
+              <h2 id="data-surface-heading">数据镜像不是单一目录，而是四个工作面</h2>
+            </div>
+          </div>
+
+          <div class="portal-surface-grid">
+            {dataSurfaces.map((surface) => (
+              <article class="portal-surface-card">
+                <div class="portal-site-topline">
+                  <p class="card-category">{surface.label}</p>
+                  <span class="status-badge">public json</span>
+                </div>
+                <div class="portal-site-copy">
+                  <h3>{surface.title}</h3>
+                </div>
+                <div class="card-actions">
+                  <a class="button button-secondary" href={surface.href} target="_blank" rel="noreferrer">
+                    打开数据
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <section class="catalog-section" aria-labelledby="catalog-heading">
           <div class="section-heading">
-            <p class="eyebrow">Catalog</p>
             <div>
+              <p class="eyebrow">Catalog</p>
               <h2 id="catalog-heading">索引目录</h2>
-              <p>
-                数据页与外部程序共用同一份 <code>/index-catalog.json</code>，
-                新增的 <code>/design.json</code> 发布 awesome-design-md 全量主题、README 截图预览与上游文档入口，并继续走现有目录卡片链路。
-              </p>
             </div>
           </div>
 
@@ -74,7 +132,6 @@ const firstPublishedPath = catalog.entries.find((entry) => entry.status === 'pub
           ) : (
             <div class="empty-state" role="status" aria-live="polite">
               <p>当前还没有已发布索引。</p>
-              <p>先同步静态 JSON，再补充目录清单后重新构建即可。</p>
             </div>
           )}
         </section>
