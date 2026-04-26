@@ -22,14 +22,16 @@ const statusLabel = entry.status === 'published' ? '已发布' : entry.status;
 
   <div class="card-heading">
     <h2>{entry.title}</h2>
-    <p>{entry.description}</p>
+  </div>
+
+  <div class="card-chip-row" aria-label={`${entry.title} 关键信息`}>
+    <span class="info-chip">{entry.sourceRepo}</span>
+    <span class="info-chip">
+      <code>{entry.path}</code>
+    </span>
   </div>
 
   <dl class="card-meta">
-    <div>
-      <dt>原始路径</dt>
-      <dd><code>{entry.path}</code></dd>
-    </div>
     {entry.historyPagePath ? (
       <div>
         <dt>历史页面</dt>
@@ -67,24 +69,24 @@ const statusLabel = entry.status === 'published' ? '已发布' : entry.status;
   ) : null}
 
   <div class="card-actions" aria-label={`${entry.title} 操作`}>
-    {entry.readmePath ? (
-      <a class="button button-tertiary" href={entry.readmePath} target="_blank" rel="noreferrer">
-        查看 README
-      </a>
-    ) : null}
-
-    {entry.historyPagePath ? (
-      <a class="button button-tertiary" href={entry.historyPagePath}>
-        版本历史
-      </a>
-    ) : null}
-
     <a class="button button-primary" href={entry.path} target="_blank" rel="noreferrer">
       原始 JSON
     </a>
 
+    {entry.historyPagePath ? (
+      <a class="button button-secondary" href={entry.historyPagePath}>
+        版本历史
+      </a>
+    ) : null}
+
+    {entry.readmePath ? (
+      <a class="button button-secondary" href={entry.readmePath} target="_blank" rel="noreferrer">
+        查看 README
+      </a>
+    ) : null}
+
     <button
-      class="button button-secondary"
+      class="button button-tertiary"
       type="button"
       data-copy-url={copyUrl}
       aria-label={`复制 ${entry.title} 的原始 JSON 链接`}
@@ -96,7 +98,7 @@ const statusLabel = entry.status === 'published' ? '已发布' : entry.status;
   {entry.sourceUrl ? (
     <p class="card-source-link">
       <a href={entry.sourceUrl} target="_blank" rel="noreferrer">
-        查看源目录
+        查看源目录 →
       </a>
     </p>
   ) : null}

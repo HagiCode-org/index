@@ -1,54 +1,110 @@
 ---
 interface Props {
   totalCount: number;
+  publishedCount: number;
+  categoryCount: number;
+  generatedAtLabel: string;
   catalogPath: string;
   primaryPath: string | null;
   portalPath: string;
+  aboutPath: string;
+  designPath: string;
 }
 
-const { totalCount, catalogPath, primaryPath, portalPath } = Astro.props;
+const {
+  totalCount,
+  publishedCount,
+  categoryCount,
+  generatedAtLabel,
+  catalogPath,
+  primaryPath,
+  portalPath,
+  aboutPath,
+  designPath,
+} = Astro.props;
 ---
 
 <section class="hero-panel">
-  <p class="eyebrow">index.hagicode.com/data</p>
-  <div class="hero-copy">
-    <div>
-      <p class="hero-kicker">Legacy Data Mirror</p>
-      <h1>HagiCode Index Data</h1>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">index.hagicode.com/data</p>
+      <div>
+        <p class="hero-kicker">Public data mirror</p>
+        <h1>HagiCode 公共数据镜像</h1>
+      </div>
+
+      <div class="hero-actions">
+        <a class="button button-secondary" href={portalPath}>
+          返回门户
+        </a>
+        <a class="button button-primary" href={catalogPath} target="_blank" rel="noreferrer">
+          查看目录 JSON
+        </a>
+        {primaryPath ? (
+          <a class="button button-tertiary" href={primaryPath} target="_blank" rel="noreferrer">
+            打开首个索引
+          </a>
+        ) : (
+          <span class="button button-disabled" aria-disabled="true">
+            暂无可用索引
+          </span>
+        )}
+      </div>
+
+      <div class="hero-route-strip" aria-label="数据页重点出口">
+        <a class="hero-route-chip" href={aboutPath} target="_blank" rel="noreferrer">
+          <span>联系数据</span>
+          <code>{aboutPath}</code>
+        </a>
+        <a class="hero-route-chip" href={designPath} target="_blank" rel="noreferrer">
+          <span>设计目录</span>
+          <code>{designPath}</code>
+        </a>
+        <a class="hero-route-chip" href="/promote.json" target="_blank" rel="noreferrer">
+          <span>推广开关</span>
+          <code>/promote.json</code>
+        </a>
+        <a class="hero-route-chip" href="/promote_content.json" target="_blank" rel="noreferrer">
+          <span>推广内容</span>
+          <code>/promote_content.json</code>
+        </a>
+      </div>
     </div>
-    <p class="hero-lede">
-      原首页内容已迁移到这里。面向程序直连，也给维护者一个能快速核对目录、来源与同步状态的数据镜像页。
-    </p>
-  </div>
-  <dl class="hero-metrics" aria-label="目录概览">
-    <div>
-      <dt>已发布条目</dt>
-      <dd>{totalCount}</dd>
+
+    <div class="hero-aside">
+      <dl class="hero-metrics" aria-label="目录概览">
+        <div>
+          <dt>目录条目</dt>
+          <dd>{totalCount}</dd>
+        </div>
+        <div>
+          <dt>已发布</dt>
+          <dd>{publishedCount}</dd>
+        </div>
+        <div>
+          <dt>分类数</dt>
+          <dd>{categoryCount}</dd>
+        </div>
+        <div>
+          <dt>最新快照</dt>
+          <dd>{generatedAtLabel}</dd>
+        </div>
+      </dl>
+
+      <article class="hero-signal-card">
+        <p class="card-category">Mirror rules</p>
+        <h2>页面与 JSON 同源</h2>
+        <div class="hero-signal-meta">
+          <div>
+            <p class="signal-label">镜像原则</p>
+            <p class="signal-value">只重排，不改写</p>
+          </div>
+          <div>
+            <p class="signal-label">人工场景</p>
+            <p class="signal-value">核对、跳转、追溯</p>
+          </div>
+        </div>
+      </article>
     </div>
-    <div>
-      <dt>页面职责</dt>
-      <dd>镜像</dd>
-    </div>
-    <div>
-      <dt>返回路径</dt>
-      <dd>门户</dd>
-    </div>
-  </dl>
-  <div class="hero-actions">
-    <a class="button button-primary" href={portalPath}>
-      返回站点门户
-    </a>
-    {primaryPath ? (
-      <a class="button button-tertiary" href={primaryPath} target="_blank" rel="noreferrer">
-        打开首个索引
-      </a>
-    ) : (
-      <span class="button button-disabled" aria-disabled="true">
-        暂无可用索引
-      </span>
-    )}
-    <a class="button button-secondary" href={catalogPath} target="_blank" rel="noreferrer">
-      查看目录 JSON
-    </a>
   </div>
 </section>

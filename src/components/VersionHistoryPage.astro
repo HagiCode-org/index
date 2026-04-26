@@ -8,12 +8,8 @@ interface Props {
 const { page } = Astro.props;
 const totalReleases = page.releases.length;
 const latestRelease = page.latestRelease;
-const updatedSummary = page.generatedAt ? `索引快照更新时间：${page.generatedAtLabel}` : '索引快照更新时间未知';
+const updatedSummary = page.generatedAt ? page.generatedAtLabel : '未知';
 const historyKicker = page.source === 'server' ? '按版本分组的 ZIP 下载记录' : '按版本分组的完整发布记录';
-const historyIntro =
-  page.source === 'server'
-    ? '每个版本只展示可直接下载的 ZIP 包；若索引提供多下载源，会在同一文件行展示多个入口。'
-    : '每个版本单独成组，完整展示全部已知文件；若索引提供多下载源，会按同一文件分组展示。';
 const sourceKindLabels: Record<VersionHistoryFileEntry['sourceKind'], string> = {
   release: 'release',
   assets: 'assets',
@@ -53,7 +49,6 @@ function getPrimaryFileActionLabel(file: VersionHistoryFileEntry): string {
           <p class="hero-kicker">{historyKicker}</p>
           <h1 id="history-heading">{page.title}</h1>
         </div>
-        <p class="hero-lede">{page.description}</p>
         <div class="hero-actions">
           <a class="button button-secondary" href="/">
             返回首页
@@ -68,7 +63,6 @@ function getPrimaryFileActionLabel(file: VersionHistoryFileEntry): string {
         <article class="history-summary-card">
           <p class="history-summary-label">版本总数</p>
           <p class="history-summary-value">{totalReleases}</p>
-          <p class="history-summary-note">静态构建直读仓库索引，不依赖运行时 API。</p>
         </article>
         <article class="history-summary-card">
           <p class="history-summary-label">最新发布</p>
@@ -76,7 +70,7 @@ function getPrimaryFileActionLabel(file: VersionHistoryFileEntry): string {
             {latestRelease ? latestRelease.version : '暂无发布'}
           </p>
           <p class="history-summary-note">
-            {latestRelease ? `${latestRelease.publishedLabel} · ${latestRelease.fileCount} 个文件` : '当前索引还没有可展示的版本记录。'}
+            {latestRelease ? `${latestRelease.publishedLabel} · ${latestRelease.fileCount} 个文件` : '暂无记录'}
           </p>
         </article>
         <article class="history-summary-card">
@@ -134,7 +128,6 @@ function getPrimaryFileActionLabel(file: VersionHistoryFileEntry): string {
       <div>
         <p class="eyebrow">Release ledger</p>
         <h2 id="history-release-heading">历史版本</h2>
-        <p>{historyIntro}</p>
       </div>
     </div>
 
@@ -201,8 +194,7 @@ function getPrimaryFileActionLabel(file: VersionHistoryFileEntry): string {
               </ul>
             ) : (
               <div class="history-release-empty" role="status">
-                <p>当前版本未提供可解析文件清单。</p>
-                <p>仍可通过 <code>{page.sourceJsonPath}</code> 追溯原始记录。</p>
+                <p>当前版本无文件清单。</p>
               </div>
             )}
           </article>
@@ -211,7 +203,6 @@ function getPrimaryFileActionLabel(file: VersionHistoryFileEntry): string {
     ) : (
       <div class="empty-state history-empty-state" role="status" aria-live="polite">
         <p>当前还没有已发布版本。</p>
-        <p>先同步 <code>{page.sourceJsonPath}</code>，再重新构建即可看到完整历史。</p>
       </div>
     )}
   </section>

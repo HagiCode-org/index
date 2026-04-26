@@ -32,22 +32,19 @@ function getUrlHostLabel(url: string): string {
 
 <section class="about-section" aria-labelledby="about-heading">
   <div class="section-heading">
-    <p class="eyebrow">About Mirror</p>
     <div>
-      <h2 id="about-heading">联系与社区</h2>
-      <p>数据页直接消费与 <code>/about.json</code> 同源的数据，便于人工查看，也便于程序核对镜像是否更新。</p>
+      <p class="eyebrow">About Mirror</p>
+      <h2 id="about-heading">联系、社区与二维码资产</h2>
     </div>
+    <p class="section-aside-copy">更新日期 {updatedDateLabel}</p>
   </div>
 
   <div class="about-layout">
     <article class="about-overview-card">
-      <p class="eyebrow">Structured About</p>
+      <p class="eyebrow">Structured about</p>
       <div class="about-overview-copy">
-        <p class="about-overview-kicker">数据页已接入</p>
-        <p class="about-overview-title">同一份 about 数据，同时供 JSON 与数据页使用。</p>
-        <p class="about-overview-text">
-          外部程序仍可读取 <code>/about.json</code>，而维护者现在可直接在数据页核对账号、联系方式与二维码资产。
-        </p>
+        <p class="about-overview-kicker">about.json</p>
+        <p class="about-overview-title">联系数据总览</p>
       </div>
 
       <dl class="about-summary-grid" aria-label="about 数据概览">
@@ -82,7 +79,6 @@ function getUrlHostLabel(url: string): string {
             <p class="eyebrow">Links</p>
             <p class="about-group-title">平台入口</p>
           </div>
-          <p>公开账号与内容分发页，直接跳转原始站点。</p>
         </div>
 
         <div class="about-link-grid">
@@ -101,7 +97,6 @@ function getUrlHostLabel(url: string): string {
             <p class="eyebrow">Contacts</p>
             <p class="about-group-title">联络方式</p>
           </div>
-          <p>账号名、群号与直接加入入口。</p>
         </div>
 
         <div class="about-contact-grid">
@@ -109,13 +104,12 @@ function getUrlHostLabel(url: string): string {
             <div class="about-contact-card">
               <p class="about-card-label">{entry.label}</p>
               <p class="about-contact-value">{entry.value}</p>
-              {entry.description ? <p class="about-card-description">{entry.description}</p> : null}
               {entry.url ? (
                 <a class="button button-secondary about-inline-action" href={entry.url} target="_blank" rel="noreferrer">
                   打开入口
                 </a>
               ) : (
-                <p class="about-inline-note">仅展示账号信息</p>
+                <p class="about-inline-note">账号</p>
               )}
             </div>
           ))}
@@ -128,7 +122,6 @@ function getUrlHostLabel(url: string): string {
             <p class="eyebrow">QR Assets</p>
             <p class="about-group-title">二维码与图片资产</p>
           </div>
-          <p>与 JSON 中一致的哈希图片 URL，数据页可直接预览。</p>
         </div>
 
         <div class="about-qr-grid">
@@ -145,7 +138,6 @@ function getUrlHostLabel(url: string): string {
               </div>
               <div class="about-qr-copy">
                 <p class="about-card-label">{entry.label}</p>
-                <p class="about-card-description">{entry.description ?? entry.alt}</p>
                 <p class="about-qr-meta">
                   {entry.width} x {entry.height}
                 </p>

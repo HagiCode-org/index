@@ -86,10 +86,6 @@ const qualityFilters = [
     <div class="promoto-hero-copy">
       <p class="eyebrow">Promoto Gallery</p>
       <h1 id="promoto-showcase-heading">Promoto 内容展示台</h1>
-      <p>
-        集中检查 <code>promoteContentPayload</code> 内的每条推广内容、渲染图片、平台目标与本地化文案。
-        原始数据仍由 <a href={rawPayloadPath} target="_blank" rel="noreferrer">/promote.json</a> 发布。
-      </p>
     </div>
 
     <dl class="promoto-meta-card" aria-label="Promoto payload metadata">
@@ -112,22 +108,21 @@ const qualityFilters = [
     <article class="promoto-metric-card">
       <span>总条目</span>
       <strong data-promoto-visible-count>{entries.length}</strong>
-      <small>当前可见 / 全量 {entries.length}</small>
     </article>
     <article class="promoto-metric-card">
       <span>平台数</span>
       <strong>{platformCounts.length}</strong>
-      <small>{platformCounts.map(([platform, count]) => `${platform}: ${count}`).join(' · ') || '暂无平台'}</small>
+      <small>{platformCounts.map(([platform, count]) => `${platform}:${count}`).join(' · ') || '暂无平台'}</small>
     </article>
     <article class="promoto-metric-card">
       <span>图片覆盖</span>
       <strong>{imageCount}/{entries.length}</strong>
-      <small>{missingImageCount === 0 ? '全部已有图片描述符' : `${missingImageCount} 条缺少图片`}</small>
+      <small>{missingImageCount === 0 ? '完整' : `${missingImageCount} 缺图`}</small>
     </article>
     <article class="promoto-metric-card">
       <span>文案完整</span>
       <strong>{completeCount}/{entries.length}</strong>
-      <small>{missingTextCount === 0 ? '中英文标题、描述、CTA 均完整' : `${missingTextCount} 条缺少本地化字段`}</small>
+      <small>{missingTextCount === 0 ? '完整' : `${missingTextCount} 缺文案`}</small>
     </article>
   </div>
 
@@ -245,8 +240,6 @@ const qualityFilters = [
                   <p class="promoto-card-id"><code>{entry.id}</code></p>
                   <h2>{titleZh}</h2>
                   <p class="promoto-title-en">{titleEn}</p>
-                  <p>{descriptionZh}</p>
-                  <p class="promoto-description-en">{descriptionEn}</p>
                 </div>
 
                 <dl class="promoto-card-meta">
@@ -280,13 +273,11 @@ const qualityFilters = [
 
       <div class="promoto-state promoto-no-results" role="status" aria-live="polite" hidden data-promoto-no-results>
         <strong>没有匹配的 Promoto 条目</strong>
-        <p>调整平台、数据质量筛选，或清空搜索关键词后继续检查。</p>
       </div>
     </>
   ) : (
     <div class="promoto-state" role="status" aria-live="polite">
       <strong>Promoto payload 为空</strong>
-      <p>当前没有可展示的推广内容。补充 <code>promoteContentPayload.contents</code> 后重新构建即可。</p>
     </div>
   )}
 </section>

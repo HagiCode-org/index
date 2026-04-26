@@ -1,36 +1,70 @@
 <footer class="site-footer">
-  <div class="section-heading">
-    <p class="eyebrow">Footer Navigation</p>
-    <div>
+  <div class="footer-grid">
+    <div class="footer-intro">
+      <p class="eyebrow">Stable routes</p>
       <h2>稳定入口</h2>
-      <p>把站点门户、数据镜像和版本历史继续挂在统一 footer，避免首页底部只剩解释性文本。</p>
+    </div>
+
+    <div class="footer-column">
+      <p class="footer-column-title">门户与镜像</p>
+      <nav class="footer-link-list" aria-label="Portal routes">
+        <a class="footer-link" href="/">
+          <span>站点门户</span>
+          <code>/</code>
+        </a>
+        <a class="footer-link" href="/data/">
+          <span>数据页</span>
+          <code>/data/</code>
+        </a>
+        <a class="footer-link" href="/promoto">
+          <span>Promoto 展示台</span>
+          <code>/promoto</code>
+        </a>
+      </nav>
+    </div>
+
+    <div class="footer-column">
+      <p class="footer-column-title">公共 JSON</p>
+      <nav class="footer-link-list" aria-label="JSON routes">
+        <a class="footer-link" href="/sites.json">
+          <span>站点清单</span>
+          <code>/sites.json</code>
+        </a>
+        <a class="footer-link" href="/index-catalog.json">
+          <span>目录索引</span>
+          <code>/index-catalog.json</code>
+        </a>
+        <a class="footer-link" href="/about.json">
+          <span>联系数据</span>
+          <code>/about.json</code>
+        </a>
+        <a class="footer-link" href="/design.json">
+          <span>设计目录</span>
+          <code>/design.json</code>
+        </a>
+      </nav>
+    </div>
+
+    <div class="footer-column">
+      <p class="footer-column-title">版本与推广</p>
+      <nav class="footer-link-list" aria-label="History routes">
+        <a class="footer-link" href="/desktop/history/">
+          <span>Desktop History</span>
+          <code>/desktop/history/</code>
+        </a>
+        <a class="footer-link" href="/server/history/">
+          <span>Server History</span>
+          <code>/server/history/</code>
+        </a>
+        <a class="footer-link" href="/promote.json">
+          <span>Promotion Flags</span>
+          <code>/promote.json</code>
+        </a>
+        <a class="footer-link" href="/promote_content.json">
+          <span>Promotion Content</span>
+          <code>/promote_content.json</code>
+        </a>
+      </nav>
     </div>
   </div>
-
-  <nav class="about-link-grid" aria-label="Index stable routes">
-    <a class="about-link-chip" href="/">
-      <span class="about-link-title">站点门户</span>
-      <span class="about-link-domain">/</span>
-    </a>
-    <a class="about-link-chip" href="/data/">
-      <span class="about-link-title">数据页</span>
-      <span class="about-link-domain">/data/</span>
-    </a>
-    <a class="about-link-chip" href="/sites.json">
-      <span class="about-link-title">sites.json</span>
-      <span class="about-link-domain">/sites.json</span>
-    </a>
-    <a class="about-link-chip" href="/index-catalog.json">
-      <span class="about-link-title">index-catalog.json</span>
-      <span class="about-link-domain">/index-catalog.json</span>
-    </a>
-    <a class="about-link-chip" href="/desktop/history/">
-      <span class="about-link-title">Desktop History</span>
-      <span class="about-link-domain">/desktop/history/</span>
-    </a>
-    <a class="about-link-chip" href="/server/history/">
-      <span class="about-link-title">Server History</span>
-      <span class="about-link-domain">/server/history/</span>
-    </a>
-  </nav>
 </footer>
