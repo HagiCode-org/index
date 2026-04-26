@@ -1,0 +1,56 @@
+---
+import Analytics51LA from '@/components/51LAAnalytics.astro';
+import IndexFooter from '@/components/IndexFooter.astro';
+import PromotoShowcase from '@/components/PromotoShowcase.astro';
+import { promoteContentPayload } from '@/data/promote-content-source';
+import '@/styles/global.css';
+
+const pageTitle = 'HagiCode Promoto Showcase';
+const pageDescription = 'HagiCode Promoto 内容展示台，用于集中检查推广条目、本地化文案、平台链接与图片渲染结果。';
+const canonicalUrl = 'https://index.hagicode.com/promoto';
+const rawPayloadPath = '/promote.json';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+  </head>
+  <body>
+    <div class="page-shell promoto-page-shell">
+      <header class="site-header">
+        <a class="brand-mark" href="/" aria-label="返回 HagiCode Index 门户">H</a>
+        <div>
+          <p class="brand-name">HagiCode Promoto Showcase</p>
+          <p class="brand-subtitle">Promotion content and rendered asset review surface</p>
+        </div>
+        <nav class="site-header-actions" aria-label="Promoto 页面快捷入口">
+          <a class="header-link" href="/">返回门户</a>
+          <a class="header-link" href="/data/">数据页</a>
+          <a class="header-link" href={rawPayloadPath} target="_blank" rel="noreferrer">Raw JSON</a>
+        </nav>
+      </header>
+
+      <main class="page-content">
+        <PromotoShowcase
+          entries={promoteContentPayload.contents}
+          payloadMeta={{ version: promoteContentPayload.version, updatedAt: promoteContentPayload.updatedAt }}
+          rawPayloadPath={rawPayloadPath}
+        />
+      </main>
+
+      <IndexFooter />
+    </div>
+
+    <Analytics51LA />
+  </body>
+</html>

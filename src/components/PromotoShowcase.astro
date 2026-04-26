@@ -1,0 +1,346 @@
+---
+import type { PromoteContentEntry, PromoteContentPayload } from '@/data/promote-content-source';
+
+interface Props {
+  readonly entries: PromoteContentPayload['contents'];
+  readonly payloadMeta: Pick<PromoteContentPayload, 'version' | 'updatedAt'>;
+  readonly rawPayloadPath: string;
+}
+
+const { entries, payloadMeta, rawPayloadPath } = Astro.props;
+
+const localeLabels = {
+  zh: '中文',
+  en: 'English',
+} as const;
+
+const isNonEmptyString = (value: unknown): value is string =>
+  typeof value === 'string' && value.trim().length > 0;
+
+const getLocalizedField = (
+  field: PromoteContentEntry['title'] | PromoteContentEntry['description'] | PromoteContentEntry['cta'],
+  locale: keyof typeof localeLabels,
+  fallbackLabel: string,
+) => {
+  const value = field?.[locale];
+  return isNonEmptyString(value) ? value : `缺少${fallbackLabel}${localeLabels[locale]}文案`;
+};
+
+const hasUsableImage = (entry: PromoteContentEntry) =>
+  Boolean(
+    entry.image &&
+      isNonEmptyString(entry.image.src) &&
+      Number.isFinite(entry.image.width) &&
+      entry.image.width > 0 &&
+      Number.isFinite(entry.image.height) &&
+      entry.image.height > 0,
+  );
+
+const hasCompleteLocalizedText = (entry: PromoteContentEntry) =>
+  (['zh', 'en'] as const).every(
+    (locale) =>
+      isNonEmptyString(entry.title?.[locale]) &&
+      isNonEmptyString(entry.description?.[locale]) &&
+      isNonEmptyString(entry.cta?.[locale]),
+  );
+
+const getQualityState = (entry: PromoteContentEntry) => {
+  if (!hasUsableImage(entry)) {
+    return 'missing-image';
+  }
+
+  if (!hasCompleteLocalizedText(entry)) {
+    return 'missing-text';
+  }
+
+  return 'complete';
+};
+
+const platformCounts = Array.from(
+  entries.reduce((counts, entry) => {
+    const platform = isNonEmptyString(entry.targetPlatform) ? entry.targetPlatform : 'unknown';
+    counts.set(platform, (counts.get(platform) ?? 0) + 1);
+    return counts;
+  }, new Map<string, number>()),
+).sort(([left], [right]) => left.localeCompare(right));
+
+const imageCount = entries.filter(hasUsableImage).length;
+const missingImageCount = entries.length - imageCount;
+const missingTextCount = entries.filter((entry) => !hasCompleteLocalizedText(entry)).length;
+const completeCount = entries.filter((entry) => getQualityState(entry) === 'complete').length;
+const updatedAtLabel = new Intl.DateTimeFormat('zh-CN', {
+  dateStyle: 'medium',
+  timeStyle: 'short',
+}).format(new Date(payloadMeta.updatedAt));
+
+const qualityFilters = [
+  { value: 'all', label: '全部状态', count: entries.length },
+  { value: 'complete', label: '资料完整', count: completeCount },
+  { value: 'missing-image', label: '缺少图片', count: missingImageCount },
+  { value: 'missing-text', label: '缺少文案', count: missingTextCount },
+] as const;
+---
+
+<section class="promoto-showcase" aria-labelledby="promoto-showcase-heading" data-promoto-showcase>
+  <div class="promoto-hero">
+    <div class="promoto-hero-copy">
+      <p class="eyebrow">Promoto Gallery</p>
+      <h1 id="promoto-showcase-heading">Promoto 内容展示台</h1>
+      <p>
+        集中检查 <code>promoteContentPayload</code> 内的每条推广内容、渲染图片、平台目标与本地化文案。
+        原始数据仍由 <a href={rawPayloadPath} target="_blank" rel="noreferrer">/promote.json</a> 发布。
+      </p>
+    </div>
+
+    <dl class="promoto-meta-card" aria-label="Promoto payload metadata">
+      <div>
+        <dt>Payload Version</dt>
+        <dd>{payloadMeta.version}</dd>
+      </div>
+      <div>
+        <dt>Updated</dt>
+        <dd>{updatedAtLabel}</dd>
+      </div>
+      <div>
+        <dt>Raw Endpoint</dt>
+        <dd><a href={rawPayloadPath} target="_blank" rel="noreferrer">{rawPayloadPath}</a></dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="promoto-metrics" aria-label="Promoto summary metrics">
+    <article class="promoto-metric-card">
+      <span>总条目</span>
+      <strong data-promoto-visible-count>{entries.length}</strong>
+      <small>当前可见 / 全量 {entries.length}</small>
+    </article>
+    <article class="promoto-metric-card">
+      <span>平台数</span>
+      <strong>{platformCounts.length}</strong>
+      <small>{platformCounts.map(([platform, count]) => `${platform}: ${count}`).join(' · ') || '暂无平台'}</small>
+    </article>
+    <article class="promoto-metric-card">
+      <span>图片覆盖</span>
+      <strong>{imageCount}/{entries.length}</strong>
+      <small>{missingImageCount === 0 ? '全部已有图片描述符' : `${missingImageCount} 条缺少图片`}</small>
+    </article>
+    <article class="promoto-metric-card">
+      <span>文案完整</span>
+      <strong>{completeCount}/{entries.length}</strong>
+      <small>{missingTextCount === 0 ? '中英文标题、描述、CTA 均完整' : `${missingTextCount} 条缺少本地化字段`}</small>
+    </article>
+  </div>
+
+  {entries.length > 0 ? (
+    <>
+      <form class="promoto-filters" aria-label="Promoto filters" data-promoto-filters>
+        <fieldset class="promoto-filter-group">
+          <legend>按平台筛选</legend>
+          <label class="promoto-filter-option">
+            <input type="radio" name="promoto-platform" value="all" checked data-promoto-filter="platform" />
+            <span>全部 <strong>{entries.length}</strong></span>
+          </label>
+          {platformCounts.map(([platform, count]) => (
+            <label class="promoto-filter-option">
+              <input type="radio" name="promoto-platform" value={platform} data-promoto-filter="platform" />
+              <span>{platform} <strong>{count}</strong></span>
+            </label>
+          ))}
+        </fieldset>
+
+        <fieldset class="promoto-filter-group">
+          <legend>按数据质量筛选</legend>
+          {qualityFilters.map((filter) => (
+            <label class="promoto-filter-option" data-disabled={filter.count === 0 ? 'true' : 'false'}>
+              <input
+                type="radio"
+                name="promoto-quality"
+                value={filter.value}
+                checked={filter.value === 'all'}
+                disabled={filter.count === 0}
+                data-promoto-filter="quality"
+              />
+              <span>{filter.label} <strong>{filter.count}</strong></span>
+            </label>
+          ))}
+        </fieldset>
+
+        <div class="promoto-search-field">
+          <label for="promoto-search">搜索标题、描述、ID 或平台</label>
+          <input
+            id="promoto-search"
+            type="search"
+            name="q"
+            placeholder="输入 main-game、Steam、愿望单..."
+            autocomplete="off"
+            data-promoto-search
+          />
+        </div>
+      </form>
+
+      <p class="promoto-count-status" role="status" aria-live="polite" data-promoto-status>
+        当前显示 {entries.length} / {entries.length} 条 Promoto 内容。
+      </p>
+
+      <div class="promoto-card-grid" data-promoto-grid>
+        {entries.map((entry) => {
+          const qualityState = getQualityState(entry);
+          const imageAvailable = hasUsableImage(entry);
+          const titleZh = getLocalizedField(entry.title, 'zh', '标题');
+          const titleEn = getLocalizedField(entry.title, 'en', '标题');
+          const descriptionZh = getLocalizedField(entry.description, 'zh', '描述');
+          const descriptionEn = getLocalizedField(entry.description, 'en', '描述');
+          const ctaZh = getLocalizedField(entry.cta, 'zh', '按钮');
+          const ctaEn = getLocalizedField(entry.cta, 'en', '按钮');
+          const platform = isNonEmptyString(entry.targetPlatform) ? entry.targetPlatform : 'unknown';
+          const imageAlt = imageAvailable
+            ? entry.image.alt
+            : `Promoto entry ${entry.id} is missing an image descriptor`;
+          const searchableText = [
+            entry.id,
+            platform,
+            titleZh,
+            titleEn,
+            descriptionZh,
+            descriptionEn,
+            ctaZh,
+            ctaEn,
+          ].join(' ').toLowerCase();
+
+          return (
+            <article
+              class="promoto-card"
+              data-promoto-card
+              data-platform={platform}
+              data-quality={qualityState}
+              data-search={searchableText}
+            >
+              <div class="promoto-image-frame" data-missing-image={imageAvailable ? 'false' : 'true'}>
+                {imageAvailable ? (
+                  <img
+                    src={entry.image.src}
+                    width={entry.image.width}
+                    height={entry.image.height}
+                    alt={imageAlt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div class="promoto-missing-image" role="img" aria-label={imageAlt}>
+                    <strong>Missing Image</strong>
+                    <span>{entry.id}</span>
+                  </div>
+                )}
+              </div>
+
+              <div class="promoto-card-body">
+                <div class="promoto-card-topline">
+                  <span class="promoto-platform-badge">{platform}</span>
+                  <span class={`promoto-quality-badge promoto-quality-${qualityState}`}>
+                    {qualityState === 'complete' ? '资料完整' : qualityState === 'missing-image' ? '缺少图片' : '缺少文案'}
+                  </span>
+                </div>
+
+                <div class="promoto-card-copy">
+                  <p class="promoto-card-id"><code>{entry.id}</code></p>
+                  <h2>{titleZh}</h2>
+                  <p class="promoto-title-en">{titleEn}</p>
+                  <p>{descriptionZh}</p>
+                  <p class="promoto-description-en">{descriptionEn}</p>
+                </div>
+
+                <dl class="promoto-card-meta">
+                  <div>
+                    <dt>CTA</dt>
+                    <dd>{ctaZh} / {ctaEn}</dd>
+                  </div>
+                  <div>
+                    <dt>Image</dt>
+                    <dd>
+                      {imageAvailable
+                        ? `${entry.image.width} x ${entry.image.height} ${entry.image.format.toUpperCase()}`
+                        : 'No image descriptor available'}
+                    </dd>
+                  </div>
+                </dl>
+
+                <div class="promoto-card-actions">
+                  <a class="button button-primary" href={entry.link} target="_blank" rel="noreferrer">
+                    {ctaZh}
+                  </a>
+                  <a class="button button-secondary" href={rawPayloadPath} target="_blank" rel="noreferrer">
+                    查看 JSON
+                  </a>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <div class="promoto-state promoto-no-results" role="status" aria-live="polite" hidden data-promoto-no-results>
+        <strong>没有匹配的 Promoto 条目</strong>
+        <p>调整平台、数据质量筛选，或清空搜索关键词后继续检查。</p>
+      </div>
+    </>
+  ) : (
+    <div class="promoto-state" role="status" aria-live="polite">
+      <strong>Promoto payload 为空</strong>
+      <p>当前没有可展示的推广内容。补充 <code>promoteContentPayload.contents</code> 后重新构建即可。</p>
+    </div>
+  )}
+</section>
+
+<script is:inline>
+  const showcase = document.querySelector('[data-promoto-showcase]');
+
+  if (showcase) {
+    const cards = Array.from(showcase.querySelectorAll('[data-promoto-card]'));
+    const platformFilters = Array.from(showcase.querySelectorAll('[data-promoto-filter="platform"]'));
+    const qualityFilters = Array.from(showcase.querySelectorAll('[data-promoto-filter="quality"]'));
+    const searchInput = showcase.querySelector('[data-promoto-search]');
+    const visibleCount = showcase.querySelector('[data-promoto-visible-count]');
+    const status = showcase.querySelector('[data-promoto-status]');
+    const noResults = showcase.querySelector('[data-promoto-no-results]');
+    const totalCount = cards.length;
+
+    const getCheckedValue = (inputs) => inputs.find((input) => input.checked)?.value ?? 'all';
+
+    const updateShowcase = () => {
+      const selectedPlatform = getCheckedValue(platformFilters);
+      const selectedQuality = getCheckedValue(qualityFilters);
+      const query = searchInput?.value.trim().toLowerCase() ?? '';
+      let shown = 0;
+
+      for (const card of cards) {
+        const platformMatches = selectedPlatform === 'all' || card.dataset.platform === selectedPlatform;
+        const qualityMatches = selectedQuality === 'all' || card.dataset.quality === selectedQuality;
+        const searchMatches = query.length === 0 || card.dataset.search?.includes(query);
+        const shouldShow = Boolean(platformMatches && qualityMatches && searchMatches);
+
+        card.hidden = !shouldShow;
+        if (shouldShow) {
+          shown += 1;
+        }
+      }
+
+      if (visibleCount) {
+        visibleCount.textContent = String(shown);
+      }
+
+      if (status) {
+        status.textContent = `当前显示 ${shown} / ${totalCount} 条 Promoto 内容。`;
+      }
+
+      if (noResults) {
+        noResults.hidden = shown !== 0;
+      }
+    };
+
+    for (const input of [...platformFilters, ...qualityFilters]) {
+      input.addEventListener('change', updateShowcase);
+    }
+
+    searchInput?.addEventListener('input', updateShowcase);
+  }
+</script>
