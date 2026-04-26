@@ -1022,6 +1022,413 @@
     background: linear-gradient(135deg, rgba(255, 250, 244, 0.96), rgba(234, 244, 241, 0.9));
   }
 
+  .promoto-page-shell {
+    width: min(1240px, calc(100% - 32px));
+  }
+
+  .promoto-showcase {
+    display: grid;
+    gap: 22px;
+  }
+
+  .promoto-hero,
+  .promoto-metric-card,
+  .promoto-filters,
+  .promoto-card,
+  .promoto-state {
+    backdrop-filter: blur(18px);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+
+  .promoto-hero {
+    border-radius: var(--radius-xl);
+    padding: 30px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.72fr);
+    gap: 24px;
+    align-items: stretch;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .promoto-hero::before {
+    content: '';
+    position: absolute;
+    inset: -120px auto auto -90px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(180, 96, 56, 0.2), transparent 68%);
+    pointer-events: none;
+  }
+
+  .promoto-hero-copy {
+    display: grid;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .promoto-hero-copy h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 8vw, 7rem);
+    line-height: 0.9;
+    letter-spacing: -0.07em;
+  }
+
+  .promoto-hero-copy p:not(.eyebrow),
+  .promoto-count-status,
+  .promoto-description-en,
+  .promoto-title-en {
+    color: var(--muted);
+  }
+
+  .promoto-hero-copy a,
+  .promoto-meta-card a {
+    color: var(--accent-strong);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .promoto-meta-card {
+    margin: 0;
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    background:
+      linear-gradient(145deg, rgba(255, 252, 247, 0.96), rgba(218, 240, 236, 0.88));
+    border: 1px solid rgba(17, 67, 63, 0.12);
+    display: grid;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .promoto-meta-card div {
+    padding-top: 12px;
+    border-top: 1px solid rgba(71, 51, 32, 0.1);
+  }
+
+  .promoto-meta-card div:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .promoto-meta-card dt,
+  .promoto-metric-card span,
+  .promoto-card-meta dt,
+  .promoto-filter-group legend,
+  .promoto-search-field label {
+    color: var(--muted);
+    font-size: 0.82rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .promoto-meta-card dd {
+    margin-top: 5px;
+    overflow-wrap: anywhere;
+    font-weight: 700;
+  }
+
+  .promoto-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .promoto-metric-card {
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    display: grid;
+    gap: 8px;
+    background: rgba(255, 252, 247, 0.9);
+  }
+
+  .promoto-metric-card strong {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.1rem);
+    line-height: 0.95;
+  }
+
+  .promoto-metric-card small {
+    color: var(--muted);
+    overflow-wrap: anywhere;
+  }
+
+  .promoto-filters {
+    border-radius: var(--radius-xl);
+    padding: 18px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(260px, 0.9fr);
+    gap: 16px;
+    align-items: end;
+  }
+
+  .promoto-filter-group {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .promoto-filter-group legend {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+
+  .promoto-filter-option {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .promoto-filter-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .promoto-filter-option span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 44px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(17, 67, 63, 0.14);
+    background: rgba(255, 255, 255, 0.58);
+    color: var(--muted);
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .promoto-filter-option input:checked + span {
+    background: var(--accent-soft);
+    border-color: rgba(15, 118, 110, 0.34);
+    color: var(--accent-strong);
+  }
+
+  .promoto-filter-option input:focus-visible + span {
+    outline: 2px solid rgba(15, 118, 110, 0.34);
+    outline-offset: 3px;
+  }
+
+  .promoto-filter-option:hover span {
+    transform: translateY(-2px);
+  }
+
+  .promoto-filter-option[data-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .promoto-search-field {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .promoto-search-field input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(17, 67, 63, 0.16);
+    background: rgba(255, 255, 255, 0.76);
+    color: var(--text);
+  }
+
+  .promoto-search-field input:focus-visible {
+    outline: 2px solid rgba(15, 118, 110, 0.34);
+    outline-offset: 3px;
+    border-color: rgba(15, 118, 110, 0.34);
+  }
+
+  .promoto-count-status {
+    padding-inline: 4px;
+  }
+
+  .promoto-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .promoto-card {
+    min-width: 0;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background:
+      linear-gradient(145deg, rgba(255, 252, 247, 0.98), rgba(238, 246, 243, 0.9));
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .promoto-card:hover,
+  .promoto-card:focus-within {
+    transform: translateY(-4px);
+    border-color: rgba(15, 118, 110, 0.25);
+    box-shadow: 0 30px 70px rgba(75, 48, 29, 0.16);
+  }
+
+  .promoto-card[hidden] {
+    display: none;
+  }
+
+  .promoto-image-frame {
+    aspect-ratio: 1232 / 706;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(circle at top left, rgba(15, 118, 110, 0.16), transparent 34%),
+      rgba(47, 34, 24, 0.08);
+  }
+
+  .promoto-image-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .promoto-missing-image {
+    width: calc(100% - 36px);
+    height: calc(100% - 36px);
+    border: 1px dashed rgba(111, 90, 73, 0.42);
+    border-radius: var(--radius-lg);
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 8px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .promoto-card-body {
+    padding: 20px;
+    display: grid;
+    gap: 18px;
+  }
+
+  .promoto-card-topline,
+  .promoto-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .promoto-platform-badge,
+  .promoto-quality-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 0.88rem;
+  }
+
+  .promoto-platform-badge {
+    background: rgba(17, 67, 63, 0.08);
+    color: var(--accent-strong);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .promoto-quality-badge {
+    background: rgba(111, 90, 73, 0.09);
+    color: var(--muted);
+  }
+
+  .promoto-quality-complete {
+    background: rgba(15, 118, 110, 0.12);
+    color: var(--accent-strong);
+  }
+
+  .promoto-quality-missing-image,
+  .promoto-quality-missing-text {
+    background: rgba(180, 96, 56, 0.14);
+    color: #7a341f;
+  }
+
+  .promoto-card-copy {
+    display: grid;
+    gap: 9px;
+  }
+
+  .promoto-card-copy h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4vw, 2.7rem);
+    line-height: 1;
+  }
+
+  .promoto-card-id code {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(17, 67, 63, 0.08);
+    overflow-wrap: anywhere;
+  }
+
+  .promoto-card-meta {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .promoto-card-meta div {
+    padding-top: 12px;
+    border-top: 1px solid rgba(71, 51, 32, 0.1);
+    min-width: 0;
+  }
+
+  .promoto-card-meta dd {
+    margin-top: 5px;
+    overflow-wrap: anywhere;
+  }
+
+  .promoto-card-actions {
+    justify-content: start;
+  }
+
+  .promoto-state {
+    border-radius: var(--radius-xl);
+    padding: 26px;
+    display: grid;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(255, 250, 244, 0.96), rgba(234, 244, 241, 0.9));
+  }
+
+  .promoto-state[hidden] {
+    display: none;
+  }
+
+  .promoto-state strong {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    line-height: 1;
+  }
+
+  .promoto-state p {
+    color: var(--muted);
+  }
+
   .site-footer {
     margin-top: 24px;
     padding: 22px 24px;
@@ -1084,7 +1491,12 @@
     .about-summary-grid,
     .history-hero-grid,
     .history-latest-meta,
-    .activity-summary-grid {
+    .activity-summary-grid,
+    .promoto-hero,
+    .promoto-metrics,
+    .promoto-filters,
+    .promoto-card-grid,
+    .promoto-card-meta {
       grid-template-columns: 1fr;
     }
 
@@ -1125,8 +1537,40 @@
     }
 
     .button,
-    .card-actions > * {
+    .card-actions > *,
+    .promoto-card-actions > * {
       width: 100%;
+    }
+  }
+
+  @media (min-width: 721px) and (max-width: 1024px) {
+    .promoto-metrics,
+    .promoto-filters {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .promoto-search-field {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .promoto-hero,
+    .promoto-card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .promoto-card,
+    .promoto-filter-option span {
+      transition: none;
+    }
+
+    .promoto-card:hover,
+    .promoto-card:focus-within,
+    .promoto-filter-option:hover span {
+      transform: none;
     }
   }
 }
