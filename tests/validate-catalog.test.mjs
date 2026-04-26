@@ -7,10 +7,22 @@ import { promisify } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildCharacterTemplateLibrary } from '../scripts/build-agent-preset-library.mjs';
+import { validateGeneratedImageDescriptor } from '../scripts/validate-catalog.mjs';
 
 const execFileAsync = promisify(execFile);
 const testDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(testDir, '..');
+
+function buildImageDescriptorFixture({ variant } = {}) {
+  return {
+    src: '/_astro/hagicode.ABC123.png',
+    width: 1232,
+    height: 706,
+    format: 'png',
+    alt: 'HagiCode Steam artwork',
+    ...(variant === undefined ? {} : { variant }),
+  };
+}
 
 function buildActivityMetricsFixture({
   lastUpdated = '2026-03-24T10:00:00.000Z',
@@ -286,6 +298,7 @@ function buildPromoteContentFixture() {
         },
         link: 'https://store.steampowered.com/app/4625540/Hagicode/',
         targetPlatform: 'steam',
+        image: buildImageDescriptorFixture(),
       },
       {
         id: 'main-game-steam-ea-2026-04-29',
@@ -303,6 +316,7 @@ function buildPromoteContentFixture() {
         },
         link: 'https://store.steampowered.com/app/4625540/Hagicode/',
         targetPlatform: 'steam',
+        image: buildImageDescriptorFixture(),
       },
       {
         id: 'hagicode-plus-bundle',
@@ -320,6 +334,7 @@ function buildPromoteContentFixture() {
         },
         link: 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/',
         targetPlatform: 'steam',
+        image: buildImageDescriptorFixture(),
       },
       {
         id: 'hagicode-turbo-engine-dlc',
@@ -337,6 +352,7 @@ function buildPromoteContentFixture() {
         },
         link: 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/',
         targetPlatform: 'steam',
+        image: buildImageDescriptorFixture(),
       },
     ],
   };
@@ -360,6 +376,7 @@ function buildSteamFixture() {
           linux: '4625542',
           macos: '4625543',
         },
+        images: [buildImageDescriptorFixture({ variant: 'store-capsule' })],
       },
       {
         key: 'turbo-engine',
@@ -373,6 +390,7 @@ function buildSteamFixture() {
           linux: '4635482',
           macos: '4635481',
         },
+        images: [buildImageDescriptorFixture({ variant: 'store-capsule' })],
       },
     ],
     bundles: [
@@ -382,6 +400,7 @@ function buildSteamFixture() {
         storeBundleId: '73989',
         storeUrl: 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/',
         includedApplicationKeys: ['hagicode', 'turbo-engine'],
+        images: [buildImageDescriptorFixture({ variant: 'store-capsule' })],
       },
     ],
   };
@@ -1229,7 +1248,7 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
   const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
   const promotePath = path.join(projectRoot, 'src', 'data', 'public', 'promote.json');
-  const promoteContentPath = path.join(projectRoot, 'src', 'data', 'public', 'promote_content.json');
+  const promoteContentPath = path.join(projectRoot, process.env.INDEX_BUILD_ROOT ?? 'dist', 'promote_content.json');
   const promote = JSON.parse(await readFile(promotePath, 'utf8'));
   const promoteContent = JSON.parse(await readFile(promoteContentPath, 'utf8'));
   const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
@@ -1273,6 +1292,11 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.match(eaPromotionContent?.description.en ?? '', /Pretty please/);
   assert.equal(mainPromotionContent?.cta.zh, '加入愿望单');
   assert.equal(mainPromotionContent?.cta.en, 'Wishlist on Steam');
+  assert.equal(typeof mainPromotionContent?.image.src, 'string');
+  assert.equal(Number.isInteger(mainPromotionContent?.image.width), true);
+  assert.equal(Number.isInteger(mainPromotionContent?.image.height), true);
+  assert.equal(typeof mainPromotionContent?.image.format, 'string');
+  assert.equal(typeof mainPromotionContent?.image.alt, 'string');
   assert.equal(eaPromotionContent?.cta.zh, '查看抢先体验');
   assert.equal(eaPromotionContent?.cta.en, 'View Early Access');
   assert.equal(eaPromotionContent?.link, 'https://store.steampowered.com/app/4625540/Hagicode/');
@@ -1331,6 +1355,86 @@ test('catalog validation rejects malformed promotion cta maps', async () => {
       catalog: buildCatalogFixture(),
       activityMetrics: buildActivityMetricsFixture(),
       promoteContent,
+    });
+
+    await assert.rejects(
+      () =>
+        execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+          cwd: tempDir,
+        }),
+      (error) => {
+        assert.match(error.stderr, testCase.expected, testCase.label);
+        return true;
+      },
+    );
+  }
+});
+
+test('catalog validation rejects invalid generated image descriptors directly', () => {
+  const invalidCases = [
+    {
+      label: 'missing src',
+      image: { ...buildImageDescriptorFixture(), src: '' },
+      expected: /Promote content\[0\] image src is required\./,
+      options: {},
+    },
+    {
+      label: 'invalid width',
+      image: { ...buildImageDescriptorFixture(), width: 0 },
+      expected: /Promote content\[0\] image width must be a positive integer\./,
+      options: {},
+    },
+    {
+      label: 'missing variant',
+      image: buildImageDescriptorFixture(),
+      expected: /Steam application\[0\] images\[0\] variant is required\./,
+      options: { requireVariant: true },
+    },
+  ];
+
+  for (const testCase of invalidCases) {
+    assert.throws(
+      () => validateGeneratedImageDescriptor(testCase.image, testCase.options.requireVariant ? 'Steam application[0] images[0]' : 'Promote content[0] image', testCase.options),
+      testCase.expected,
+      testCase.label,
+    );
+  }
+});
+
+test('catalog validation rejects invalid generated promote and Steam image descriptors', async () => {
+  const invalidCases = [
+    {
+      label: 'promote missing image',
+      mutate({ promoteContent }) {
+        delete promoteContent.contents[0].image;
+      },
+      expected: /Promote content\[0\] image must be an object\./,
+    },
+    {
+      label: 'steam missing images',
+      mutate({ steam }) {
+        delete steam.applications[0].images;
+      },
+      expected: /Steam application\[0\] images must be a non-empty array\./,
+    },
+    {
+      label: 'steam blank variant',
+      mutate({ steam }) {
+        steam.applications[0].images[0].variant = '   ';
+      },
+      expected: /Steam application\[0\] images\[0\] variant is required\./,
+    },
+  ];
+
+  for (const testCase of invalidCases) {
+    const promoteContent = buildPromoteContentFixture();
+    const steam = buildSteamFixture();
+    testCase.mutate({ promoteContent, steam });
+    const tempDir = await createValidationFixture({
+      catalog: buildCatalogFixture(),
+      activityMetrics: buildActivityMetricsFixture(),
+      promoteContent,
+      steam,
     });
 
     await assert.rejects(

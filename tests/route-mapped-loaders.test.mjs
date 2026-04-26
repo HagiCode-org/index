@@ -181,6 +181,14 @@ test('steam route-mapped JSON publishes the canonical application mapping for Ha
   assert.equal(hagicodeEntry.platformAppIds.macos, '4625543');
   assert.equal(hagicodeEntry.promoteId, 'main-game-2026-04-29');
   assert.equal(hagicodeEntry.storeUrl, 'https://store.steampowered.com/app/4625540/Hagicode/');
+  assert.equal(Array.isArray(hagicodeEntry.images), true);
+  assert.equal(hagicodeEntry.images.length >= 3, true);
+  assert.equal(hagicodeEntry.images.some((entry) => entry.variant === 'store-capsule'), true);
+  assert.equal(hagicodeEntry.images.some((entry) => entry.variant === 'library-capsule'), true);
+  assert.equal(hagicodeEntry.images.every((entry) => typeof entry.src === 'string' && entry.src.length > 0), true);
+  assert.equal(hagicodeEntry.images.every((entry) => Number.isInteger(entry.width) && entry.width > 0), true);
+  assert.equal(hagicodeEntry.images.every((entry) => Number.isInteger(entry.height) && entry.height > 0), true);
+  assert.equal(hagicodeEntry.images.every((entry) => typeof entry.format === 'string' && entry.format.length > 0), true);
   assert.equal(turboEngineEntry.kind, 'dlc');
   assert.equal(turboEngineEntry.parentKey, 'hagicode');
   assert.equal(turboEngineEntry.storeAppId, '4635480');
@@ -188,10 +196,12 @@ test('steam route-mapped JSON publishes the canonical application mapping for Ha
   assert.equal(turboEngineEntry.platformAppIds.linux, '4635482');
   assert.equal(turboEngineEntry.platformAppIds.macos, '4635481');
   assert.equal(turboEngineEntry.storeUrl, 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/');
+  assert.equal(turboEngineEntry.images.some((entry) => entry.variant === 'wide-capsule'), true);
   assert.equal(hagicodePlusBundle.displayName, 'Hagicode Plus');
   assert.equal(hagicodePlusBundle.storeBundleId, '73989');
   assert.equal(hagicodePlusBundle.storeUrl, 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/');
   assert.deepEqual(hagicodePlusBundle.includedApplicationKeys, ['hagicode', 'turbo-engine']);
+  assert.equal(hagicodePlusBundle.images.some((entry) => entry.variant === 'store-capsule'), true);
 });
 
 test('promotion route-mapped JSON publishes stable flags and localized content contracts', async () => {
@@ -244,7 +254,7 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.ok(eaPromotionContent, 'main-game Steam EA promotion content is required.');
   assert.ok(plusPromotionContent, 'hagicode-plus promotion content is required.');
   assert.ok(turboPromotionContent, 'turbo-engine promotion content is required.');
-  assert.deepEqual(Object.keys(mainPromotionContent).sort(), ['cta', 'description', 'id', 'link', 'targetPlatform', 'title']);
+  assert.deepEqual(Object.keys(mainPromotionContent).sort(), ['cta', 'description', 'id', 'image', 'link', 'targetPlatform', 'title']);
   assert.equal(mainPromotionContent.title.zh, '求求加入愿望单');
   assert.equal(mainPromotionContent.title.en, 'Wishlist It, Pretty Please');
   assert.match(mainPromotionContent.description.zh, /Hagicode/);
@@ -256,7 +266,13 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.equal(mainPromotionContent.cta.en, 'Wishlist on Steam');
   assert.equal(mainPromotionContent.link, 'https://store.steampowered.com/app/4625540/Hagicode/');
   assert.equal(mainPromotionContent.targetPlatform, 'steam');
-  assert.deepEqual(Object.keys(eaPromotionContent).sort(), ['cta', 'description', 'id', 'link', 'targetPlatform', 'title']);
+  assert.equal(typeof mainPromotionContent.image.src, 'string');
+  assert.equal(mainPromotionContent.image.src.length > 0, true);
+  assert.equal(Number.isInteger(mainPromotionContent.image.width) && mainPromotionContent.image.width > 0, true);
+  assert.equal(Number.isInteger(mainPromotionContent.image.height) && mainPromotionContent.image.height > 0, true);
+  assert.equal(typeof mainPromotionContent.image.format, 'string');
+  assert.equal(typeof mainPromotionContent.image.alt, 'string');
+  assert.deepEqual(Object.keys(eaPromotionContent).sort(), ['cta', 'description', 'id', 'image', 'link', 'targetPlatform', 'title']);
   assert.equal(eaPromotionContent.title.zh, '终于上架 EA 啦');
   assert.equal(eaPromotionContent.title.en, 'Early Access Is Finally Here');
   assert.match(eaPromotionContent.description.zh, /steam/i);
@@ -271,7 +287,7 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.equal(eaPromotionContent.cta.en, 'View Early Access');
   assert.equal(eaPromotionContent.link, 'https://store.steampowered.com/app/4625540/Hagicode/');
   assert.equal(eaPromotionContent.targetPlatform, 'steam');
-  assert.deepEqual(Object.keys(plusPromotionContent).sort(), ['cta', 'description', 'id', 'link', 'targetPlatform', 'title']);
+  assert.deepEqual(Object.keys(plusPromotionContent).sort(), ['cta', 'description', 'id', 'image', 'link', 'targetPlatform', 'title']);
   assert.equal(plusPromotionContent.title.zh.length > 0, true);
   assert.equal(plusPromotionContent.title.en.length > 0, true);
   assert.match(plusPromotionContent.description.zh, /15% off/);
@@ -280,7 +296,7 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.equal(plusPromotionContent.cta.en, 'View Bundle');
   assert.equal(plusPromotionContent.link, 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/');
   assert.equal(plusPromotionContent.targetPlatform, 'steam');
-  assert.deepEqual(Object.keys(turboPromotionContent).sort(), ['cta', 'description', 'id', 'link', 'targetPlatform', 'title']);
+  assert.deepEqual(Object.keys(turboPromotionContent).sort(), ['cta', 'description', 'id', 'image', 'link', 'targetPlatform', 'title']);
   assert.equal(turboPromotionContent.title.zh.length > 0, true);
   assert.equal(turboPromotionContent.title.en.length > 0, true);
   assert.match(turboPromotionContent.description.zh, /32/);
