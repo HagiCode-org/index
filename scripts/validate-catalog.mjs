@@ -28,12 +28,14 @@ const fileBackedRouteMappedJsonPaths = [
   '/live-broadcast.json',
   '/legal-documents.json',
   '/promote.json',
-  '/promote_content.json',
   '/server/index.json',
   '/desktop/index.json',
+];
+const generatedRouteMappedJsonPaths = [
+  '/about.json',
+  '/promote_content.json',
   '/steam/index.json',
 ];
-const generatedRouteMappedJsonPaths = ['/about.json'];
 const routeMappedJsonPaths = [
   ...fileBackedRouteMappedJsonPaths,
   ...generatedRouteMappedJsonPaths,
@@ -377,6 +379,7 @@ function validatePromoteContentContract(payload) {
 
     assert(typeof entry.link === 'string' && entry.link.trim().length > 0, `${fieldName} link is required.`);
     assert(typeof entry.targetPlatform === 'string' && entry.targetPlatform.trim().length > 0, `${fieldName} targetPlatform is required.`);
+    validateGeneratedImageDescriptor(entry.image, `${fieldName} image`, { requireVariant: false });
 
     if ('imageUrl' in entry && entry.imageUrl !== undefined) {
       assert(typeof entry.imageUrl === 'string' && entry.imageUrl.trim().length > 0, `${fieldName} imageUrl must be a non-empty string when present.`);
@@ -407,6 +410,11 @@ function validateSteamContract(payload) {
       assert(typeof entry.promoteId === 'string' && entry.promoteId.trim().length > 0, `${fieldName} promoteId must be a non-empty string when present.`);
     }
 
+    assert(Array.isArray(entry.images) && entry.images.length > 0, `${fieldName} images must be a non-empty array.`);
+    entry.images.forEach((image, imageIndex) => {
+      validateGeneratedImageDescriptor(image, `${fieldName} images[${imageIndex}]`, { requireVariant: true });
+    });
+
     applicationKeys.add(entry.key);
   });
 
@@ -433,7 +441,29 @@ function validateSteamContract(payload) {
         `${fieldName} includedApplicationKeys[${applicationIndex}] must reference a published Steam application key.`,
       );
     });
+
+    if ('images' in entry && entry.images !== undefined) {
+      assert(Array.isArray(entry.images) && entry.images.length > 0, `${fieldName} images must be a non-empty array when present.`);
+      entry.images.forEach((image, imageIndex) => {
+        validateGeneratedImageDescriptor(image, `${fieldName} images[${imageIndex}]`, { requireVariant: true });
+      });
+    }
   });
+}
+
+export function validateGeneratedImageDescriptor(image, fieldName, { requireVariant = false } = {}) {
+  assert(image && typeof image === 'object' && !Array.isArray(image), `${fieldName} must be an object.`);
+  assert(typeof image.src === 'string' && image.src.trim().length > 0, `${fieldName} src is required.`);
+  assert(Number.isInteger(image.width) && image.width > 0, `${fieldName} width must be a positive integer.`);
+  assert(Number.isInteger(image.height) && image.height > 0, `${fieldName} height must be a positive integer.`);
+  assert(typeof image.format === 'string' && image.format.trim().length > 0, `${fieldName} format is required.`);
+  assert(typeof image.alt === 'string' && image.alt.trim().length > 0, `${fieldName} alt is required.`);
+
+  if (requireVariant) {
+    assert(typeof image.variant === 'string' && image.variant.trim().length > 0, `${fieldName} variant is required.`);
+  } else if ('variant' in image && image.variant !== undefined) {
+    assert(typeof image.variant === 'string' && image.variant.trim().length > 0, `${fieldName} variant must be a non-empty string when present.`);
+  }
 }
 
 function validateAboutImageEntry(entry, fieldName) {
