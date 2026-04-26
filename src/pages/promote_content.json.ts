@@ -1,7 +1,8 @@
-import { createRouteMappedJsonResponse } from '@/lib/json-publication';
+import { promoteContentPayload } from '@/data/promote-content-source';
+import { createPublishedJsonResponse } from '@/lib/json-publication';
 
 export const prerender = true;
 
 export async function GET() {
-  return createRouteMappedJsonResponse('/promote_content.json');
+  return createPublishedJsonResponse(promoteContentPayload);
 }

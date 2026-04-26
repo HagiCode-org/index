@@ -9,13 +9,15 @@ export const fileBackedRouteMappedJsonPaths = [
   '/live-broadcast.json',
   '/legal-documents.json',
   '/promote.json',
-  '/promote_content.json',
   '/server/index.json',
   '/desktop/index.json',
-  '/steam/index.json',
 ] as const;
 
-export const generatedRouteMappedJsonPaths = ['/about.json'] as const;
+export const generatedRouteMappedJsonPaths = [
+  '/about.json',
+  '/promote_content.json',
+  '/steam/index.json',
+] as const;
 
 export const routeMappedJsonPaths = [
   ...fileBackedRouteMappedJsonPaths,

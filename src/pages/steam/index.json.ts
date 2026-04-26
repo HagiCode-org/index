@@ -1,7 +1,8 @@
-import { createRouteMappedJsonResponse } from '@/lib/json-publication';
+import { steamPayload } from '@/data/steam-source';
+import { createPublishedJsonResponse } from '@/lib/json-publication';
 
 export const prerender = true;
 
 export async function GET() {
-  return createRouteMappedJsonResponse('/steam/index.json');
+  return createPublishedJsonResponse(steamPayload);
 }
