@@ -17,6 +17,7 @@ export const generatedRouteMappedJsonPaths = [
   '/about.json',
   '/promote_content.json',
   '/steam/index.json',
+  '/steam/achievements.json',
 ] as const;
 
 export const routeMappedJsonPaths = [

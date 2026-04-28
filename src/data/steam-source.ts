@@ -9,6 +9,7 @@ import turboEngineLibraryCapsule from '@/assets/steam/turboEngine/hagicode-turbo
 import turboEngineStoreCapsule from '@/assets/steam/turboEngine/hagicode-turbo-engine-promo-462x174.png';
 import turboEngineWideCapsule from '@/assets/steam/turboEngine/hagicode-turbo-engine-promo-1232x706.png';
 import { createImageDescriptor, type ImageDescriptor } from '@/data/image-descriptor';
+import rawSteamAchievementSource from '@/data/steam-achievements-source.json';
 
 export interface SteamApplicationEntry {
   readonly key: string;
@@ -31,16 +32,147 @@ export interface SteamBundleEntry {
   readonly images: readonly ImageDescriptor[];
 }
 
+export interface SteamAchievementLocaleText {
+  readonly 'zh-CN': string;
+  readonly en: string;
+}
+
+export interface SteamAchievementCondition {
+  readonly source: string;
+  readonly schedulePreset: string;
+  readonly rewardAmount?: number;
+  readonly progressUnitSize?: number;
+}
+
+export interface SteamAchievementIconSource {
+  readonly concept: string;
+  readonly prompt: string;
+}
+
+export interface SteamAchievementEntry {
+  readonly localId: string;
+  readonly steamApiName: string;
+  readonly category: string;
+  readonly displayName: SteamAchievementLocaleText;
+  readonly description: SteamAchievementLocaleText;
+  readonly condition: SteamAchievementCondition;
+  readonly steamworks: {
+    readonly apiName: string;
+    readonly displayName: SteamAchievementLocaleText;
+    readonly description: SteamAchievementLocaleText;
+    readonly hidden: boolean;
+    readonly statBased: boolean;
+    readonly achievedIconPath: string;
+    readonly lockedIconPath: string;
+  };
+  readonly icons: {
+    readonly achieved: ImageDescriptor;
+    readonly locked: ImageDescriptor;
+  };
+  readonly icon: SteamAchievementIconSource;
+}
+
+export interface SteamAchievementPayload {
+  readonly version: string;
+  readonly updatedAt: string;
+  readonly applicationKey: string;
+  readonly applicationSteamAppId: string;
+  readonly iconBasePath: string;
+  readonly iconSize: {
+    readonly width: number;
+    readonly height: number;
+    readonly format: string;
+  };
+  readonly steamworksDefaults: {
+    readonly hidden: boolean;
+    readonly statBased: boolean;
+    readonly achievedIconSize: {
+      readonly width: number;
+      readonly height: number;
+    };
+    readonly lockedIconSize: {
+      readonly width: number;
+      readonly height: number;
+    };
+  };
+  readonly rewardDefaults: Readonly<Record<string, unknown>>;
+  readonly schedulePresets: Readonly<Record<string, unknown>>;
+  readonly achievements: readonly SteamAchievementEntry[];
+}
+
 export interface SteamPayload {
   readonly version: string;
   readonly updatedAt: string;
   readonly applications: readonly SteamApplicationEntry[];
   readonly bundles: readonly SteamBundleEntry[];
+  readonly achievements: readonly SteamAchievementEntry[];
 }
+
+type RawSteamAchievementEntry = Omit<SteamAchievementEntry, 'steamworks' | 'icons'>;
+type RawSteamAchievementSource = Omit<SteamAchievementPayload, 'achievements'> & {
+  readonly achievements: readonly RawSteamAchievementEntry[];
+};
+
+const steamAchievementSource = rawSteamAchievementSource as RawSteamAchievementSource;
+
+function apiNameToIconBasename(apiName: string): string {
+  return apiName.toLowerCase();
+}
+
+function createPublicImageDescriptor(
+  src: string,
+  metadata: {
+    readonly alt: string;
+    readonly variant: string;
+  },
+): ImageDescriptor {
+  return {
+    src,
+    width: steamAchievementSource.iconSize.width,
+    height: steamAchievementSource.iconSize.height,
+    format: steamAchievementSource.iconSize.format,
+    alt: metadata.alt,
+    variant: metadata.variant,
+  };
+}
+
+function createSteamAchievementEntry(entry: RawSteamAchievementEntry): SteamAchievementEntry {
+  const basename = apiNameToIconBasename(entry.steamApiName);
+  const achievedIconPath = `${steamAchievementSource.iconBasePath}/${basename}.png`;
+  const lockedIconPath = `${steamAchievementSource.iconBasePath}/${basename}_locked.png`;
+
+  return {
+    ...entry,
+    steamworks: {
+      apiName: entry.steamApiName,
+      displayName: entry.displayName,
+      description: entry.description,
+      hidden: steamAchievementSource.steamworksDefaults.hidden,
+      statBased: steamAchievementSource.steamworksDefaults.statBased,
+      achievedIconPath,
+      lockedIconPath,
+    },
+    icons: {
+      achieved: createPublicImageDescriptor(achievedIconPath, {
+        variant: 'achieved',
+        alt: `${entry.displayName.en} Steam achievement icon`,
+      }),
+      locked: createPublicImageDescriptor(lockedIconPath, {
+        variant: 'locked',
+        alt: `${entry.displayName.en} locked Steam achievement icon`,
+      }),
+    },
+  };
+}
+
+export const steamAchievementPayload: SteamAchievementPayload = {
+  ...steamAchievementSource,
+  achievements: steamAchievementSource.achievements.map(createSteamAchievementEntry),
+};
 
 export const steamPayload: SteamPayload = {
   version: '1.0.0',
-  updatedAt: '2026-04-23T00:00:00.000Z',
+  updatedAt: '2026-04-28T00:00:00.000Z',
   applications: [
     {
       key: 'hagicode',
@@ -125,4 +257,5 @@ export const steamPayload: SteamPayload = {
       ],
     },
   ],
+  achievements: steamAchievementPayload.achievements,
 };
