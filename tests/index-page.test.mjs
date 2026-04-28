@@ -14,6 +14,10 @@ test('homepage renders the portal shell and canonical site destinations from /si
   assert.match(homepage, /打开数据页/);
   assert.match(homepage, /站点清单 JSON/);
   assert.match(homepage, /查看目录 JSON/);
+  assert.match(homepage, /Steam 成就页面/);
+  assert.match(homepage, /\/steam\/achievements\//);
+  assert.match(homepage, /Steam 成就 JSON/);
+  assert.match(homepage, /\/steam\/achievements\.json/);
   assert.doesNotMatch(homepage, /联系与社区/);
   assert.doesNotMatch(homepage, /打开 about JSON/);
 

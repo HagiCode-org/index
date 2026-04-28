@@ -12,6 +12,11 @@ test('/data/ keeps the legacy catalog and about mirror content accessible', asyn
   assert.match(dataPage, /HagiCode Index Data/);
   assert.match(dataPage, /返回站点门户/);
   assert.match(dataPage, /查看目录 JSON/);
+  assert.match(dataPage, /Steam 成就页面/);
+  assert.match(dataPage, /打开 Steam 成就页面/);
+  assert.match(dataPage, /Steam 成就 JSON/);
+  assert.match(dataPage, /\/steam\/achievements\//);
+  assert.match(dataPage, /\/steam\/achievements\.json/);
   assert.match(dataPage, /联系与社区/);
   assert.match(dataPage, /打开 about JSON/);
   assert.match(dataPage, /\/design\.json/);
