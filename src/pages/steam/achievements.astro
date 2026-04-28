@@ -1,0 +1,191 @@
+---
+import Analytics51LA from '@/components/51LAAnalytics.astro';
+import IndexFooter from '@/components/IndexFooter.astro';
+import SteamAchievementFilterBar from '@/components/SteamAchievementFilterBar.astro';
+import SteamAchievementPageHero from '@/components/SteamAchievementPageHero.astro';
+import SteamAchievementTable from '@/components/SteamAchievementTable.astro';
+import { steamAchievementPageData } from '@/data/steam-source';
+import '@/styles/global.css';
+
+export const prerender = true;
+
+const updatedAtLabel = new Intl.DateTimeFormat('zh-CN', {
+  dateStyle: 'medium',
+  timeStyle: 'short',
+  timeZone: 'UTC',
+}).format(new Date(steamAchievementPageData.updatedAt));
+const pageTitle = 'Steam Achievement Data';
+const pageDescription = 'HagiCode Steam 成就数据页，集中展示成就目录、图标资源与 Steamworks 元数据。';
+const canonicalUrl = 'https://index.hagicode.com/steam/achievements/';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand-mark" href="/">H</a>
+        <div>
+          <p class="brand-name">Steam Achievement Data</p>
+          <p class="brand-subtitle">Human-readable Steamworks metadata, icon assets, and public paths</p>
+        </div>
+        <nav class="site-header-actions" aria-label="Steam 成就页快捷入口">
+          <a class="header-link" href="/">返回门户</a>
+          <a class="header-link" href="/data/">数据页</a>
+          <a class="header-link" href={steamAchievementPageData.rawJsonPath} target="_blank" rel="noreferrer">
+            Raw JSON
+          </a>
+        </nav>
+      </header>
+
+      <main class="page-content steam-achievement-page">
+        <SteamAchievementPageHero pageData={steamAchievementPageData} updatedAtLabel={updatedAtLabel} />
+        <SteamAchievementFilterBar
+          categories={steamAchievementPageData.categories}
+          totalCount={steamAchievementPageData.stats.achievementCount}
+        />
+        <SteamAchievementTable rows={steamAchievementPageData.rows} />
+      </main>
+
+      <IndexFooter />
+      <p class="sr-only" id="steam-copy-status" aria-live="polite"></p>
+    </div>
+
+    <script is:inline>
+      const copyStatusNode = document.getElementById('steam-copy-status');
+      const filterStatusNode = document.querySelector('[data-filter-status]');
+      const visibleCountNode = document.querySelector('[data-visible-count]');
+      const emptyStateNode = document.querySelector('[data-empty-state]');
+      const searchInput = document.querySelector('[data-filter-input]');
+      const rows = Array.from(document.querySelectorAll('[data-achievement-row]'));
+      const categoryButtons = Array.from(document.querySelectorAll('[data-filter-category]'));
+      let activeCategory = 'all';
+
+      const setStatus = (message) => {
+        if (copyStatusNode) {
+          copyStatusNode.textContent = message;
+        }
+      };
+
+      const syncCategoryButtons = () => {
+        for (const button of categoryButtons) {
+          const isActive = button.getAttribute('data-filter-category') === activeCategory;
+          button.setAttribute('aria-pressed', String(isActive));
+          button.classList.toggle('is-active', isActive);
+        }
+      };
+
+      const updateFilterSummary = (visibleCount, query) => {
+        if (!filterStatusNode || !visibleCountNode) {
+          return;
+        }
+
+        visibleCountNode.textContent = String(visibleCount);
+        const queryLabel = query ? `，关键字“${query}”` : '';
+        const categoryLabel = activeCategory === 'all' ? '全部分类' : activeCategory;
+        filterStatusNode.innerHTML =
+          `当前显示 <strong data-visible-count>${visibleCount}</strong> / ${rows.length} 个条目。` +
+          ` 分类：<code>${categoryLabel}</code>${queryLabel}。`;
+      };
+
+      const applyFilters = () => {
+        const query = searchInput instanceof HTMLInputElement ? searchInput.value.trim().toLowerCase() : '';
+        let visibleCount = 0;
+
+        for (const row of rows) {
+          const category = row.getAttribute('data-category') ?? '';
+          const searchable = row.getAttribute('data-search-text') ?? '';
+          const matchesCategory = activeCategory === 'all' || category === activeCategory;
+          const matchesQuery = query.length === 0 || searchable.includes(query);
+          const isVisible = matchesCategory && matchesQuery;
+
+          row.hidden = !isVisible;
+          row.setAttribute('aria-hidden', String(!isVisible));
+
+          if (isVisible) {
+            visibleCount += 1;
+          }
+        }
+
+        if (emptyStateNode) {
+          emptyStateNode.hidden = visibleCount !== 0;
+        }
+
+        updateFilterSummary(visibleCount, query);
+      };
+
+      const copyText = async (value) => {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(value);
+          return;
+        }
+
+        const fallback = document.createElement('textarea');
+        fallback.value = value;
+        fallback.setAttribute('readonly', '');
+        fallback.style.position = 'absolute';
+        fallback.style.left = '-9999px';
+        document.body.appendChild(fallback);
+        fallback.select();
+        document.execCommand('copy');
+        fallback.remove();
+      };
+
+      for (const button of categoryButtons) {
+        button.addEventListener('click', () => {
+          activeCategory = button.getAttribute('data-filter-category') ?? 'all';
+          syncCategoryButtons();
+          applyFilters();
+        });
+      }
+
+      if (searchInput instanceof HTMLInputElement) {
+        searchInput.addEventListener('input', () => {
+          applyFilters();
+        });
+      }
+
+      for (const button of document.querySelectorAll('[data-copy-value]')) {
+        if (!(button instanceof HTMLButtonElement)) {
+          continue;
+        }
+
+        button.dataset.idleLabel = button.textContent?.trim() ?? '复制路径';
+        button.addEventListener('click', async () => {
+          const value = button.getAttribute('data-copy-value');
+
+          if (!value) {
+            return;
+          }
+
+          try {
+            await copyText(value);
+            setStatus(`已复制：${value}`);
+            button.textContent = '已复制';
+            window.setTimeout(() => {
+              button.textContent = button.dataset.idleLabel ?? '复制路径';
+            }, 1600);
+          } catch {
+            setStatus(`复制失败，请手动复制：${value}`);
+          }
+        });
+      }
+
+      syncCategoryButtons();
+      applyFilters();
+    </script>
+    <Analytics51LA />
+  </body>
+</html>
