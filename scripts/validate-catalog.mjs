@@ -35,6 +35,7 @@ const generatedRouteMappedJsonPaths = [
   '/about.json',
   '/promote_content.json',
   '/steam/index.json',
+  '/steam/achievements.json',
 ];
 const routeMappedJsonPaths = [
   ...fileBackedRouteMappedJsonPaths,
@@ -67,6 +68,7 @@ const agentTemplatesEntryId = 'agent-templates';
 const characterTemplatesEntryId = 'character-templates';
 const promotionFlagsEntryId = 'promotion-flags';
 const promotionContentEntryId = 'promotion-content';
+const steamAchievementsEntryId = 'steam-achievements';
 const explicitTimezoneIsoPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/;
 const supportedCharacterTemplateModes = ['curated', 'universal'];
 const requiredPortalSites = new Map([
@@ -393,6 +395,7 @@ function validateSteamContract(payload) {
   assert(typeof payload.updatedAt === 'string' && payload.updatedAt.trim().length > 0, 'Steam payload updatedAt is required.');
   assert(Array.isArray(payload.applications), 'Steam payload applications must be an array.');
   assert(Array.isArray(payload.bundles), 'Steam payload bundles must be an array.');
+  assert(Array.isArray(payload.achievements), 'Steam payload achievements must be an array.');
 
   const applicationKeys = new Set();
 
@@ -448,6 +451,77 @@ function validateSteamContract(payload) {
         validateGeneratedImageDescriptor(image, `${fieldName} images[${imageIndex}]`, { requireVariant: true });
       });
     }
+  });
+
+  validateSteamAchievementsArray(payload.achievements, 'Steam payload achievements');
+}
+
+function validateSteamAchievementsContract(payload) {
+  assert(payload && typeof payload === 'object' && !Array.isArray(payload), 'Steam achievements payload must be an object.');
+  assert(payload.version === '1.0.0', 'Steam achievements payload version must be 1.0.0.');
+  assert(typeof payload.updatedAt === 'string' && payload.updatedAt.trim().length > 0, 'Steam achievements payload updatedAt is required.');
+  assert(payload.applicationKey === 'hagicode', 'Steam achievements payload applicationKey must be hagicode.');
+  assert(payload.applicationSteamAppId === '4625540', 'Steam achievements payload applicationSteamAppId must be 4625540.');
+  assert(payload.iconSize?.width === 256, 'Steam achievements icon width must be 256.');
+  assert(payload.iconSize?.height === 256, 'Steam achievements icon height must be 256.');
+  assert(payload.iconSize?.format === 'png', 'Steam achievements icon format must be png.');
+  assert(payload.steamworksDefaults?.hidden === false, 'Steam achievements must default to visible Steamworks achievements.');
+  assert(payload.steamworksDefaults?.statBased === false, 'Steam achievements must publish ordinary one-shot Steamworks achievement settings.');
+  assert(payload.schedulePresets && typeof payload.schedulePresets === 'object', 'Steam achievements schedulePresets are required.');
+  assert(payload.rewardDefaults && typeof payload.rewardDefaults === 'object', 'Steam achievements rewardDefaults are required.');
+  validateSteamAchievementsArray(payload.achievements, 'Steam achievements payload achievements');
+}
+
+function validateSteamAchievementsArray(achievements, fieldName) {
+  assert(Array.isArray(achievements), `${fieldName} must be an array.`);
+  assert(achievements.length === 19, `${fieldName} must publish exactly 19 achievements.`);
+
+  const seenLocalIds = new Set();
+  const seenApiNames = new Set();
+
+  achievements.forEach((entry, index) => {
+    const entryName = `${fieldName}[${index}]`;
+    assert(entry && typeof entry === 'object' && !Array.isArray(entry), `${entryName} must be an object.`);
+
+    for (const key of ['localId', 'steamApiName', 'category']) {
+      assert(typeof entry[key] === 'string' && entry[key].trim().length > 0, `${entryName} ${key} is required.`);
+    }
+
+    assert(/^HAGICODE_[A-Z0-9_]+$/.test(entry.steamApiName), `${entryName} steamApiName must use HAGICODE_* format.`);
+    assert(!seenLocalIds.has(entry.localId), `Duplicate Steam achievement localId ${entry.localId}.`);
+    assert(!seenApiNames.has(entry.steamApiName), `Duplicate Steam achievement API name ${entry.steamApiName}.`);
+    seenLocalIds.add(entry.localId);
+    seenApiNames.add(entry.steamApiName);
+
+    for (const localizedField of ['displayName', 'description']) {
+      assert(entry[localizedField] && typeof entry[localizedField] === 'object' && !Array.isArray(entry[localizedField]), `${entryName} ${localizedField} must be an object.`);
+      for (const locale of ['zh-CN', 'en']) {
+        assert(typeof entry[localizedField][locale] === 'string' && entry[localizedField][locale].trim().length > 0, `${entryName} ${localizedField}.${locale} is required.`);
+      }
+    }
+
+    assert(entry.condition && typeof entry.condition === 'object' && !Array.isArray(entry.condition), `${entryName} condition must be an object.`);
+    assert(typeof entry.condition.source === 'string' && entry.condition.source.trim().length > 0, `${entryName} condition.source is required.`);
+    assert(typeof entry.condition.schedulePreset === 'string' && entry.condition.schedulePreset.trim().length > 0, `${entryName} condition.schedulePreset is required.`);
+
+    assert(entry.steamworks && typeof entry.steamworks === 'object' && !Array.isArray(entry.steamworks), `${entryName} steamworks must be an object.`);
+    assert(entry.steamworks.apiName === entry.steamApiName, `${entryName} steamworks.apiName must match steamApiName.`);
+    assert(entry.steamworks.hidden === false, `${entryName} steamworks.hidden must be false.`);
+    assert(entry.steamworks.statBased === false, `${entryName} steamworks.statBased must be false.`);
+    assert(typeof entry.steamworks.achievedIconPath === 'string' && entry.steamworks.achievedIconPath.endsWith('.png'), `${entryName} steamworks.achievedIconPath must be a PNG path.`);
+    assert(typeof entry.steamworks.lockedIconPath === 'string' && entry.steamworks.lockedIconPath.endsWith('_locked.png'), `${entryName} steamworks.lockedIconPath must be a locked PNG path.`);
+
+    assert(entry.icons && typeof entry.icons === 'object' && !Array.isArray(entry.icons), `${entryName} icons must be an object.`);
+    validateGeneratedImageDescriptor(entry.icons.achieved, `${entryName} icons.achieved`, { requireVariant: true });
+    validateGeneratedImageDescriptor(entry.icons.locked, `${entryName} icons.locked`, { requireVariant: true });
+    assert(entry.icons.achieved.width === 256 && entry.icons.achieved.height === 256, `${entryName} achieved icon must be 256x256.`);
+    assert(entry.icons.locked.width === 256 && entry.icons.locked.height === 256, `${entryName} locked icon must be 256x256.`);
+    assert(entry.icons.achieved.src === entry.steamworks.achievedIconPath, `${entryName} achieved icon path must match Steamworks config.`);
+    assert(entry.icons.locked.src === entry.steamworks.lockedIconPath, `${entryName} locked icon path must match Steamworks config.`);
+
+    assert(entry.icon && typeof entry.icon === 'object' && !Array.isArray(entry.icon), `${entryName} icon prompt metadata must be an object.`);
+    assert(typeof entry.icon.concept === 'string' && entry.icon.concept.trim().length > 0, `${entryName} icon.concept is required.`);
+    assert(typeof entry.icon.prompt === 'string' && entry.icon.prompt.trim().length > 0, `${entryName} icon.prompt is required.`);
   });
 }
 
@@ -926,6 +1000,8 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   await assertPublishedRoute('/desktop/index.json', publishedRoot);
   const steamPayload = await assertPublishedRoute('/steam/index.json', publishedRoot);
   validateSteamContract(steamPayload);
+  const steamAchievementsPayload = await assertPublishedRoute('/steam/achievements.json', publishedRoot);
+  validateSteamAchievementsContract(steamAchievementsPayload);
   validateAboutContract(await assertPublishedRoute('/about.json', publishedRoot));
 
   const publishedPromotionContentIds = new Set(promoteContentPayload.contents.map((entry) => entry.id));
@@ -963,6 +1039,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   let sawCharacterTemplatesEntry = false;
   let sawPromotionFlagsEntry = false;
   let sawPromotionContentEntry = false;
+  let sawSteamAchievementsEntry = false;
 
   for (const [index, entry] of catalog.entries.entries()) {
     assert(entry && typeof entry === 'object', `Entry ${index} must be an object.`);
@@ -1078,6 +1155,14 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
       assert(entry.sourceRepo === 'repos/index', 'Promotion content entry sourceRepo must be repos/index.');
       assert(entry.status === 'published', 'Promotion content entry status must be published.');
     }
+
+    if (entry.id === steamAchievementsEntryId) {
+      sawSteamAchievementsEntry = true;
+      assert(entry.path === '/steam/achievements.json', 'Steam achievements entry path must be /steam/achievements.json.');
+      assert(entry.sourceRepo === 'repos/index', 'Steam achievements entry sourceRepo must be repos/index.');
+      assert(entry.status === 'published', 'Steam achievements entry status must be published.');
+      assert(entry.lastUpdated === steamAchievementsPayload.updatedAt, 'Steam achievements entry lastUpdated must match /steam/achievements.json.');
+    }
   }
 
   assert(sawActivityEntry, 'Catalog must include an activity-metrics entry.');
@@ -1087,6 +1172,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   assert(sawCharacterTemplatesEntry, 'Catalog must include a character-templates entry.');
   assert(sawPromotionFlagsEntry, 'Catalog must include a promotion-flags entry.');
   assert(sawPromotionContentEntry, 'Catalog must include a promotion-content entry.');
+  assert(sawSteamAchievementsEntry, 'Catalog must include a steam-achievements entry.');
 
   console.log(`Validated ${catalog.entries.length} catalog entries, ${routeMappedJsonPaths.length} route-mapped JSON assets, and ${publishedJsonCount} published JSON assets.`);
 }

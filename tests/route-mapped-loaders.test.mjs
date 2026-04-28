@@ -14,6 +14,7 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   const aboutEntry = catalog.entries.find((entry) => entry.id === 'about');
   const designEntry = catalog.entries.find((entry) => entry.id === 'design-theme-catalog');
   const steamDataEntry = catalog.entries.find((entry) => entry.id === 'steam-data');
+  const steamAchievementsEntry = catalog.entries.find((entry) => entry.id === 'steam-achievements');
   const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
   const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
 
@@ -22,6 +23,7 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   assert.ok(aboutEntry, 'about entry is required.');
   assert.ok(designEntry, 'design-theme-catalog entry is required.');
   assert.ok(steamDataEntry, 'steam-data entry is required.');
+  assert.ok(steamAchievementsEntry, 'steam-achievements entry is required.');
   assert.ok(promotionFlagsEntry, 'promotion-flags entry is required.');
   assert.ok(promotionContentEntry, 'promotion-content entry is required.');
   assert.equal(serverEntry.path, '/server/index.json');
@@ -30,6 +32,7 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   assert.equal(aboutEntry.path, '/about.json');
   assert.equal(designEntry.path, '/design.json');
   assert.equal(steamDataEntry.path, '/steam/index.json');
+  assert.equal(steamAchievementsEntry.path, '/steam/achievements.json');
   assert.equal(promotionFlagsEntry.path, '/promote.json');
   assert.equal(promotionContentEntry.path, '/promote_content.json');
 });
@@ -163,17 +166,31 @@ test('design route-mapped JSON loads awesome-design-md themes and README-derived
 
 test('steam route-mapped JSON publishes the canonical application mapping for Hagicode, Turbo Engine, and Hagicode Plus', async () => {
   const steamData = await loadRouteMappedJson('/steam/index.json');
+  const steamAchievements = await loadRouteMappedJson('/steam/achievements.json');
   const hagicodeEntry = steamData.applications.find((entry) => entry.key === 'hagicode');
   const turboEngineEntry = steamData.applications.find((entry) => entry.key === 'turbo-engine');
   const hagicodePlusBundle = steamData.bundles.find((entry) => entry.key === 'hagicode-plus');
+  const createAchievement = steamData.achievements.find((entry) => entry.steamApiName === 'HAGICODE_CREATE');
+  const tokenAchievement = steamAchievements.achievements.find((entry) => entry.steamApiName === 'HAGICODE_TOKEN_CONSUMPTION');
 
   assert.equal(steamData.version, '1.0.0');
   assert.equal(typeof steamData.updatedAt, 'string');
   assert.equal(Array.isArray(steamData.applications), true);
   assert.equal(Array.isArray(steamData.bundles), true);
+  assert.equal(Array.isArray(steamData.achievements), true);
+  assert.equal(steamData.achievements.length, 19);
   assert.ok(hagicodeEntry, 'hagicode entry is required.');
   assert.ok(turboEngineEntry, 'turbo-engine entry is required.');
   assert.ok(hagicodePlusBundle, 'hagicode-plus bundle entry is required.');
+  assert.ok(createAchievement, 'HAGICODE_CREATE achievement is required.');
+  assert.equal(createAchievement.localId, 'create');
+  assert.equal(createAchievement.displayName['zh-CN'], '开题者');
+  assert.equal(createAchievement.steamworks.hidden, false);
+  assert.equal(createAchievement.steamworks.statBased, false);
+  assert.equal(createAchievement.icons.achieved.width, 256);
+  assert.equal(createAchievement.icons.achieved.height, 256);
+  assert.equal(createAchievement.icons.achieved.src, '/steam/achievements/icons/hagicode_create.png');
+  assert.equal(createAchievement.icons.locked.src, '/steam/achievements/icons/hagicode_create_locked.png');
   assert.equal(hagicodeEntry.kind, 'application');
   assert.equal(hagicodeEntry.storeAppId, '4625540');
   assert.equal(hagicodeEntry.platformAppIds.windows, '4625541');
@@ -202,6 +219,14 @@ test('steam route-mapped JSON publishes the canonical application mapping for Ha
   assert.equal(hagicodePlusBundle.storeUrl, 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/');
   assert.deepEqual(hagicodePlusBundle.includedApplicationKeys, ['hagicode', 'turbo-engine']);
   assert.equal(hagicodePlusBundle.images.some((entry) => entry.variant === 'store-capsule'), true);
+  assert.equal(steamAchievements.applicationKey, 'hagicode');
+  assert.equal(steamAchievements.applicationSteamAppId, '4625540');
+  assert.equal(steamAchievements.iconSize.width, 256);
+  assert.equal(steamAchievements.iconSize.height, 256);
+  assert.equal(steamAchievements.achievements.length, 19);
+  assert.ok(tokenAchievement, 'HAGICODE_TOKEN_CONSUMPTION achievement is required.');
+  assert.equal(tokenAchievement.condition.progressUnitSize, 1000000);
+  assert.equal(tokenAchievement.condition.schedulePreset, 'tokenConsumption');
 });
 
 test('promotion route-mapped JSON publishes stable flags and localized content contracts', async () => {

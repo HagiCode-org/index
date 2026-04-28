@@ -12,6 +12,9 @@ import { validateGeneratedImageDescriptor } from '../scripts/validate-catalog.mj
 const execFileAsync = promisify(execFile);
 const testDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(testDir, '..');
+const steamAchievementSourceFixture = JSON.parse(
+  await readFile(path.join(projectRoot, 'src', 'data', 'steam-achievements-source.json'), 'utf8'),
+);
 
 function buildImageDescriptorFixture({ variant } = {}) {
   return {
@@ -359,9 +362,11 @@ function buildPromoteContentFixture() {
 }
 
 function buildSteamFixture() {
+  const achievements = buildSteamAchievementsFixture().achievements;
+
   return {
     version: '1.0.0',
-    updatedAt: '2026-04-23T00:00:00.000Z',
+    updatedAt: '2026-04-28T00:00:00.000Z',
     applications: [
       {
         key: 'hagicode',
@@ -403,6 +408,53 @@ function buildSteamFixture() {
         images: [buildImageDescriptorFixture({ variant: 'store-capsule' })],
       },
     ],
+    achievements,
+  };
+}
+
+function buildSteamAchievementsFixture() {
+  const iconBasePath = steamAchievementSourceFixture.iconBasePath;
+  const iconSize = steamAchievementSourceFixture.iconSize;
+  const achievements = steamAchievementSourceFixture.achievements.map((entry) => {
+    const basename = entry.steamApiName.toLowerCase();
+    const achievedIconPath = `${iconBasePath}/${basename}.png`;
+    const lockedIconPath = `${iconBasePath}/${basename}_locked.png`;
+
+    return {
+      ...entry,
+      steamworks: {
+        apiName: entry.steamApiName,
+        displayName: entry.displayName,
+        description: entry.description,
+        hidden: false,
+        statBased: false,
+        achievedIconPath,
+        lockedIconPath,
+      },
+      icons: {
+        achieved: {
+          src: achievedIconPath,
+          width: iconSize.width,
+          height: iconSize.height,
+          format: iconSize.format,
+          alt: `${entry.displayName.en} Steam achievement icon`,
+          variant: 'achieved',
+        },
+        locked: {
+          src: lockedIconPath,
+          width: iconSize.width,
+          height: iconSize.height,
+          format: iconSize.format,
+          alt: `${entry.displayName.en} locked Steam achievement icon`,
+          variant: 'locked',
+        },
+      },
+    };
+  });
+
+  return {
+    ...steamAchievementSourceFixture,
+    achievements,
   };
 }
 
@@ -549,6 +601,16 @@ function buildCatalogFixture({
         category: 'catalogs',
         sourceRepo: 'repos/index',
         lastUpdated: '2026-04-23T00:00:00.000Z',
+        status: 'published',
+      },
+      {
+        id: 'steam-achievements',
+        title: 'Steam Achievements',
+        description: '公开 Steamworks 后台配置用的成就 API 名、双语文案、里程碑参数与 256x256 图标路径。',
+        path: '/steam/achievements.json',
+        category: 'catalogs',
+        sourceRepo: 'repos/index',
+        lastUpdated: '2026-04-28T00:00:00.000Z',
         status: 'published',
       },
     ],
@@ -904,6 +966,7 @@ async function createValidationFixture({
   promote = buildPromoteFixture(),
   promoteContent = buildPromoteContentFixture(),
   steam = buildSteamFixture(),
+  steamAchievements = buildSteamAchievementsFixture(),
   design = buildDesignFixture(),
   libraryData = buildCharacterTemplateLibraryFixtureData(),
 } = {}) {
@@ -995,6 +1058,7 @@ async function createValidationFixture({
   await writeFile(path.join(distDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'steam', 'index.json'), JSON.stringify(steam), 'utf8');
+  await writeFile(path.join(distDir, 'steam', 'achievements.json'), JSON.stringify(steamAchievements), 'utf8');
   await writeFile(path.join(distDir, 'agent-templates', 'index.json'), JSON.stringify({
     version: '1.0.0',
     generatedAt: catalog.generatedAt,
@@ -1079,7 +1143,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries, 12 route-mapped JSON assets, and \d+ published JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries, 13 route-mapped JSON assets, and \d+ published JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
@@ -1183,6 +1247,7 @@ test('catalog exposes managed server and desktop entries', async () => {
     'design-theme-catalog',
     'secondary-professions',
     'steam-data',
+    'steam-achievements',
     'promotion-flags',
     'promotion-content',
   ]);
