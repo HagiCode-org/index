@@ -26,21 +26,25 @@ const dataSurfaces = [
     title: '索引目录',
     href: '/index-catalog.json',
     label: 'catalog',
+    actionLabel: '打开 catalog JSON',
   },
   {
     title: '联系与社区',
     href: '/about.json',
     label: 'about',
+    actionLabel: '打开 about JSON',
   },
   {
     title: '设计目录',
     href: '/design.json',
     label: 'design',
+    actionLabel: '打开 design JSON',
   },
   {
     title: '推广内容',
     href: '/promote_content.json',
     label: 'promotion',
+    actionLabel: '打开 promotion JSON',
   },
 ] as const;
 ---
@@ -68,7 +72,7 @@ const dataSurfaces = [
           <p class="brand-subtitle">Legacy data mirror and JSON inspection page</p>
         </div>
         <nav class="site-header-actions" aria-label="数据页快捷入口">
-          <a class="header-link" href="/">返回门户</a>
+          <a class="header-link" href="/">返回站点门户</a>
           <a class="header-link" href="/sites.json" target="_blank" rel="noreferrer">站点 JSON</a>
           <a class="header-link" href="/index-catalog.json" target="_blank" rel="noreferrer">目录 JSON</a>
         </nav>
@@ -107,7 +111,7 @@ const dataSurfaces = [
                 </div>
                 <div class="card-actions">
                   <a class="button button-secondary" href={surface.href} target="_blank" rel="noreferrer">
-                    打开数据
+                    {surface.actionLabel}
                   </a>
                 </div>
               </article>

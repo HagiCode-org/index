@@ -166,6 +166,9 @@ function getPrimaryFileActionLabel(file: VersionHistoryFileEntry): string {
                     <div class="history-file-copy">
                       <p class="history-file-name">{file.label}</p>
                       <p class="history-file-meta">{formatFileMeta(file)}</p>
+                      {file.sources.length > 1 ? (
+                        <p class="history-file-source-note">多下载源</p>
+                      ) : null}
                     </div>
                     {file.sources.length > 0 ? (
                       <div class="history-row-actions history-file-actions" aria-label={`${file.label} 下载来源`}>
