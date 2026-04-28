@@ -100,6 +100,53 @@ export interface SteamAchievementPayload {
   readonly achievements: readonly SteamAchievementEntry[];
 }
 
+export interface SteamAchievementPageCategory {
+  readonly key: string;
+  readonly count: number;
+}
+
+export interface SteamAchievementPageStats {
+  readonly achievementCount: number;
+  readonly categoryCount: number;
+  readonly rewardBearingCount: number;
+  readonly progressTrackedCount: number;
+  readonly publicIconCount: number;
+}
+
+export interface SteamAchievementPageRow {
+  readonly localId: string;
+  readonly steamApiName: string;
+  readonly category: string;
+  readonly displayName: SteamAchievementLocaleText;
+  readonly description: SteamAchievementLocaleText;
+  readonly steamworksDisplayName: SteamAchievementLocaleText;
+  readonly steamworksDescription: SteamAchievementLocaleText;
+  readonly steamworksHidden: boolean;
+  readonly steamworksStatBased: boolean;
+  readonly source: string;
+  readonly rewardAmount: number | null;
+  readonly rewardLabel: string;
+  readonly progressUnitSize: number | null;
+  readonly progressLabel: string;
+  readonly schedulePreset: string;
+  readonly scheduleLabel: string;
+  readonly achievedIconPath: string;
+  readonly lockedIconPath: string;
+  readonly achievedIcon: ImageDescriptor;
+  readonly lockedIcon: ImageDescriptor;
+  readonly searchText: string;
+}
+
+export interface SteamAchievementPageData {
+  readonly updatedAt: string;
+  readonly applicationSteamAppId: string;
+  readonly rawJsonPath: string;
+  readonly iconDirectoryPath: string;
+  readonly categories: readonly SteamAchievementPageCategory[];
+  readonly stats: SteamAchievementPageStats;
+  readonly rows: readonly SteamAchievementPageRow[];
+}
+
 export interface SteamPayload {
   readonly version: string;
   readonly updatedAt: string;
@@ -114,6 +161,7 @@ type RawSteamAchievementSource = Omit<SteamAchievementPayload, 'achievements'> &
 };
 
 const steamAchievementSource = rawSteamAchievementSource as RawSteamAchievementSource;
+const numberFormatter = new Intl.NumberFormat('en-US');
 
 function apiNameToIconBasename(apiName: string): string {
   return apiName.toLowerCase();
@@ -162,6 +210,83 @@ function createSteamAchievementEntry(entry: RawSteamAchievementEntry): SteamAchi
         alt: `${entry.displayName.en} locked Steam achievement icon`,
       }),
     },
+  };
+}
+
+function describeSchedulePreset(schedulePreset: string): string {
+  const preset = steamAchievementSource.schedulePresets[schedulePreset];
+
+  if (!preset || typeof preset !== 'object') {
+    return schedulePreset;
+  }
+
+  const record = preset as Record<string, unknown>;
+  const presetType = typeof record.type === 'string' ? record.type : 'custom';
+  const step = typeof record.step === 'number' ? record.step : null;
+  const from = typeof record.from === 'number' ? record.from : null;
+  const to = typeof record.to === 'number' ? record.to : null;
+
+  if (presetType === 'explicit-then-range') {
+    const range = record.range;
+
+    if (range && typeof range === 'object') {
+      const rangeRecord = range as Record<string, unknown>;
+      const rangeFrom = typeof rangeRecord.from === 'number' ? rangeRecord.from : null;
+      const rangeTo = typeof rangeRecord.to === 'number' ? rangeRecord.to : null;
+      const rangeStep = typeof rangeRecord.step === 'number' ? rangeRecord.step : null;
+
+      return `${schedulePreset} · explicit + ${rangeFrom ?? '?'}-${rangeTo ?? '?'} / ${rangeStep ?? '?'}`;
+    }
+  }
+
+  if (presetType === 'range') {
+    return `${schedulePreset} · ${from ?? '?'}-${to ?? '?'} / ${step ?? '?'}`;
+  }
+
+  if (presetType === 'explicit') {
+    const values = Array.isArray(record.values) ? record.values.length : 0;
+    return `${schedulePreset} · ${values} explicit values`;
+  }
+
+  return `${schedulePreset} · ${presetType}`;
+}
+
+function createSteamAchievementPageRow(entry: SteamAchievementEntry): SteamAchievementPageRow {
+  const rewardAmount = entry.condition.rewardAmount ?? null;
+  const progressUnitSize = entry.condition.progressUnitSize ?? null;
+
+  return {
+    localId: entry.localId,
+    steamApiName: entry.steamApiName,
+    category: entry.category,
+    displayName: entry.displayName,
+    description: entry.description,
+    steamworksDisplayName: entry.steamworks.displayName,
+    steamworksDescription: entry.steamworks.description,
+    steamworksHidden: entry.steamworks.hidden,
+    steamworksStatBased: entry.steamworks.statBased,
+    source: entry.condition.source,
+    rewardAmount,
+    rewardLabel: rewardAmount === null ? '—' : `${numberFormatter.format(rewardAmount)} points`,
+    progressUnitSize,
+    progressLabel:
+      progressUnitSize === null ? 'No progress unit' : `${numberFormatter.format(progressUnitSize)} per unit`,
+    schedulePreset: entry.condition.schedulePreset,
+    scheduleLabel: describeSchedulePreset(entry.condition.schedulePreset),
+    achievedIconPath: entry.steamworks.achievedIconPath,
+    lockedIconPath: entry.steamworks.lockedIconPath,
+    achievedIcon: entry.icons.achieved,
+    lockedIcon: entry.icons.locked,
+    searchText: [
+      entry.localId,
+      entry.steamApiName,
+      entry.displayName['zh-CN'],
+      entry.displayName.en,
+      entry.steamworks.displayName['zh-CN'],
+      entry.steamworks.displayName.en,
+    ]
+      .join(' ')
+      .toLowerCase(),
   };
 }
 
@@ -258,4 +383,30 @@ export const steamPayload: SteamPayload = {
     },
   ],
   achievements: steamAchievementPayload.achievements,
+};
+
+const steamAchievementPageRows = steamAchievementPayload.achievements.map(createSteamAchievementPageRow);
+const steamAchievementCategoryCounts = new Map<string, number>();
+
+for (const row of steamAchievementPageRows) {
+  steamAchievementCategoryCounts.set(row.category, (steamAchievementCategoryCounts.get(row.category) ?? 0) + 1);
+}
+
+export const steamAchievementPageData: SteamAchievementPageData = {
+  updatedAt: steamAchievementPayload.updatedAt,
+  applicationSteamAppId: steamAchievementPayload.applicationSteamAppId,
+  rawJsonPath: '/steam/achievements.json',
+  iconDirectoryPath: steamAchievementPayload.iconBasePath,
+  categories: Array.from(steamAchievementCategoryCounts, ([key, count]) => ({
+    key,
+    count,
+  })),
+  stats: {
+    achievementCount: steamAchievementPageRows.length,
+    categoryCount: steamAchievementCategoryCounts.size,
+    rewardBearingCount: steamAchievementPageRows.filter((row) => row.rewardAmount !== null).length,
+    progressTrackedCount: steamAchievementPageRows.filter((row) => row.progressUnitSize !== null).length,
+    publicIconCount: steamAchievementPageRows.length * 2,
+  },
+  rows: steamAchievementPageRows,
 };
