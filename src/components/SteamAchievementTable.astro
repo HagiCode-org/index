@@ -1,0 +1,52 @@
+---
+import type { SteamAchievementPageRow } from '@/data/steam-source';
+import SteamAchievementTableRow from '@/components/SteamAchievementTableRow.astro';
+
+interface Props {
+  rows: readonly SteamAchievementPageRow[];
+}
+
+const { rows } = Astro.props;
+---
+
+<section class="catalog-section steam-achievement-table-shell" aria-labelledby="steam-achievement-table-heading">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Shared payload table</p>
+      <h2 id="steam-achievement-table-heading">按字段拆分的成就表</h2>
+    </div>
+  </div>
+
+  <p class="steam-achievement-table-note">
+    表格容器支持横向滚动。键盘用户聚焦表格后，也可以继续浏览每一列的公开路径和复制动作。
+  </p>
+
+  <div class="steam-achievement-table-scroll" tabindex="0">
+    <table class="steam-achievement-table">
+      <caption class="sr-only">HagiCode Steam 成就目录及公开图标路径。</caption>
+      <thead>
+        <tr>
+          <th scope="col">名称</th>
+          <th scope="col">steamApiName</th>
+          <th scope="col">localId</th>
+          <th scope="col">分类</th>
+          <th scope="col">奖励</th>
+          <th scope="col">计划预设</th>
+          <th scope="col">achieved 图标</th>
+          <th scope="col">locked 图标</th>
+          <th scope="col">资源动作</th>
+        </tr>
+      </thead>
+      <tbody id="steam-achievement-table-body">
+        {rows.map((row) => (
+          <SteamAchievementTableRow row={row} />
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="empty-state steam-achievement-empty-state" data-empty-state role="status" aria-live="polite" hidden>
+    <p>当前过滤条件下没有匹配的 Steam 成就。</p>
+    <p>请切回“全部”分类，或尝试输入更短的 `localId`、`steamApiName`、中文名或英文名关键字。</p>
+  </div>
+</section>

@@ -1,0 +1,125 @@
+---
+import type { SteamAchievementPageRow } from '@/data/steam-source';
+
+interface Props {
+  row: SteamAchievementPageRow;
+}
+
+const { row } = Astro.props;
+const configChips = [
+  row.steamworksHidden ? 'hidden' : 'visible',
+  row.steamworksStatBased ? 'stat based' : 'achievement',
+];
+---
+
+<tr
+  class="steam-achievement-row"
+  data-achievement-row
+  data-category={row.category}
+  data-search-text={row.searchText}
+>
+  <td class="steam-achievement-cell steam-achievement-name-cell">
+    <div class="steam-achievement-name-stack">
+      <p class="steam-achievement-name-primary">{row.displayName['zh-CN']}</p>
+      <p class="steam-achievement-name-secondary">{row.displayName.en}</p>
+      <p class="steam-achievement-supporting-copy">{row.description['zh-CN']}</p>
+    </div>
+  </td>
+
+  <td class="steam-achievement-cell steam-achievement-code-cell">
+    <div class="steam-achievement-code-stack">
+      <code>{row.steamApiName}</code>
+      <p class="steam-achievement-name-secondary">{row.steamworksDisplayName.en}</p>
+      <p class="steam-achievement-supporting-copy">{row.steamworksDescription.en}</p>
+      <div class="steam-achievement-chip-row" aria-label={`${row.steamApiName} Steamworks 配置`}>
+        {configChips.map((chip) => (
+          <span class="info-chip">{chip}</span>
+        ))}
+      </div>
+    </div>
+  </td>
+
+  <td class="steam-achievement-cell">
+    <div class="steam-achievement-code-stack">
+      <code>{row.localId}</code>
+      <p class="steam-achievement-supporting-copy">{row.source}</p>
+    </div>
+  </td>
+
+  <td class="steam-achievement-cell">
+    <div class="steam-achievement-code-stack">
+      <span class="status-badge steam-achievement-category-badge">{row.category}</span>
+      <p class="steam-achievement-supporting-copy">{row.source}</p>
+    </div>
+  </td>
+
+  <td class="steam-achievement-cell">
+    <div class="steam-achievement-value-stack">
+      <strong>{row.rewardLabel}</strong>
+      <p class="steam-achievement-supporting-copy">{row.progressLabel}</p>
+    </div>
+  </td>
+
+  <td class="steam-achievement-cell">
+    <div class="steam-achievement-code-stack">
+      <code>{row.schedulePreset}</code>
+      <p class="steam-achievement-supporting-copy">{row.scheduleLabel}</p>
+    </div>
+  </td>
+
+  <td class="steam-achievement-cell steam-achievement-icon-cell">
+    <a
+      class="steam-achievement-icon-card"
+      href={row.achievedIconPath}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`打开 ${row.steamApiName} 的 achieved 图标`}
+    >
+      <img
+        src={row.achievedIcon.src}
+        width={row.achievedIcon.width}
+        height={row.achievedIcon.height}
+        alt={row.achievedIcon.alt}
+        loading="lazy"
+        decoding="async"
+      />
+      <span class="steam-achievement-icon-label">achieved</span>
+      <code>{row.achievedIconPath}</code>
+    </a>
+  </td>
+
+  <td class="steam-achievement-cell steam-achievement-icon-cell">
+    <a
+      class="steam-achievement-icon-card"
+      href={row.lockedIconPath}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`打开 ${row.steamApiName} 的 locked 图标`}
+    >
+      <img
+        src={row.lockedIcon.src}
+        width={row.lockedIcon.width}
+        height={row.lockedIcon.height}
+        alt={row.lockedIcon.alt}
+        loading="lazy"
+        decoding="async"
+      />
+      <span class="steam-achievement-icon-label">locked</span>
+      <code>{row.lockedIconPath}</code>
+    </a>
+  </td>
+
+  <td class="steam-achievement-cell steam-achievement-actions-cell">
+    <div class="steam-achievement-action-stack" aria-label={`${row.steamApiName} 资源动作`}>
+      <button class="button button-tertiary" type="button" data-copy-value={row.steamApiName}>
+        复制 API
+      </button>
+      <button class="button button-tertiary" type="button" data-copy-value={row.achievedIconPath}>
+        复制 achieved
+      </button>
+      <button class="button button-tertiary" type="button" data-copy-value={row.lockedIconPath}>
+        复制 locked
+      </button>
+    </div>
+  </td>
+</tr>

@@ -1,0 +1,83 @@
+---
+import type { SteamAchievementPageData } from '@/data/steam-source';
+
+interface Props {
+  pageData: SteamAchievementPageData;
+  updatedAtLabel: string;
+}
+
+const { pageData, updatedAtLabel } = Astro.props;
+---
+
+<section class="hero-panel steam-achievement-hero" aria-labelledby="steam-achievement-heading">
+  <div class="hero-grid steam-achievement-hero-grid">
+    <div class="hero-copy steam-achievement-hero-copy">
+      <div>
+        <p class="eyebrow">Steam public data</p>
+        <h1 id="steam-achievement-heading">Steam Achievement Data</h1>
+      </div>
+
+      <p class="hero-lede">
+        集中浏览 HagiCode 的 Steam 成就目录、图标资源和 Steamworks 字段，不需要先打开裸 JSON 或源文件。
+      </p>
+
+      <div class="hero-actions">
+        <a class="button button-primary" href={pageData.rawJsonPath} target="_blank" rel="noreferrer">
+          打开 Raw JSON
+        </a>
+        <a class="button button-secondary" href="/data/">
+          打开数据页
+        </a>
+        <a class="button button-tertiary" href="/">
+          返回门户
+        </a>
+        <button class="button button-tertiary" type="button" data-copy-value={pageData.rawJsonPath}>
+          复制 JSON 路径
+        </button>
+        <button class="button button-tertiary" type="button" data-copy-value={pageData.iconDirectoryPath}>
+          复制图标目录
+        </button>
+      </div>
+
+      <div class="hero-route-strip steam-achievement-route-strip">
+        <a class="hero-route-chip" href={pageData.rawJsonPath} target="_blank" rel="noreferrer">
+          <span>Raw JSON</span>
+          <code>{pageData.rawJsonPath}</code>
+        </a>
+        <div class="hero-route-chip">
+          <span>Icon base path</span>
+          <code>{pageData.iconDirectoryPath}</code>
+        </div>
+        <div class="hero-route-chip">
+          <span>Steam App ID</span>
+          <code>{pageData.applicationSteamAppId}</code>
+        </div>
+        <div class="hero-route-chip">
+          <span>Updated (UTC)</span>
+          <code>{updatedAtLabel}</code>
+        </div>
+      </div>
+    </div>
+
+    <aside class="hero-aside" aria-label="Steam 成就摘要">
+      <dl class="hero-metrics steam-achievement-metrics">
+        <div>
+          <dt>成就条目</dt>
+          <dd>{pageData.stats.achievementCount}</dd>
+        </div>
+        <div>
+          <dt>分类数量</dt>
+          <dd>{pageData.stats.categoryCount}</dd>
+        </div>
+        <div>
+          <dt>带奖励字段</dt>
+          <dd>{pageData.stats.rewardBearingCount}</dd>
+        </div>
+        <div>
+          <dt>公开图标</dt>
+          <dd>{pageData.stats.publicIconCount}</dd>
+        </div>
+      </dl>
+    </aside>
+  </div>
+</section>

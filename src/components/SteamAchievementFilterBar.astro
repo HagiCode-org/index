@@ -1,0 +1,67 @@
+---
+import type { SteamAchievementPageCategory } from '@/data/steam-source';
+
+interface Props {
+  categories: readonly SteamAchievementPageCategory[];
+  totalCount: number;
+}
+
+const { categories, totalCount } = Astro.props;
+---
+
+<section class="catalog-section steam-achievement-filter-shell" aria-labelledby="steam-achievement-filter-heading">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Local filters</p>
+      <h2 id="steam-achievement-filter-heading">按分类或稳定标识快速定位</h2>
+    </div>
+  </div>
+
+  <div class="steam-achievement-filter-bar">
+    <div class="steam-achievement-category-group">
+      <p class="steam-achievement-filter-label">Category</p>
+      <div class="steam-achievement-category-list" role="toolbar" aria-label="按分类筛选成就">
+        <button
+          class="button button-tertiary steam-achievement-filter-chip is-active"
+          type="button"
+          data-filter-category="all"
+          aria-pressed="true"
+          aria-controls="steam-achievement-table-body"
+        >
+          全部
+          <span>{totalCount}</span>
+        </button>
+        {categories.map((category) => (
+          <button
+            class="button button-tertiary steam-achievement-filter-chip"
+            type="button"
+            data-filter-category={category.key}
+            aria-pressed="false"
+            aria-controls="steam-achievement-table-body"
+          >
+            <code>{category.key}</code>
+            <span>{category.count}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <label class="steam-achievement-search-field" for="steam-achievement-search">
+      <span class="steam-achievement-filter-label">Keyword filter</span>
+      <input
+        id="steam-achievement-search"
+        type="search"
+        name="steam-achievement-search"
+        placeholder="搜索 localId / steamApiName / 中英文名称"
+        autocomplete="off"
+        spellcheck="false"
+        data-filter-input
+        aria-controls="steam-achievement-table-body"
+      />
+    </label>
+  </div>
+
+  <p class="steam-achievement-filter-summary" data-filter-status aria-live="polite">
+    当前显示 <strong data-visible-count>{totalCount}</strong> / {totalCount} 个条目。支持本地过滤，不会触发额外请求。
+  </p>
+</section>
