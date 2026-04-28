@@ -46,6 +46,18 @@ const dataSurfaces = [
     label: 'promotion',
     actionLabel: '打开 promotion JSON',
   },
+  {
+    title: 'Steam 成就页面',
+    href: '/steam/achievements/',
+    label: 'steam page',
+    actionLabel: '打开 Steam 成就页面',
+  },
+  {
+    title: 'Steam 成就 JSON',
+    href: '/steam/achievements.json',
+    label: 'steam raw',
+    actionLabel: '打开 Steam 成就 JSON',
+  },
 ] as const;
 ---
 
@@ -95,7 +107,7 @@ const dataSurfaces = [
           <div class="section-heading">
             <div>
               <p class="eyebrow">Mirror lanes</p>
-              <h2 id="data-surface-heading">数据镜像不是单一目录，而是四个工作面</h2>
+              <h2 id="data-surface-heading">数据镜像把原始 JSON 和可读页面一起公开</h2>
             </div>
           </div>
 

@@ -23,6 +23,11 @@ const portalGeneratedLabel = new Intl.DateTimeFormat('zh-CN', {
 }).format(new Date(sitesCatalog.generatedAt));
 const dataEntryLinks = [
   {
+    title: 'Steam 成就页面',
+    description: '面向开发者浏览的成就目录、图标预览和稳定公开路径。',
+    href: '/steam/achievements/',
+  },
+  {
     title: '站点导航 JSON',
     description: '供其他站点页脚与工具站同步站群清单。',
     href: '/sites.json',
@@ -206,6 +211,7 @@ const canonicalUrl = 'https://index.hagicode.com/';
 
                 <div class="portal-site-copy">
                   <h3>{entry.title}</h3>
+                  <p>{entry.description}</p>
                 </div>
 
                 <p class="portal-site-domain">
