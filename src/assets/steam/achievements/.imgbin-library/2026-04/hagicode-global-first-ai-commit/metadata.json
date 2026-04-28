@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 2,
+  "assetId": "hagicode-global-first-ai-commit",
+  "slug": "hagicode-global-first-ai-commit",
+  "title": "AI Commit First Run",
+  "tags": [
+    "steam-achievement",
+    "first-experience"
+  ],
+  "source": {
+    "type": "generated"
+  },
+  "paths": {
+    "assetDir": "/home/newbe36524/repos/hagicode-mono/repos/index/src/assets/steam/achievements/.imgbin-library/2026-04/hagicode-global-first-ai-commit",
+    "original": "original.png"
+  },
+  "generated": {
+    "prompt": "Square Steam achievement badge icon for HagiCode: a friendly AI stamp pressing approval onto a glowing commit gem, tiny branch lines, warm magenta and cyan highlights, premium game badge, crisp centered silhouette, no readable text, no logo, dark rounded vignette background.\n\nRender as a polished square icon that remains recognizable at 64x64.\n\nUse a single centered emblem, thick readable shapes, balanced negative space, subtle rim light, and no text or watermark.\n\nThe final source image will be resized to 256x256 PNG for Steamworks achievement icon upload.",
+    "provider": "azure-openai-image-api",
+    "model": "gpt-image-1.5",
+    "tags": [
+      "steam-achievement",
+      "first-experience"
+    ],
+    "title": "AI Commit First Run",
+    "promptSource": {
+      "type": "docs-prompt-file",
+      "path": "/tmp/hagicode-steam-achievement-nVz1ca/prompt.json",
+      "context": "steam-achievement-icon",
+      "generationParams": {
+        "size": "1024x1024",
+        "quality": "high",
+        "format": "png"
+      },
+      "metadata": {
+        "source": "hagicode-index-steam-achievements",
+        "localId": "global.first.ai-commit",
+        "steamApiName": "HAGICODE_GLOBAL_FIRST_AI_COMMIT",
+        "displayName": "AI Commit First Run",
+        "targetSize": "256x256"
+      }
+    },
+    "generationParams": {
+      "size": "1024x1024",
+      "quality": "high",
+      "format": "png"
+    }
+  },
+  "status": {
+    "generation": "succeeded",
+    "recognition": "pending",
+    "thumbnail": "skipped"
+  },
+  "providerPayload": {
+    "image": {
+      "created": 1777380966,
+      "background": "opaque",
+      "output_format": "png",
+      "quality": "high",
+      "size": "1024x1024",
+      "usage": {
+        "input_tokens": 119,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 119
+        },
+        "output_tokens": 4534,
+        "output_tokens_details": {
+          "image_tokens": 4160,
+          "text_tokens": 374
+        },
+        "total_tokens": 4653
+      },
+      "data": [
+        {}
+      ]
+    }
+  },
+  "timestamps": {
+    "createdAt": "2026-04-28T12:55:30.224Z",
+    "updatedAt": "2026-04-28T12:55:30.224Z"
+  }
+}
