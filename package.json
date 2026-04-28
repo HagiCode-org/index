@@ -18,6 +18,7 @@
     "validate": "npm run prepare:generated && node ./scripts/validate-activity-metrics.mjs && astro build --outDir .astro-validate && node ./scripts/minify-published-json.mjs --published-root .astro-validate && npm run verify:json-routes -- --published-root .astro-validate && node ./scripts/sync-secondary-professions.mjs --check",
     "test": "npm run prepare:generated && node ./scripts/validate-activity-metrics.mjs && astro build --outDir .astro-test && node ./scripts/minify-published-json.mjs --published-root .astro-test && npm run verify:json-routes -- --published-root .astro-test && INDEX_BUILD_ROOT=.astro-test node --test ./tests/*.test.mjs",
     "typecheck": "astro check",
+    "generate:steam-achievements": "node ./scripts/generate-steam-achievement-icons.mjs",
     "sync:index": "node ./scripts/sync-azure-index.mjs",
     "update-activity-metrics": "node ./scripts/update-activity-metrics.mjs",
     "sync:agent-templates": "node ./scripts/sync-agent-templates.mjs",
