@@ -1,0 +1,36 @@
+localesRoot: src/i18n/locales
+repoRoot: .
+baseLocale: en-US
+targetLocales:
+  - zh-CN
+  - zh-Hant
+  - ja-JP
+  - ko-KR
+  - de-DE
+  - fr-FR
+  - es-ES
+  - pt-BR
+  - ru-RU
+doctor:
+  excludedDirectories:
+    - .git
+    - .astro
+    - .astro-test
+    - .astro-validate
+    - dist
+    - node_modules
+    - public
+    - src/i18n/generated-locales
+  textFileExtensions:
+    - .astro
+    - .ts
+    - .js
+    - .mjs
+    - .json
+    - .md
+    - .yml
+    - .yaml
+  allowlist:
+    legacy-index-route-code: []
+    legacy-json-route-path: []
+    legacy-generated-locale-path: []
