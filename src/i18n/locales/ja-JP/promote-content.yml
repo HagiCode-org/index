@@ -1,0 +1,21 @@
+promotions:
+  main-game-2026-04-29:
+    title: "お願いです、ウィッシュリストに追加してください"
+    description: "世界で唯一ではないけれど、とても使いやすい Vibe Coding ソフト Hagicode が 4月29日に発売されます。Steam のウィッシュリストに追加してください。お願いです。"
+    cta: "Steam でウィッシュリストに追加"
+    alt: "HagiCode Steam store capsule artwork"
+  main-game-steam-ea-2026-04-29:
+    title: "ついに早期アクセス開始"
+    description: "世界で唯一ではないけれど、とても使いやすい Vibe Coding ソフト Hagicode が Steam で早期アクセスを開始しました。ぜひ見に来てください。お願いです。"
+    cta: "早期アクセスを見る"
+    alt: "HagiCode Early Access Steam artwork"
+  hagicode-plus-bundle:
+    title: "Hagicode Plus バンドル"
+    description: "世界で唯一ではないけれど、まとめ方がうまい Hagicode Plus が 15% off です。本編と Turbo Engine DLC をまとめてそろえられます。Steam でぜひ見てください。お願いです。"
+    cta: "バンドルを見る"
+    alt: "Hagicode Plus Steam bundle artwork"
+  hagicode-turbo-engine-dlc:
+    title: "Turbo Engine DLC"
+    description: "世界で唯一ではないけれど、本当にパワフルな Turbo Engine DLC では最大 32 本の同時オンラインセッションと、さらに多くのカスタマイズ項目を解放できます。Hagicode の作業がもっとスムーズになります。Steam で見てください。お願いです。"
+    cta: "DLC を見る"
+    alt: "Turbo Engine DLC Steam artwork"

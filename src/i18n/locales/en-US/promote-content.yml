@@ -1,0 +1,21 @@
+promotions:
+  main-game-2026-04-29:
+    title: "Wishlist It, Pretty Please"
+    description: "Hagicode, the not-globally-unique but super handy Vibe Coding software, launches on April 29. Please add it to your Steam wishlist. Sob. Pretty please."
+    cta: "Wishlist on Steam"
+    alt: "HagiCode Steam store capsule artwork"
+  main-game-steam-ea-2026-04-29:
+    title: "Early Access Is Finally Here"
+    description: "Hagicode, the not-globally-unique but super handy Vibe Coding software, is now in Steam Early Access. Please come take a look. Sob. Pretty please."
+    cta: "View Early Access"
+    alt: "HagiCode Early Access Steam artwork"
+  hagicode-plus-bundle:
+    title: "Hagicode Plus Bundle"
+    description: "Hagicode Plus, the not-globally-unique but impressively bundled option, is 15% off with the base game and Turbo Engine DLC. Come check it out on Steam. Sob. Pretty please."
+    cta: "View Bundle"
+    alt: "Hagicode Plus Steam bundle artwork"
+  hagicode-turbo-engine-dlc:
+    title: "Turbo Engine DLC"
+    description: "Turbo Engine DLC is not globally unique, but it really can run: unlock up to 32 concurrent online sessions and more customization options for your Hagicode workflow. Come peek on Steam. Sob. Pretty please."
+    cta: "View DLC"
+    alt: "Turbo Engine DLC Steam artwork"

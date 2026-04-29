@@ -1,0 +1,21 @@
+promotions:
+  main-game-2026-04-29:
+    title: "求求加入愿望单"
+    description: "全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 将于 4月29日发售，快来 steam 加入愿望单吧，呜呜呜，求求了"
+    cta: "加入愿望单"
+    alt: "HagiCode Steam store capsule artwork"
+  main-game-steam-ea-2026-04-29:
+    title: "终于上架 EA 啦"
+    description: "全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 已经在 steam 开启 EA 抢先体验啦，快来看看吧，呜呜呜，求求了"
+    cta: "查看抢先体验"
+    alt: "HagiCode Early Access Steam artwork"
+  hagicode-plus-bundle:
+    title: "Hagicode Plus 套装"
+    description: "全球不唯一但是很会打包的 Hagicode Plus 现享 15% off，组合本体与 Turbo Engine DLC，一口气补齐体验，快来 steam 看看吧，呜呜呜，求求了"
+    cta: "查看套装"
+    alt: "Hagicode Plus Steam bundle artwork"
+  hagicode-turbo-engine-dlc:
+    title: "Turbo Engine DLC"
+    description: "全球不唯一但是真的很能跑的 Turbo Engine DLC 可解锁 32 个并发上线和更多自定义选项，让 Hagicode 工作流更顺手，快来 steam 看看吧，呜呜呜，求求了"
+    cta: "查看 DLC"
+    alt: "Turbo Engine DLC Steam artwork"

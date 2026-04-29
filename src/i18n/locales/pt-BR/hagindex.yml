@@ -1,0 +1,131 @@
+metadata:
+  title: "HagiCode Portal"
+  description: "HagiCode site navigation portal for the main site, docs, data mirrors, and standalone tools."
+header:
+  brandName: "HagiCode Portal"
+  brandSubtitle: "Site navigation and public data handoff"
+  navAria: "Portal shortcuts"
+  nav:
+    dataPage: "Data"
+    sitesJson: "Sites JSON"
+    catalogJson: "View catalog JSON"
+hero:
+  eyebrow: "index.hagicode.com"
+  kicker: "Site switchboard"
+  title: "HagiCode Index control surface"
+  actions:
+    dataMirror: "Open data mirror"
+    sitesJson: "Sites catalog JSON"
+  routesAria: "Homepage priority exits"
+  routes:
+    catalog: "Catalog index"
+    desktopHistory: "Desktop history"
+    serverHistory: "Server history"
+    promoto: "Promoto showcase"
+  metricsAria: "Portal overview"
+  metrics:
+    siteCount: "Site entries"
+    groupCount: "Site groups"
+    publicIndexCount: "Public indexes"
+    routeCount: "Stable routes"
+  signal:
+    category: "Operational signal"
+    title: "Entry / JSON / history"
+    deliveryLabel: "Delivery"
+    deliveryValue: "Static publish"
+    snapshotLabel: "Site snapshot"
+sections:
+  surface:
+    eyebrow: "Control surface"
+    title: "Four operating lines for Index"
+    snapshotAria: "Portal snapshot"
+  data:
+    eyebrow: "Public data"
+    title: "Data entry navigation"
+  sites:
+    eyebrow: "Portal sites"
+    title: "Site entries"
+surfaceCards:
+  portal:
+    title: "Portal entry"
+    label: "portal"
+    status: "always on"
+    action: "Open entry"
+  mirror:
+    title: "Data mirror"
+    label: "mirror"
+    status: "always on"
+    action: "Open entry"
+  history:
+    title: "Version history"
+    label: "history"
+    status: "always on"
+    action: "Open entry"
+  review:
+    title: "Operations review"
+    label: "review"
+    status: "always on"
+    action: "Open entry"
+routeSignals:
+  siteSnapshot: "Site catalog snapshot"
+  publicIndexScale: "Public index scale"
+  stableRouteCount: "Stable entry count"
+dataCategory: "data"
+stableRouteBadge: "stable route"
+dataEntries:
+  steamAchievements:
+    title: "Steam achievements page"
+    description: "Achievement catalog, icon preview, and stable public route for developer review."
+  sitesJson:
+    title: "Site navigation JSON"
+    description: "Site-group catalog used by footers and tool sites."
+  indexCatalog:
+    title: "Catalog index JSON"
+    description: "Public index catalog and status metadata."
+  activityMetrics:
+    title: "Activity metrics JSON"
+    description: "Homepage activity statistics consumed by the main site."
+  liveBroadcast:
+    title: "Live broadcast JSON"
+    description: "Public live-entry metadata for the site."
+  steamAchievementsJson:
+    title: "Steam achievements JSON"
+    description: "Steamworks achievement list, milestone parameters, and icon paths."
+  design:
+    title: "Design catalog JSON"
+    description: "Public catalog entry for awesome-design-md."
+  legalDocuments:
+    title: "Legal documents JSON"
+    description: "Public legal document metadata and landing-page mappings."
+  desktopHistory:
+    title: "Desktop version history"
+    description: "Crawlable desktop history page and download entry."
+  serverHistory:
+    title: "Server version history"
+    description: "Crawlable server history page and index entry."
+siteCard:
+  productionBadge: "production"
+  actionAriaTemplate: "{title} actions"
+footer:
+  eyebrow: "Stable routes"
+  title: "Stable entries"
+  columns:
+    portal: "Portal and mirrors"
+    json: "Public JSON"
+    history: "Version and promotion"
+  aria:
+    portal: "Portal routes"
+    json: "JSON routes"
+    history: "History routes"
+  links:
+    home: "Site portal"
+    data: "Data page"
+    promoto: "Promoto showcase"
+    sites: "Site catalog"
+    catalog: "Catalog index"
+    about: "Contact data"
+    design: "Design catalog"
+    desktopHistory: "Desktop History"
+    serverHistory: "Server History"
+    promote: "Promotion Flags"
+    promoteContent: "Promotion Content"

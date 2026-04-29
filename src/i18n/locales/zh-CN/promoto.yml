@@ -1,0 +1,75 @@
+metadata:
+  title: "HagiCode Promoto Showcase"
+  description: "HagiCode Promoto 内容展示台，用于集中检查推广条目、本地化文案、平台链接与图片渲染结果。"
+header:
+  brandAria: "返回 HagiCode Index 门户"
+  brandName: "HagiCode Promoto Showcase"
+  brandSubtitle: "Promotion content and rendered asset review surface"
+  navAria: "Promoto 页面快捷入口"
+  nav:
+    portal: "返回门户"
+    dataPage: "数据页"
+    rawJson: "Raw JSON"
+showcase:
+  hero:
+    eyebrow: "Promoto Gallery"
+    title: "Promoto 内容展示台"
+    descriptionTemplate: "按 desktop 的完整语言清单检查 Promoto 文案覆盖情况，目前要求每个条目都补齐 {count} 种语言的标题、描述与 CTA。"
+  meta:
+    aria: "Promoto payload metadata"
+    payloadVersion: "Payload Version"
+    updated: "Updated"
+    localeScope: "Locale Scope"
+    rawEndpoint: "Raw Endpoint"
+  metrics:
+    aria: "Promoto summary metrics"
+    entries: "总条目"
+    platforms: "平台数"
+    noPlatforms: "暂无平台"
+    imageCoverage: "图片覆盖"
+    full: "完整"
+    missingImageTemplate: "{count} 条缺图"
+    localeCoverage: "多语言覆盖"
+    localeCompleteTemplate: "{count} 种语言完整"
+    missingTextTemplate: "{count} 条缺多语言文案"
+  filters:
+    aria: "Promoto filters"
+    platformLegend: "按平台筛选"
+    platformAll: "全部"
+    qualityLegend: "按数据质量筛选"
+    localeLegend: "当前查看语言"
+    localeHelperTemplate: "在 {count} 种桌面端语言之间切换卡片正文，当前选择会保留在本次浏览器会话中。"
+    quality:
+      all: "全部状态"
+      complete: "资料完整"
+      missing-image: "缺少图片"
+      missing-text: "缺少文案"
+    searchLabel: "搜索标题、描述、CTA、ID 或平台"
+    searchPlaceholder: "输入 Steam、Wishlist、願望單、ウィッシュリスト..."
+  status:
+    visibleTemplate: "当前显示 {shown} / {total} 条 Promoto 内容。"
+    localeTemplate: "当前语言：{language}（{locale}）"
+  card:
+    currentLocaleLabel: "当前语言"
+    quality:
+      complete: "资料完整"
+      missing-image: "缺少图片"
+      missing-text: "缺少文案"
+    missing:
+      titleTemplate: "缺少标题{language}文案"
+      descriptionTemplate: "缺少描述{language}文案"
+      ctaTemplate: "缺少按钮{language}文案"
+      imageLabelTemplate: "Promoto entry {id} is missing an image descriptor"
+      imageTitle: "Missing Image"
+    localeSummaryTemplate: "语言覆盖 {complete}/{total}"
+    missingLocalesTemplate: "缺少 {locales}"
+    allLocalesComplete: "已补齐全部 desktop 语言"
+    meta:
+      locales: "Locales"
+      image: "Image"
+      noImage: "No image descriptor available"
+    ctaLabel: "CTA"
+    jsonAction: "查看 JSON"
+  states:
+    noResults: "没有匹配的 Promoto 条目"
+    emptyPayload: "Promoto payload 为空"
