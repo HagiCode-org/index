@@ -4,3 +4,4 @@ dist/
 npm-debug.log*
 .astro-test/
 .astro-validate/
+src/i18n/generated-locales/

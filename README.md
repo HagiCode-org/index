@@ -21,6 +21,42 @@
 
 维护者不需要、也不应该为了线上体积手工压缩源 JSON。请继续把可维护性放在 source 文件里，把发布格式交给构建后的 minify 与 verify 步骤。
 
+## hagi18n 本地化工作流
+
+HagIndex 使用 hagi18n 风格的 YAML 源文件维护门户、页脚、Promoto 展示页与 `/promote_content.json` 的人类可读文案。
+
+- 配置文件：`hagi18n.yaml`
+- YAML 源目录：`src/i18n/locales/<locale>/`
+- 必需 namespace：`hagindex.yml`、`promoto.yml`、`promote-content.yml`
+- 生成产物：`src/i18n/generated-locales/<locale>/<namespace>.json`
+
+`generated-locales` 是构建前生成的运行时资源，不作为人工维护入口。修改文案时先改 YAML，再执行：
+
+```bash
+npm run i18n:generate
+npm run i18n:check
+```
+
+常用维护命令：
+
+```bash
+npm run i18n:audit
+npm run i18n:report
+npm run i18n:doctor
+npm run i18n:sync
+npm run i18n:prune
+```
+
+带 `:write` 后缀的 `i18n:sync:write` 与 `i18n:prune:write` 会改写 YAML；不带 `:write` 的命令只预览结果。
+
+所有 `npm run dev`、`npm run build`、`npm run validate` 和 `npm test` 都会先运行 `prepare:generated`，其中包含 `prepare:i18n`。`validate` 与 `test` 还会运行 `i18n:check`，用于发现 YAML 与生成 JSON 的漂移。
+
+翻译和元数据边界：
+
+- 放进 YAML：页面标题、导航标签、页脚文字、按钮文字、Promoto 筛选/状态文案、推广标题、描述、CTA、图片 alt。
+- 留在 TypeScript/JSON：公开路由、href、外部链接、promotion ID、平台 ID、时间戳、图片 import、图片尺寸与格式描述。
+- `/promote_content.json` 的公开 shape 不变；`src/data/promote-content-metadata.ts` 只维护稳定元数据，`src/data/promote-content-source.ts` 从生成资源组合本地化字段。
+
 ## Source / Public 边界
 
 当前仓库明确区分两类 JSON：
