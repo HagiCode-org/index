@@ -6,6 +6,7 @@ import os from 'node:os';
 import { promisify } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SUPPORTED_DESKTOP_LANGUAGE_CODES } from '../src/lib/desktop-language-contract.ts';
 import { buildCharacterTemplateLibrary } from '../scripts/build-agent-preset-library.mjs';
 import { validateGeneratedImageDescriptor } from '../scripts/validate-catalog.mjs';
 
@@ -15,6 +16,7 @@ const projectRoot = path.resolve(testDir, '..');
 const steamAchievementSourceFixture = JSON.parse(
   await readFile(path.join(projectRoot, 'src', 'data', 'steam-achievements-source.json'), 'utf8'),
 );
+const supportedPromotoLocales = [...SUPPORTED_DESKTOP_LANGUAGE_CODES].sort();
 
 function buildImageDescriptorFixture({ variant } = {}) {
   return {
@@ -25,6 +27,10 @@ function buildImageDescriptorFixture({ variant } = {}) {
     alt: 'HagiCode Steam artwork',
     ...(variant === undefined ? {} : { variant }),
   };
+}
+
+function buildLocalizedPromoteField(values) {
+  return { ...values };
 }
 
 function buildActivityMetricsFixture({
@@ -287,72 +293,168 @@ function buildPromoteContentFixture() {
     contents: [
       {
         id: 'main-game-2026-04-29',
-        title: {
-          zh: '求求加入愿望单',
-          en: 'Wishlist It, Pretty Please',
-        },
-        description: {
-          zh: '全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 将于 4月29日发售，快来 steam 加入愿望单吧，呜呜呜，求求了',
-          en: 'Hagicode, the not-globally-unique but super handy Vibe Coding software, launches on April 29. Please add it to your Steam wishlist. Sob. Pretty please.',
-        },
-        cta: {
-          zh: '加入愿望单',
-          en: 'Wishlist on Steam',
-        },
+        title: buildLocalizedPromoteField({
+          'zh-CN': '求求加入愿望单',
+          'zh-Hant': '求求加入願望單',
+          'en-US': 'Wishlist It, Pretty Please',
+          'ja-JP': 'お願いです、ウィッシュリストに追加してください',
+          'ko-KR': '제발 위시리스트에 추가해 주세요',
+          'de-DE': 'Bitte auf die Wunschliste setzen',
+          'fr-FR': 'Ajoutez-le a votre liste de souhaits, s il vous plait',
+          'es-ES': 'Anadelo a tu lista de deseados, por favor',
+          'pt-BR': 'Coloque na lista de desejos, por favor',
+          'ru-RU': 'Пожалуйста, добавьте в список желаемого',
+        }),
+        description: buildLocalizedPromoteField({
+          'zh-CN': '全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 将于 4月29日发售，快来 steam 加入愿望单吧，呜呜呜，求求了',
+          'zh-Hant': '全球不唯一但是超級好用的 Vibe Coding 軟體 Hagicode 將於 4月29日發售，快來 Steam 加入願望單吧，嗚嗚嗚，求求了',
+          'en-US': 'Hagicode, the not-globally-unique but super handy Vibe Coding software, launches on April 29. Please add it to your Steam wishlist. Sob. Pretty please.',
+          'ja-JP': '世界で唯一ではないけれど、とても使いやすい Vibe Coding ソフト Hagicode が 4月29日に発売されます。Steam のウィッシュリストに追加してください。お願いです。',
+          'ko-KR': '전 세계에서 유일하진 않지만 정말 편리한 Vibe Coding 소프트웨어 Hagicode가 4월 29일에 출시됩니다. Steam 위시리스트에 추가해 주세요. 제발요.',
+          'de-DE': 'Hagicode, die nicht weltweit einzigartige, aber extrem praktische Vibe-Coding-Software, erscheint am 29. April. Bitte setzt sie auf eure Steam-Wunschliste. Bitte, bitte.',
+          'fr-FR': 'Hagicode, le logiciel de Vibe Coding pas unique au monde mais vraiment pratique, sort le 29 avril. Ajoutez-le a votre liste de souhaits Steam. S il vous plait.',
+          'es-ES': 'Hagicode, el software de Vibe Coding que no es unico en el mundo pero si muy util, se lanza el 29 de abril. Anadelo a tu lista de deseados de Steam. Por favor.',
+          'pt-BR': 'Hagicode, o software de Vibe Coding que nao e unico no mundo, mas e util demais, sera lancado em 29 de abril. Adicione-o a sua lista de desejos da Steam. Por favor.',
+          'ru-RU': 'Hagicode, не уникальный во всем мире, но очень удобный Vibe Coding софт, выходит 29 апреля. Пожалуйста, добавьте его в список желаемого Steam. Очень просим.',
+        }),
+        cta: buildLocalizedPromoteField({
+          'zh-CN': '加入愿望单',
+          'zh-Hant': '加入願望單',
+          'en-US': 'Wishlist on Steam',
+          'ja-JP': 'Steam でウィッシュリストに追加',
+          'ko-KR': 'Steam 위시리스트에 추가',
+          'de-DE': 'Auf Steam vormerken',
+          'fr-FR': 'Ajouter sur Steam',
+          'es-ES': 'Anadir a Steam',
+          'pt-BR': 'Adicionar na Steam',
+          'ru-RU': 'Добавить в желаемое Steam',
+        }),
         link: 'https://store.steampowered.com/app/4625540/Hagicode/',
         targetPlatform: 'steam',
         image: buildImageDescriptorFixture(),
       },
       {
         id: 'main-game-steam-ea-2026-04-29',
-        title: {
-          zh: '终于上架 EA 啦',
-          en: 'Early Access Is Finally Here',
-        },
-        description: {
-          zh: '全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 已经在 steam 开启 EA 抢先体验啦，快来看看吧，呜呜呜，求求了',
-          en: 'Hagicode, the not-globally-unique but super handy Vibe Coding software, is now in Steam Early Access. Please come take a look. Sob. Pretty please.',
-        },
-        cta: {
-          zh: '查看抢先体验',
-          en: 'View Early Access',
-        },
+        title: buildLocalizedPromoteField({
+          'zh-CN': '终于上架 EA 啦',
+          'zh-Hant': '終於上架 EA 啦',
+          'en-US': 'Early Access Is Finally Here',
+          'ja-JP': 'ついに早期アクセス開始',
+          'ko-KR': '드디어 앞서 해보기 시작',
+          'de-DE': 'Early Access ist endlich da',
+          'fr-FR': 'L acces anticipe est enfin la',
+          'es-ES': 'El acceso anticipado por fin llego',
+          'pt-BR': 'O acesso antecipado finalmente chegou',
+          'ru-RU': 'Ранний доступ наконец открыт',
+        }),
+        description: buildLocalizedPromoteField({
+          'zh-CN': '全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 已经在 steam 开启 EA 抢先体验啦，快来看看吧，呜呜呜，求求了',
+          'zh-Hant': '全球不唯一但是超級好用的 Vibe Coding 軟體 Hagicode 已經在 Steam 開啟 EA 搶先體驗啦，快來看看吧，嗚嗚嗚，求求了',
+          'en-US': 'Hagicode, the not-globally-unique but super handy Vibe Coding software, is now in Steam Early Access. Please come take a look. Sob. Pretty please.',
+          'ja-JP': '世界で唯一ではないけれど、とても使いやすい Vibe Coding ソフト Hagicode が Steam で早期アクセスを開始しました。ぜひ見に来てください。お願いです。',
+          'ko-KR': '전 세계에서 유일하진 않지만 정말 편리한 Vibe Coding 소프트웨어 Hagicode가 이제 Steam 앞서 해보기로 출시되었습니다. 한번 보러 와 주세요. 제발요.',
+          'de-DE': 'Hagicode, die nicht weltweit einzigartige, aber extrem praktische Vibe-Coding-Software, ist jetzt im Steam-Early-Access. Schaut bitte vorbei. Bitte, bitte.',
+          'fr-FR': 'Hagicode, le logiciel de Vibe Coding pas unique au monde mais vraiment pratique, est maintenant disponible en acces anticipe sur Steam. Venez y jeter un oeil. S il vous plait.',
+          'es-ES': 'Hagicode, el software de Vibe Coding que no es unico en el mundo pero si muy util, ya esta en acceso anticipado en Steam. Ven a echarle un vistazo. Por favor.',
+          'pt-BR': 'Hagicode, o software de Vibe Coding que nao e unico no mundo, mas e util demais, ja esta em acesso antecipado na Steam. Venha dar uma olhada. Por favor.',
+          'ru-RU': 'Hagicode, не уникальный во всем мире, но очень удобный Vibe Coding софт, уже вышел в раннем доступе Steam. Загляните посмотреть. Очень просим.',
+        }),
+        cta: buildLocalizedPromoteField({
+          'zh-CN': '查看抢先体验',
+          'zh-Hant': '查看搶先體驗',
+          'en-US': 'View Early Access',
+          'ja-JP': '早期アクセスを見る',
+          'ko-KR': '앞서 해보기 보기',
+          'de-DE': 'Early Access ansehen',
+          'fr-FR': 'Voir l acces anticipe',
+          'es-ES': 'Ver acceso anticipado',
+          'pt-BR': 'Ver acesso antecipado',
+          'ru-RU': 'Открыть ранний доступ',
+        }),
         link: 'https://store.steampowered.com/app/4625540/Hagicode/',
         targetPlatform: 'steam',
         image: buildImageDescriptorFixture(),
       },
       {
         id: 'hagicode-plus-bundle',
-        title: {
-          zh: 'Hagicode Plus 套装',
-          en: 'Hagicode Plus Bundle',
-        },
-        description: {
-          zh: '全球不唯一但是很会打包的 Hagicode Plus 现享 15% off，组合本体与 Turbo Engine DLC，一口气补齐体验，快来 steam 看看吧，呜呜呜，求求了',
-          en: 'Hagicode Plus, the not-globally-unique but impressively bundled option, is 15% off with the base game and Turbo Engine DLC. Come check it out on Steam. Sob. Pretty please.',
-        },
-        cta: {
-          zh: '查看套装',
-          en: 'View Bundle',
-        },
+        title: buildLocalizedPromoteField({
+          'zh-CN': 'Hagicode Plus 套装',
+          'zh-Hant': 'Hagicode Plus 套裝',
+          'en-US': 'Hagicode Plus Bundle',
+          'ja-JP': 'Hagicode Plus バンドル',
+          'ko-KR': 'Hagicode Plus 번들',
+          'de-DE': 'Hagicode Plus Bundle',
+          'fr-FR': 'Pack Hagicode Plus',
+          'es-ES': 'Pack Hagicode Plus',
+          'pt-BR': 'Pacote Hagicode Plus',
+          'ru-RU': 'Набор Hagicode Plus',
+        }),
+        description: buildLocalizedPromoteField({
+          'zh-CN': '全球不唯一但是很会打包的 Hagicode Plus 现享 15% off，组合本体与 Turbo Engine DLC，一口气补齐体验，快来 steam 看看吧，呜呜呜，求求了',
+          'zh-Hant': '全球不唯一但是很會打包的 Hagicode Plus 現享 15% off，組合本體與 Turbo Engine DLC，一口氣補齊體驗，快來 Steam 看看吧，嗚嗚嗚，求求了',
+          'en-US': 'Hagicode Plus, the not-globally-unique but impressively bundled option, is 15% off with the base game and Turbo Engine DLC. Come check it out on Steam. Sob. Pretty please.',
+          'ja-JP': '世界で唯一ではないけれど、まとめ方がうまい Hagicode Plus が 15% off です。本編と Turbo Engine DLC をまとめてそろえられます。Steam でぜひ見てください。お願いです。',
+          'ko-KR': '전 세계에서 유일하진 않지만 묶음 구성이 아주 좋은 Hagicode Plus를 지금 15% off로 만날 수 있습니다. 본편과 Turbo Engine DLC를 한 번에 챙겨 보세요. Steam에서 확인해 주세요. 제발요.',
+          'de-DE': 'Hagicode Plus, das nicht weltweit einzigartige, aber stark gebuendelte Paket, ist jetzt 15% off. Basis-Spiel und Turbo Engine DLC gibt es zusammen fuer das volle Erlebnis. Schaut auf Steam vorbei. Bitte, bitte.',
+          'fr-FR': 'Hagicode Plus, l offre pas unique au monde mais tres bien regroupee, est maintenant a 15% off. Le jeu de base et le DLC Turbo Engine arrivent ensemble pour une experience complete. Venez voir sur Steam. S il vous plait.',
+          'es-ES': 'Hagicode Plus, la opcion que no es unica en el mundo pero si sabe empaquetarse, ahora tiene 15% off. Reune el juego base y el DLC Turbo Engine para completar la experiencia. Ven a verlo en Steam. Por favor.',
+          'pt-BR': 'Hagicode Plus, a opcao que nao e unica no mundo mas sabe montar um pacote como ninguem, esta com 15% off. Junte o jogo base com o DLC Turbo Engine e complete a experiencia. Veja na Steam. Por favor.',
+          'ru-RU': 'Hagicode Plus, вариант не уникальный во всем мире, но отлично собранный в набор, сейчас доступен со скидкой 15% off. Базовая игра и DLC Turbo Engine вместе закрывают весь опыт. Загляните в Steam. Очень просим.',
+        }),
+        cta: buildLocalizedPromoteField({
+          'zh-CN': '查看套装',
+          'zh-Hant': '查看套裝',
+          'en-US': 'View Bundle',
+          'ja-JP': 'バンドルを見る',
+          'ko-KR': '번들 보기',
+          'de-DE': 'Bundle ansehen',
+          'fr-FR': 'Voir le pack',
+          'es-ES': 'Ver pack',
+          'pt-BR': 'Ver pacote',
+          'ru-RU': 'Открыть набор',
+        }),
         link: 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/',
         targetPlatform: 'steam',
         image: buildImageDescriptorFixture(),
       },
       {
         id: 'hagicode-turbo-engine-dlc',
-        title: {
-          zh: 'Turbo Engine DLC',
-          en: 'Turbo Engine DLC',
-        },
-        description: {
-          zh: '全球不唯一但是真的很能跑的 Turbo Engine DLC 可解锁 32 个并发上线和更多自定义选项，让 Hagicode 工作流更顺手，快来 steam 看看吧，呜呜呜，求求了',
-          en: 'Turbo Engine DLC is not globally unique, but it really can run: unlock up to 32 concurrent online sessions and more customization options for your Hagicode workflow. Come peek on Steam. Sob. Pretty please.',
-        },
-        cta: {
-          zh: '查看 DLC',
-          en: 'View DLC',
-        },
+        title: buildLocalizedPromoteField({
+          'zh-CN': 'Turbo Engine DLC',
+          'zh-Hant': 'Turbo Engine DLC',
+          'en-US': 'Turbo Engine DLC',
+          'ja-JP': 'Turbo Engine DLC',
+          'ko-KR': 'Turbo Engine DLC',
+          'de-DE': 'Turbo Engine DLC',
+          'fr-FR': 'DLC Turbo Engine',
+          'es-ES': 'DLC Turbo Engine',
+          'pt-BR': 'DLC Turbo Engine',
+          'ru-RU': 'DLC Turbo Engine',
+        }),
+        description: buildLocalizedPromoteField({
+          'zh-CN': '全球不唯一但是真的很能跑的 Turbo Engine DLC 可解锁 32 个并发上线和更多自定义选项，让 Hagicode 工作流更顺手，快来 steam 看看吧，呜呜呜，求求了',
+          'zh-Hant': '全球不唯一但是真的很能跑的 Turbo Engine DLC 可解鎖 32 個並發上線和更多自訂選項，讓 Hagicode 工作流更順手，快來 Steam 看看吧，嗚嗚嗚，求求了',
+          'en-US': 'Turbo Engine DLC is not globally unique, but it really can run: unlock up to 32 concurrent online sessions and more customization options for your Hagicode workflow. Come peek on Steam. Sob. Pretty please.',
+          'ja-JP': '世界で唯一ではないけれど、本当にパワフルな Turbo Engine DLC では最大 32 本の同時オンラインセッションと、さらに多くのカスタマイズ項目を解放できます。Hagicode の作業がもっとスムーズになります。Steam で見てください。お願いです。',
+          'ko-KR': '전 세계에서 유일하진 않지만 정말 잘 달리는 Turbo Engine DLC는 최대 32개의 동시 온라인 세션과 더 많은 사용자 지정 옵션을 열어 줍니다. Hagicode 워크플로를 더 매끄럽게 만들어 줍니다. Steam에서 확인해 주세요. 제발요.',
+          'de-DE': 'Das Turbo Engine DLC ist nicht weltweit einzigartig, aber wirklich schnell: Es schaltet bis zu 32 gleichzeitige Online-Sitzungen und mehr Anpassungsoptionen fuer euren Hagicode-Workflow frei. Schaut auf Steam vorbei. Bitte, bitte.',
+          'fr-FR': 'Le DLC Turbo Engine n est pas unique au monde, mais il envoie vraiment: il debloque jusqu a 32 sessions en ligne simultanees et davantage d options de personnalisation pour votre workflow Hagicode. Venez voir sur Steam. S il vous plait.',
+          'es-ES': 'El DLC Turbo Engine no es unico en el mundo, pero si corre de verdad: desbloquea hasta 32 sesiones online simultaneas y mas opciones de personalizacion para tu flujo de trabajo con Hagicode. Ven a verlo en Steam. Por favor.',
+          'pt-BR': 'O DLC Turbo Engine nao e unico no mundo, mas realmente entrega desempenho: desbloqueia ate 32 sessoes online simultaneas e mais opcoes de personalizacao para o seu fluxo de trabalho com Hagicode. Veja na Steam. Por favor.',
+          'ru-RU': 'DLC Turbo Engine не уникален во всем мире, но действительно ускоряет работу: он открывает до 32 одновременных онлайн-сессий и больше настроек для вашего процесса в Hagicode. Загляните в Steam. Очень просим.',
+        }),
+        cta: buildLocalizedPromoteField({
+          'zh-CN': '查看 DLC',
+          'zh-Hant': '查看 DLC',
+          'en-US': 'View DLC',
+          'ja-JP': 'DLC を見る',
+          'ko-KR': 'DLC 보기',
+          'de-DE': 'DLC ansehen',
+          'fr-FR': 'Voir le DLC',
+          'es-ES': 'Ver DLC',
+          'pt-BR': 'Ver DLC',
+          'ru-RU': 'Открыть DLC',
+        }),
         link: 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/',
         targetPlatform: 'steam',
         image: buildImageDescriptorFixture(),
@@ -976,11 +1078,13 @@ async function createValidationFixture({
   const distDir = path.join(tempDir, 'dist');
   const routeSourceDir = path.join(tempDir, 'src', 'data', 'public');
   const srcDataDir = path.join(tempDir, 'src', 'data');
+  const srcLibDir = path.join(tempDir, 'src', 'lib');
   const designVendorDir = path.join(tempDir, 'vendor', 'awesome-design-md', 'design-md');
   const validateScriptPath = path.join(projectRoot, 'scripts', 'validate-catalog.mjs');
   const minifyScriptPath = path.join(projectRoot, 'scripts', 'minify-published-json.mjs');
   const updateScriptPath = path.join(projectRoot, 'scripts', 'update-activity-metrics.mjs');
   const buildScriptPath = path.join(projectRoot, 'scripts', 'build-agent-preset-library.mjs');
+  const desktopLanguageContractPath = path.join(projectRoot, 'src', 'lib', 'desktop-language-contract.ts');
   const soulIndexFixture = buildSoulIndexFixture();
   const traitIndexFixture = buildTraitIndexFixture();
   const characterLibraryFixture = buildCharacterTemplateLibrary({
@@ -994,6 +1098,7 @@ async function createValidationFixture({
   await mkdir(distDir, { recursive: true });
   await mkdir(routeSourceDir, { recursive: true });
   await mkdir(srcDataDir, { recursive: true });
+  await mkdir(srcLibDir, { recursive: true });
   await mkdir(designVendorDir, { recursive: true });
   await mkdir(path.join(distDir, 'agent-templates', 'trait', 'templates'), { recursive: true });
   await mkdir(path.join(distDir, 'agent-templates', 'soul', 'templates'), { recursive: true });
@@ -1023,6 +1128,11 @@ async function createValidationFixture({
   await writeFile(
     path.join(scriptsDir, 'build-agent-preset-library.mjs'),
     await readFile(buildScriptPath, 'utf8'),
+    'utf8',
+  );
+  await writeFile(
+    path.join(srcLibDir, 'desktop-language-contract.ts'),
+    await readFile(desktopLanguageContractPath, 'utf8'),
     'utf8',
   );
   const managedIndexFixture = JSON.stringify({
@@ -1342,39 +1452,44 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.equal(Date.parse(mainPromotion.endTime), Date.parse(eaPromotion.startTime));
   assert.equal(plusPromotion?.on, false);
   assert.equal(turboPromotion?.on, false);
-  assert.match(mainPromotionContent?.description.zh, /Vibe Coding/);
-  assert.match(mainPromotionContent?.description.zh, /求求了/);
-  assert.doesNotMatch(mainPromotionContent?.description.zh ?? '', /游戏将于/);
-  assert.equal(eaPromotionContent?.title.zh, '终于上架 EA 啦');
-  assert.equal(eaPromotionContent?.title.en, 'Early Access Is Finally Here');
-  assert.match(eaPromotionContent?.description.zh ?? '', /steam/i);
-  assert.match(eaPromotionContent?.description.zh ?? '', /EA|抢先体验/);
-  assert.match(eaPromotionContent?.description.zh ?? '', /呜呜呜/);
-  assert.match(eaPromotionContent?.description.zh ?? '', /求求了/);
-  assert.match(eaPromotionContent?.description.en ?? '', /Steam/);
-  assert.match(eaPromotionContent?.description.en ?? '', /Early Access|EA/);
-  assert.match(eaPromotionContent?.description.en ?? '', /Sob/);
-  assert.match(eaPromotionContent?.description.en ?? '', /Pretty please/);
-  assert.equal(mainPromotionContent?.cta.zh, '加入愿望单');
-  assert.equal(mainPromotionContent?.cta.en, 'Wishlist on Steam');
+  assert.deepEqual(Object.keys(mainPromotionContent?.title ?? {}).sort(), supportedPromotoLocales);
+  assert.deepEqual(Object.keys(mainPromotionContent?.description ?? {}).sort(), supportedPromotoLocales);
+  assert.deepEqual(Object.keys(mainPromotionContent?.cta ?? {}).sort(), supportedPromotoLocales);
+  assert.match(mainPromotionContent?.description['zh-CN'], /Vibe Coding/);
+  assert.match(mainPromotionContent?.description['zh-CN'], /求求了/);
+  assert.doesNotMatch(mainPromotionContent?.description['zh-CN'] ?? '', /游戏将于/);
+  assert.equal(eaPromotionContent?.title['zh-CN'], '终于上架 EA 啦');
+  assert.equal(eaPromotionContent?.title['en-US'], 'Early Access Is Finally Here');
+  assert.equal(eaPromotionContent?.title['ja-JP'], 'ついに早期アクセス開始');
+  assert.match(eaPromotionContent?.description['zh-CN'] ?? '', /steam/i);
+  assert.match(eaPromotionContent?.description['zh-CN'] ?? '', /EA|抢先体验/);
+  assert.match(eaPromotionContent?.description['zh-CN'] ?? '', /呜呜呜/);
+  assert.match(eaPromotionContent?.description['zh-CN'] ?? '', /求求了/);
+  assert.match(eaPromotionContent?.description['en-US'] ?? '', /Steam/);
+  assert.match(eaPromotionContent?.description['en-US'] ?? '', /Early Access|EA/);
+  assert.match(eaPromotionContent?.description['en-US'] ?? '', /Sob/);
+  assert.match(eaPromotionContent?.description['en-US'] ?? '', /Pretty please/);
+  assert.equal(mainPromotionContent?.cta['zh-CN'], '加入愿望单');
+  assert.equal(mainPromotionContent?.cta['en-US'], 'Wishlist on Steam');
   assert.equal(typeof mainPromotionContent?.image.src, 'string');
   assert.equal(Number.isInteger(mainPromotionContent?.image.width), true);
   assert.equal(Number.isInteger(mainPromotionContent?.image.height), true);
   assert.equal(typeof mainPromotionContent?.image.format, 'string');
-  assert.equal(typeof mainPromotionContent?.image.alt, 'string');
-  assert.equal(eaPromotionContent?.cta.zh, '查看抢先体验');
-  assert.equal(eaPromotionContent?.cta.en, 'View Early Access');
+  assert.equal(mainPromotionContent?.image.alt, 'HagiCode Steam store capsule artwork');
+  assert.equal(eaPromotionContent?.cta['zh-CN'], '查看抢先体验');
+  assert.equal(eaPromotionContent?.cta['en-US'], 'View Early Access');
+  assert.equal(eaPromotionContent?.image.alt, 'HagiCode Early Access Steam artwork');
   assert.equal(eaPromotionContent?.link, 'https://store.steampowered.com/app/4625540/Hagicode/');
   assert.equal(eaPromotionContent?.targetPlatform, 'steam');
-  assert.match(plusPromotionContent?.description.zh, /15% off/);
-  assert.match(plusPromotionContent?.description.zh, /呜呜呜/);
-  assert.equal(plusPromotionContent?.cta.zh, '查看套装');
-  assert.equal(plusPromotionContent?.cta.en, 'View Bundle');
+  assert.match(plusPromotionContent?.description['zh-CN'], /15% off/);
+  assert.match(plusPromotionContent?.description['zh-CN'], /呜呜呜/);
+  assert.equal(plusPromotionContent?.cta['zh-CN'], '查看套装');
+  assert.equal(plusPromotionContent?.cta['en-US'], 'View Bundle');
   assert.equal(plusPromotionContent?.link, 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/');
-  assert.match(turboPromotionContent?.description.zh, /32/);
-  assert.match(turboPromotionContent?.description.zh, /求求了/);
-  assert.equal(turboPromotionContent?.cta.zh, '查看 DLC');
-  assert.equal(turboPromotionContent?.cta.en, 'View DLC');
+  assert.match(turboPromotionContent?.description['zh-CN'], /32/);
+  assert.match(turboPromotionContent?.description['zh-CN'], /求求了/);
+  assert.equal(turboPromotionContent?.cta['zh-CN'], '查看 DLC');
+  assert.equal(turboPromotionContent?.cta['en-US'], 'View DLC');
   assert.equal(turboPromotionContent?.link, 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/');
 });
 
@@ -1402,14 +1517,21 @@ test('catalog validation rejects malformed promotion cta maps', async () => {
       mutate(promoteContent) {
         promoteContent.contents[0].cta = 'Wishlist';
       },
-      expected: /Promote content\[0\] cta must be an object when present\./,
+      expected: /Promote content\[0\] cta must be an object\./,
     },
     {
       label: 'blank cta value',
       mutate(promoteContent) {
-        promoteContent.contents[0].cta.zh = '   ';
+        promoteContent.contents[0].cta['zh-CN'] = '   ';
       },
-      expected: /Promote content\[0\] cta\.zh must be a non-empty string when present\./,
+      expected: /Promote content\[0\] cta\.zh-CN is required\./,
+    },
+    {
+      label: 'missing desktop locale',
+      mutate(promoteContent) {
+        delete promoteContent.contents[0].title['ja-JP'];
+      },
+      expected: /Promote content\[0\] title locales must match Desktop supported language codes\./,
     },
   ];
 
