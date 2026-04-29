@@ -3,10 +3,12 @@ import Analytics51LA from '@/components/51LAAnalytics.astro';
 import IndexFooter from '@/components/IndexFooter.astro';
 import PortalHero from '@/components/PortalHero.astro';
 import PortalSiteCard from '@/components/PortalSiteCard.astro';
+import { formatI18n, getLocaleNamespace, getString } from '@/i18n/runtime';
 import { loadIndexCatalog } from '@/lib/load-index-catalog';
 import { loadSitesCatalog } from '@/lib/load-sites-catalog';
 import '@/styles/global.css';
 
+const copy = getLocaleNamespace('hagindex');
 const sitesCatalog = await loadSitesCatalog();
 const indexCatalog = await loadIndexCatalog();
 const groupedEntries = sitesCatalog.groups.map((group) => ({
@@ -23,94 +25,80 @@ const portalGeneratedLabel = new Intl.DateTimeFormat('zh-CN', {
 }).format(new Date(sitesCatalog.generatedAt));
 const dataEntryLinks = [
   {
-    title: 'Steam 成就页面',
-    description: '面向开发者浏览的成就目录、图标预览和稳定公开路径。',
+    id: 'steamAchievements',
     href: '/steam/achievements/',
   },
   {
-    title: '站点导航 JSON',
-    description: '供其他站点页脚与工具站同步站群清单。',
+    id: 'sitesJson',
     href: '/sites.json',
   },
   {
-    title: '目录索引 JSON',
-    description: '公开索引目录与状态元数据。',
+    id: 'indexCatalog',
     href: '/index-catalog.json',
   },
   {
-    title: '活动指标 JSON',
-    description: '主站运行时消费的首页活动统计数据。',
+    id: 'activityMetrics',
     href: '/activity-metrics.json',
   },
   {
-    title: '直播入口 JSON',
-    description: '站内直播入口与公开直播元数据。',
+    id: 'liveBroadcast',
     href: '/live-broadcast.json',
   },
   {
-    title: 'Steam 成就 JSON',
-    description: 'Steamworks 后台配置用的成就清单、里程碑参数与图标路径。',
+    id: 'steamAchievementsJson',
     href: '/steam/achievements.json',
   },
   {
-    title: '设计目录 JSON',
-    description: 'awesome-design-md 的公开目录入口。',
+    id: 'design',
     href: '/design.json',
   },
   {
-    title: '法律文档 JSON',
-    description: '公开法律文档元数据与落地页映射。',
+    id: 'legalDocuments',
     href: '/legal-documents.json',
   },
   {
-    title: 'Desktop 版本历史',
-    description: '可抓取的桌面端历史页与下载入口。',
+    id: 'desktopHistory',
     href: '/desktop/history/',
   },
   {
-    title: 'Server 版本历史',
-    description: '可抓取的服务端历史页与索引入口。',
+    id: 'serverHistory',
     href: '/server/history/',
   },
 ];
 const operatingSurfaces = [
   {
-    title: '门户入口',
+    id: 'portal',
     href: '/',
-    label: 'portal',
   },
   {
-    title: '数据镜像',
+    id: 'mirror',
     href: '/data/',
-    label: 'mirror',
   },
   {
-    title: '版本历史',
+    id: 'history',
     href: '/desktop/history/',
-    label: 'history',
   },
   {
-    title: '运营检查',
+    id: 'review',
     href: '/promoto',
-    label: 'review',
   },
 ] as const;
 const routeSignals = [
   {
-    title: '站点清单快照',
+    id: 'siteSnapshot',
     value: portalGeneratedLabel,
   },
   {
-    title: '公开索引规模',
+    id: 'publicIndexScale',
     value: String(indexCatalog.entries.length),
   },
   {
-    title: '稳定入口总数',
+    id: 'stableRouteCount',
     value: String(dataEntryLinks.length),
   },
 ] as const;
-const pageTitle = 'HagiCode Portal';
-const pageDescription = 'HagiCode 站点导航门户，集中收纳主站、文档、数据镜像与独立工具站点。';
+const pageTitle = getString(copy, 'metadata.title');
+const pageDescription = getString(copy, 'metadata.description');
 const canonicalUrl = 'https://index.hagicode.com/';
 ---
 
@@ -133,13 +121,13 @@ const canonicalUrl = 'https://index.hagicode.com/';
       <header class="site-header">
         <a class="brand-mark" href="/">H</a>
         <div>
-          <p class="brand-name">HagiCode Portal</p>
-          <p class="brand-subtitle">Site navigation and public data handoff</p>
+          <p class="brand-name">{getString(copy, 'header.brandName')}</p>
+          <p class="brand-subtitle">{getString(copy, 'header.brandSubtitle')}</p>
         </div>
-        <nav class="site-header-actions" aria-label="门户快捷入口">
-          <a class="header-link" href="/data/">数据页</a>
-          <a class="header-link" href="/sites.json" target="_blank" rel="noreferrer">站点 JSON</a>
-          <a class="header-link" href="/index-catalog.json" target="_blank" rel="noreferrer">查看目录 JSON</a>
+        <nav class="site-header-actions" aria-label={getString(copy, 'header.navAria')}>
+          <a class="header-link" href="/data/">{getString(copy, 'header.nav.dataPage')}</a>
+          <a class="header-link" href="/sites.json" target="_blank" rel="noreferrer">{getString(copy, 'header.nav.sitesJson')}</a>
+          <a class="header-link" href="/index-catalog.json" target="_blank" rel="noreferrer">{getString(copy, 'header.nav.catalogJson')}</a>
         </nav>
       </header>
 
@@ -159,8 +147,8 @@ const canonicalUrl = 'https://index.hagicode.com/';
         <section class="portal-section portal-surface-section" aria-labelledby="portal-surface-heading">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Control surface</p>
-              <h2 id="portal-surface-heading">把 Index 划成四条主线</h2>
+              <p class="eyebrow">{getString(copy, 'sections.surface.eyebrow')}</p>
+              <h2 id="portal-surface-heading">{getString(copy, 'sections.surface.title')}</h2>
             </div>
           </div>
 
@@ -168,25 +156,25 @@ const canonicalUrl = 'https://index.hagicode.com/';
             {operatingSurfaces.map((surface) => (
               <article class="portal-surface-card">
                 <div class="portal-site-topline">
-                  <p class="card-category">{surface.label}</p>
-                  <span class="status-badge">always on</span>
+                  <p class="card-category">{getString(copy, `surfaceCards.${surface.id}.label`)}</p>
+                  <span class="status-badge">{getString(copy, `surfaceCards.${surface.id}.status`)}</span>
                 </div>
                 <div class="portal-site-copy">
-                  <h3>{surface.title}</h3>
+                  <h3>{getString(copy, `surfaceCards.${surface.id}.title`)}</h3>
                 </div>
                 <div class="card-actions">
                   <a class="button button-secondary" href={surface.href}>
-                    打开入口
+                    {getString(copy, `surfaceCards.${surface.id}.action`)}
                   </a>
                 </div>
               </article>
             ))}
           </div>
 
-          <div class="portal-snapshot-grid" aria-label="门户快照">
+          <div class="portal-snapshot-grid" aria-label={getString(copy, 'sections.surface.snapshotAria')}>
             {routeSignals.map((signal) => (
               <article class="snapshot-card">
-                <p class="card-category">{signal.title}</p>
+                <p class="card-category">{getString(copy, `routeSignals.${signal.id}`)}</p>
                 <p class="snapshot-value">{signal.value}</p>
               </article>
             ))}
@@ -196,8 +184,8 @@ const canonicalUrl = 'https://index.hagicode.com/';
         <section class="portal-section" aria-labelledby="portal-data-heading">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Public data</p>
-              <h2 id="portal-data-heading">数据入口导航</h2>
+              <p class="eyebrow">{getString(copy, 'sections.data.eyebrow')}</p>
+              <h2 id="portal-data-heading">{getString(copy, 'sections.data.title')}</h2>
             </div>
           </div>
 
@@ -205,22 +193,27 @@ const canonicalUrl = 'https://index.hagicode.com/';
             {dataEntryLinks.map((entry) => (
               <article class="portal-site-card">
                 <div class="portal-site-topline">
-                  <p class="card-category">data</p>
-                  <span class="status-badge">stable route</span>
+                  <p class="card-category">{getString(copy, 'dataCategory')}</p>
+                  <span class="status-badge">{getString(copy, 'stableRouteBadge')}</span>
                 </div>
 
                 <div class="portal-site-copy">
-                  <h3>{entry.title}</h3>
-                  <p>{entry.description}</p>
+                  <h3>{getString(copy, `dataEntries.${entry.id}.title`)}</h3>
+                  <p>{getString(copy, `dataEntries.${entry.id}.description`)}</p>
                 </div>
 
                 <p class="portal-site-domain">
                   <code>{entry.href}</code>
                 </p>
 
-                <div class="card-actions" aria-label={`${entry.title} 操作`}>
+                <div
+                  class="card-actions"
+                  aria-label={formatI18n(getString(copy, 'siteCard.actionAriaTemplate'), {
+                    title: getString(copy, `dataEntries.${entry.id}.title`),
+                  })}
+                >
                   <a class="button button-primary" href={entry.href}>
-                    打开入口
+                    {getString(copy, 'surfaceCards.portal.action')}
                   </a>
                 </div>
               </article>
@@ -231,8 +224,8 @@ const canonicalUrl = 'https://index.hagicode.com/';
         <section class="portal-section" aria-labelledby="portal-sites-heading">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Portal sites</p>
-              <h2 id="portal-sites-heading">站点入口</h2>
+              <p class="eyebrow">{getString(copy, 'sections.sites.eyebrow')}</p>
+              <h2 id="portal-sites-heading">{getString(copy, 'sections.sites.title')}</h2>
             </div>
           </div>
 

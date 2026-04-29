@@ -1,5 +1,6 @@
 ---
 import type { SitesCatalogEntry } from '@/lib/load-sites-catalog';
+import { getLocaleNamespace, getString } from '@/i18n/runtime';
 
 interface Props {
   siteCount: number;
@@ -24,15 +25,16 @@ const {
   sitesJsonPath,
   catalogPath,
 } = Astro.props;
+const copy = getLocaleNamespace('hagindex');
 ---
 
 <section class="hero-panel portal-hero" aria-labelledby="portal-hero-heading">
   <div class="hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow">index.hagicode.com</p>
+      <p class="eyebrow">{getString(copy, 'hero.eyebrow')}</p>
       <div>
-        <p class="hero-kicker">Site switchboard</p>
-        <h1 id="portal-hero-heading">HagiCode Index 站群总控台</h1>
+        <p class="hero-kicker">{getString(copy, 'hero.kicker')}</p>
+        <h1 id="portal-hero-heading">{getString(copy, 'hero.title')}</h1>
       </div>
 
       <div class="hero-actions">
@@ -42,63 +44,63 @@ const {
           </a>
         ))}
         <a class="button button-secondary" href={dataPagePath}>
-          打开数据镜像
+          {getString(copy, 'hero.actions.dataMirror')}
         </a>
         <a class="button button-tertiary" href={sitesJsonPath} target="_blank" rel="noreferrer">
-          站点清单 JSON
+          {getString(copy, 'hero.actions.sitesJson')}
         </a>
       </div>
 
-      <div class="hero-route-strip" aria-label="首页重点出口">
+      <div class="hero-route-strip" aria-label={getString(copy, 'hero.routesAria')}>
         <a class="hero-route-chip" href={catalogPath} target="_blank" rel="noreferrer">
-          <span>目录索引</span>
+          <span>{getString(copy, 'hero.routes.catalog')}</span>
           <code>/index-catalog.json</code>
         </a>
         <a class="hero-route-chip" href="/desktop/history/">
-          <span>Desktop 历史页</span>
+          <span>{getString(copy, 'hero.routes.desktopHistory')}</span>
           <code>/desktop/history/</code>
         </a>
         <a class="hero-route-chip" href="/server/history/">
-          <span>Server 历史页</span>
+          <span>{getString(copy, 'hero.routes.serverHistory')}</span>
           <code>/server/history/</code>
         </a>
         <a class="hero-route-chip" href="/promoto">
-          <span>Promoto 展示台</span>
+          <span>{getString(copy, 'hero.routes.promoto')}</span>
           <code>/promoto</code>
         </a>
       </div>
     </div>
 
     <div class="hero-aside">
-      <dl class="hero-metrics" aria-label="门户概览">
+      <dl class="hero-metrics" aria-label={getString(copy, 'hero.metricsAria')}>
         <div>
-          <dt>站点入口</dt>
+          <dt>{getString(copy, 'hero.metrics.siteCount')}</dt>
           <dd>{siteCount}</dd>
         </div>
         <div>
-          <dt>站群分组</dt>
+          <dt>{getString(copy, 'hero.metrics.groupCount')}</dt>
           <dd>{groupCount}</dd>
         </div>
         <div>
-          <dt>公开索引</dt>
+          <dt>{getString(copy, 'hero.metrics.publicIndexCount')}</dt>
           <dd>{publicIndexCount}</dd>
         </div>
         <div>
-          <dt>稳定路由</dt>
+          <dt>{getString(copy, 'hero.metrics.routeCount')}</dt>
           <dd>{routeCount}</dd>
         </div>
       </dl>
 
       <article class="hero-signal-card">
-        <p class="card-category">Operational signal</p>
-        <h2>入口 / JSON / 历史</h2>
+        <p class="card-category">{getString(copy, 'hero.signal.category')}</p>
+        <h2>{getString(copy, 'hero.signal.title')}</h2>
         <div class="hero-signal-meta">
           <div>
-            <p class="signal-label">交付方式</p>
-            <p class="signal-value">静态发布</p>
+            <p class="signal-label">{getString(copy, 'hero.signal.deliveryLabel')}</p>
+            <p class="signal-value">{getString(copy, 'hero.signal.deliveryValue')}</p>
           </div>
           <div>
-            <p class="signal-label">站点快照</p>
+            <p class="signal-label">{getString(copy, 'hero.signal.snapshotLabel')}</p>
             <p class="signal-value">{generatedAtLabel}</p>
           </div>
         </div>

@@ -481,8 +481,12 @@
   .history-release-summary,
   .history-file-meta,
   .promoto-count-status,
-  .promoto-description-en,
-  .promoto-title-en,
+  .promoto-filter-help,
+  .promoto-locale-summary,
+  .promoto-locale-status,
+  .promoto-current-locale-label,
+  .promoto-selected-locale-code,
+  .promoto-selected-locale-description,
   .promoto-state p,
   .snapshot-card p:not(.snapshot-value) {
     color: var(--muted);
@@ -1368,7 +1372,7 @@
   .promoto-filters {
     padding: 18px;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(260px, 0.9fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
     align-items: end;
   }
@@ -1385,6 +1389,16 @@
   .promoto-filter-group legend {
     width: 100%;
     margin-bottom: 4px;
+  }
+
+  .promoto-locale-switcher {
+    grid-column: 1 / -1;
+  }
+
+  .promoto-locale-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .promoto-filter-option {
@@ -1436,7 +1450,36 @@
     cursor: not-allowed;
   }
 
+  .promoto-locale-option span {
+    min-width: 156px;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .promoto-locale-option strong,
+  .promoto-locale-option small {
+    display: block;
+    line-height: 1.2;
+  }
+
+  .promoto-locale-option small {
+    color: inherit;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .promoto-filter-help {
+    width: 100%;
+    margin: 2px 0 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
   .promoto-search-field {
+    grid-column: 1 / -1;
     display: grid;
     gap: 8px;
     min-width: 0;
@@ -1555,6 +1598,85 @@
     font-size: clamp(1.9rem, 4vw, 2.7rem);
     font-weight: 800;
     line-height: 0.96;
+  }
+
+  .promoto-count-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+  }
+
+  .promoto-locale-status {
+    overflow-wrap: anywhere;
+  }
+
+  .promoto-current-locale-label {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .promoto-selected-locale {
+    display: grid;
+    gap: 14px;
+    padding: 18px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(250, 255, 105, 0.14);
+    background:
+      radial-gradient(circle at top left, rgba(250, 255, 105, 0.12), transparent 32%),
+      rgba(16, 16, 16, 0.94);
+  }
+
+  .promoto-selected-locale-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .promoto-selected-locale-name,
+  .promoto-selected-locale-code,
+  .promoto-selected-locale-description {
+    margin: 0;
+  }
+
+  .promoto-selected-locale-name {
+    font-weight: 700;
+  }
+
+  .promoto-locale-summary {
+    margin: 0;
+  }
+
+  .promoto-selected-locale-code {
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .promoto-selected-locale-short {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(250, 255, 105, 0.16);
+    background: rgba(250, 255, 105, 0.08);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .promoto-selected-locale-description {
+    font-size: 0.98rem;
+    line-height: 1.62;
   }
 
   .promoto-card-meta {
@@ -1736,7 +1858,7 @@
     }
 
     .promoto-filters {
-      grid-template-columns: minmax(300px, 0.95fr) minmax(0, 1.3fr) minmax(320px, 0.8fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .promoto-card-grid {
@@ -1969,6 +2091,7 @@
     .history-latest-meta,
     .activity-summary-grid,
     .promoto-card-grid,
+    .promoto-locale-grid,
     .promoto-card-meta {
       grid-template-columns: 1fr;
     }

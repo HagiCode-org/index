@@ -1,5 +1,6 @@
 ---
 import type { SitesCatalogEntry } from '@/lib/load-sites-catalog';
+import { formatI18n, getLocaleNamespace, getString } from '@/i18n/runtime';
 
 interface Props {
   entry: SitesCatalogEntry;
@@ -7,12 +8,13 @@ interface Props {
 
 const { entry } = Astro.props;
 const hostLabel = new URL(entry.url).hostname;
+const copy = getLocaleNamespace('hagindex');
 ---
 
 <article class="portal-site-card">
   <div class="portal-site-topline">
     <p class="card-category">{entry.label}</p>
-    <span class="status-badge">production</span>
+    <span class="status-badge">{getString(copy, 'siteCard.productionBadge')}</span>
   </div>
 
   <div class="portal-site-copy">
@@ -23,7 +25,7 @@ const hostLabel = new URL(entry.url).hostname;
     <code>{hostLabel}</code>
   </p>
 
-  <div class="card-actions" aria-label={`${entry.title} 操作`}>
+  <div class="card-actions" aria-label={formatI18n(getString(copy, 'siteCard.actionAriaTemplate'), { title: entry.title })}>
     <a class="button button-primary" href={entry.url} target="_blank" rel="noreferrer">
       {entry.actionLabel}
     </a>

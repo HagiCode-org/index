@@ -1,5 +1,12 @@
 ---
 import type { PromoteContentEntry, PromoteContentPayload } from '@/data/promote-content-source';
+import {
+  DEFAULT_DESKTOP_LANGUAGE,
+  DESKTOP_LANGUAGES,
+  type DesktopLanguage,
+  type DesktopLanguageCode,
+} from '@/lib/desktop-language-contract';
+import { formatI18n, getLocaleNamespace, getString } from '@/i18n/runtime';
 
 interface Props {
   readonly entries: PromoteContentPayload['contents'];
@@ -8,22 +15,39 @@ interface Props {
 }
 
 const { entries, payloadMeta, rawPayloadPath } = Astro.props;
+const copy = getLocaleNamespace('promoto');
+const DEFAULT_PROMOTO_LOCALE = DEFAULT_DESKTOP_LANGUAGE;
+const PROMOTO_SELECTED_LOCALE_STORAGE_KEY = 'hagicode.promoto.selected-locale';
 
-const localeLabels = {
-  zh: '中文',
-  en: 'English',
-} as const;
+interface LocalizedBundle {
+  readonly code: DesktopLanguageCode;
+  readonly name: string;
+  readonly nativeName: string;
+  readonly shortLabel: string;
+  readonly title: string;
+  readonly description: string;
+  readonly cta: string;
+}
+
+const languageByCode = new Map<DesktopLanguageCode, DesktopLanguage>(
+  DESKTOP_LANGUAGES.map((language) => [language.code, language]),
+);
 
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === 'string' && value.trim().length > 0;
 
 const getLocalizedField = (
   field: PromoteContentEntry['title'] | PromoteContentEntry['description'] | PromoteContentEntry['cta'],
-  locale: keyof typeof localeLabels,
-  fallbackLabel: string,
+  locale: DesktopLanguageCode,
+  fallbackTemplatePath: string,
 ) => {
   const value = field?.[locale];
-  return isNonEmptyString(value) ? value : `缺少${fallbackLabel}${localeLabels[locale]}文案`;
+  if (isNonEmptyString(value)) {
+    return value;
+  }
+
+  const language = languageByCode.get(locale);
+  return formatI18n(getString(copy, fallbackTemplatePath), { language: language?.nativeName ?? locale });
 };
 
 const hasUsableImage = (entry: PromoteContentEntry) =>
@@ -36,13 +60,16 @@ const hasUsableImage = (entry: PromoteContentEntry) =>
       entry.image.height > 0,
   );
 
-const hasCompleteLocalizedText = (entry: PromoteContentEntry) =>
-  (['zh', 'en'] as const).every(
-    (locale) =>
-      isNonEmptyString(entry.title?.[locale]) &&
-      isNonEmptyString(entry.description?.[locale]) &&
-      isNonEmptyString(entry.cta?.[locale]),
+const getMissingTextLocales = (entry: PromoteContentEntry) =>
+  DESKTOP_LANGUAGES.filter(
+    (language) =>
+      !isNonEmptyString(entry.title?.[language.code]) ||
+      !isNonEmptyString(entry.description?.[language.code]) ||
+      !isNonEmptyString(entry.cta?.[language.code]),
   );
+
+const hasCompleteLocalizedText = (entry: PromoteContentEntry) =>
+  getMissingTextLocales(entry).length === 0;
 
 const getQualityState = (entry: PromoteContentEntry) => {
   if (!hasUsableImage(entry)) {
@@ -55,6 +82,16 @@ const getQualityState = (entry: PromoteContentEntry) => {
 
   return 'complete';
 };
+
+const createLocalizedBundle = (entry: PromoteContentEntry, language: DesktopLanguage): LocalizedBundle => ({
+  code: language.code,
+  name: language.name,
+  nativeName: language.nativeName,
+  shortLabel: language.shortLabel,
+  title: getLocalizedField(entry.title, language.code, 'showcase.card.missing.titleTemplate'),
+  description: getLocalizedField(entry.description, language.code, 'showcase.card.missing.descriptionTemplate'),
+  cta: getLocalizedField(entry.cta, language.code, 'showcase.card.missing.ctaTemplate'),
+});
 
 const platformCounts = Array.from(
   entries.reduce((counts, entry) => {
@@ -74,66 +111,96 @@ const updatedAtLabel = new Intl.DateTimeFormat('zh-CN', {
 }).format(new Date(payloadMeta.updatedAt));
 
 const qualityFilters = [
-  { value: 'all', label: '全部状态', count: entries.length },
-  { value: 'complete', label: '资料完整', count: completeCount },
-  { value: 'missing-image', label: '缺少图片', count: missingImageCount },
-  { value: 'missing-text', label: '缺少文案', count: missingTextCount },
+  { value: 'all', label: getString(copy, 'showcase.filters.quality.all'), count: entries.length },
+  { value: 'complete', label: getString(copy, 'showcase.filters.quality.complete'), count: completeCount },
+  { value: 'missing-image', label: getString(copy, 'showcase.filters.quality.missing-image'), count: missingImageCount },
+  { value: 'missing-text', label: getString(copy, 'showcase.filters.quality.missing-text'), count: missingTextCount },
 ] as const;
+const visibleStatusText = formatI18n(getString(copy, 'showcase.status.visibleTemplate'), {
+  shown: entries.length,
+  total: entries.length,
+});
+const visibleStatusTemplate = getString(copy, 'showcase.status.visibleTemplate');
+const localeStatusTemplate = getString(copy, 'showcase.status.localeTemplate');
+const localeHelperText = formatI18n(getString(copy, 'showcase.filters.localeHelperTemplate'), {
+  count: DESKTOP_LANGUAGES.length,
+});
+const defaultLanguage = languageByCode.get(DEFAULT_PROMOTO_LOCALE);
+const localeStatusText = formatI18n(localeStatusTemplate, {
+  language: defaultLanguage?.nativeName ?? DEFAULT_PROMOTO_LOCALE,
+  locale: DEFAULT_PROMOTO_LOCALE,
+});
 ---
 
-<section class="promoto-showcase" aria-labelledby="promoto-showcase-heading" data-promoto-showcase>
+<section
+  class="promoto-showcase"
+  aria-labelledby="promoto-showcase-heading"
+  data-promoto-showcase
+  data-status-template={visibleStatusTemplate}
+  data-locale-status-template={localeStatusTemplate}
+  data-default-locale={DEFAULT_PROMOTO_LOCALE}
+  data-storage-key={PROMOTO_SELECTED_LOCALE_STORAGE_KEY}
+  data-supported-locales={DESKTOP_LANGUAGES.map((language) => language.code).join('|')}
+>
   <div class="promoto-hero">
     <div class="promoto-hero-copy">
-      <p class="eyebrow">Promoto Gallery</p>
-      <h1 id="promoto-showcase-heading">Promoto 内容展示台</h1>
+      <p class="eyebrow">{getString(copy, 'showcase.hero.eyebrow')}</p>
+      <h1 id="promoto-showcase-heading">{getString(copy, 'showcase.hero.title')}</h1>
+      <p>
+        {formatI18n(getString(copy, 'showcase.hero.descriptionTemplate'), { count: DESKTOP_LANGUAGES.length })}
+      </p>
     </div>
 
-    <dl class="promoto-meta-card" aria-label="Promoto payload metadata">
+    <dl class="promoto-meta-card" aria-label={getString(copy, 'showcase.meta.aria')}>
       <div>
-        <dt>Payload Version</dt>
+        <dt>{getString(copy, 'showcase.meta.payloadVersion')}</dt>
         <dd>{payloadMeta.version}</dd>
       </div>
       <div>
-        <dt>Updated</dt>
+        <dt>{getString(copy, 'showcase.meta.updated')}</dt>
         <dd>{updatedAtLabel}</dd>
       </div>
       <div>
-        <dt>Raw Endpoint</dt>
+        <dt>{getString(copy, 'showcase.meta.localeScope')}</dt>
+        <dd>{DESKTOP_LANGUAGES.map((language) => language.code).join(' · ')}</dd>
+      </div>
+      <div>
+        <dt>{getString(copy, 'showcase.meta.rawEndpoint')}</dt>
         <dd><a href={rawPayloadPath} target="_blank" rel="noreferrer">{rawPayloadPath}</a></dd>
       </div>
     </dl>
   </div>
 
-  <div class="promoto-metrics" aria-label="Promoto summary metrics">
+  <div class="promoto-metrics" aria-label={getString(copy, 'showcase.metrics.aria')}>
     <article class="promoto-metric-card">
-      <span>总条目</span>
+      <span>{getString(copy, 'showcase.metrics.entries')}</span>
       <strong data-promoto-visible-count>{entries.length}</strong>
     </article>
     <article class="promoto-metric-card">
-      <span>平台数</span>
+      <span>{getString(copy, 'showcase.metrics.platforms')}</span>
       <strong>{platformCounts.length}</strong>
-      <small>{platformCounts.map(([platform, count]) => `${platform}:${count}`).join(' · ') || '暂无平台'}</small>
+      <small>{platformCounts.map(([platform, count]) => [platform, count].join(':')).join(' · ') || getString(copy, 'showcase.metrics.noPlatforms')}</small>
     </article>
     <article class="promoto-metric-card">
-      <span>图片覆盖</span>
+      <span>{getString(copy, 'showcase.metrics.imageCoverage')}</span>
       <strong>{imageCount}/{entries.length}</strong>
-      <small>{missingImageCount === 0 ? '完整' : `${missingImageCount} 缺图`}</small>
+      <small>{missingImageCount === 0 ? getString(copy, 'showcase.metrics.full') : formatI18n(getString(copy, 'showcase.metrics.missingImageTemplate'), { count: missingImageCount })}</small>
     </article>
     <article class="promoto-metric-card">
-      <span>文案完整</span>
+      <span>{getString(copy, 'showcase.metrics.localeCoverage')}</span>
       <strong>{completeCount}/{entries.length}</strong>
-      <small>{missingTextCount === 0 ? '完整' : `${missingTextCount} 缺文案`}</small>
+      <small>{missingTextCount === 0 ? formatI18n(getString(copy, 'showcase.metrics.localeCompleteTemplate'), { count: DESKTOP_LANGUAGES.length }) : formatI18n(getString(copy, 'showcase.metrics.missingTextTemplate'), { count: missingTextCount })}</small>
     </article>
   </div>
 
   {entries.length > 0 ? (
     <>
-      <form class="promoto-filters" aria-label="Promoto filters" data-promoto-filters>
+      <form class="promoto-filters" aria-label={getString(copy, 'showcase.filters.aria')} data-promoto-filters>
         <fieldset class="promoto-filter-group">
-          <legend>按平台筛选</legend>
+          <legend>{getString(copy, 'showcase.filters.platformLegend')}</legend>
           <label class="promoto-filter-option">
             <input type="radio" name="promoto-platform" value="all" checked data-promoto-filter="platform" />
-            <span>全部 <strong>{entries.length}</strong></span>
+            <span>{getString(copy, 'showcase.filters.platformAll')} <strong>{entries.length}</strong></span>
           </label>
           {platformCounts.map(([platform, count]) => (
             <label class="promoto-filter-option">
@@ -144,7 +211,7 @@ const qualityFilters = [
         </fieldset>
 
         <fieldset class="promoto-filter-group">
-          <legend>按数据质量筛选</legend>
+          <legend>{getString(copy, 'showcase.filters.qualityLegend')}</legend>
           {qualityFilters.map((filter) => (
             <label class="promoto-filter-option" data-disabled={filter.count === 0 ? 'true' : 'false'}>
               <input
@@ -160,13 +227,39 @@ const qualityFilters = [
           ))}
         </fieldset>
 
+        <fieldset
+          class="promoto-filter-group promoto-locale-switcher"
+          aria-describedby="promoto-locale-helper"
+        >
+          <legend>{getString(copy, 'showcase.filters.localeLegend')}</legend>
+          <div class="promoto-locale-options">
+            {DESKTOP_LANGUAGES.map((language) => (
+              <label class="promoto-filter-option promoto-locale-option">
+                <input
+                  type="radio"
+                  name="promoto-locale"
+                  value={language.code}
+                  checked={language.code === DEFAULT_PROMOTO_LOCALE}
+                  data-promoto-locale-input
+                  data-locale-name={language.nativeName}
+                />
+                <span>
+                  <strong>{language.nativeName}</strong>
+                  <small>{language.code}</small>
+                </span>
+              </label>
+            ))}
+          </div>
+          <p id="promoto-locale-helper" class="promoto-filter-help">{localeHelperText}</p>
+        </fieldset>
+
         <div class="promoto-search-field">
-          <label for="promoto-search">搜索标题、描述、ID 或平台</label>
+          <label for="promoto-search">{getString(copy, 'showcase.filters.searchLabel')}</label>
           <input
             id="promoto-search"
             type="search"
             name="q"
-            placeholder="输入 main-game、Steam、愿望单..."
+            placeholder={getString(copy, 'showcase.filters.searchPlaceholder')}
             autocomplete="off"
             data-promoto-search
           />
@@ -174,33 +267,36 @@ const qualityFilters = [
       </form>
 
       <p class="promoto-count-status" role="status" aria-live="polite" data-promoto-status>
-        当前显示 {entries.length} / {entries.length} 条 Promoto 内容。
+        <span data-promoto-visible-status>{visibleStatusText}</span>
+        <span class="promoto-locale-status" data-promoto-locale-status>{localeStatusText}</span>
       </p>
 
       <div class="promoto-card-grid" data-promoto-grid>
         {entries.map((entry) => {
           const qualityState = getQualityState(entry);
           const imageAvailable = hasUsableImage(entry);
-          const titleZh = getLocalizedField(entry.title, 'zh', '标题');
-          const titleEn = getLocalizedField(entry.title, 'en', '标题');
-          const descriptionZh = getLocalizedField(entry.description, 'zh', '描述');
-          const descriptionEn = getLocalizedField(entry.description, 'en', '描述');
-          const ctaZh = getLocalizedField(entry.cta, 'zh', '按钮');
-          const ctaEn = getLocalizedField(entry.cta, 'en', '按钮');
+          const missingLocales = getMissingTextLocales(entry);
+          const localizedBundles = DESKTOP_LANGUAGES.map((language) => createLocalizedBundle(entry, language));
+          const localizedBundleByCode = Object.fromEntries(
+            localizedBundles.map((bundle) => [bundle.code, bundle]),
+          );
+          const defaultBundle =
+            localizedBundles.find((bundle) => bundle.code === DEFAULT_PROMOTO_LOCALE) ?? localizedBundles[0];
           const platform = isNonEmptyString(entry.targetPlatform) ? entry.targetPlatform : 'unknown';
           const imageAlt = imageAvailable
             ? entry.image.alt
-            : `Promoto entry ${entry.id} is missing an image descriptor`;
-          const searchableText = [
-            entry.id,
-            platform,
-            titleZh,
-            titleEn,
-            descriptionZh,
-            descriptionEn,
-            ctaZh,
-            ctaEn,
-          ].join(' ').toLowerCase();
+            : formatI18n(getString(copy, 'showcase.card.missing.imageLabelTemplate'), { id: entry.id });
+          const searchableText = localizedBundles
+            .reduce(
+              (parts, bundle) => parts.concat(bundle.code, bundle.name, bundle.nativeName, bundle.title, bundle.description, bundle.cta),
+              [entry.id, platform],
+            )
+            .join(' ')
+            .toLowerCase();
+
+          if (!defaultBundle) {
+            return null;
+          }
 
           return (
             <article
@@ -209,6 +305,8 @@ const qualityFilters = [
               data-platform={platform}
               data-quality={qualityState}
               data-search={searchableText}
+              data-promoto-localized-bundles={JSON.stringify(localizedBundleByCode)}
+              data-selected-locale={DEFAULT_PROMOTO_LOCALE}
             >
               <div class="promoto-image-frame" data-missing-image={imageAvailable ? 'false' : 'true'}>
                 {imageAvailable ? (
@@ -222,7 +320,7 @@ const qualityFilters = [
                   />
                 ) : (
                   <div class="promoto-missing-image" role="img" aria-label={imageAlt}>
-                    <strong>Missing Image</strong>
+                    <strong>{getString(copy, 'showcase.card.missing.imageTitle')}</strong>
                     <span>{entry.id}</span>
                   </div>
                 )}
@@ -231,38 +329,73 @@ const qualityFilters = [
               <div class="promoto-card-body">
                 <div class="promoto-card-topline">
                   <span class="promoto-platform-badge">{platform}</span>
-                  <span class={`promoto-quality-badge promoto-quality-${qualityState}`}>
-                    {qualityState === 'complete' ? '资料完整' : qualityState === 'missing-image' ? '缺少图片' : '缺少文案'}
+                  <span class={['promoto-quality-badge', 'promoto-quality-' + qualityState].join(' ')}>
+                    {getString(copy, 'showcase.card.quality.' + qualityState)}
                   </span>
                 </div>
 
                 <div class="promoto-card-copy">
                   <p class="promoto-card-id"><code>{entry.id}</code></p>
-                  <h2>{titleZh}</h2>
-                  <p class="promoto-title-en">{titleEn}</p>
+                  <p class="promoto-current-locale-label">
+                    {getString(copy, 'showcase.card.currentLocaleLabel')}
+                  </p>
+                  <div class="promoto-selected-locale" data-promoto-selected-locale>
+                    <div class="promoto-selected-locale-head">
+                      <div>
+                        <p class="promoto-selected-locale-name" data-promoto-locale-name>
+                          {defaultBundle.nativeName}
+                        </p>
+                        <p class="promoto-selected-locale-code" data-promoto-locale-code>
+                          {defaultBundle.code}
+                        </p>
+                      </div>
+                      <span class="promoto-selected-locale-short" data-promoto-locale-short>
+                        {defaultBundle.shortLabel}
+                      </span>
+                    </div>
+                    <h2 data-promoto-title>{defaultBundle.title}</h2>
+                    <p class="promoto-selected-locale-description" data-promoto-description>
+                      {defaultBundle.description}
+                    </p>
+                  </div>
+                  <p class="promoto-locale-summary">
+                    {formatI18n(getString(copy, 'showcase.card.localeSummaryTemplate'), {
+                      complete: DESKTOP_LANGUAGES.length - missingLocales.length,
+                      total: DESKTOP_LANGUAGES.length,
+                    })}
+                    {missingLocales.length > 0
+                      ? ' · ' + formatI18n(getString(copy, 'showcase.card.missingLocalesTemplate'), { locales: missingLocales.map((language) => language.shortLabel).join(' / ') })
+                      : ' · ' + getString(copy, 'showcase.card.allLocalesComplete')}
+                  </p>
                 </div>
 
                 <dl class="promoto-card-meta">
                   <div>
-                    <dt>CTA</dt>
-                    <dd>{ctaZh} / {ctaEn}</dd>
+                    <dt>{getString(copy, 'showcase.card.meta.locales')}</dt>
+                    <dd>{DESKTOP_LANGUAGES.length}</dd>
                   </div>
                   <div>
-                    <dt>Image</dt>
+                    <dt>{getString(copy, 'showcase.card.meta.image')}</dt>
                     <dd>
                       {imageAvailable
-                        ? `${entry.image.width} x ${entry.image.height} ${entry.image.format.toUpperCase()}`
-                        : 'No image descriptor available'}
+                        ? [entry.image.width, 'x', entry.image.height, entry.image.format.toUpperCase()].join(' ')
+                        : getString(copy, 'showcase.card.meta.noImage')}
                     </dd>
                   </div>
                 </dl>
 
                 <div class="promoto-card-actions">
-                  <a class="button button-primary" href={entry.link} target="_blank" rel="noreferrer">
-                    {ctaZh}
+                  <a
+                    class="button button-primary"
+                    href={entry.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-promoto-primary-action
+                  >
+                    {defaultBundle.cta}
                   </a>
                   <a class="button button-secondary" href={rawPayloadPath} target="_blank" rel="noreferrer">
-                    查看 JSON
+                    {getString(copy, 'showcase.card.jsonAction')}
                   </a>
                 </div>
               </div>
@@ -272,12 +405,12 @@ const qualityFilters = [
       </div>
 
       <div class="promoto-state promoto-no-results" role="status" aria-live="polite" hidden data-promoto-no-results>
-        <strong>没有匹配的 Promoto 条目</strong>
+        <strong>{getString(copy, 'showcase.states.noResults')}</strong>
       </div>
     </>
   ) : (
     <div class="promoto-state" role="status" aria-live="polite">
-      <strong>Promoto payload 为空</strong>
+      <strong>{getString(copy, 'showcase.states.emptyPayload')}</strong>
     </div>
   )}
 </section>
@@ -289,13 +422,115 @@ const qualityFilters = [
     const cards = Array.from(showcase.querySelectorAll('[data-promoto-card]'));
     const platformFilters = Array.from(showcase.querySelectorAll('[data-promoto-filter="platform"]'));
     const qualityFilters = Array.from(showcase.querySelectorAll('[data-promoto-filter="quality"]'));
+    const localeInputs = Array.from(showcase.querySelectorAll('[data-promoto-locale-input]'));
     const searchInput = showcase.querySelector('[data-promoto-search]');
     const visibleCount = showcase.querySelector('[data-promoto-visible-count]');
-    const status = showcase.querySelector('[data-promoto-status]');
+    const visibleStatus = showcase.querySelector('[data-promoto-visible-status]');
+    const localeStatus = showcase.querySelector('[data-promoto-locale-status]');
     const noResults = showcase.querySelector('[data-promoto-no-results]');
     const totalCount = cards.length;
+    const statusTemplate = showcase.dataset.statusTemplate ?? 'Showing {shown} / {total} Promoto entries.';
+    const localeStatusTemplate = showcase.dataset.localeStatusTemplate ?? 'Current language: {language} ({locale})';
+    const defaultLocale = showcase.dataset.defaultLocale ?? 'zh-CN';
+    const storageKey = showcase.dataset.storageKey ?? 'hagicode.promoto.selected-locale';
+    const supportedLocales = new Set((showcase.dataset.supportedLocales ?? '').split('|').filter(Boolean));
+    const localeBundleCache = new WeakMap();
+    const localeNames = new Map(
+      localeInputs.map((input) => [input.value, input.dataset.localeName ?? input.value]),
+    );
 
     const getCheckedValue = (inputs) => inputs.find((input) => input.checked)?.value ?? 'all';
+    const validateLocale = (value) => (supportedLocales.has(value) ? value : defaultLocale);
+
+    const readStoredLocale = () => {
+      try {
+        return validateLocale(sessionStorage.getItem(storageKey) ?? defaultLocale);
+      } catch {
+        return defaultLocale;
+      }
+    };
+
+    const persistSelectedLocale = (value) => {
+      try {
+        sessionStorage.setItem(storageKey, validateLocale(value));
+      } catch {
+        // Ignore browsers or environments that block sessionStorage.
+      }
+    };
+
+    const getLocalizedBundles = (card) => {
+      const cached = localeBundleCache.get(card);
+      if (cached) {
+        return cached;
+      }
+
+      try {
+        const parsed = JSON.parse(card.dataset.promotoLocalizedBundles ?? '{}');
+        localeBundleCache.set(card, parsed);
+        return parsed;
+      } catch {
+        const fallback = {};
+        localeBundleCache.set(card, fallback);
+        return fallback;
+      }
+    };
+
+    const applySelectedLocale = (locale) => {
+      const nextLocale = validateLocale(locale);
+
+      for (const input of localeInputs) {
+        input.checked = input.value === nextLocale;
+      }
+
+      const localeName = localeNames.get(nextLocale) ?? nextLocale;
+      if (localeStatus) {
+        localeStatus.textContent = localeStatusTemplate
+          .replace('{language}', localeName)
+          .replace('{locale}', nextLocale);
+      }
+
+      for (const card of cards) {
+        const localizedBundles = getLocalizedBundles(card);
+        const bundle = localizedBundles[nextLocale] ?? localizedBundles[defaultLocale];
+        if (!bundle) {
+          continue;
+        }
+
+        card.dataset.selectedLocale = bundle.code ?? nextLocale;
+        const title = card.querySelector('[data-promoto-title]');
+        const description = card.querySelector('[data-promoto-description]');
+        const localeNameElement = card.querySelector('[data-promoto-locale-name]');
+        const localeCodeElement = card.querySelector('[data-promoto-locale-code]');
+        const localeShortElement = card.querySelector('[data-promoto-locale-short]');
+        const primaryAction = card.querySelector('[data-promoto-primary-action]');
+
+        if (title) {
+          title.textContent = bundle.title;
+        }
+
+        if (description) {
+          description.textContent = bundle.description;
+        }
+
+        if (localeNameElement) {
+          localeNameElement.textContent = bundle.nativeName;
+        }
+
+        if (localeCodeElement) {
+          localeCodeElement.textContent = bundle.code;
+        }
+
+        if (localeShortElement) {
+          localeShortElement.textContent = bundle.shortLabel;
+        }
+
+        if (primaryAction) {
+          primaryAction.textContent = bundle.cta;
+        }
+      }
+
+      return nextLocale;
+    };
 
     const updateShowcase = () => {
       const selectedPlatform = getCheckedValue(platformFilters);
@@ -319,8 +554,10 @@ const qualityFilters = [
         visibleCount.textContent = String(shown);
       }
 
-      if (status) {
-        status.textContent = `当前显示 ${shown} / ${totalCount} 条 Promoto 内容。`;
+      if (visibleStatus) {
+        visibleStatus.textContent = statusTemplate
+          .replace('{shown}', String(shown))
+          .replace('{total}', String(totalCount));
       }
 
       if (noResults) {
@@ -333,5 +570,17 @@ const qualityFilters = [
     }
 
     searchInput?.addEventListener('input', updateShowcase);
+    for (const input of localeInputs) {
+      input.addEventListener('change', () => {
+        const nextLocale = validateLocale(input.value);
+        persistSelectedLocale(nextLocale);
+        applySelectedLocale(nextLocale);
+        updateShowcase();
+      });
+    }
+
+    const storedLocale = readStoredLocale();
+    applySelectedLocale(storedLocale);
+    updateShowcase();
   }
 </script>

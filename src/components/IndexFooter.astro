@@ -1,70 +1,53 @@
+---
+import { getLocaleNamespace, getString } from '@/i18n/runtime';
+
+const copy = getLocaleNamespace('hagindex');
+const footerLinks = {
+  portal: [
+    { id: 'home', href: '/', code: '/' },
+    { id: 'data', href: '/data/', code: '/data/' },
+    { id: 'promoto', href: '/promoto', code: '/promoto' },
+  ],
+  json: [
+    { id: 'sites', href: '/sites.json', code: '/sites.json' },
+    { id: 'catalog', href: '/index-catalog.json', code: '/index-catalog.json' },
+    { id: 'about', href: '/about.json', code: '/about.json' },
+    { id: 'design', href: '/design.json', code: '/design.json' },
+  ],
+  history: [
+    { id: 'desktopHistory', href: '/desktop/history/', code: '/desktop/history/' },
+    { id: 'serverHistory', href: '/server/history/', code: '/server/history/' },
+    { id: 'promote', href: '/promote.json', code: '/promote.json' },
+    { id: 'promoteContent', href: '/promote_content.json', code: '/promote_content.json' },
+  ],
+} as const;
+
+const columns = [
+  { id: 'portal', links: footerLinks.portal },
+  { id: 'json', links: footerLinks.json },
+  { id: 'history', links: footerLinks.history },
+] as const;
+---
+
 <footer class="site-footer">
   <div class="footer-grid">
     <div class="footer-intro">
-      <p class="eyebrow">Stable routes</p>
-      <h2>稳定入口</h2>
+      <p class="eyebrow">{getString(copy, 'footer.eyebrow')}</p>
+      <h2>{getString(copy, 'footer.title')}</h2>
     </div>
 
-    <div class="footer-column">
-      <p class="footer-column-title">门户与镜像</p>
-      <nav class="footer-link-list" aria-label="Portal routes">
-        <a class="footer-link" href="/">
-          <span>站点门户</span>
-          <code>/</code>
-        </a>
-        <a class="footer-link" href="/data/">
-          <span>数据页</span>
-          <code>/data/</code>
-        </a>
-        <a class="footer-link" href="/promoto">
-          <span>Promoto 展示台</span>
-          <code>/promoto</code>
-        </a>
-      </nav>
-    </div>
-
-    <div class="footer-column">
-      <p class="footer-column-title">公共 JSON</p>
-      <nav class="footer-link-list" aria-label="JSON routes">
-        <a class="footer-link" href="/sites.json">
-          <span>站点清单</span>
-          <code>/sites.json</code>
-        </a>
-        <a class="footer-link" href="/index-catalog.json">
-          <span>目录索引</span>
-          <code>/index-catalog.json</code>
-        </a>
-        <a class="footer-link" href="/about.json">
-          <span>联系数据</span>
-          <code>/about.json</code>
-        </a>
-        <a class="footer-link" href="/design.json">
-          <span>设计目录</span>
-          <code>/design.json</code>
-        </a>
-      </nav>
-    </div>
-
-    <div class="footer-column">
-      <p class="footer-column-title">版本与推广</p>
-      <nav class="footer-link-list" aria-label="History routes">
-        <a class="footer-link" href="/desktop/history/">
-          <span>Desktop History</span>
-          <code>/desktop/history/</code>
-        </a>
-        <a class="footer-link" href="/server/history/">
-          <span>Server History</span>
-          <code>/server/history/</code>
-        </a>
-        <a class="footer-link" href="/promote.json">
-          <span>Promotion Flags</span>
-          <code>/promote.json</code>
-        </a>
-        <a class="footer-link" href="/promote_content.json">
-          <span>Promotion Content</span>
-          <code>/promote_content.json</code>
-        </a>
-      </nav>
-    </div>
+    {columns.map((column) => (
+      <div class="footer-column">
+        <p class="footer-column-title">{getString(copy, `footer.columns.${column.id}`)}</p>
+        <nav class="footer-link-list" aria-label={getString(copy, `footer.aria.${column.id}`)}>
+          {column.links.map((link) => (
+            <a class="footer-link" href={link.href}>
+              <span>{getString(copy, `footer.links.${link.id}`)}</span>
+              <code>{link.code}</code>
+            </a>
+          ))}
+        </nav>
+      </div>
+    ))}
   </div>
 </footer>
