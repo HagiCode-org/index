@@ -13,10 +13,16 @@ import { validateGeneratedImageDescriptor } from '../scripts/validate-catalog.mj
 const execFileAsync = promisify(execFile);
 const testDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(testDir, '..');
+const nodeCommand = process.execPath;
+const nodeCommandBaseArgs = ['--experimental-strip-types'];
 const steamAchievementSourceFixture = JSON.parse(
   await readFile(path.join(projectRoot, 'src', 'data', 'steam-achievements-source.json'), 'utf8'),
 );
 const supportedPromotoLocales = [...SUPPORTED_DESKTOP_LANGUAGE_CODES].sort();
+
+function execNodeAsync(args, options) {
+  return execFileAsync(nodeCommand, [...nodeCommandBaseArgs, ...args], options);
+}
 
 function buildImageDescriptorFixture({ variant } = {}) {
   return {
@@ -1505,7 +1511,7 @@ test('catalog validation keeps legacy promotion content without cta parseable', 
     promoteContent,
   });
 
-  await execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+  await execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
     cwd: tempDir,
   });
 });
@@ -1546,7 +1552,7 @@ test('catalog validation rejects malformed promotion cta maps', async () => {
 
     await assert.rejects(
       () =>
-        execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
           cwd: tempDir,
         }),
       (error) => {
@@ -1626,7 +1632,7 @@ test('catalog validation rejects invalid generated promote and Steam image descr
 
     await assert.rejects(
       () =>
-        execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
           cwd: tempDir,
         }),
       (error) => {
@@ -1649,7 +1655,7 @@ test('catalog validation fails when an enabled promotion flag does not resolve t
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -1675,7 +1681,7 @@ test('catalog validation fails when a scheduled promotion flag does not resolve 
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -1728,7 +1734,7 @@ test('catalog validation rejects invalid promotion schedule metadata', async () 
 
     await assert.rejects(
       () =>
-        execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+        execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
           cwd: tempDir,
         }),
       (error) => {
@@ -1751,7 +1757,7 @@ test('catalog validation fails when a Steam promoteId does not resolve to promot
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -1773,7 +1779,7 @@ test('catalog validation fails when a Steam bundle references an unknown applica
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -1896,7 +1902,7 @@ test('catalog validation fails when the activity metrics catalog entry drifts fr
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -1919,7 +1925,7 @@ test('catalog validation fails with a clear message when the design vendor submo
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -1945,7 +1951,7 @@ test('catalog validation fails when the live broadcast payload publishes a QR as
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -1993,7 +1999,7 @@ test('catalog validation fails when the design payload drifts from the canonical
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -2044,7 +2050,7 @@ test('catalog validation fails when the design download URL drifts from the cano
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -2072,7 +2078,7 @@ test('catalog validation fails when the about payload leaks a raw source filenam
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -2097,7 +2103,7 @@ test('catalog validation fails when the about payload misses required image meta
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -2122,7 +2128,7 @@ test('catalog validation fails when the about payload misses a region priority m
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -2146,9 +2152,9 @@ test('catalog validation fails when a route-mapped JSON output is pretty printed
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
-    }),
+      }),
     (error) => {
       assert.match(error.stderr, /Published JSON \/index-catalog\.json must be stable minified JSON\./);
       return true;
@@ -2170,7 +2176,7 @@ test('catalog validation fails when copied public JSON output is pretty printed'
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -2194,7 +2200,7 @@ test('catalog validation reports invalid copied public JSON with the published p
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -2224,7 +2230,7 @@ test('published JSON minifier preserves semantics and public paths while leaving
   const beforeCopied = JSON.parse(await readFile(copiedPublishedPath, 'utf8'));
   const beforeRoute = JSON.parse(await readFile(routeMappedPublishedPath, 'utf8'));
 
-  await execFileAsync('node', ['./scripts/minify-published-json.mjs', '--published-root', 'dist'], {
+  await execNodeAsync(['./scripts/minify-published-json.mjs', '--published-root', 'dist'], {
     cwd: tempDir,
   });
 
@@ -2246,7 +2252,7 @@ test('published JSON minifier refuses source-of-truth directories', async () => 
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/minify-published-json.mjs', '--published-root', 'public'], {
+      execNodeAsync(['./scripts/minify-published-json.mjs', '--published-root', 'public'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -2275,7 +2281,7 @@ test('catalog validation fails when a character template references an unknown s
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
@@ -2315,7 +2321,7 @@ test('catalog validation fails when a universal character template still control
 
   await assert.rejects(
     () =>
-      execFileAsync('node', ['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
         cwd: tempDir,
       }),
     (error) => {
