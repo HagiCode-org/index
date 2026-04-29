@@ -2,6 +2,7 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
+import { SUPPORTED_DESKTOP_LANGUAGE_CODES } from '../src/lib/desktop-language-contract.ts';
 import { loadActivityMetrics } from './update-activity-metrics.mjs';
 import {
   buildCharacterTemplateLibrary,
@@ -71,6 +72,7 @@ const promotionContentEntryId = 'promotion-content';
 const steamAchievementsEntryId = 'steam-achievements';
 const explicitTimezoneIsoPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/;
 const supportedCharacterTemplateModes = ['curated', 'universal'];
+const requiredPromotoLocaleCodes = [...SUPPORTED_DESKTOP_LANGUAGE_CODES];
 const requiredPortalSites = new Map([
   ['hagicode-main', 'https://hagicode.com/'],
   ['hagicode-docs', 'https://docs.hagicode.com/'],
@@ -348,6 +350,20 @@ function hasPromotionSchedule(promote) {
   return promote.startTime !== undefined || promote.endTime !== undefined;
 }
 
+function validatePromotoLocalizedField(value, fieldName) {
+  assert(value && typeof value === 'object' && !Array.isArray(value), `${fieldName} must be an object.`);
+
+  const localeKeys = Object.keys(value).sort();
+  assert(
+    isDeepStrictEqual(localeKeys, [...requiredPromotoLocaleCodes].sort()),
+    `${fieldName} locales must match Desktop supported language codes.`,
+  );
+
+  for (const locale of requiredPromotoLocaleCodes) {
+    assert(typeof value[locale] === 'string' && value[locale].trim().length > 0, `${fieldName}.${locale} is required.`);
+  }
+}
+
 function validatePromoteContentContract(payload) {
   assert(payload && typeof payload === 'object' && !Array.isArray(payload), 'Promote content payload must be an object.');
   assert(payload.version === '1.0.0', 'Promote content payload version must be 1.0.0.');
@@ -363,20 +379,11 @@ function validatePromoteContentContract(payload) {
     assert(!seenIds.has(entry.id), `Duplicate promote content id ${entry.id}.`);
     seenIds.add(entry.id);
 
-    assert(entry.title && typeof entry.title === 'object' && !Array.isArray(entry.title), `${fieldName} title must be an object.`);
-    assert(entry.description && typeof entry.description === 'object' && !Array.isArray(entry.description), `${fieldName} description must be an object.`);
-
-    for (const locale of ['zh', 'en']) {
-      assert(typeof entry.title[locale] === 'string' && entry.title[locale].trim().length > 0, `${fieldName} title.${locale} is required.`);
-      assert(typeof entry.description[locale] === 'string' && entry.description[locale].trim().length > 0, `${fieldName} description.${locale} is required.`);
-    }
+    validatePromotoLocalizedField(entry.title, `${fieldName} title`);
+    validatePromotoLocalizedField(entry.description, `${fieldName} description`);
 
     if ('cta' in entry && entry.cta !== undefined) {
-      assert(entry.cta && typeof entry.cta === 'object' && !Array.isArray(entry.cta), `${fieldName} cta must be an object when present.`);
-      for (const [locale, label] of Object.entries(entry.cta)) {
-        assert(typeof locale === 'string' && locale.trim().length > 0, `${fieldName} cta locale keys must be non-empty strings.`);
-        assert(typeof label === 'string' && label.trim().length > 0, `${fieldName} cta.${locale} must be a non-empty string when present.`);
-      }
+      validatePromotoLocalizedField(entry.cta, `${fieldName} cta`);
     }
 
     assert(typeof entry.link === 'string' && entry.link.trim().length > 0, `${fieldName} link is required.`);
