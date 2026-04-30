@@ -314,6 +314,16 @@ npm run build
 - `npm test`：覆盖版本历史归一化、按版本分组文件清单、`files[]` 回退、不可下载文件可见性、route-mapped loader 契约、portal/data 页分流、`/sites.json` 与 `/index-catalog.json` 的职责校验、catalog 漂移检测、活动摘要同步、同日重跑、90 天滚动、pretty JSON 拒绝与 `/about.json` 结构校验。
 - `npm run build`：生成最终静态站点，并再次验证 route-mapped JSON 输出。
 
+## 生产部署
+
+- 权威工作流：`.github/workflows/index-deploy-gh-pages.yml`
+- 生产 source of truth：`gh-pages` 分支，只允许 CI 发布经过验证的 JSON 索引快照
+- 发布 payload 契约：分支根目录保留 `esa.jsonc`，静态站点和 JSON 公开产物统一放在 `dist/`
+- 所需 GitHub 权限：deploy job 需要 `contents: write`
+- 所需托管设置：托管层应读取 `gh-pages/esa.jsonc`，并把 `gh-pages/dist/` 作为发布目录
+- 首次部署检查：确认 `dist/` 内仍包含 `/sites.json`、`/index-catalog.json`、历史页及镜像资产，然后验证 `https://index.hagicode.com`
+- 回滚方式：回退 source 提交或从旧提交重新运行工作流，让 CI 重新发布上一个稳定快照
+
 ## 维护边界
 
 - monorepo 中的 `repos/site` 只是参考实现，不是运行时依赖。
