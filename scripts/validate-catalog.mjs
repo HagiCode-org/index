@@ -735,14 +735,22 @@ function validateSitesCatalogContract(payload) {
   assert(Array.isArray(payload.groups) && payload.groups.length > 0, 'Sites catalog groups must be a non-empty array.');
   assert(Array.isArray(payload.entries) && payload.entries.length > 0, 'Sites catalog entries must be a non-empty array.');
 
+  const assertLocalizedField = (value, fieldName) => {
+    assert(value && typeof value === 'object' && !Array.isArray(value), `${fieldName} must be an object.`);
+
+    for (const locale of SUPPORTED_DESKTOP_LANGUAGE_CODES) {
+      assert(typeof value[locale] === 'string' && value[locale].trim().length > 0, `${fieldName}.${locale} is required.`);
+    }
+  };
+
   const groupIds = new Set();
 
   payload.groups.forEach((group, index) => {
     const fieldName = `Sites group[${index}]`;
     assert(group && typeof group === 'object' && !Array.isArray(group), `${fieldName} must be an object.`);
-    for (const key of ['id', 'label', 'description']) {
-      assert(typeof group[key] === 'string' && group[key].trim().length > 0, `${fieldName} ${key} is required.`);
-    }
+    assert(typeof group.id === 'string' && group.id.trim().length > 0, `${fieldName} id is required.`);
+    assertLocalizedField(group.label, `${fieldName} label`);
+    assertLocalizedField(group.description, `${fieldName} description`);
     assert(!groupIds.has(group.id), `Sites group ${group.id} must be unique.`);
     groupIds.add(group.id);
   });
@@ -753,9 +761,13 @@ function validateSitesCatalogContract(payload) {
   payload.entries.forEach((entry, index) => {
     const fieldName = `Sites entry[${index}]`;
     assert(entry && typeof entry === 'object' && !Array.isArray(entry), `${fieldName} must be an object.`);
-    for (const key of ['id', 'title', 'label', 'description', 'groupId', 'url', 'actionLabel']) {
-      assert(typeof entry[key] === 'string' && entry[key].trim().length > 0, `${fieldName} ${key} is required.`);
-    }
+    assert(typeof entry.id === 'string' && entry.id.trim().length > 0, `${fieldName} id is required.`);
+    assertLocalizedField(entry.title, `${fieldName} title`);
+    assertLocalizedField(entry.label, `${fieldName} label`);
+    assertLocalizedField(entry.description, `${fieldName} description`);
+    assert(typeof entry.groupId === 'string' && entry.groupId.trim().length > 0, `${fieldName} groupId is required.`);
+    assert(typeof entry.url === 'string' && entry.url.trim().length > 0, `${fieldName} url is required.`);
+    assertLocalizedField(entry.actionLabel, `${fieldName} actionLabel`);
     assert(!entryIds.has(entry.id), `Sites entry ${entry.id} must be unique.`);
     entryIds.add(entry.id);
     assert(groupIds.has(entry.groupId), `Sites entry ${entry.id} references unknown groupId ${entry.groupId}.`);
