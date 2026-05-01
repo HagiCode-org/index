@@ -60,14 +60,23 @@ test('loadPackageHistory keeps the existing raw JSON contract for server and des
 
 test('loadSitesCatalog reads the source-side route-mapped portal catalog with canonical production URLs', async () => {
   const sitesCatalog = await loadSitesCatalog();
+  const sitesCatalogEn = await loadSitesCatalog('en-US');
   const mainSiteEntry = sitesCatalog.entries.find((entry) => entry.id === 'hagicode-main');
   const dataMirrorEntry = sitesCatalog.entries.find((entry) => entry.id === 'index-data');
+  const englishGroup = sitesCatalogEn.groups.find((group) => group.id === 'core-sites');
+  const englishMainSiteEntry = sitesCatalogEn.entries.find((entry) => entry.id === 'hagicode-main');
 
   assert.equal(sitesCatalog.groups.length > 0, true);
   assert.ok(mainSiteEntry, 'hagicode-main entry is required.');
   assert.ok(dataMirrorEntry, 'index-data entry is required.');
+  assert.ok(englishGroup, 'english core-sites group is required.');
+  assert.ok(englishMainSiteEntry, 'english hagicode-main entry is required.');
   assert.equal(mainSiteEntry.url, 'https://hagicode.com/');
   assert.equal(dataMirrorEntry.url, 'https://index.hagicode.com/data/');
+  assert.equal(mainSiteEntry.title, 'HagiCode 主站');
+  assert.equal(englishGroup.label, 'Core Sites');
+  assert.equal(englishMainSiteEntry.title, 'HagiCode Main Site');
+  assert.equal(englishMainSiteEntry.actionLabel, 'Open main site');
 });
 
 test('live broadcast route-mapped JSON keeps the canonical schedule contract', async () => {

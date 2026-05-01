@@ -1398,11 +1398,18 @@ test('portal sites catalog exposes the approved production destinations', async 
   const sitesCatalogPath = path.join(projectRoot, 'src', 'data', 'public', 'sites.json');
   const sitesCatalog = JSON.parse(await readFile(sitesCatalogPath, 'utf8'));
   const urlById = new Map(sitesCatalog.entries.map((entry) => [entry.id, entry.url]));
+  const coreGroup = sitesCatalog.groups.find((group) => group.id === 'core-sites');
+  const mainSiteEntry = sitesCatalog.entries.find((entry) => entry.id === 'hagicode-main');
 
   assert.deepEqual(
     sitesCatalog.groups.map((group) => group.id),
     ['core-sites', 'data-and-tools', 'creator-studios'],
   );
+  assert.equal(coreGroup.label['zh-CN'], '核心站点');
+  assert.equal(coreGroup.label['en-US'], 'Core Sites');
+  assert.equal(mainSiteEntry.title['zh-CN'], 'HagiCode 主站');
+  assert.equal(mainSiteEntry.title['en-US'], 'HagiCode Main Site');
+  assert.equal(mainSiteEntry.actionLabel['ja-JP'], '公式サイトを開く');
   assert.equal(urlById.get('hagicode-main'), 'https://hagicode.com/');
   assert.equal(urlById.get('hagicode-docs'), 'https://docs.hagicode.com/');
   assert.equal(urlById.get('newbe-blog'), 'https://newbe.hagicode.com/');

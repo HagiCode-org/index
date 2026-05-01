@@ -25,7 +25,7 @@ test('homepage renders the portal shell and canonical site destinations from /si
   assert.doesNotMatch(homepage, /打开 about JSON/);
 
   for (const entry of sitesCatalog.entries) {
-    assert.match(homepage, new RegExp(entry.title.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')));
+    assert.match(homepage, new RegExp(entry.title['zh-CN'].replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')));
     assert.match(homepage, new RegExp(entry.url.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')));
   }
 });
