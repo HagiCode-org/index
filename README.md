@@ -317,6 +317,7 @@ npm run build
 ## 生产部署
 
 - 权威工作流：`.github/workflows/index-deploy-gh-pages.yml`
+- 镜像同步工作流：`.github/workflows/index-file-sync.yml` 在同步 `server` / `desktop` 索引并提交到 `main` 后，会显式 dispatch `index-deploy-gh-pages.yml`，避免因 Actions bot push 不触发 `on: push` 而漏发版
 - 生产 source of truth：`gh-pages` 分支，只允许 CI 发布经过验证的 JSON 索引快照
 - 发布 payload 契约：分支根目录保留 `esa.jsonc`，静态站点和 JSON 公开产物统一放在 `dist/`
 - 所需 GitHub 权限：deploy job 需要 `contents: write`
