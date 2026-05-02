@@ -4,7 +4,6 @@ import path from 'node:path';
 export const fileBackedRouteMappedJsonPaths = [
   '/index-catalog.json',
   '/sites.json',
-  '/activity-metrics.json',
   '/design.json',
   '/live-broadcast.json',
   '/legal-documents.json',

@@ -62,21 +62,6 @@
       "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/public/character-templates"
     },
     {
-      "id": "activity-metrics",
-      "title": "Activity Metrics",
-      "description": "镜像发布 HagiCode Index 的活跃用户快照与 90 天历史。",
-      "path": "/activity-metrics.json",
-      "category": "analytics",
-      "sourceRepo": "repos/index",
-      "lastUpdated": "2026-05-01T02:00:38.031Z",
-      "status": "published",
-      "activityMetrics": {
-        "activeUsers": 306,
-        "activeSessions": 133,
-        "dateRange": "3Days"
-      }
-    },
-    {
       "id": "about",
       "title": "About",
       "description": "发布 HagiCode 对外联系渠道、社区入口与二维码资源的 canonical JSON 入口。",

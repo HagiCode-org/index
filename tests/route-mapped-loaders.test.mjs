@@ -13,7 +13,6 @@ const supportedPromotoLocales = [...SUPPORTED_DESKTOP_LANGUAGE_CODES].sort();
 test('loadIndexCatalog reads source-side route-mapped catalog with stable published paths', async () => {
   const catalog = await loadIndexCatalog();
   const serverEntry = catalog.entries.find((entry) => entry.id === 'server-packages');
-  const activityEntry = catalog.entries.find((entry) => entry.id === 'activity-metrics');
   const aboutEntry = catalog.entries.find((entry) => entry.id === 'about');
   const designEntry = catalog.entries.find((entry) => entry.id === 'design-theme-catalog');
   const steamDataEntry = catalog.entries.find((entry) => entry.id === 'steam-data');
@@ -22,7 +21,6 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
 
   assert.ok(serverEntry, 'server-packages entry is required.');
-  assert.ok(activityEntry, 'activity-metrics entry is required.');
   assert.ok(aboutEntry, 'about entry is required.');
   assert.ok(designEntry, 'design-theme-catalog entry is required.');
   assert.ok(steamDataEntry, 'steam-data entry is required.');
@@ -31,7 +29,6 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   assert.ok(promotionContentEntry, 'promotion-content entry is required.');
   assert.equal(serverEntry.path, '/server/index.json');
   assert.equal(serverEntry.historyPagePath, '/server/history/');
-  assert.equal(activityEntry.path, '/activity-metrics.json');
   assert.equal(aboutEntry.path, '/about.json');
   assert.equal(designEntry.path, '/design.json');
   assert.equal(steamDataEntry.path, '/steam/index.json');

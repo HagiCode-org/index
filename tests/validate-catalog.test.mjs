@@ -39,39 +39,6 @@ function buildLocalizedPromoteField(values) {
   return { ...values };
 }
 
-function buildActivityMetricsFixture({
-  lastUpdated = '2026-03-24T10:00:00.000Z',
-  pullCount = 123,
-  activeUsers = 7,
-  activeSessions = 11,
-  dateRange = '3Days',
-} = {}) {
-  return {
-    lastUpdated,
-    dockerHub: {
-      repository: 'newbe36524/hagicode',
-      pullCount,
-    },
-    clarity: {
-      activeUsers,
-      activeSessions,
-      dateRange,
-    },
-    history: [
-      {
-        date: lastUpdated,
-        dockerHub: {
-          pullCount,
-        },
-        clarity: {
-          activeUsers,
-          activeSessions,
-        },
-      },
-    ],
-  };
-}
-
 function buildLiveBroadcastFixture() {
   return {
     version: '1.0.0',
@@ -627,11 +594,6 @@ function buildDesignReadmeFixture(theme) {
 function buildCatalogFixture({
   lastUpdated = '2026-03-24T10:00:00.000Z',
   designUpdatedAt = '2026-04-08T00:00:00.000Z',
-  activityMetrics = {
-    activeUsers: 7,
-    activeSessions: 11,
-    dateRange: '3Days',
-  },
 } = {}) {
   return {
     version: '1.0.0',
@@ -646,17 +608,6 @@ function buildCatalogFixture({
         sourceRepo: 'repos/index',
         lastUpdated,
         status: 'published',
-      },
-      {
-        id: 'activity-metrics',
-        title: 'Activity Metrics',
-        description: '镜像发布 HagiCode Index 的活跃用户快照与 90 天历史。',
-        path: '/activity-metrics.json',
-        category: 'analytics',
-        sourceRepo: 'repos/index',
-        lastUpdated,
-        status: 'published',
-        activityMetrics,
       },
       {
         id: 'about',
@@ -725,6 +676,14 @@ function buildCatalogFixture({
   };
 }
 
+function loc(value) {
+  const entry = {};
+  for (const code of SUPPORTED_DESKTOP_LANGUAGE_CODES) {
+    entry[code] = value;
+  }
+  return entry;
+}
+
 function buildSitesCatalogFixture() {
   return {
     version: '1.0.0',
@@ -732,110 +691,110 @@ function buildSitesCatalogFixture() {
     groups: [
       {
         id: 'core-sites',
-        label: '核心站点',
-        description: '项目官网、正式文档与长期内容站点，适合作为进入 HagiCode 生态的主路径。',
+        label: loc('核心站点'),
+        description: loc('项目官网、正式文档与长期内容站点'),
       },
       {
         id: 'data-and-tools',
-        label: '数据与工具',
-        description: '保留公开数据镜像、部署工具、状态页与辅助实验站点，便于核对服务与入口。',
+        label: loc('数据与工具'),
+        description: loc('保留公开数据镜像与部署工具'),
       },
       {
         id: 'creator-studios',
-        label: '创作实验',
-        description: '围绕人格与特质构建的独立体验站点。',
+        label: loc('创作实验'),
+        description: loc('围绕人格与特质构建的独立体验站点'),
       },
     ],
     entries: [
       {
         id: 'hagicode-main',
-        title: 'HagiCode 主站',
-        label: '官网',
-        description: '项目官网、产品介绍与统一入口，适合先了解 HagiCode 的核心定位。',
+        title: loc('HagiCode 主站'),
+        label: loc('官网'),
+        description: loc('项目官网、产品介绍与统一入口'),
         groupId: 'core-sites',
         url: 'https://hagicode.com/',
-        actionLabel: '进入主站',
+        actionLabel: loc('进入主站'),
       },
       {
         id: 'hagicode-docs',
-        title: 'HagiCode Docs',
-        label: '文档',
-        description: '安装指南、产品文档与博客内容的正式发布站点。',
+        title: loc('HagiCode Docs'),
+        label: loc('文档'),
+        description: loc('安装指南、产品文档与博客内容的正式发布站点'),
         groupId: 'core-sites',
         url: 'https://docs.hagicode.com/',
-        actionLabel: '查看文档',
+        actionLabel: loc('查看文档'),
       },
       {
         id: 'newbe-blog',
-        title: 'newbe',
-        label: 'newbe',
-        description: '长期文章与技术沉淀站点，适合补充阅读经验总结、工具思路与实践记录。',
+        title: loc('newbe'),
+        label: loc('newbe'),
+        description: loc('长期文章与技术沉淀站点'),
         groupId: 'core-sites',
         url: 'https://newbe.hagicode.com/',
-        actionLabel: '打开 newbe',
+        actionLabel: loc('打开 newbe'),
       },
       {
         id: 'index-data',
-        title: 'Index Data Mirror',
-        label: '数据镜像',
-        description: '保留旧首页的人类可读数据页，集中展示 catalog、about 与公开 JSON 入口。',
+        title: loc('Index Data Mirror'),
+        label: loc('数据镜像'),
+        description: loc('保留旧首页的人类可读数据页'),
         groupId: 'data-and-tools',
         url: 'https://index.hagicode.com/data/',
-        actionLabel: '打开数据页',
+        actionLabel: loc('打开数据页'),
       },
       {
         id: 'compose-builder',
-        title: 'Docker Compose Builder',
-        label: 'Builder',
-        description: '图形化生成 Docker Compose 配置，适合快速搭建 HagiCode 服务。',
+        title: loc('Docker Compose Builder'),
+        label: loc('Builder'),
+        description: loc('图形化生成 Docker Compose 配置'),
         groupId: 'data-and-tools',
         url: 'https://builder.hagicode.com/',
-        actionLabel: '打开 Builder',
+        actionLabel: loc('打开 Builder'),
       },
       {
         id: 'cost-calculator',
-        title: 'AI Replacement Calculator',
-        label: 'Cost',
-        description: '交互式成本测算工具，用于评估 AI agent 引入后的岗位成本结构与替代风险。',
+        title: loc('AI Replacement Calculator'),
+        label: loc('Cost'),
+        description: loc('交互式成本测算工具'),
         groupId: 'data-and-tools',
         url: 'https://cost.hagicode.com/',
-        actionLabel: '打开 Cost',
+        actionLabel: loc('打开 Cost'),
       },
       {
         id: 'status-page',
-        title: 'HagiCode Status',
-        label: 'Status',
-        description: '公开状态页，集中展示官网、文档、下载索引与其他公开服务的可用性。',
+        title: loc('HagiCode Status'),
+        label: loc('Status'),
+        description: loc('公开状态页'),
         groupId: 'data-and-tools',
         url: 'https://status.hagicode.com/',
-        actionLabel: '查看状态',
+        actionLabel: loc('查看状态'),
       },
       {
         id: 'awesome-design-gallery',
-        title: 'Awesome Design MD',
-        label: 'Design',
-        description: '设计语言画廊站点，收纳设计条目、预览页与 DESIGN.md 细节，便于查找参考。',
+        title: loc('Awesome Design MD'),
+        label: loc('Design'),
+        description: loc('设计语言画廊站点'),
         groupId: 'data-and-tools',
         url: 'https://design.hagicode.com/',
-        actionLabel: '打开 Design',
+        actionLabel: loc('打开 Design'),
       },
       {
         id: 'soul-builder',
-        title: 'Soul Builder',
-        label: 'Soul',
-        description: '面向角色灵魂设定的独立站点，用于组织可复用的人设草稿。',
+        title: loc('Soul Builder'),
+        label: loc('Soul'),
+        description: loc('面向角色灵魂设定的独立站点'),
         groupId: 'creator-studios',
         url: 'https://soul.hagicode.com/',
-        actionLabel: '打开 Soul',
+        actionLabel: loc('打开 Soul'),
       },
       {
         id: 'trait-builder',
-        title: 'Trait Builder',
-        label: 'Trait',
-        description: '面向特质搜索与组合的独立站点，用于构建可检索的 trait 数据。',
+        title: loc('Trait Builder'),
+        label: loc('Trait'),
+        description: loc('面向特质搜索与组合的独立站点'),
         groupId: 'creator-studios',
         url: 'https://trait.hagicode.com/',
-        actionLabel: '打开 Trait',
+        actionLabel: loc('打开 Trait'),
       },
     ],
   };
@@ -1066,7 +1025,6 @@ function buildTraitIndexFixture() {
 
 async function createValidationFixture({
   catalog,
-  activityMetrics,
   sitesCatalog = buildSitesCatalogFixture(),
   liveBroadcast = buildLiveBroadcastFixture(),
   about = buildAboutFixture(),
@@ -1088,7 +1046,6 @@ async function createValidationFixture({
   const designVendorDir = path.join(tempDir, 'vendor', 'awesome-design-md', 'design-md');
   const validateScriptPath = path.join(projectRoot, 'scripts', 'validate-catalog.mjs');
   const minifyScriptPath = path.join(projectRoot, 'scripts', 'minify-published-json.mjs');
-  const updateScriptPath = path.join(projectRoot, 'scripts', 'update-activity-metrics.mjs');
   const buildScriptPath = path.join(projectRoot, 'scripts', 'build-agent-preset-library.mjs');
   const desktopLanguageContractPath = path.join(projectRoot, 'src', 'lib', 'desktop-language-contract.ts');
   const soulIndexFixture = buildSoulIndexFixture();
@@ -1127,11 +1084,6 @@ async function createValidationFixture({
     'utf8',
   );
   await writeFile(
-    path.join(scriptsDir, 'update-activity-metrics.mjs'),
-    await readFile(updateScriptPath, 'utf8'),
-    'utf8',
-  );
-  await writeFile(
     path.join(scriptsDir, 'build-agent-preset-library.mjs'),
     await readFile(buildScriptPath, 'utf8'),
     'utf8',
@@ -1153,7 +1105,6 @@ async function createValidationFixture({
   );
   await writeFile(path.join(routeSourceDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
   await writeFile(path.join(routeSourceDir, 'sites.json'), JSON.stringify(sitesCatalog), 'utf8');
-  await writeFile(path.join(routeSourceDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
   await writeFile(path.join(routeSourceDir, 'design.json'), JSON.stringify(design), 'utf8');
   await writeFile(path.join(routeSourceDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(routeSourceDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
@@ -1164,7 +1115,6 @@ async function createValidationFixture({
   await writeFile(path.join(routeSourceDir, 'steam', 'index.json'), JSON.stringify(steam), 'utf8');
   await writeFile(path.join(distDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
   await writeFile(path.join(distDir, 'sites.json'), JSON.stringify(sitesCatalog), 'utf8');
-  await writeFile(path.join(distDir, 'activity-metrics.json'), JSON.stringify(activityMetrics), 'utf8');
   await writeFile(path.join(distDir, 'design.json'), JSON.stringify(design), 'utf8');
   await writeFile(path.join(distDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(distDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
@@ -1259,7 +1209,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries, 13 route-mapped JSON assets, and \d+ published JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries, 12 route-mapped JSON assets, and \d+ published JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
@@ -1358,7 +1308,6 @@ test('catalog exposes managed server and desktop entries', async () => {
     'desktop-packages',
     'agent-templates',
     'character-templates',
-    'activity-metrics',
     'about',
     'design-theme-catalog',
     'secondary-professions',
@@ -1514,7 +1463,6 @@ test('catalog validation keeps legacy promotion content without cta parseable', 
 
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
     promoteContent,
   });
 
@@ -1553,8 +1501,7 @@ test('catalog validation rejects malformed promotion cta maps', async () => {
     testCase.mutate(promoteContent);
     const tempDir = await createValidationFixture({
       catalog: buildCatalogFixture(),
-      activityMetrics: buildActivityMetricsFixture(),
-      promoteContent,
+        promoteContent,
     });
 
     await assert.rejects(
@@ -1632,8 +1579,7 @@ test('catalog validation rejects invalid generated promote and Steam image descr
     testCase.mutate({ promoteContent, steam });
     const tempDir = await createValidationFixture({
       catalog: buildCatalogFixture(),
-      activityMetrics: buildActivityMetricsFixture(),
-      promoteContent,
+        promoteContent,
       steam,
     });
 
@@ -1656,7 +1602,6 @@ test('catalog validation fails when an enabled promotion flag does not resolve t
 
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
     promote,
   });
 
@@ -1682,7 +1627,6 @@ test('catalog validation fails when a scheduled promotion flag does not resolve 
 
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
     promote,
   });
 
@@ -1735,8 +1679,7 @@ test('catalog validation rejects invalid promotion schedule metadata', async () 
     testCase.mutate(promote);
     const tempDir = await createValidationFixture({
       catalog: buildCatalogFixture(),
-      activityMetrics: buildActivityMetricsFixture(),
-      promote,
+        promote,
     });
 
     await assert.rejects(
@@ -1758,7 +1701,6 @@ test('catalog validation fails when a Steam promoteId does not resolve to promot
 
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
     steam,
   });
 
@@ -1780,7 +1722,6 @@ test('catalog validation fails when a Steam bundle references an unknown applica
 
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
     steam,
   });
 
@@ -1794,22 +1735,6 @@ test('catalog validation fails when a Steam bundle references an unknown applica
       return true;
     },
   );
-});
-
-test('activity metrics catalog entry mirrors the current raw snapshot summary', async () => {
-  const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
-  const activityMetricsPath = path.join(projectRoot, 'src', 'data', 'public', 'activity-metrics.json');
-  const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
-  const activityMetrics = JSON.parse(await readFile(activityMetricsPath, 'utf8'));
-  const activityEntry = catalog.entries.find((entry) => entry.id === 'activity-metrics');
-
-  assert.equal(activityEntry.path, '/activity-metrics.json');
-  assert.equal(activityEntry.lastUpdated, activityMetrics.lastUpdated);
-  assert.deepEqual(activityEntry.activityMetrics, {
-    activeUsers: activityMetrics.clarity.activeUsers,
-    activeSessions: activityMetrics.clarity.activeSessions,
-    dateRange: activityMetrics.clarity.dateRange,
-  });
 });
 
 test('live broadcast source-side contract keeps the stable QR asset and Thursday exclusion', async () => {
@@ -1893,39 +1818,9 @@ test('published universal character template only exposes soul bindings', async 
   assert.deepEqual(detail.traitTemplateIds, []);
 });
 
-test('catalog validation fails when the activity metrics catalog entry drifts from the raw snapshot', async () => {
-  const activityMetrics = buildActivityMetricsFixture();
-  const tempDir = await createValidationFixture({
-    catalog: buildCatalogFixture({
-      lastUpdated: '2026-03-23T10:00:00.000Z',
-      activityMetrics: {
-        activeUsers: 5,
-        activeSessions: 9,
-        dateRange: '3Days',
-      },
-    }),
-    activityMetrics,
-  });
-
-  await assert.rejects(
-    () =>
-      execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
-        cwd: tempDir,
-      }),
-    (error) => {
-      assert.match(
-        error.stderr,
-        /Activity metrics entry lastUpdated must match \/activity-metrics\.json\./,
-      );
-      return true;
-    },
-  );
-});
-
 test('catalog validation fails with a clear message when the design vendor submodule is missing', async () => {
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
   });
 
   await rm(path.join(tempDir, 'vendor'), { recursive: true, force: true });
@@ -1946,7 +1841,6 @@ test('catalog validation fails with a clear message when the design vendor submo
 test('catalog validation fails when the live broadcast payload publishes a QR asset URL', async () => {
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
     liveBroadcast: {
       ...buildLiveBroadcastFixture(),
       qrCode: {
@@ -1971,7 +1865,6 @@ test('catalog validation fails when the live broadcast payload publishes a QR as
 test('catalog validation fails when the design payload drifts from the canonical preview URL pattern', async () => {
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
     design: buildDesignFixture({
       themes: [
         {
@@ -2022,7 +1915,6 @@ test('catalog validation fails when the design payload drifts from the canonical
 test('catalog validation fails when the design download URL drifts from the canonical route', async () => {
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
     design: buildDesignFixture({
       themes: [
         {
@@ -2079,7 +1971,6 @@ test('catalog validation fails when the about payload leaks a raw source filenam
 
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
     about,
   });
 
@@ -2104,7 +1995,6 @@ test('catalog validation fails when the about payload misses required image meta
 
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
     about,
   });
 
@@ -2129,7 +2019,6 @@ test('catalog validation fails when the about payload misses a region priority m
 
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
     about,
   });
 
@@ -2148,7 +2037,6 @@ test('catalog validation fails when the about payload misses a region priority m
 test('catalog validation fails when a route-mapped JSON output is pretty printed', async () => {
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
   });
 
   await writeFile(
@@ -2172,7 +2060,6 @@ test('catalog validation fails when a route-mapped JSON output is pretty printed
 test('catalog validation fails when copied public JSON output is pretty printed', async () => {
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
   });
 
   await writeFile(
@@ -2196,7 +2083,6 @@ test('catalog validation fails when copied public JSON output is pretty printed'
 test('catalog validation reports invalid copied public JSON with the published path', async () => {
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
   });
 
   await writeFile(
@@ -2220,7 +2106,6 @@ test('catalog validation reports invalid copied public JSON with the published p
 test('published JSON minifier preserves semantics and public paths while leaving sources readable', async () => {
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
   });
   const sourcePublicPath = path.join(tempDir, 'public', 'secondary-professions', 'index.json');
   const copiedPublishedPath = path.join(tempDir, 'dist', 'secondary-professions', 'index.json');
@@ -2254,7 +2139,6 @@ test('published JSON minifier preserves semantics and public paths while leaving
 test('published JSON minifier refuses source-of-truth directories', async () => {
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics: buildActivityMetricsFixture(),
   });
 
   await assert.rejects(
@@ -2270,10 +2154,8 @@ test('published JSON minifier refuses source-of-truth directories', async () => 
 });
 
 test('catalog validation fails when a character template references an unknown soul template', async () => {
-  const activityMetrics = buildActivityMetricsFixture();
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics,
   });
 
   const detailPath = path.join(tempDir, 'dist', 'character-templates', 'templates', 'character-one.json');
@@ -2302,10 +2184,8 @@ test('catalog validation fails when a character template references an unknown s
 });
 
 test('catalog validation fails when a universal character template still controls traits', async () => {
-  const activityMetrics = buildActivityMetricsFixture();
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),
-    activityMetrics,
     libraryData: buildCharacterTemplateLibraryFixtureData({
       templateMode: 'universal',
       traitTemplateIds: [],

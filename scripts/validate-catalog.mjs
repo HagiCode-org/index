@@ -3,7 +3,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { SUPPORTED_DESKTOP_LANGUAGE_CODES } from '../src/lib/desktop-language-contract.ts';
-import { loadActivityMetrics } from './update-activity-metrics.mjs';
 import {
   buildCharacterTemplateLibrary,
   coreDungeonScriptKeys,
@@ -24,7 +23,6 @@ const requiredFields = [
 const fileBackedRouteMappedJsonPaths = [
   '/index-catalog.json',
   '/sites.json',
-  '/activity-metrics.json',
   '/design.json',
   '/live-broadcast.json',
   '/legal-documents.json',
@@ -62,7 +60,6 @@ const expectedHistoryPaths = new Map([
   ['server-packages', '/server/history/'],
   ['desktop-packages', '/desktop/history/'],
 ]);
-const activityEntryId = 'activity-metrics';
 const aboutEntryId = 'about';
 const designEntryId = 'design-theme-catalog';
 const agentTemplatesEntryId = 'agent-templates';
@@ -706,28 +703,6 @@ function validateDesignContract(payload) {
   assert(payload.themes.some((theme) => theme.slug === 'x.ai'), 'Design payload must include x.ai.');
 }
 
-function validateActivitySummary(value, fieldName) {
-  assert(value && typeof value === 'object' && !Array.isArray(value), `${fieldName} must be an object.`);
-  assert(
-    Number.isInteger(value.activeUsers) && value.activeUsers >= 0,
-    `${fieldName}.activeUsers must be a non-negative integer.`,
-  );
-  assert(
-    Number.isInteger(value.activeSessions) && value.activeSessions >= 0,
-    `${fieldName}.activeSessions must be a non-negative integer.`,
-  );
-  assert(
-    typeof value.dateRange === 'string' && value.dateRange.trim().length > 0,
-    `${fieldName}.dateRange must be a non-empty string.`,
-  );
-
-  return {
-    activeUsers: value.activeUsers,
-    activeSessions: value.activeSessions,
-    dateRange: value.dateRange,
-  };
-}
-
 function validateSitesCatalogContract(payload) {
   assert(payload && typeof payload === 'object' && !Array.isArray(payload), 'Sites catalog payload must be an object.');
   assert(payload.version === '1.0.0', 'Sites catalog payload version must be 1.0.0.');
@@ -1005,7 +980,6 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
 
   const publishedCatalog = await assertPublishedRoute('/index-catalog.json', publishedRoot);
   validateSitesCatalogContract(await assertPublishedRoute('/sites.json', publishedRoot));
-  await assertPublishedRoute('/activity-metrics.json', publishedRoot);
   const designPayload = await assertPublishedRoute('/design.json', publishedRoot);
   validateDesignContract(designPayload);
   await assertDesignVendorAvailable();
@@ -1044,14 +1018,11 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   }
 
   const catalog = publishedCatalog;
-  const activityMetricsAsset = await loadActivityMetrics(resolveSourcePath('/activity-metrics.json'));
 
   assert(typeof catalog.version === 'string' && catalog.version.length > 0, 'Catalog version is required.');
   assert(typeof catalog.generatedAt === 'string' && catalog.generatedAt.length > 0, 'Catalog generatedAt is required.');
   assert(Array.isArray(catalog.entries), 'Catalog entries must be an array.');
-  assert(activityMetricsAsset, 'Activity metrics asset is required.');
 
-  let sawActivityEntry = false;
   let sawAboutEntry = false;
   let sawDesignEntry = false;
   let sawAgentTemplatesEntry = false;
@@ -1078,10 +1049,6 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
       await access(resolvePublishedPath(entry.readmePath, publishedRoot));
     }
 
-    if (entry.activityMetrics !== undefined) {
-      validateActivitySummary(entry.activityMetrics, `Entry ${entry.id} activityMetrics`);
-    }
-
     if (entry.historyPagePath !== undefined) {
       assert(typeof entry.historyPagePath === 'string', `Entry ${entry.id} historyPagePath must be a string.`);
       assert(entry.category === 'packages', `Entry ${entry.id} historyPagePath is only allowed for package entries.`);
@@ -1097,29 +1064,6 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
           `Entry ${entry.id} historyPagePath must be ${expectedPath}.`,
         );
       }
-    }
-
-    if (entry.id === activityEntryId) {
-      sawActivityEntry = true;
-      assert(entry.path === '/activity-metrics.json', 'Activity metrics entry path must be /activity-metrics.json.');
-      const summary = validateActivitySummary(entry.activityMetrics, `Entry ${entry.id} activityMetrics`);
-
-      assert(
-        entry.lastUpdated === activityMetricsAsset.lastUpdated,
-        'Activity metrics entry lastUpdated must match /activity-metrics.json.',
-      );
-      assert(
-        summary.activeUsers === activityMetricsAsset.clarity.activeUsers,
-        'Activity metrics entry activeUsers must match /activity-metrics.json.',
-      );
-      assert(
-        summary.activeSessions === activityMetricsAsset.clarity.activeSessions,
-        'Activity metrics entry activeSessions must match /activity-metrics.json.',
-      );
-      assert(
-        summary.dateRange === activityMetricsAsset.clarity.dateRange,
-        'Activity metrics entry dateRange must match /activity-metrics.json.',
-      );
     }
 
     if (entry.id === aboutEntryId) {
@@ -1184,7 +1128,6 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
     }
   }
 
-  assert(sawActivityEntry, 'Catalog must include an activity-metrics entry.');
   assert(sawAboutEntry, 'Catalog must include an about entry.');
   assert(sawDesignEntry, 'Catalog must include a design-theme-catalog entry.');
   assert(sawAgentTemplatesEntry, 'Catalog must include an agent-templates entry.');
