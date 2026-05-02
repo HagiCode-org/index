@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: write
   contents: write
 
 # Source-side mirrors only; Astro publishes the stable public routes from these files.
@@ -58,3 +59,9 @@ jobs:
           git add src/data/public/index-catalog.json src/data/public/server/index.json src/data/public/desktop/index.json
           git commit -m "chore(index): sync managed package indexes"
           git push
+
+      - name: Trigger gh-pages deployment workflow
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run index-deploy-gh-pages.yml --ref "${GITHUB_REF_NAME}"
