@@ -12,6 +12,11 @@ export interface IndexCatalogEntry {
   status: string;
   readmePath?: string;
   sourceUrl?: string;
+  activityMetrics?: {
+    activeUsers: number;
+    activeSessions: number;
+    dateRange: string;
+  };
 }
 
 export interface IndexCatalog {
@@ -47,6 +52,30 @@ function optionalString(value: unknown): string | undefined {
   return value;
 }
 
+function optionalActivityMetrics(
+  value: unknown,
+): IndexCatalogEntry['activityMetrics'] {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return undefined;
+  }
+
+  const metrics = value as Record<string, unknown>;
+  if (
+    typeof metrics.activeUsers !== 'number' ||
+    typeof metrics.activeSessions !== 'number' ||
+    typeof metrics.dateRange !== 'string' ||
+    metrics.dateRange.trim().length === 0
+  ) {
+    return undefined;
+  }
+
+  return {
+    activeUsers: metrics.activeUsers,
+    activeSessions: metrics.activeSessions,
+    dateRange: metrics.dateRange,
+  };
+}
+
 function normalizeEntry(rawEntry: unknown): IndexCatalogEntry {
   if (!rawEntry || typeof rawEntry !== 'object') {
     throw new Error('Catalog entry must be an object.');
@@ -70,6 +99,7 @@ function normalizeEntry(rawEntry: unknown): IndexCatalogEntry {
     status: String(entry.status),
     readmePath: optionalString(entry.readmePath),
     sourceUrl: optionalString(entry.sourceUrl),
+    activityMetrics: optionalActivityMetrics(entry.activityMetrics),
   };
 }
 
