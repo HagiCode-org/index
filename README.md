@@ -26,9 +26,19 @@
 HagIndex 使用 hagi18n 风格的 YAML 源文件维护门户、页脚、Promoto 展示页与 `/promote_content.json` 的人类可读文案。
 
 - 配置文件：`hagi18n.yaml`
+- 29 语言 published-content locale source of truth：`src/i18n/locale-metadata.ts`
+- 站点参考实现：`../site/src/i18n/locale-metadata.ts`（仅用于对齐，不作为运行时依赖）
 - YAML 源目录：`src/i18n/locales/<locale>/`
 - 必需 namespace：`hagindex.yml`、`promoto.yml`、`promote-content.yml`
 - 生成产物：`src/i18n/generated-locales/<locale>/<namespace>.json`
+
+当前 published-content locale catalog 与 `repos/site` 保持 29 个 canonical locale 对齐，并显式维护 canonical code、native label、short label、alias 与 fallback chain。维护者在新增或调整 locale 时，必须同步更新：
+
+1. `src/i18n/locale-metadata.ts`
+2. `src/i18n/config.ts`
+3. `hagi18n.yaml`
+4. `src/i18n/locales/<locale>/`
+5. `src/i18n/generated-locales/<locale>/`（通过 `npm run i18n:generate` 生成）
 
 `generated-locales` 是构建前生成的运行时资源，不作为人工维护入口。修改文案时先改 YAML，再执行：
 
@@ -56,6 +66,8 @@ npm run i18n:prune
 - 放进 YAML：页面标题、导航标签、页脚文字、按钮文字、Promoto 筛选/状态文案、推广标题、描述、CTA、图片 alt。
 - 留在 TypeScript/JSON：公开路由、href、外部链接、promotion ID、平台 ID、时间戳、图片 import、图片尺寸与格式描述。
 - `/promote_content.json` 的公开 shape 不变；`src/data/promote-content-metadata.ts` 只维护稳定元数据，`src/data/promote-content-source.ts` 从生成资源组合本地化字段。
+- `/sites.json` 的 localized field 也跟随这套 29 语言 published-content contract 扩展，但公开路径与 payload shape 保持不变。
+- 此变更范围只覆盖 outward-facing published content；`index.hagicode.com` 的 page shell 仍保持当前单语言路由模型，不在这里引入 localized routes、全站 language selector 或整站 UI i18n。
 
 ## Source / Public 边界
 
