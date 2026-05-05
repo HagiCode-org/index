@@ -36,7 +36,18 @@ function buildImageDescriptorFixture({ variant } = {}) {
 }
 
 function buildLocalizedPromoteField(values) {
-  return { ...values };
+  const fallbackValue =
+    values['en-US'] ??
+    values['zh-CN'] ??
+    Object.values(values).find((value) => typeof value === 'string' && value.trim().length > 0) ??
+    '';
+  const localized = {};
+
+  for (const code of SUPPORTED_DESKTOP_LANGUAGE_CODES) {
+    localized[code] = values[code] ?? fallbackValue;
+  }
+
+  return localized;
 }
 
 function buildLiveBroadcastFixture() {
@@ -655,7 +666,7 @@ function buildCatalogFixture({
       {
         id: 'promotion-content',
         title: 'Promotion Content',
-        description: '公开中英文促销标题、描述与跳转链接，供各站点按 promoteId 渲染推广卡片。',
+        description: '公开 29 种语言的促销标题、描述与跳转链接，供各站点按 promoteId 渲染推广卡片。',
         path: '/promote_content.json',
         category: 'catalogs',
         sourceRepo: 'repos/index',
@@ -1042,12 +1053,14 @@ async function createValidationFixture({
   const distDir = path.join(tempDir, 'dist');
   const routeSourceDir = path.join(tempDir, 'src', 'data', 'public');
   const srcDataDir = path.join(tempDir, 'src', 'data');
+  const srcI18nDir = path.join(tempDir, 'src', 'i18n');
   const srcLibDir = path.join(tempDir, 'src', 'lib');
   const designVendorDir = path.join(tempDir, 'vendor', 'awesome-design-md', 'design-md');
   const validateScriptPath = path.join(projectRoot, 'scripts', 'validate-catalog.mjs');
   const minifyScriptPath = path.join(projectRoot, 'scripts', 'minify-published-json.mjs');
   const buildScriptPath = path.join(projectRoot, 'scripts', 'build-agent-preset-library.mjs');
   const desktopLanguageContractPath = path.join(projectRoot, 'src', 'lib', 'desktop-language-contract.ts');
+  const localeMetadataPath = path.join(projectRoot, 'src', 'i18n', 'locale-metadata.ts');
   const soulIndexFixture = buildSoulIndexFixture();
   const traitIndexFixture = buildTraitIndexFixture();
   const characterLibraryFixture = buildCharacterTemplateLibrary({
@@ -1061,6 +1074,7 @@ async function createValidationFixture({
   await mkdir(distDir, { recursive: true });
   await mkdir(routeSourceDir, { recursive: true });
   await mkdir(srcDataDir, { recursive: true });
+  await mkdir(srcI18nDir, { recursive: true });
   await mkdir(srcLibDir, { recursive: true });
   await mkdir(designVendorDir, { recursive: true });
   await mkdir(path.join(distDir, 'agent-templates', 'trait', 'templates'), { recursive: true });
@@ -1091,6 +1105,11 @@ async function createValidationFixture({
   await writeFile(
     path.join(srcLibDir, 'desktop-language-contract.ts'),
     await readFile(desktopLanguageContractPath, 'utf8'),
+    'utf8',
+  );
+  await writeFile(
+    path.join(srcI18nDir, 'locale-metadata.ts'),
+    await readFile(localeMetadataPath, 'utf8'),
     'utf8',
   );
   const managedIndexFixture = JSON.stringify({

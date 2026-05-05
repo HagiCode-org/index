@@ -9,10 +9,11 @@ import {
   generateI18nResources,
   verifyGeneratedI18nResources,
 } from '../scripts/generate-i18n-resources.mjs';
+import { SUPPORTED_DESKTOP_LANGUAGE_CODES } from '../src/lib/desktop-language-contract.ts';
 
 const testDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(testDirectory, '..');
-const expectedLocales = ['de-DE', 'en-US', 'es-ES', 'fr-FR', 'ja-JP', 'ko-KR', 'pt-BR', 'ru-RU', 'zh-CN', 'zh-Hant'];
+const expectedLocales = [...SUPPORTED_DESKTOP_LANGUAGE_CODES].sort();
 const expectedNamespaces = ['hagindex', 'promote-content', 'promoto'];
 
 async function withTemporaryI18nTree(callback) {
@@ -56,4 +57,12 @@ test('i18n check reports stale generated resources', async () => {
       /zh-CN\/hagindex\.json is stale/,
     );
   });
+});
+
+test('hagi18n config target locales stay aligned with the generated locale catalog', async () => {
+  const config = load(await readFile(path.join(projectRoot, 'hagi18n.yaml'), 'utf8'));
+  assert.deepEqual(
+    [...config.targetLocales].sort(),
+    expectedLocales.filter((locale) => locale !== 'en-US'),
+  );
 });
