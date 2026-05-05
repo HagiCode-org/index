@@ -88,7 +88,11 @@ function normalizeLocalizedField(value: unknown, fieldName: string): SitesCatalo
 
 function resolveLocalizedField(value: SitesCatalogLocalizedField, locale: DesktopLanguageCode): string {
   const language = desktopLanguageLookup.get(locale);
-  const resolutionChain = [locale, ...(language?.fallbackCodes ?? []), DEFAULT_DESKTOP_LANGUAGE];
+  const resolutionChain: readonly DesktopLanguageCode[] = [
+    locale,
+    ...(language?.fallbackCodes ?? []),
+    DEFAULT_DESKTOP_LANGUAGE,
+  ];
 
   for (const candidate of resolutionChain) {
     const localizedValue = value[candidate];
