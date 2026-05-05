@@ -1,0 +1,21 @@
+promotions:
+  main-game-2026-04-29:
+    title: "ช่วยกด Wishlist ให้หน่อยนะ"
+    description: "Hagicode ซอฟต์แวร์ Vibe Coding ที่อาจไม่ได้ยูนีกที่สุดในโลกแต่ใช้งานสะดวกมาก จะวางจำหน่ายวันที่ 29 เมษายน ช่วยเพิ่มลง Steam wishlist ให้หน่อยนะ ขอร้องล่ะ"
+    cta: "เพิ่มใน Wishlist บน Steam"
+    alt: "ภาพโปรโมต HagiCode สำหรับหน้าร้าน Steam"
+  main-game-steam-ea-2026-04-29:
+    title: "Early Access มาแล้วจริง ๆ"
+    description: "Hagicode ซอฟต์แวร์ Vibe Coding ที่อาจไม่ได้ยูนีกที่สุดในโลกแต่ใช้งานสะดวกมาก ตอนนี้อยู่ใน Steam Early Access แล้ว แวะมาดูกันหน่อยนะ ขอร้องล่ะ"
+    cta: "ดู Early Access"
+    alt: "ภาพโปรโมต HagiCode Early Access บน Steam"
+  hagicode-plus-bundle:
+    title: "ชุด Hagicode Plus"
+    description: "Hagicode Plus อาจไม่ใช่บันเดิลที่ยูนีกที่สุดในโลก แต่จัดชุดมาได้ดีมาก ตอนนี้ลด 15% พร้อมเกมหลักและ Turbo Engine DLC แวะมาดูบน Steam หน่อยนะ ขอร้องล่ะ"
+    cta: "ดูบันเดิล"
+    alt: "ภาพโปรโมตชุด Hagicode Plus บน Steam"
+  hagicode-turbo-engine-dlc:
+    title: "Turbo Engine DLC"
+    description: "Turbo Engine DLC อาจไม่ใช่ของที่ยูนีกระดับโลก แต่แรงจริง: ปลดล็อกการใช้งานออนไลน์พร้อมกันสูงสุด 32 เซสชัน และตัวเลือกปรับแต่งเพิ่มเติมสำหรับ workflow ของคุณใน Hagicode ลองแวะมาดูบน Steam"
+    cta: "ดู DLC"
+    alt: "ภาพโปรโมต Turbo Engine DLC บน Steam"

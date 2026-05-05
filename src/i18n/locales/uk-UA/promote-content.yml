@@ -1,0 +1,21 @@
+promotions:
+  main-game-2026-04-29:
+    title: "Додайте в бажане, будь ласка"
+    description: "Hagicode — можливо, не унікальний на весь світ, але дуже зручний софт для Vibe Coding — виходить 29 квітня. Будь ласка, додайте його до списку бажаного в Steam. Дуже просимо."
+    cta: "Додати до бажаного в Steam"
+    alt: "Промо-арт HagiCode для сторінки в Steam"
+  main-game-steam-ea-2026-04-29:
+    title: "Early Access нарешті тут"
+    description: "Hagicode — можливо, не унікальний на весь світ, але дуже зручний софт для Vibe Coding — уже доступний у Steam Early Access. Заходьте подивитися. Будь ласка."
+    cta: "Переглянути Early Access"
+    alt: "Промо-арт HagiCode Early Access у Steam"
+  hagicode-plus-bundle:
+    title: "Набір Hagicode Plus"
+    description: "Hagicode Plus, можливо, не найунікальніший набір у світі, зате дуже вдало зібраний: зараз зі знижкою 15% і включає базову гру та Turbo Engine DLC. Загляньте в Steam. Дуже просимо."
+    cta: "Переглянути набір"
+    alt: "Промо-арт набору Hagicode Plus у Steam"
+  hagicode-turbo-engine-dlc:
+    title: "Turbo Engine DLC"
+    description: "Turbo Engine DLC, можливо, і не унікальний у світовому масштабі, але справді потужний: відкриває до 32 одночасних онлайн-сесій і більше можливостей налаштування для вашого workflow у Hagicode. Загляньте в Steam."
+    cta: "Переглянути DLC"
+    alt: "Промо-арт Turbo Engine DLC у Steam"

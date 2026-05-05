@@ -1,0 +1,21 @@
+promotions:
+  main-game-2026-04-29:
+    title: "İstek listesine ekleyin, lütfen"
+    description: "Dünyada tamamen benzersiz olmayabilir ama aşırı kullanışlı bir Vibe Coding yazılımı olan Hagicode, 29 Nisan’da çıkıyor. Lütfen Steam istek listenize ekleyin. Ne olur."
+    cta: "Steam istek listesine ekle"
+    alt: "Steam mağaza sayfası için HagiCode görseli"
+  main-game-steam-ea-2026-04-29:
+    title: "Early Access sonunda burada"
+    description: "Dünyada tamamen benzersiz olmayabilir ama aşırı kullanışlı bir Vibe Coding yazılımı olan Hagicode artık Steam Early Access’te. Bir göz atın, lütfen."
+    cta: "Early Access’i görüntüle"
+    alt: "Steam üzerindeki HagiCode Early Access görseli"
+  hagicode-plus-bundle:
+    title: "Hagicode Plus Paketi"
+    description: "Hagicode Plus belki dünyanın en benzersiz paketi değil ama gerçekten çok iyi hazırlanmış: ana oyun ve Turbo Engine DLC ile birlikte %15 indirimde. Steam’de bir bakın, lütfen."
+    cta: "Paketi görüntüle"
+    alt: "Steam üzerindeki Hagicode Plus paketi görseli"
+  hagicode-turbo-engine-dlc:
+    title: "Turbo Engine DLC"
+    description: "Turbo Engine DLC belki küresel ölçekte benzersiz değil ama gerçekten güçlü: Hagicode iş akışınız için 32’ye kadar eşzamanlı çevrimiçi oturum ve daha fazla özelleştirme seçeneği açar. Steam’de bir göz atın."
+    cta: "DLC’yi görüntüle"
+    alt: "Steam üzerindeki Turbo Engine DLC görseli"

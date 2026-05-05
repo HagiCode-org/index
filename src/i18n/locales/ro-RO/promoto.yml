@@ -1,0 +1,75 @@
+metadata:
+  title: "HagiCode Promoto Showcase"
+  description: "HagiCode Promoto review surface for promotion entries, localized copy, platform links, and rendered image output."
+header:
+  brandAria: "Return to HagiCode Index portal"
+  brandName: "HagiCode Promoto Showcase"
+  brandSubtitle: "Promotion content and rendered asset review surface"
+  navAria: "Promoto page shortcuts"
+  nav:
+    portal: "Portal"
+    dataPage: "Data"
+    rawJson: "Raw JSON"
+showcase:
+  hero:
+    eyebrow: "Promoto Gallery"
+    title: "Promoto content showcase"
+    descriptionTemplate: "Check Promoto copy coverage against the full desktop language list. Each entry currently requires title, description, and CTA in {count} languages."
+  meta:
+    aria: "Promoto payload metadata"
+    payloadVersion: "Payload Version"
+    updated: "Updated"
+    localeScope: "Locale Scope"
+    rawEndpoint: "Raw Endpoint"
+  metrics:
+    aria: "Promoto summary metrics"
+    entries: "Entries"
+    platforms: "Platforms"
+    noPlatforms: "No platforms"
+    imageCoverage: "Image coverage"
+    full: "Complete"
+    missingImageTemplate: "{count} missing images"
+    localeCoverage: "Locale coverage"
+    localeCompleteTemplate: "{count} languages complete"
+    missingTextTemplate: "{count} missing localized copy"
+  filters:
+    aria: "Promoto filters"
+    platformLegend: "Filter by platform"
+    platformAll: "All"
+    qualityLegend: "Filter by data quality"
+    localeLegend: "Review language"
+    localeHelperTemplate: "Switch card copy across {count} supported desktop languages. The current selection stays in this browser session."
+    quality:
+      all: "All states"
+      complete: "Complete"
+      missing-image: "Missing image"
+      missing-text: "Missing copy"
+    searchLabel: "Search title, description, CTA, ID, or platform"
+    searchPlaceholder: "Enter Steam, Wishlist, 願望單, ウィッシュリスト..."
+  status:
+    visibleTemplate: "Showing {shown} / {total} Promoto entries."
+    localeTemplate: "Current language: {language} ({locale})"
+  card:
+    currentLocaleLabel: "Current language"
+    quality:
+      complete: "Complete"
+      missing-image: "Missing image"
+      missing-text: "Missing copy"
+    missing:
+      titleTemplate: "Missing title copy for {language}"
+      descriptionTemplate: "Missing description copy for {language}"
+      ctaTemplate: "Missing CTA copy for {language}"
+      imageLabelTemplate: "Promoto entry {id} is missing an image descriptor"
+      imageTitle: "Missing Image"
+    localeSummaryTemplate: "Locale coverage {complete}/{total}"
+    missingLocalesTemplate: "Missing {locales}"
+    allLocalesComplete: "All desktop languages complete"
+    meta:
+      locales: "Locales"
+      image: "Image"
+      noImage: "No image descriptor available"
+    ctaLabel: "CTA"
+    jsonAction: "View JSON"
+  states:
+    noResults: "No matching Promoto entries"
+    emptyPayload: "Promoto payload is empty"

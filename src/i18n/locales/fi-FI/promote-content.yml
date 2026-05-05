@@ -1,0 +1,21 @@
+promotions:
+  main-game-2026-04-29:
+    title: "Lisää toivelistalle, kiltti"
+    description: "Hagicode, ei ehkä maailman ainutlaatuisin mutta todella kätevä Vibe Coding -ohjelmisto, julkaistaan 29. huhtikuuta. Lisää se Steam-toivelistallesi. Kiltti."
+    cta: "Lisää Steam-toivelistalle"
+    alt: "HagiCode-kuvitus Steam-sivulle"
+  main-game-steam-ea-2026-04-29:
+    title: "Early Access on vihdoin täällä"
+    description: "Hagicode, ei ehkä maailman ainutlaatuisin mutta todella kätevä Vibe Coding -ohjelmisto, on nyt Steam Early Accessissa. Käy vilkaisemassa. Kiltti."
+    cta: "Katso Early Access"
+    alt: "HagiCode Early Access -kuvitus Steamissa"
+  hagicode-plus-bundle:
+    title: "Hagicode Plus -paketti"
+    description: "Hagicode Plus, ehkä ei maailman ainutlaatuisin mutta erittäin hyvin koottu paketti, on 15 % alennuksessa ja sisältää peruspelin sekä Turbo Engine DLC:n. Käy katsomassa Steamissa. Kiltti."
+    cta: "Katso paketti"
+    alt: "Hagicode Plus -paketin kuvitus Steamissa"
+  hagicode-turbo-engine-dlc:
+    title: "Turbo Engine DLC"
+    description: "Turbo Engine DLC ei ehkä ole maailman mittakaavassa ainutlaatuinen, mutta se todella kulkee: avaa jopa 32 samanaikaista verkkosessiota ja lisää mukautusvaihtoehtoja Hagicode-työnkulkuusi. Kurkkaa Steamiin."
+    cta: "Katso DLC"
+    alt: "Turbo Engine DLC -kuvitus Steamissa"

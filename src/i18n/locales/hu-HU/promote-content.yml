@@ -1,0 +1,21 @@
+promotions:
+  main-game-2026-04-29:
+    title: "Tedd a kívánságlistára, kérlek"
+    description: "A Hagicode, a nem teljesen világegyedi, de szuper hasznos Vibe Coding szoftver április 29-én jelenik meg. Kérlek, add hozzá a Steam kívánságlistádhoz. Nagyon szépen kérünk."
+    cta: "Hozzáadás Steam kívánságlistához"
+    alt: "HagiCode Steam borítókép"
+  main-game-steam-ea-2026-04-29:
+    title: "Végre itt az Early Access"
+    description: "A Hagicode, a nem teljesen világegyedi, de szuper hasznos Vibe Coding szoftver már elérhető Steam Early Accessben. Nézz rá, kérlek."
+    cta: "Early Access megtekintése"
+    alt: "HagiCode Early Access Steam borítókép"
+  hagicode-plus-bundle:
+    title: "Hagicode Plus csomag"
+    description: "A Hagicode Plus talán nem a világ legegyedibb csomagja, de nagyon jól van összerakva: 15% kedvezménnyel kapod meg az alapjátékot és a Turbo Engine DLC-t. Nézd meg Steamen. Kérlek."
+    cta: "Csomag megtekintése"
+    alt: "Hagicode Plus Steam csomagkép"
+  hagicode-turbo-engine-dlc:
+    title: "Turbo Engine DLC"
+    description: "A Turbo Engine DLC lehet, hogy nem világszinten egyedi, de tényleg odateszi magát: akár 32 párhuzamos online munkamenetet és több testreszabási lehetőséget nyit meg a Hagicode workflow-dhoz. Nézz be Steamre."
+    cta: "DLC megtekintése"
+    alt: "Turbo Engine DLC Steam borítókép"
