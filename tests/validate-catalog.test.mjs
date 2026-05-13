@@ -1428,9 +1428,11 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.equal(promotionContentEntry.status, 'published');
   assert.equal(mainPromotion?.on, true);
   assert.equal(mainPromotion?.endTime, '2026-04-29T00:00:00+08:00');
-  assert.equal(eaPromotion?.on, true);
+  assert.equal(eaPromotion?.on, false);
   assert.equal(eaPromotion?.startTime, '2026-04-29T00:00:00+08:00');
+  assert.equal(eaPromotion?.endTime, '2026-05-13T14:24:33+08:00');
   assert.equal(Date.parse(mainPromotion.endTime), Date.parse(eaPromotion.startTime));
+  assert.equal(Date.parse(eaPromotion.startTime) < Date.parse(eaPromotion.endTime), true);
   assert.equal(plusPromotion?.on, false);
   assert.equal(turboPromotion?.on, false);
   assert.deepEqual(Object.keys(mainPromotionContent?.title ?? {}).sort(), supportedPromotoLocales);

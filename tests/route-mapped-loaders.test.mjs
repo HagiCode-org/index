@@ -269,14 +269,16 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.ok(turboPromotion, 'turbo-engine promotion flag is required.');
   assert.equal(mainPromotion.on, true);
   assert.equal(mainPromotion.endTime, '2026-04-29T00:00:00+08:00');
-  assert.equal(eaPromotion.on, true);
+  assert.equal(eaPromotion.on, false);
   assert.equal(eaPromotion.startTime, '2026-04-29T00:00:00+08:00');
+  assert.equal(eaPromotion.endTime, '2026-05-13T14:24:33+08:00');
   assert.equal(Date.parse(mainPromotion.endTime), Date.parse(eaPromotion.startTime));
+  assert.equal(Date.parse(eaPromotion.startTime) < Date.parse(eaPromotion.endTime), true);
   assert.equal(plusPromotion.on, false);
   assert.equal(turboPromotion.on, false);
   assert.deepEqual(promote.promotes.map((entry) => Object.keys(entry).sort()), [
     ['endTime', 'id', 'on'],
-    ['id', 'on', 'startTime'],
+    ['endTime', 'id', 'on', 'startTime'],
     ['id', 'on'],
     ['id', 'on'],
   ]);
