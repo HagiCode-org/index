@@ -23,7 +23,6 @@
     "i18n:check": "node ./scripts/generate-i18n-resources.mjs --check",
     "prepare:generated": "npm run prepare:i18n && npm run sync:secondary-professions && npm run sync:character-templates",
     "verify:json-routes": "node --experimental-strip-types ./scripts/validate-catalog.mjs",
-    "sync:presets": "node ./scripts/sync-presets.mjs",
     "sync:character-templates": "node ./scripts/build-agent-preset-library.mjs",
     "validate": "export NODE_ENV=\"${NODE_ENV:-production}\"; npm run prepare:generated && npm run i18n:check && astro build --outDir .astro-validate && node ./scripts/minify-published-json.mjs --published-root .astro-validate && npm run verify:json-routes -- --published-root .astro-validate && node ./scripts/sync-secondary-professions.mjs --check",
     "test": "export NODE_ENV=\"${NODE_ENV:-production}\"; npm run prepare:generated && npm run i18n:check && astro build --outDir .astro-test && node ./scripts/minify-published-json.mjs --published-root .astro-test && npm run verify:json-routes -- --published-root .astro-test && INDEX_BUILD_ROOT=.astro-test node --experimental-strip-types --test ./tests/*.test.mjs",
