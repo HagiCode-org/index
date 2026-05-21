@@ -20,13 +20,13 @@ presets/
 ### 获取预设索引
 
 ```bash
-curl https://<your-docs-site>/presets/index.json
+curl https://index.hagicode.com/presets/index.json
 ```
 
 ### 加载特定提供商预设
 
 ```bash
-curl https://<your-docs-site>/presets/claude-code/providers/zai.json
+curl https://index.hagicode.com/presets/claude-code/providers/zai.json
 ```
 
 ## 预设格式

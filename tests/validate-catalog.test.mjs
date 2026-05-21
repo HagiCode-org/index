@@ -1803,6 +1803,23 @@ test('catalog exposes agent template discovery entry with the public manifest pa
   assert.deepEqual(manifest.types.map((item) => item.templateType), ['soul', 'trait']);
 });
 
+test('catalog exposes presets discovery entry with the canonical index mirror path', async () => {
+  const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
+  const manifestPath = path.join(projectRoot, 'public', 'presets', 'index.json');
+  const readmePath = path.join(projectRoot, 'public', 'presets', 'README.md');
+  const catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+  const readme = await readFile(readmePath, 'utf8');
+  const entry = catalog.entries.find((item) => item.id === 'presets-catalog');
+
+  assert.equal(entry.path, '/presets/index.json');
+  assert.equal(entry.readmePath, '/presets/README.md');
+  assert.equal(entry.category, 'presets');
+  assert.equal(entry.sourceRepo, 'repos/docs');
+  assert.ok(manifest.types['claude-code']);
+  assert.match(readme, /https:\/\/index\.hagicode\.com\/presets\/index\.json/);
+});
+
 test('catalog exposes character template discovery entry with the public manifest path', async () => {
   const catalogPath = path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json');
   const manifestPath = path.join(projectRoot, 'public', 'character-templates', 'index.json');
