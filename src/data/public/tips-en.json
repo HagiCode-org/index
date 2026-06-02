@@ -1,0 +1,257 @@
+{
+  "schemaVersion": "1.0.0",
+  "locale": "en",
+  "updatedAt": "2026-06-01",
+  "tips": [
+    {
+      "id": "project-first",
+      "text": "Create a project before starting a session so HagiCode can manage files, context, and history together.",
+      "category": "project"
+    },
+    {
+      "id": "project-boundary",
+      "text": "Keep each project focused on related code and materials so sessions do not read unrelated context.",
+      "category": "project"
+    },
+    {
+      "id": "project-name-clear",
+      "text": "Use a business or repository name for the project so it is easier to find later.",
+      "category": "project"
+    },
+    {
+      "id": "project-goal-note",
+      "text": "Record the current goal in the project so later sessions can pick up faster.",
+      "category": "project"
+    },
+    {
+      "id": "project-docs",
+      "text": "Put startup steps, account details, and common commands in the project notes to avoid repeating them.",
+      "category": "project"
+    },
+    {
+      "id": "project-context-clean",
+      "text": "Remove unrelated files before uploading materials so HagiCode can stay focused on the task.",
+      "category": "project"
+    },
+    {
+      "id": "project-before-session",
+      "text": "Select the right project before opening a new session so the task lands in the correct context.",
+      "category": "project"
+    },
+    {
+      "id": "project-history",
+      "text": "When reviewing project history, start with the conclusion from the most recent completed session.",
+      "category": "project"
+    },
+    {
+      "id": "proposal-large-change",
+      "text": "For larger changes, ask HagiCode to write a proposal before deciding whether to implement it.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-scope",
+      "text": "Make the proposal scope clear so the session does not keep expanding while it runs.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-options",
+      "text": "When you are unsure about the approach, ask HagiCode to list multiple options in the proposal.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-risk",
+      "text": "Risk notes in a proposal help you decide whether the change is worth continuing.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-tasks",
+      "text": "Breaking a proposal into tasks makes execution progress easier to follow.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-review",
+      "text": "Review the proposal before implementation to catch missing details or a wrong direction early.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-change-name",
+      "text": "Give each proposal a short, clear name so it is easier to find later.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-finish",
+      "text": "Record the result after a proposal is finished so you can revisit why the change was made.",
+      "category": "proposal"
+    },
+    {
+      "id": "session-single-goal",
+      "text": "Give each session one clear goal so the result is easier to judge.",
+      "category": "session"
+    },
+    {
+      "id": "session-start-clear",
+      "text": "Start a session by stating the goal, constraints, and expected output directly.",
+      "category": "session"
+    },
+    {
+      "id": "session-context",
+      "text": "When continuing an old task, tell HagiCode what has changed recently.",
+      "category": "session"
+    },
+    {
+      "id": "session-checkpoint",
+      "text": "In a long session, ask HagiCode for progress checkpoints along the way.",
+      "category": "session"
+    },
+    {
+      "id": "session-stop-point",
+      "text": "Before pausing, record the next step so resuming the session takes less time.",
+      "category": "session"
+    },
+    {
+      "id": "session-review-result",
+      "text": "After a session ends, read the result summary before deciding whether to keep asking follow-up questions.",
+      "category": "session"
+    },
+    {
+      "id": "session-correction",
+      "text": "Correct the direction as soon as it feels wrong instead of overturning the whole session at the end.",
+      "category": "session"
+    },
+    {
+      "id": "session-files",
+      "text": "If you know the relevant files, give HagiCode the file paths directly.",
+      "category": "session"
+    },
+    {
+      "id": "session-errors",
+      "text": "When something fails, send HagiCode the full error message instead of only saying it failed.",
+      "category": "session"
+    },
+    {
+      "id": "multi-session-plan",
+      "text": "Before running sessions in parallel, split the goal into parts that do not conflict with each other.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-naming",
+      "text": "Use clear names for parallel sessions, such as proposal design, frontend implementation, or troubleshooting.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-isolation",
+      "text": "When running sessions in parallel, try not to have them edit the same group of files.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-merge",
+      "text": "After parallel sessions finish, review the results together before deciding which parts to use.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-review",
+      "text": "For important tasks, let one session implement and another session focus on review.",
+      "category": "multi-session"
+    },
+    {
+      "id": "agent-role",
+      "text": "Give each agent a clear role, such as implementation, review, testing, or documentation cleanup.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-boundary",
+      "text": "When multiple agents collaborate, define their responsibility boundaries in advance.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-handoff",
+      "text": "During an agent handoff, preserve key conclusions, unfinished work, and important notes.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-review",
+      "text": "A review agent is better suited to finding issues than taking on a large rewrite at the same time.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-research",
+      "text": "A research agent can gather background first, then hand the work to an implementation agent.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-summary",
+      "text": "Ask an agent for a short summary when you need to judge the next step quickly.",
+      "category": "agent"
+    },
+    {
+      "id": "claude-analysis",
+      "text": "Claude is well suited for analyzing long materials, comparing approaches, and organizing complex context.",
+      "category": "claude"
+    },
+    {
+      "id": "claude-design",
+      "text": "Before complex design work, ask Claude to check whether the reasoning is complete.",
+      "category": "claude"
+    },
+    {
+      "id": "claude-docs",
+      "text": "When reading a large set of documents, Claude can help extract the key points and constraints.",
+      "category": "claude"
+    },
+    {
+      "id": "codex-implementation",
+      "text": "Codex is well suited for entering a repository, editing code, and running commands to verify the result.",
+      "category": "codex"
+    },
+    {
+      "id": "codex-navigation",
+      "text": "When you do not know where to change something, ask Codex to search the project structure first.",
+      "category": "codex"
+    },
+    {
+      "id": "codex-review-diff",
+      "text": "After Codex makes changes, focus on which files changed and why those changes were made.",
+      "category": "codex"
+    },
+    {
+      "id": "code-server-open",
+      "text": "When you need to inspect code manually, open the project with code-server.",
+      "category": "code-server"
+    },
+    {
+      "id": "code-server-edit",
+      "text": "For small manual adjustments, code-server can be more convenient than switching local environments.",
+      "category": "code-server"
+    },
+    {
+      "id": "code-server-terminal",
+      "text": "Before running a command in code-server, confirm that the terminal is in the target project.",
+      "category": "code-server"
+    },
+    {
+      "id": "code-server-preview",
+      "text": "When adjusting an interface, use code-server to preview the actual result.",
+      "category": "code-server"
+    },
+    {
+      "id": "omniroute-provider",
+      "text": "OmniRoute can connect different models in one place so switching capabilities is easier.",
+      "category": "omniroute"
+    },
+    {
+      "id": "omniroute-model-choice",
+      "text": "Use a faster model for simple tasks, then switch to a stronger model for complex ones.",
+      "category": "omniroute"
+    },
+    {
+      "id": "omniroute-fallback",
+      "text": "When a model is unavailable, OmniRoute fallback routes can reduce interruptions.",
+      "category": "omniroute"
+    },
+    {
+      "id": "omniroute-cost",
+      "text": "With OmniRoute, balance speed, quality, and cost based on how important the task is.",
+      "category": "omniroute"
+    }
+  ]
+}
