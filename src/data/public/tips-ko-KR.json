@@ -1,0 +1,272 @@
+{
+  "schemaVersion": "1.0.0",
+  "locale": "ko-KR",
+  "updatedAt": "2026-06-01",
+  "tips": [
+    {
+      "id": "project-first",
+      "text": "세션을 시작하기 전에 프로젝트를 만들어두면 HagiCode가 파일, 컨텍스트, 기록을 한데 묶어 관리할 수 있어요.",
+      "category": "project"
+    },
+    {
+      "id": "project-boundary",
+      "text": "각 프로젝트는 서로 관련 있는 코드와 자료만 포함하도록 유지하면, 세션이 불필요한 컨텍스트를 읽지 않아도 돼요.",
+      "category": "project"
+    },
+    {
+      "id": "project-name-clear",
+      "text": "프로젝트 이름은 비즈니스명이나 저장소명으로 지으면 나중에 찾기 쉬워요.",
+      "category": "project"
+    },
+    {
+      "id": "project-goal-note",
+      "text": "현재 목표를 프로젝트에 기록해두면, 이후 세션에서 더 빠르게 작업을 이어갈 수 있어요.",
+      "category": "project"
+    },
+    {
+      "id": "project-docs",
+      "text": "시작 단계, 계정 정보, 자주 쓰는 명령어를 프로젝트 노트에 적어두면 매번 반복하지 않아도 돼요.",
+      "category": "project"
+    },
+    {
+      "id": "project-context-clean",
+      "text": "자료를 올리기 전에 관련 없는 파일은 미리 제거하면 HagiCode가 작업에 더 집중할 수 있어요.",
+      "category": "project"
+    },
+    {
+      "id": "project-before-session",
+      "text": "새 세션을 열기 전에 올바른 프로젝트를 선택하면 작업이 알맞은 컨텍스트에서 시작돼요.",
+      "category": "project"
+    },
+    {
+      "id": "project-history",
+      "text": "프로젝트 기록을 검토할 때는 가장 최근에 완료된 세션의 결론부터 읽어보세요.",
+      "category": "project"
+    },
+    {
+      "id": "proposal-large-change",
+      "text": "규모가 큰 변경은 HagiCode에 먼저 제안서를 작성해 달라고 요청한 뒤, 실행 여부를 결정하세요.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-scope",
+      "text": "제안서의 범위를 명확히 정하면 세션이 진행되면서 범위가 계속 커지는 걸 막을 수 있어요.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-options",
+      "text": "어떤 접근 방식이 좋을지 확신이 안 된다면, 제안서에 여러 옵션을 나열해 달라고 HagiCode에 요청해 보세요.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-risk",
+      "text": "제안서에 위험 요소를 적어두면, 변경을 계속 진행할지 판단하는 데 도움이 돼요.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-tasks",
+      "text": "제안서를 작업 단위로 나누면 실행 과정을 더 쉽게 추적할 수 있어요.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-review",
+      "text": "구현에 들어가기 전에 제안서를 검토하면, 빠진 내용이나 잘못된 방향을 일찍 발견할 수 있어요.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-change-name",
+      "text": "각 제안서에 짧고 명확한 이름을 붙이면 나중에 찾기 편해요.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-finish",
+      "text": "제안서가 마무리되면 결과를 기록해두면, 나중에 왜 그 변경을 했는지 다시 확인할 수 있어요.",
+      "category": "proposal"
+    },
+    {
+      "id": "session-single-goal",
+      "text": "각 세션에는 하나의 명확한 목표를 주면 결과를 판단하기 더 쉬워요.",
+      "category": "session"
+    },
+    {
+      "id": "session-start-clear",
+      "text": "세션을 시작할 때 목표, 제약 조건, 기대 출력을 바로 명시하세요.",
+      "category": "session"
+    },
+    {
+      "id": "session-context",
+      "text": "이전 작업을 이어갈 때는 최근에 무엇이 바뀌었는지 HagiCode에 알려주세요.",
+      "category": "session"
+    },
+    {
+      "id": "session-checkpoint",
+      "text": "긴 세션에서는 중간에 진행 상황을 점검해 달라고 HagiCode에 요청해 보세요.",
+      "category": "session"
+    },
+    {
+      "id": "session-stop-point",
+      "text": "세션을 잠시 멈추기 전에 다음 단계를 기록해두면, 나중에 이어할 때 시간이 덜 걸려요.",
+      "category": "session"
+    },
+    {
+      "id": "session-review-result",
+      "text": "세션이 끝난 후에는 결과 요약을 먼저 읽어보고 추가 질문을 할지 결정하세요.",
+      "category": "session"
+    },
+    {
+      "id": "session-correction",
+      "text": "방향이 잘못됐다고 느끼면 즉시 수정하세요. 세션 끝에 전체를 뒤집는 것보다 낫아요.",
+      "category": "session"
+    },
+    {
+      "id": "session-files",
+      "text": "관련 파일을 알고 있다면 파일 경로를 HagiCode에 직접 알려주세요.",
+      "category": "session"
+    },
+    {
+      "id": "session-errors",
+      "text": "뭔가 실패했을 때는 그냥 실패했다고만 말하지 말고, 전체 오류 메시지를 HagiCode에 보내주세요.",
+      "category": "session"
+    },
+    {
+      "id": "multi-session-plan",
+      "text": "세션을 병렬로 실행하기 전에, 서로 충돌하지 않도록 목표를 미리 나누어 두세요.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-naming",
+      "text": "병렬 세션에는 제안서 설계, 프론트엔드 구현, 문제 해결 등 명확한 이름을 사용하세요.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-isolation",
+      "text": "세션을 병렬로 실행할 때는 같은 파일 그룹을 함께 편집하지 않도록 하세요.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-merge",
+      "text": "병렬 세션이 끝난 후에는 결과를 함께 검토하고 어떤 부분을 사용할지 결정하세요.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-review",
+      "text": "중요한 작업에는 한 세션은 구현을, 다른 세션은 리뷰를 담당하게 분리해 보세요.",
+      "category": "multi-session"
+    },
+    {
+      "id": "agent-role",
+      "text": "각 에이전트에 구현, 리뷰, 테스트, 문서 정리 등 명확한 역할을 부여하세요.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-boundary",
+      "text": "여러 에이전트가 협력할 때는 책임 경계를 미리 정해두세요.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-handoff",
+      "text": "에이전트 간 작업을 넘길 때는 핵심 결론, 미완료 작업, 중요한 참고 사항을 함께 전달하세요.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-review",
+      "text": "리뷰 에이전트는 한 번에 대규모 재작성을 맡기보다 문제를 찾는 데 활용하는 게 더 효과적이에요.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-research",
+      "text": "조사 에이전트가 먼저 배경 정보를 수집하고, 그 결과를 구현 에이전트에 넘기는 방식도 좋아요.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-summary",
+      "text": "다음 단계를 빠르게 판단해야 할 때는 에이전트에게 짧은 요약을 요청해 보세요.",
+      "category": "agent"
+    },
+    {
+      "id": "claude-analysis",
+      "text": "Claude는 긴 자료 분석, 접근 방식 비교, 복잡한 컨텍스트 정리에 특히 강점이 있어요.",
+      "category": "claude"
+    },
+    {
+      "id": "claude-design",
+      "text": "복잡한 설계 작업 전에 Claude에게 논리가 충분한지 검토해 달라고 요청해 보세요.",
+      "category": "claude"
+    },
+    {
+      "id": "claude-docs",
+      "text": "문서가 많을 때는 Claude가 핵심 내용과 제약 조건을 추출하는 데 도움을 줄 수 있어요.",
+      "category": "claude"
+    },
+    {
+      "id": "codex-implementation",
+      "text": "Codex는 저장소에 들어가 코드를 편집하고 명령어를 실행해 결과를 확인하는 데 잘 맞아요.",
+      "category": "codex"
+    },
+    {
+      "id": "codex-navigation",
+      "text": "어디를 수정해야 할지 모를 때는 Codex에게 먼저 프로젝트 구조를 검색해 달라고 요청해 보세요.",
+      "category": "codex"
+    },
+    {
+      "id": "codex-review-diff",
+      "text": "Codex가 변경을 마친 후에는 어떤 파일이 바뀌었고 왜 바뀌었는지에 집중해서 검토하세요.",
+      "category": "codex"
+    },
+    {
+      "id": "code-server-open",
+      "text": "코드를 직접 확인해야 할 때는 code-server로 프로젝트를 열어보세요.",
+      "category": "code-server"
+    },
+    {
+      "id": "code-server-edit",
+      "text": "작은 수동 조정에는 로컬 환경을 전환하는 것보다 code-server가 더 편해요.",
+      "category": "code-server"
+    },
+    {
+      "id": "code-server-terminal",
+      "text": "code-server에서 명령어를 실행하기 전에 터미널이 대상 프로젝트에 있는지 확인하세요.",
+      "category": "code-server"
+    },
+    {
+      "id": "code-server-preview",
+      "text": "인터페이스를 조정할 때는 code-server로 실제 결과를 미리 확인해 보세요.",
+      "category": "code-server"
+    },
+    {
+      "id": "omniroute-provider",
+      "text": "OmniRoute는 여러 모델을 한 곳에서 연결할 수 있어, 기능 전환이 더 쉬워요.",
+      "category": "omniroute"
+    },
+    {
+      "id": "omniroute-model-choice",
+      "text": "간단한 작업에는 빠른 모델을 사용하고, 복잡한 작업에는 더 강력한 모델로 전환해 보세요.",
+      "category": "omniroute"
+    },
+    {
+      "id": "omniroute-fallback",
+      "text": "모델을 사용할 수 없을 때 OmniRoute 폴백 라우팅이 중단을 줄여줘요.",
+      "category": "omniroute"
+    },
+    {
+      "id": "omniroute-cost",
+      "text": "OmniRoute를 사용하면 작업의 중요도에 따라 속도, 품질, 비용의 균형을 맞출 수 있어요.",
+      "category": "omniroute"
+    },
+    {
+      "id": "hagipower-overview",
+      "text": "Hagipower는 세션 전반에 걸쳐 에너지와 활동을 추적해서, 시간이 지남에 따라 사용량이 어떻게 쌓이는지 볼 수 있어요.",
+      "category": "hagipower"
+    },
+    {
+      "id": "hagipower-daily-achievement",
+      "text": "매일의 Hagipower 달성 현황을 확인하면 코딩 목표와 연속 기록을 꾸준히 유지하는 데 도움이 돼요.",
+      "category": "hagipower"
+    },
+    {
+      "id": "hagipower-energy-balance",
+      "text": "빠른 작업과 집중 깊은 작업 세션을 섞어서 Hagipower 소비의 균형을 맞추면 에너지를 안정적으로 유지할 수 있어요.",
+      "category": "hagipower"
+    }
+  ]
+}

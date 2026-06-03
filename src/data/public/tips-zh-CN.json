@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "locale": "zh",
+  "locale": "zh-CN",
   "updatedAt": "2026-06-01",
   "tips": [
     {
@@ -252,6 +252,21 @@
       "id": "omniroute-cost",
       "text": "使用 OmniRoute 时，可以按任务重要程度平衡速度、质量和成本。",
       "category": "omniroute"
+    },
+    {
+      "id": "hagipower-overview",
+      "text": "Hagipower 会追踪你在各会话中的能量和活动，让你看到使用量随时间累积的情况。",
+      "category": "hagipower"
+    },
+    {
+      "id": "hagipower-daily-achievement",
+      "text": "查看每日 Hagipower 成就，帮助你保持编码目标和连续天数。",
+      "category": "hagipower"
+    },
+    {
+      "id": "hagipower-energy-balance",
+      "text": "合理分配 Hagipower 消耗，把快速任务和专注深度工作搭配使用，保持能量稳定。",
+      "category": "hagipower"
     }
   ]
 }

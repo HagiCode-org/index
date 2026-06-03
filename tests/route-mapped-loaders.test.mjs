@@ -105,6 +105,31 @@ test('legal documents route-mapped JSON keeps the desktop legal metadata contrac
   assert.equal(privacyPolicy.locales['en-US'].title, 'Privacy Policy');
 });
 
+test('localized tips route-mapped JSON loads valid English and Chinese payloads', async () => {
+  const englishTips = await loadRouteMappedJson('/tips-en.json');
+  const chineseTips = await loadRouteMappedJson('/tips-zh.json');
+
+  for (const [payload, locale] of [[englishTips, 'en'], [chineseTips, 'zh']]) {
+    assert.equal(payload.schemaVersion, '1.0.0');
+    assert.equal(payload.locale, locale);
+    assert.equal(typeof payload.updatedAt, 'string');
+    assert.equal(Array.isArray(payload.tips), true);
+    assert.equal(payload.tips.length > 0, true);
+
+    const ids = new Set();
+    for (const tip of payload.tips) {
+      assert.equal(typeof tip.id, 'string');
+      assert.equal(tip.id.trim().length > 0, true);
+      assert.equal(typeof tip.text, 'string');
+      assert.equal(tip.text.trim().length > 0, true);
+      assert.equal(typeof tip.category, 'string');
+      assert.equal(tip.category.trim().length > 0, true);
+      assert.equal(ids.has(tip.id), false);
+      ids.add(tip.id);
+    }
+  }
+});
+
 test('about route-mapped JSON loads the canonical structured about contract', async () => {
   const about = await loadRouteMappedJson('/about.json');
   const youtubeEntry = about.entries.find((entry) => entry.id === 'youtube');

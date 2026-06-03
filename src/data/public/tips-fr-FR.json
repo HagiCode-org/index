@@ -1,0 +1,272 @@
+{
+  "schemaVersion": "1.0.0",
+  "locale": "fr-FR",
+  "updatedAt": "2026-06-01",
+  "tips": [
+    {
+      "id": "project-first",
+      "text": "Créez un projet avant de démarrer une session pour qu'HagiCode puisse gérer ensemble les fichiers, le contexte et l'historique.",
+      "category": "project"
+    },
+    {
+      "id": "project-boundary",
+      "text": "Concentrez chaque projet sur du code et des ressources connexes pour éviter que les sessions ne chargent du contexte non pertinent.",
+      "category": "project"
+    },
+    {
+      "id": "project-name-clear",
+      "text": "Utilisez un nom métier ou de dépôt pour le projet afin de le retrouver plus facilement par la suite.",
+      "category": "project"
+    },
+    {
+      "id": "project-goal-note",
+      "text": "Notez l'objectif en cours dans le projet pour que les sessions suivantes puissent reprendre plus rapidement.",
+      "category": "project"
+    },
+    {
+      "id": "project-docs",
+      "text": "Consignez les étapes de démarrage, les détails de compte et les commandes courantes dans les notes du projet pour ne pas les répéter.",
+      "category": "project"
+    },
+    {
+      "id": "project-context-clean",
+      "text": "Supprimez les fichiers non pertinents avant d'importer des ressources pour qu'HagiCode reste concentré sur la tâche.",
+      "category": "project"
+    },
+    {
+      "id": "project-before-session",
+      "text": "Sélectionnez le bon projet avant d'ouvrir une nouvelle session pour que la tâche s'inscrive dans le contexte approprié.",
+      "category": "project"
+    },
+    {
+      "id": "project-history",
+      "text": "Lorsque vous consultez l'historique d'un projet, commencez par la conclusion de la session terminée la plus récente.",
+      "category": "project"
+    },
+    {
+      "id": "proposal-large-change",
+      "text": "Pour les modifications importantes, demandez à HagiCode de rédiger une proposition avant de décider de la mettre en oeuvre.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-scope",
+      "text": "Définissez clairement le périmètre de la proposition pour que la session ne s'étende pas indéfiniment.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-options",
+      "text": "Quand vous hésitez sur l'approche, demandez à HagiCode de lister plusieurs options dans la proposition.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-risk",
+      "text": "Les notes de risque dans une proposition vous aident à décider si la modification vaut la peine d'être poursuivie.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-tasks",
+      "text": "Découper une proposition en tâches rend la progression de l'exécution plus facile à suivre.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-review",
+      "text": "Relisez la proposition avant la mise en oeuvre pour repérer rapidement les détails manquants ou une mauvaise direction.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-change-name",
+      "text": "Donnez à chaque proposition un nom court et clair pour la retrouver plus facilement.",
+      "category": "proposal"
+    },
+    {
+      "id": "proposal-finish",
+      "text": "Consignez le résultat une fois la proposition terminée pour pouvoir revenir sur les raisons de la modification.",
+      "category": "proposal"
+    },
+    {
+      "id": "session-single-goal",
+      "text": "Donnez à chaque session un objectif clair pour que le résultat soit plus simple à évaluer.",
+      "category": "session"
+    },
+    {
+      "id": "session-start-clear",
+      "text": "Commencez une session en indiquant directement l'objectif, les contraintes et le résultat attendu.",
+      "category": "session"
+    },
+    {
+      "id": "session-context",
+      "text": "Quand vous reprenez une tâche existante, indiquez à HagiCode ce qui a changé récemment.",
+      "category": "session"
+    },
+    {
+      "id": "session-checkpoint",
+      "text": "Dans une session longue, demandez à HagiCode des points d'avancement en cours de route.",
+      "category": "session"
+    },
+    {
+      "id": "session-stop-point",
+      "text": "Avant de faire une pause, notez la prochaine étape pour que la reprise de la session soit plus rapide.",
+      "category": "session"
+    },
+    {
+      "id": "session-review-result",
+      "text": "Une fois la session terminée, lisez le résumé du résultat avant de décider si des questions complémentaires sont nécessaires.",
+      "category": "session"
+    },
+    {
+      "id": "session-correction",
+      "text": "Corrigez la direction dès que quelque chose vous semble incorrect plutôt que de devoir refaire toute la session à la fin.",
+      "category": "session"
+    },
+    {
+      "id": "session-files",
+      "text": "Si vous connaissez les fichiers concernés, donnez directement les chemins à HagiCode.",
+      "category": "session"
+    },
+    {
+      "id": "session-errors",
+      "text": "En cas d'échec, envoyez le message d'erreur complet à HagiCode au lieu de simplement dire que ça n'a pas fonctionné.",
+      "category": "session"
+    },
+    {
+      "id": "multi-session-plan",
+      "text": "Avant de lancer des sessions en parallèle, découpez l'objectif en parties qui ne se contredisent pas.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-naming",
+      "text": "Utilisez des noms clairs pour les sessions parallèles, par exemple conception de proposition, implémentation frontend ou dépannage.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-isolation",
+      "text": "Lorsque vous exécutez des sessions en parallèle, évitez qu'elles modifient les mêmes fichiers.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-merge",
+      "text": "Une fois les sessions parallèles terminées, examinez les résultats ensemble avant de décider quelles parties conserver.",
+      "category": "multi-session"
+    },
+    {
+      "id": "multi-session-review",
+      "text": "Pour les tâches importantes, confiez l'implémentation à une session et la revue à une autre.",
+      "category": "multi-session"
+    },
+    {
+      "id": "agent-role",
+      "text": "Attribuez à chaque agent un rôle clair : implémentation, revue, tests ou nettoyage de la documentation.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-boundary",
+      "text": "Quand plusieurs agents collaborent, définissez leurs périmètres de responsabilité à l'avance.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-handoff",
+      "text": "Lors d'un transfert entre agents, conservez les conclusions clés, le travail inachevé et les notes importantes.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-review",
+      "text": "Un agent de revue est plus adapté pour repérer les problèmes que pour effectuer une grosse réécriture en même temps.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-research",
+      "text": "Un agent de recherche peut rassembler le contexte nécessaire, puis transmettre le travail à un agent d'implémentation.",
+      "category": "agent"
+    },
+    {
+      "id": "agent-summary",
+      "text": "Demandez un résumé court à un agent quand vous devez rapidement décider de la prochaine étape.",
+      "category": "agent"
+    },
+    {
+      "id": "claude-analysis",
+      "text": "Claude est particulièrement adapté pour analyser de longs documents, comparer des approches et organiser un contexte complexe.",
+      "category": "claude"
+    },
+    {
+      "id": "claude-design",
+      "text": "Avant un travail de conception complexe, demandez à Claude de vérifier que le raisonnement est complet.",
+      "category": "claude"
+    },
+    {
+      "id": "claude-docs",
+      "text": "Pour lire un ensemble volumineux de documents, Claude peut vous aider à en extraire les points clés et les contraintes.",
+      "category": "claude"
+    },
+    {
+      "id": "codex-implementation",
+      "text": "Codex est particulièrement adapté pour entrer dans un dépôt, modifier du code et exécuter des commandes pour vérifier le résultat.",
+      "category": "codex"
+    },
+    {
+      "id": "codex-navigation",
+      "text": "Quand vous ne savez pas où effectuer une modification, demandez à Codex d'explorer d'abord la structure du projet.",
+      "category": "codex"
+    },
+    {
+      "id": "codex-review-diff",
+      "text": "Après que Codex a effectué des modifications, concentrez-vous sur les fichiers modifiés et les raisons de ces changements.",
+      "category": "codex"
+    },
+    {
+      "id": "code-server-open",
+      "text": "Quand vous avez besoin d'inspecter le code manuellement, ouvrez le projet avec code-server.",
+      "category": "code-server"
+    },
+    {
+      "id": "code-server-edit",
+      "text": "Pour des petits ajustements manuels, code-server peut être plus pratique que de basculer entre environnements locaux.",
+      "category": "code-server"
+    },
+    {
+      "id": "code-server-terminal",
+      "text": "Avant d'exécuter une commande dans code-server, vérifiez que le terminal se trouve dans le projet cible.",
+      "category": "code-server"
+    },
+    {
+      "id": "code-server-preview",
+      "text": "Quand vous ajustez une interface, utilisez code-server pour prévisualiser le résultat réel.",
+      "category": "code-server"
+    },
+    {
+      "id": "omniroute-provider",
+      "text": "OmniRoute peut rassembler différents modèles en un seul endroit pour faciliter le changement de capacités.",
+      "category": "omniroute"
+    },
+    {
+      "id": "omniroute-model-choice",
+      "text": "Utilisez un modèle plus rapide pour les tâches simples, puis passez à un modèle plus puissant pour les tâches complexes.",
+      "category": "omniroute"
+    },
+    {
+      "id": "omniroute-fallback",
+      "text": "Quand un modèle est indisponible, les routes de secours d'OmniRoute peuvent réduire les interruptions.",
+      "category": "omniroute"
+    },
+    {
+      "id": "omniroute-cost",
+      "text": "Avec OmniRoute, équilibrez vitesse, qualité et coût en fonction de l'importance de la tâche.",
+      "category": "omniroute"
+    },
+    {
+      "id": "hagipower-overview",
+      "text": "Hagipower suit votre énergie et votre activité d'une session à l'autre pour que vous puissiez voir comment votre usage évolue dans le temps.",
+      "category": "hagipower"
+    },
+    {
+      "id": "hagipower-daily-achievement",
+      "text": "Consultez vos accomplissements quotidiens Hagipower pour rester sur la bonne voie avec vos objectifs de code et vos séries.",
+      "category": "hagipower"
+    },
+    {
+      "id": "hagipower-energy-balance",
+      "text": "Équilibrez vos dépenses Hagipower en alternant tâches rapides et sessions de travail approfondi pour maintenir votre énergie stable.",
+      "category": "hagipower"
+    }
+  ]
+}

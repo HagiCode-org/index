@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "locale": "en",
+  "locale": "en-US",
   "updatedAt": "2026-06-01",
   "tips": [
     {
@@ -252,6 +252,21 @@
       "id": "omniroute-cost",
       "text": "With OmniRoute, balance speed, quality, and cost based on how important the task is.",
       "category": "omniroute"
+    },
+    {
+      "id": "hagipower-overview",
+      "text": "Hagipower tracks your energy and activity across sessions so you can see how your usage adds up over time.",
+      "category": "hagipower"
+    },
+    {
+      "id": "hagipower-daily-achievement",
+      "text": "Check your daily Hagipower achievements to stay on track with your coding goals and streaks.",
+      "category": "hagipower"
+    },
+    {
+      "id": "hagipower-energy-balance",
+      "text": "Balance Hagipower spending by mixing quick tasks with focused deep-work sessions to keep your energy steady.",
+      "category": "hagipower"
     }
   ]
 }

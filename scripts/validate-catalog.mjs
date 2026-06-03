@@ -27,6 +27,16 @@ const fileBackedRouteMappedJsonPaths = [
   '/live-broadcast.json',
   '/legal-documents.json',
   '/promote.json',
+  '/tips-en-US.json',
+  '/tips-zh-CN.json',
+  '/tips-zh-Hant.json',
+  '/tips-ja-JP.json',
+  '/tips-ko-KR.json',
+  '/tips-de-DE.json',
+  '/tips-fr-FR.json',
+  '/tips-es-ES.json',
+  '/tips-pt-BR.json',
+  '/tips-ru-RU.json',
   '/server/index.json',
   '/desktop/index.json',
 ];
@@ -70,6 +80,18 @@ const steamAchievementsEntryId = 'steam-achievements';
 const explicitTimezoneIsoPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/;
 const supportedCharacterTemplateModes = ['curated', 'universal'];
 const requiredPromotoLocaleCodes = [...SUPPORTED_DESKTOP_LANGUAGE_CODES];
+const tipsRouteConfigs = [
+  { sitePath: '/tips-en-US.json', locale: 'en-US' },
+  { sitePath: '/tips-zh-CN.json', locale: 'zh-CN' },
+  { sitePath: '/tips-zh-Hant.json', locale: 'zh-Hant' },
+  { sitePath: '/tips-ja-JP.json', locale: 'ja-JP' },
+  { sitePath: '/tips-ko-KR.json', locale: 'ko-KR' },
+  { sitePath: '/tips-de-DE.json', locale: 'de-DE' },
+  { sitePath: '/tips-fr-FR.json', locale: 'fr-FR' },
+  { sitePath: '/tips-es-ES.json', locale: 'es-ES' },
+  { sitePath: '/tips-pt-BR.json', locale: 'pt-BR' },
+  { sitePath: '/tips-ru-RU.json', locale: 'ru-RU' },
+];
 const requiredPortalSites = new Map([
   ['hagicode-main', 'https://hagicode.com/'],
   ['hagicode-docs', 'https://docs.hagicode.com/'],
@@ -340,6 +362,29 @@ function validatePromoteContract(payload) {
     if (entry.startTime !== undefined && entry.endTime !== undefined) {
       assert(Date.parse(entry.startTime) < Date.parse(entry.endTime), `${fieldName} startTime must be before endTime.`);
     }
+  });
+}
+
+function validateTipsContract(payload, expectedLocale, sitePath) {
+  assert(payload && typeof payload === 'object' && !Array.isArray(payload), `${sitePath} payload must be an object.`);
+  assert(typeof payload.schemaVersion === 'string' && payload.schemaVersion.trim().length > 0, `${sitePath} schemaVersion is required.`);
+  assert(payload.locale === expectedLocale, `${sitePath} locale must be ${expectedLocale}.`);
+  assert(typeof payload.updatedAt === 'string' && payload.updatedAt.trim().length > 0, `${sitePath} updatedAt is required.`);
+  assert(Array.isArray(payload.tips) && payload.tips.length > 0, `${sitePath} tips must be a non-empty array.`);
+
+  const seenIds = new Set();
+
+  payload.tips.forEach((tip, index) => {
+    const fieldName = `${sitePath} tips[${index}]`;
+
+    assert(tip && typeof tip === 'object' && !Array.isArray(tip), `${fieldName} must be an object.`);
+
+    for (const field of ['id', 'text', 'category']) {
+      assert(typeof tip[field] === 'string' && tip[field].trim().length > 0, `${fieldName} ${field} is required.`);
+    }
+
+    assert(!seenIds.has(tip.id), `${sitePath} duplicate tip id ${tip.id}.`);
+    seenIds.add(tip.id);
   });
 }
 
@@ -987,6 +1032,9 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   validateLegalDocumentsContract(await assertPublishedRoute('/legal-documents.json', publishedRoot));
   const promotePayload = await assertPublishedRoute('/promote.json', publishedRoot);
   validatePromoteContract(promotePayload);
+  for (const { sitePath, locale } of tipsRouteConfigs) {
+    validateTipsContract(await assertPublishedRoute(sitePath, publishedRoot), locale, sitePath);
+  }
   const promoteContentPayload = await assertPublishedRoute('/promote_content.json', publishedRoot);
   validatePromoteContentContract(promoteContentPayload);
   await assertPublishedRoute('/server/index.json', publishedRoot);

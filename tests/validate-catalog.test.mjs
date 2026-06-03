@@ -270,6 +270,23 @@ function buildPromoteFixture() {
   };
 }
 
+function buildTipsFixture({ locale = 'en' } = {}) {
+  return {
+    schemaVersion: '1.0.0',
+    locale,
+    updatedAt: '2026-06-01',
+    tips: [
+      {
+        id: 'start-with-project',
+        text: locale === 'zh'
+          ? '先创建项目，让 HagiCode 能把会话、文件和上下文集中管理。'
+          : 'Create a project first so HagiCode can keep sessions, files, and context together.',
+        category: 'getting-started',
+      },
+    ],
+  };
+}
+
 function buildPromoteContentFixture() {
   return {
     version: '1.0.0',
@@ -1041,6 +1058,8 @@ async function createValidationFixture({
   about = buildAboutFixture(),
   legalDocuments = buildLegalDocumentsFixture(),
   promote = buildPromoteFixture(),
+  tipsEn = buildTipsFixture({ locale: 'en' }),
+  tipsZh = buildTipsFixture({ locale: 'zh' }),
   promoteContent = buildPromoteContentFixture(),
   steam = buildSteamFixture(),
   steamAchievements = buildSteamAchievementsFixture(),
@@ -1128,6 +1147,8 @@ async function createValidationFixture({
   await writeFile(path.join(routeSourceDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(routeSourceDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
   await writeFile(path.join(routeSourceDir, 'promote.json'), JSON.stringify(promote), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'tips-en.json'), JSON.stringify(tipsEn), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'tips-zh.json'), JSON.stringify(tipsZh), 'utf8');
   await writeFile(path.join(routeSourceDir, 'promote_content.json'), JSON.stringify(promoteContent), 'utf8');
   await writeFile(path.join(routeSourceDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(routeSourceDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
@@ -1138,6 +1159,8 @@ async function createValidationFixture({
   await writeFile(path.join(distDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(distDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
   await writeFile(path.join(distDir, 'promote.json'), JSON.stringify(promote), 'utf8');
+  await writeFile(path.join(distDir, 'tips-en.json'), JSON.stringify(tipsEn), 'utf8');
+  await writeFile(path.join(distDir, 'tips-zh.json'), JSON.stringify(tipsZh), 'utf8');
   await writeFile(path.join(distDir, 'promote_content.json'), JSON.stringify(promoteContent), 'utf8');
   await writeFile(path.join(distDir, 'about.json'), JSON.stringify(about), 'utf8');
   await writeFile(path.join(distDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
@@ -1228,7 +1251,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries, 12 route-mapped JSON assets, and \d+ published JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries, 14 route-mapped JSON assets, and \d+ published JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
