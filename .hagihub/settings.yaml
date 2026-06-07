@@ -1,0 +1,5 @@
+action_recommendations:
+  - id: index-deploy-gh-pages
+    watch: true
+    include: true
+    reason: "publish site"
