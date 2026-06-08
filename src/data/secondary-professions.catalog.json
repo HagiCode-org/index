@@ -1,21 +1,41 @@
 {
-  "version": "2026.03.27",
-  "publishedAt": "2026-03-27T00:00:00.000Z",
+  "version": "2026.06.08",
+  "publishedAt": "2026-06-08T00:00:00.000Z",
   "title": "Secondary Profession Catalog",
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
     {
-      "id": "secondary-gpt-5-4",
-      "name": "GPT 5.4",
+      "id": "secondary-gpt-5-5",
+      "name": "GPT 5.5",
       "family": "gpt",
-      "summary": "hero.professionCopy.secondary.gpt54.summary",
+      "summary": "hero.professionCopy.secondary.gpt55.summary",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 10,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
-        "hermes"
+        "hermes",
+        "pi"
+      ],
+      "defaultParameters": {
+        "model": "gpt-5.5",
+        "reasoning": "high"
+      }
+    },
+    {
+      "id": "secondary-gpt-5-4",
+      "name": "GPT 5.4",
+      "family": "gpt",
+      "summary": "hero.professionCopy.secondary.gpt54.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
+      "sortOrder": 11,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "codex",
+        "copilot",
+        "hermes",
+        "pi"
       ],
       "defaultParameters": {
         "model": "gpt-5.4",
@@ -33,7 +53,8 @@
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
-        "hermes"
+        "hermes",
+        "pi"
       ],
       "defaultParameters": {
         "model": "gpt-5.3-codex",
@@ -46,12 +67,13 @@
       "family": "gpt",
       "summary": "hero.professionCopy.secondary.gpt52Codex.summary",
       "sourceLabel": "hero.professionCopy.sources.aiCodex",
-      "sortOrder": 21,
+      "sortOrder": 20,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
-        "hermes"
+        "hermes",
+        "pi"
       ],
       "defaultParameters": {
         "model": "gpt-5.2-codex",
@@ -69,7 +91,8 @@
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
-        "hermes"
+        "hermes",
+        "pi"
       ],
       "defaultParameters": {
         "model": "gpt-5-mini",
@@ -89,7 +112,8 @@
         "codebuddy",
         "hermes",
         "qoder",
-        "kiro"
+        "kiro",
+        "pi"
       ],
       "defaultParameters": {
         "model": "anthropic/claude-sonnet-4-6",
@@ -102,17 +126,18 @@
       "family": "anthropic",
       "summary": "hero.professionCopy.secondary.claude4Opus.summary",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
-      "sortOrder": 41,
+      "sortOrder": 40,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
         "hermes",
         "qoder",
-        "kiro"
+        "kiro",
+        "pi"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-opus-4-6",
+        "model": "anthropic/claude-opus-4-7",
         "reasoning": "high"
       }
     },
@@ -129,7 +154,8 @@
         "codebuddy",
         "hermes",
         "qoder",
-        "kiro"
+        "kiro",
+        "pi"
       ],
       "defaultParameters": {
         "model": "glm-4.7",
@@ -142,14 +168,15 @@
       "family": "anthropic",
       "summary": "hero.professionCopy.secondary.glm5.summary",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
-      "sortOrder": 61,
+      "sortOrder": 60,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
         "hermes",
         "qoder",
-        "kiro"
+        "kiro",
+        "pi"
       ],
       "defaultParameters": {
         "model": "glm-5",
@@ -162,14 +189,15 @@
       "family": "anthropic",
       "summary": "hero.professionCopy.secondary.glm5Turbo.summary",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
-      "sortOrder": 62,
+      "sortOrder": 60,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
         "hermes",
         "qoder",
-        "kiro"
+        "kiro",
+        "pi"
       ],
       "defaultParameters": {
         "model": "glm-5-turbo",
@@ -189,7 +217,8 @@
         "codebuddy",
         "hermes",
         "qoder",
-        "kiro"
+        "kiro",
+        "pi"
       ],
       "defaultParameters": {
         "model": "glm-5.0",
@@ -209,7 +238,8 @@
         "codebuddy",
         "hermes",
         "qoder",
-        "kiro"
+        "kiro",
+        "pi"
       ],
       "defaultParameters": {
         "model": "glm-5.1",
@@ -229,7 +259,8 @@
         "codebuddy",
         "hermes",
         "qoder",
-        "kiro"
+        "kiro",
+        "pi"
       ],
       "defaultParameters": {
         "model": "minimax-m2.7",
@@ -249,7 +280,8 @@
         "codebuddy",
         "hermes",
         "qoder",
-        "kiro"
+        "kiro",
+        "pi"
       ],
       "defaultParameters": {
         "model": "minimax-m2.7-high-speed",
@@ -269,10 +301,43 @@
         "codebuddy",
         "hermes",
         "qoder",
-        "kiro"
+        "kiro",
+        "pi"
       ],
       "defaultParameters": {
         "model": "minimax-m2.5",
+        "reasoning": "medium"
+      }
+    },
+    {
+      "id": "secondary-deepseek-v4-pro",
+      "name": "DeepSeek V4 Pro",
+      "family": "deepseek",
+      "summary": "hero.professionCopy.secondary.deepseekV4Pro.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersReasonixCliModel",
+      "sortOrder": 73,
+      "supportsImage": false,
+      "compatiblePrimaryFamilies": [
+        "reasonix"
+      ],
+      "defaultParameters": {
+        "model": "deepseek-v4-pro",
+        "reasoning": "high"
+      }
+    },
+    {
+      "id": "secondary-deepseek-v4-flash",
+      "name": "DeepSeek V4 Flash",
+      "family": "deepseek",
+      "summary": "hero.professionCopy.secondary.deepseekV4Flash.summary",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersReasonixCliModel",
+      "sortOrder": 74,
+      "supportsImage": false,
+      "compatiblePrimaryFamilies": [
+        "reasonix"
+      ],
+      "defaultParameters": {
+        "model": "deepseek-v4-flash",
         "reasoning": "medium"
       }
     },
@@ -284,7 +349,11 @@
       "summary": "hero.professionCopy.secondary.kimiK25.summary",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersKimiCliModel",
       "sortOrder": 80,
-      "supportsImage": true
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "kimi"
+      ],
+      "defaultParameters": {}
     },
     {
       "id": "secondary-gemini-2-5-pro",
@@ -295,6 +364,9 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 81,
       "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "gemini"
+      ],
       "defaultParameters": {
         "model": "gemini-2.5-pro"
       }
@@ -308,6 +380,9 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 82,
       "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "gemini"
+      ],
       "defaultParameters": {
         "model": "gemini-2.5-flash"
       }
@@ -321,6 +396,9 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 83,
       "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "gemini"
+      ],
       "defaultParameters": {
         "model": "gemini-2.5-flash-lite"
       }

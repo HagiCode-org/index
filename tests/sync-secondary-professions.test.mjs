@@ -6,7 +6,7 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 
 import { syncSecondaryProfessions } from '../scripts/sync-secondary-professions.mjs';
 
-const ANTHROPIC_COMPATIBLE_FAMILIES = ['claude', 'codebuddy', 'hermes', 'qoder', 'kiro'];
+const ANTHROPIC_COMPATIBLE_FAMILIES = ['claude', 'codebuddy', 'hermes', 'qoder', 'kiro', 'pi'];
 
 function stableJson(value) {
   return `${JSON.stringify(value, null, 2)}\n`;
