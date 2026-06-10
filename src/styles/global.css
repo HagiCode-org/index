@@ -187,6 +187,7 @@
   .hero-panel,
   .portal-section,
   .portal-group-card,
+  .portal-spotlight-card,
   .catalog-section,
   .about-section,
   .about-overview-card,
@@ -216,6 +217,7 @@
   .hero-panel,
   .portal-section,
   .portal-group-card,
+  .portal-spotlight-card,
   .catalog-section,
   .about-section,
   .site-footer,
@@ -443,6 +445,7 @@
   .card-heading h2,
   .portal-group-head h3,
   .portal-site-copy h3,
+  .portal-spotlight-copy h3,
   .hero-signal-card h2,
   .promoto-card-copy h2,
   .site-footer h2 {
@@ -468,6 +471,7 @@
   .hero-lede,
   .portal-group-head > p,
   .portal-site-copy p,
+  .portal-spotlight-copy p,
   .portal-site-domain,
   .about-overview-text,
   .about-group-head > p,
@@ -601,6 +605,7 @@
   .portal-surface-grid,
   .portal-snapshot-grid,
   .portal-group-grid,
+  .portal-spotlight-meta,
   .about-link-grid,
   .about-contact-grid,
   .about-qr-grid,
@@ -733,6 +738,7 @@
 
   .hero-signal-card,
   .portal-group-card,
+  .portal-spotlight-card,
   .about-overview-card,
   .about-group-card,
   .index-card,
@@ -755,6 +761,82 @@
     font-size: 1.8rem;
     font-weight: 800;
     line-height: 0.94;
+  }
+
+  .portal-spotlight-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .portal-spotlight-section::after {
+    content: "";
+    position: absolute;
+    inset: auto -88px -108px auto;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(22, 101, 52, 0.18), transparent 66%);
+    pointer-events: none;
+  }
+
+  .portal-spotlight-card {
+    position: relative;
+    border-color: var(--accent-border);
+    background:
+      linear-gradient(135deg, rgba(18, 34, 22, 0.86) 0%, rgba(12, 12, 12, 0.96) 54%, rgba(8, 8, 8, 0.99) 100%);
+    box-shadow: var(--shadow-2);
+  }
+
+  .portal-spotlight-layout {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.8fr);
+    align-items: start;
+  }
+
+  .portal-spotlight-copy {
+    display: grid;
+    gap: 10px;
+    max-width: 56rem;
+  }
+
+  .portal-spotlight-copy h3 {
+    font-size: clamp(2rem, 5vw, 3.35rem);
+    font-weight: 900;
+    line-height: 0.95;
+  }
+
+  .portal-spotlight-copy p {
+    max-width: 50rem;
+    font-size: 1.02rem;
+  }
+
+  .portal-spotlight-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .portal-spotlight-meta div {
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    background: rgba(20, 20, 20, 0.88);
+    box-shadow: var(--shadow-inset);
+  }
+
+  .portal-spotlight-meta dt {
+    color: var(--muted);
+    font-size: 0.84rem;
+  }
+
+  .portal-spotlight-meta dd {
+    margin-top: 8px;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+    overflow-wrap: anywhere;
   }
 
   .hero-signal-meta,
@@ -1950,6 +2032,7 @@
     .hero-grid,
     .history-hero-grid,
     .promoto-hero,
+    .portal-spotlight-layout,
     .about-layout,
     .footer-grid {
       grid-template-columns: 1fr;
@@ -1964,6 +2047,7 @@
     .hero-route-strip,
     .hero-metrics,
     .portal-snapshot-grid,
+    .portal-spotlight-meta,
     .about-summary-grid,
     .history-summary-grid,
     .history-latest-meta,
@@ -1990,6 +2074,7 @@
     .hero-route-strip,
     .portal-surface-grid,
     .portal-snapshot-grid,
+    .portal-spotlight-meta,
     .promoto-card-grid,
     .promoto-metrics,
     .promoto-filters,

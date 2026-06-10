@@ -1,6 +1,7 @@
 ---
 import Analytics51LA from '@/components/51LAAnalytics.astro';
 import IndexFooter from '@/components/IndexFooter.astro';
+import PortalLaunchSpotlight from '@/components/PortalLaunchSpotlight.astro';
 import PortalHero from '@/components/PortalHero.astro';
 import PortalSiteCard from '@/components/PortalSiteCard.astro';
 import { formatI18n, getLocaleNamespace, getString } from '@/i18n/runtime';
@@ -93,6 +94,9 @@ const routeSignals = [
     value: String(dataEntryLinks.length),
   },
 ] as const;
+const microsoftStoreUrl = 'https://apps.microsoft.com/detail/9N3PM0N3SVDW';
+const windowsStoreGuideUrl = 'https://docs.hagicode.com/installation/windows-store/';
+const promotoUrl = '/promoto';
 const pageTitle = getString(copy, 'metadata.title');
 const pageDescription = getString(copy, 'metadata.description');
 const canonicalUrl = 'https://index.hagicode.com/';
@@ -138,6 +142,12 @@ const canonicalUrl = 'https://index.hagicode.com/';
           dataPagePath="/data/"
           sitesJsonPath="/sites.json"
           catalogPath="/index-catalog.json"
+        />
+
+        <PortalLaunchSpotlight
+          storeUrl={microsoftStoreUrl}
+          guideUrl={windowsStoreGuideUrl}
+          promotoUrl={promotoUrl}
         />
 
         <section class="portal-section portal-surface-section" aria-labelledby="portal-surface-heading">

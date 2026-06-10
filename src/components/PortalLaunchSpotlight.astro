@@ -1,0 +1,58 @@
+---
+import { getLocaleNamespace, getString } from '@/i18n/runtime';
+
+interface Props {
+  storeUrl: string;
+  guideUrl: string;
+  promotoUrl: string;
+}
+
+const { storeUrl, guideUrl, promotoUrl } = Astro.props;
+const copy = getLocaleNamespace('hagindex');
+---
+
+<section class="portal-section portal-spotlight-section" aria-labelledby="portal-spotlight-heading">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">{getString(copy, 'sections.spotlight.eyebrow')}</p>
+      <h2 id="portal-spotlight-heading">{getString(copy, 'sections.spotlight.title')}</h2>
+    </div>
+  </div>
+
+  <article class="portal-spotlight-card">
+    <div class="portal-site-topline">
+      <p class="card-category">{getString(copy, 'spotlight.category')}</p>
+      <span class="status-badge">{getString(copy, 'spotlight.status')}</span>
+    </div>
+
+    <div class="portal-spotlight-layout">
+      <div class="portal-spotlight-copy">
+        <h3>{getString(copy, 'spotlight.title')}</h3>
+        <p>{getString(copy, 'spotlight.description')}</p>
+      </div>
+
+      <dl class="portal-spotlight-meta" aria-label={getString(copy, 'spotlight.metaAria')}>
+        <div>
+          <dt>{getString(copy, 'spotlight.meta.channelLabel')}</dt>
+          <dd>{getString(copy, 'spotlight.meta.channelValue')}</dd>
+        </div>
+        <div>
+          <dt>{getString(copy, 'spotlight.meta.surfaceLabel')}</dt>
+          <dd>{getString(copy, 'spotlight.meta.surfaceValue')}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="card-actions">
+      <a class="button button-primary" href={storeUrl} target="_blank" rel="noreferrer">
+        {getString(copy, 'spotlight.actions.openStore')}
+      </a>
+      <a class="button button-secondary" href={guideUrl} target="_blank" rel="noreferrer">
+        {getString(copy, 'spotlight.actions.installGuide')}
+      </a>
+      <a class="button button-tertiary" href={promotoUrl}>
+        {getString(copy, 'spotlight.actions.promoto')}
+      </a>
+    </div>
+  </article>
+</section>
