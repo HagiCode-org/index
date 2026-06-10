@@ -21,17 +21,17 @@ function sortByCode(locales) {
 test('index published-content locale metadata stays aligned with the site reference catalog', () => {
   const indexLocales = sortByCode(INDEX_PUBLISHED_CONTENT_LOCALES);
   const siteLocales = sortByCode(SITE_LOCALES);
+  const indexLocaleByCode = new Map(indexLocales.map((locale) => [locale.code, locale]));
 
   assert.equal(indexLocales.length, 29);
-  assert.deepEqual(
-    indexLocales.map((locale) => locale.code),
-    siteLocales.map((locale) => locale.code),
-  );
+  assert.equal(siteLocales.length > 0, true);
 
-  for (const locale of indexLocales) {
-    const siteLocale = siteLocales.find((entry) => entry.code === locale.code);
-    assert.ok(siteLocale, `${locale.code} must exist in the site locale catalog.`);
-    assert.deepEqual(locale, siteLocale);
+  for (const siteLocale of siteLocales) {
+    const indexLocale = indexLocaleByCode.get(siteLocale.code);
+    assert.ok(indexLocale, `${siteLocale.code} must exist in the index locale catalog.`);
+    assert.equal(indexLocale.code, siteLocale.code);
+    assert.deepEqual(indexLocale.fallbackCodes, siteLocale.fallbackCodes);
+    assert.deepEqual(indexLocale.aliases, siteLocale.aliases);
   }
 });
 

@@ -270,7 +270,9 @@ function buildPromoteFixture() {
   };
 }
 
-function buildTipsFixture({ locale = 'en' } = {}) {
+function buildTipsFixture({ locale = 'en-US' } = {}) {
+  const isChineseLocale = String(locale).startsWith('zh');
+
   return {
     schemaVersion: '1.0.0',
     locale,
@@ -278,7 +280,7 @@ function buildTipsFixture({ locale = 'en' } = {}) {
     tips: [
       {
         id: 'start-with-project',
-        text: locale === 'zh'
+        text: isChineseLocale
           ? '先创建项目，让 HagiCode 能把会话、文件和上下文集中管理。'
           : 'Create a project first so HagiCode can keep sessions, files, and context together.',
         category: 'getting-started',
@@ -1058,8 +1060,8 @@ async function createValidationFixture({
   about = buildAboutFixture(),
   legalDocuments = buildLegalDocumentsFixture(),
   promote = buildPromoteFixture(),
-  tipsEn = buildTipsFixture({ locale: 'en' }),
-  tipsZh = buildTipsFixture({ locale: 'zh' }),
+  tipsEn = buildTipsFixture({ locale: 'en-US' }),
+  tipsZh = buildTipsFixture({ locale: 'zh-CN' }),
   promoteContent = buildPromoteContentFixture(),
   steam = buildSteamFixture(),
   steamAchievements = buildSteamAchievementsFixture(),
@@ -1135,6 +1137,16 @@ async function createValidationFixture({
     generatedAt: catalog.generatedAt,
     packages: [{ version: '1.0.0' }],
   });
+  const supplementalTipsFixtures = [
+    { fileName: 'tips-zh-Hant.json', payload: buildTipsFixture({ locale: 'zh-Hant' }) },
+    { fileName: 'tips-ja-JP.json', payload: buildTipsFixture({ locale: 'ja-JP' }) },
+    { fileName: 'tips-ko-KR.json', payload: buildTipsFixture({ locale: 'ko-KR' }) },
+    { fileName: 'tips-de-DE.json', payload: buildTipsFixture({ locale: 'de-DE' }) },
+    { fileName: 'tips-fr-FR.json', payload: buildTipsFixture({ locale: 'fr-FR' }) },
+    { fileName: 'tips-es-ES.json', payload: buildTipsFixture({ locale: 'es-ES' }) },
+    { fileName: 'tips-pt-BR.json', payload: buildTipsFixture({ locale: 'pt-BR' }) },
+    { fileName: 'tips-ru-RU.json', payload: buildTipsFixture({ locale: 'ru-RU' }) },
+  ];
 
   await writeFile(
     path.join(srcDataDir, 'agent-preset-library.json'),
@@ -1147,8 +1159,11 @@ async function createValidationFixture({
   await writeFile(path.join(routeSourceDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(routeSourceDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
   await writeFile(path.join(routeSourceDir, 'promote.json'), JSON.stringify(promote), 'utf8');
-  await writeFile(path.join(routeSourceDir, 'tips-en.json'), JSON.stringify(tipsEn), 'utf8');
-  await writeFile(path.join(routeSourceDir, 'tips-zh.json'), JSON.stringify(tipsZh), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'tips-en-US.json'), JSON.stringify(tipsEn), 'utf8');
+  await writeFile(path.join(routeSourceDir, 'tips-zh-CN.json'), JSON.stringify(tipsZh), 'utf8');
+  for (const entry of supplementalTipsFixtures) {
+    await writeFile(path.join(routeSourceDir, entry.fileName), JSON.stringify(entry.payload), 'utf8');
+  }
   await writeFile(path.join(routeSourceDir, 'promote_content.json'), JSON.stringify(promoteContent), 'utf8');
   await writeFile(path.join(routeSourceDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(routeSourceDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
@@ -1159,8 +1174,11 @@ async function createValidationFixture({
   await writeFile(path.join(distDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(distDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
   await writeFile(path.join(distDir, 'promote.json'), JSON.stringify(promote), 'utf8');
-  await writeFile(path.join(distDir, 'tips-en.json'), JSON.stringify(tipsEn), 'utf8');
-  await writeFile(path.join(distDir, 'tips-zh.json'), JSON.stringify(tipsZh), 'utf8');
+  await writeFile(path.join(distDir, 'tips-en-US.json'), JSON.stringify(tipsEn), 'utf8');
+  await writeFile(path.join(distDir, 'tips-zh-CN.json'), JSON.stringify(tipsZh), 'utf8');
+  for (const entry of supplementalTipsFixtures) {
+    await writeFile(path.join(distDir, entry.fileName), JSON.stringify(entry.payload), 'utf8');
+  }
   await writeFile(path.join(distDir, 'promote_content.json'), JSON.stringify(promoteContent), 'utf8');
   await writeFile(path.join(distDir, 'about.json'), JSON.stringify(about), 'utf8');
   await writeFile(path.join(distDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
@@ -1251,7 +1269,7 @@ test('catalog validation script succeeds', async (t) => {
     { cwd: projectRoot },
   );
 
-  assert.match(stdout, /Validated \d+ catalog entries, 14 route-mapped JSON assets, and \d+ published JSON assets\./);
+  assert.match(stdout, /Validated \d+ catalog entries, \d+ route-mapped JSON assets, and \d+ published JSON assets\./);
 });
 
 test('character template library materializes stable dungeon bindings for summaries and details', () => {
@@ -1432,10 +1450,12 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   const promoteContent = JSON.parse(await readFile(promoteContentPath, 'utf8'));
   const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
   const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
+  const microsoftStorePromotion = promote.promotes.find((entry) => entry.id === 'desktop-microsoft-store-2026-06-10');
   const mainPromotion = promote.promotes.find((entry) => entry.id === 'main-game-2026-04-29');
   const eaPromotion = promote.promotes.find((entry) => entry.id === 'main-game-steam-ea-2026-04-29');
   const plusPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-plus-bundle');
   const turboPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
+  const microsoftStorePromotionContent = promoteContent.contents.find((entry) => entry.id === 'desktop-microsoft-store-2026-06-10');
   const mainPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-2026-04-29');
   const eaPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-steam-ea-2026-04-29');
   const plusPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-plus-bundle');
@@ -1449,6 +1469,7 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.equal(promotionContentEntry.path, '/promote_content.json');
   assert.equal(promotionContentEntry.sourceRepo, 'repos/index');
   assert.equal(promotionContentEntry.status, 'published');
+  assert.equal(microsoftStorePromotion?.on, true);
   assert.equal(mainPromotion?.on, true);
   assert.equal(mainPromotion?.endTime, '2026-04-29T00:00:00+08:00');
   assert.equal(eaPromotion?.on, false);
@@ -1458,6 +1479,18 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.equal(Date.parse(eaPromotion.startTime) < Date.parse(eaPromotion.endTime), true);
   assert.equal(plusPromotion?.on, false);
   assert.equal(turboPromotion?.on, false);
+  assert.deepEqual(Object.keys(microsoftStorePromotionContent?.title ?? {}).sort(), supportedPromotoLocales);
+  assert.deepEqual(Object.keys(microsoftStorePromotionContent?.description ?? {}).sort(), supportedPromotoLocales);
+  assert.deepEqual(Object.keys(microsoftStorePromotionContent?.cta ?? {}).sort(), supportedPromotoLocales);
+  assert.equal(microsoftStorePromotionContent?.title['zh-CN'], 'HagiCode for Windows 已上线 Microsoft Store');
+  assert.equal(microsoftStorePromotionContent?.title['en-US'], 'HagiCode for Windows is now on Microsoft Store');
+  assert.match(microsoftStorePromotionContent?.description['zh-CN'] ?? '', /Windows/);
+  assert.match(microsoftStorePromotionContent?.description['en-US'] ?? '', /store-managed update path/);
+  assert.equal(microsoftStorePromotionContent?.cta['zh-CN'], '打开 Microsoft Store');
+  assert.equal(microsoftStorePromotionContent?.cta['en-US'], 'Open Microsoft Store');
+  assert.equal(microsoftStorePromotionContent?.image.alt, 'HagiCode for Windows Microsoft Store artwork');
+  assert.equal(microsoftStorePromotionContent?.link, 'https://apps.microsoft.com/detail/9N3PM0N3SVDW');
+  assert.equal(microsoftStorePromotionContent?.targetPlatform, 'microsoft-store');
   assert.deepEqual(Object.keys(mainPromotionContent?.title ?? {}).sort(), supportedPromotoLocales);
   assert.deepEqual(Object.keys(mainPromotionContent?.description ?? {}).sort(), supportedPromotoLocales);
   assert.deepEqual(Object.keys(mainPromotionContent?.cta ?? {}).sort(), supportedPromotoLocales);

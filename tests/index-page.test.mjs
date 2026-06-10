@@ -40,7 +40,9 @@ test('promoto page renders localized review labels and stable JSON links', async
   assert.match(promotoPage, /当前查看语言/);
   assert.match(promotoPage, /在 29 种桌面端语言之间切换卡片正文/);
   assert.match(promotoPage, /name="promoto-locale"/);
-  assert.match(promotoPage, /当前显示 4 \/ 4 条 Promoto 内容/);
+  assert.match(promotoPage, /当前显示 5 \/ 5 条 Promoto 内容/);
+  assert.match(promotoPage, /HagiCode for Windows 已上线 Microsoft Store/);
+  assert.match(promotoPage, /microsoft-store/);
   assert.match(promotoPage, /当前语言：简体中文（zh-CN）/);
   assert.match(promotoPage, /data-selected-locale="zh-CN"/);
   assert.match(promotoPage, /data-promoto-selected-locale/);

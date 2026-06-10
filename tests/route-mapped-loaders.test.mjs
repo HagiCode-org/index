@@ -106,10 +106,10 @@ test('legal documents route-mapped JSON keeps the desktop legal metadata contrac
 });
 
 test('localized tips route-mapped JSON loads valid English and Chinese payloads', async () => {
-  const englishTips = await loadRouteMappedJson('/tips-en.json');
-  const chineseTips = await loadRouteMappedJson('/tips-zh.json');
+  const englishTips = await loadRouteMappedJson('/tips-en-US.json');
+  const chineseTips = await loadRouteMappedJson('/tips-zh-CN.json');
 
-  for (const [payload, locale] of [[englishTips, 'en'], [chineseTips, 'zh']]) {
+  for (const [payload, locale] of [[englishTips, 'en-US'], [chineseTips, 'zh-CN']]) {
     assert.equal(payload.schemaVersion, '1.0.0');
     assert.equal(payload.locale, locale);
     assert.equal(typeof payload.updatedAt, 'string');
@@ -269,10 +269,12 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   const promoteContent = await loadRouteMappedJson('/promote_content.json');
   const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
   const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
+  const microsoftStorePromotion = promote.promotes.find((entry) => entry.id === 'desktop-microsoft-store-2026-06-10');
   const mainPromotion = promote.promotes.find((entry) => entry.id === 'main-game-2026-04-29');
   const eaPromotion = promote.promotes.find((entry) => entry.id === 'main-game-steam-ea-2026-04-29');
   const plusPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-plus-bundle');
   const turboPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
+  const microsoftStorePromotionContent = promoteContent.contents.find((entry) => entry.id === 'desktop-microsoft-store-2026-06-10');
   const mainPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-2026-04-29');
   const eaPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-steam-ea-2026-04-29');
   const plusPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-plus-bundle');
@@ -288,10 +290,12 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.equal(promote.version, '1.0.0');
   assert.equal(typeof promote.updatedAt, 'string');
   assert.equal(Array.isArray(promote.promotes), true);
+  assert.ok(microsoftStorePromotion, 'microsoft-store promotion flag is required.');
   assert.ok(mainPromotion, 'main-game promotion flag is required.');
   assert.ok(eaPromotion, 'main-game Steam EA promotion flag is required.');
   assert.ok(plusPromotion, 'hagicode-plus promotion flag is required.');
   assert.ok(turboPromotion, 'turbo-engine promotion flag is required.');
+  assert.equal(microsoftStorePromotion.on, true);
   assert.equal(mainPromotion.on, true);
   assert.equal(mainPromotion.endTime, '2026-04-29T00:00:00+08:00');
   assert.equal(eaPromotion.on, false);
@@ -302,6 +306,7 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.equal(plusPromotion.on, false);
   assert.equal(turboPromotion.on, false);
   assert.deepEqual(promote.promotes.map((entry) => Object.keys(entry).sort()), [
+    ['id', 'on'],
     ['endTime', 'id', 'on'],
     ['endTime', 'id', 'on', 'startTime'],
     ['id', 'on'],
@@ -311,10 +316,22 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.equal(promoteContent.version, '1.0.0');
   assert.equal(typeof promoteContent.updatedAt, 'string');
   assert.equal(Array.isArray(promoteContent.contents), true);
+  assert.ok(microsoftStorePromotionContent, 'microsoft-store promotion content is required.');
   assert.ok(mainPromotionContent, 'main-game promotion content is required.');
   assert.ok(eaPromotionContent, 'main-game Steam EA promotion content is required.');
   assert.ok(plusPromotionContent, 'hagicode-plus promotion content is required.');
   assert.ok(turboPromotionContent, 'turbo-engine promotion content is required.');
+  assert.deepEqual(Object.keys(microsoftStorePromotionContent).sort(), ['cta', 'description', 'id', 'image', 'link', 'targetPlatform', 'title']);
+  assert.deepEqual(Object.keys(microsoftStorePromotionContent.title).sort(), supportedPromotoLocales);
+  assert.equal(microsoftStorePromotionContent.title['zh-CN'], 'HagiCode for Windows 已上线 Microsoft Store');
+  assert.equal(microsoftStorePromotionContent.title['en-US'], 'HagiCode for Windows is now on Microsoft Store');
+  assert.match(microsoftStorePromotionContent.description['zh-CN'], /Microsoft Store/);
+  assert.match(microsoftStorePromotionContent.description['en-US'], /Microsoft Store/);
+  assert.equal(microsoftStorePromotionContent.cta['zh-CN'], '打开 Microsoft Store');
+  assert.equal(microsoftStorePromotionContent.cta['en-US'], 'Open Microsoft Store');
+  assert.equal(microsoftStorePromotionContent.link, 'https://apps.microsoft.com/detail/9N3PM0N3SVDW');
+  assert.equal(microsoftStorePromotionContent.targetPlatform, 'microsoft-store');
+  assert.equal(microsoftStorePromotionContent.image.alt, 'HagiCode for Windows Microsoft Store artwork');
   assert.deepEqual(Object.keys(mainPromotionContent).sort(), ['cta', 'description', 'id', 'image', 'link', 'targetPlatform', 'title']);
   assert.deepEqual(Object.keys(mainPromotionContent.title).sort(), supportedPromotoLocales);
   assert.deepEqual(Object.keys(mainPromotionContent.description).sort(), supportedPromotoLocales);
