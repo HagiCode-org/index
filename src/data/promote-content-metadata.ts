@@ -1,4 +1,5 @@
 import type { ImageMetadata } from 'astro';
+import hagicodeWindowsStoreArtwork from '@/assets/steam/hagicode/1280x720.png';
 import hagicodeCapsule from '@/assets/steam/hagicode/1232x706.png';
 import hagicodeEaCapsule from '@/assets/steam/hagicode/920x430.png';
 import hagicodePlusCapsule from '@/assets/steam/hagicode-plus/hagicode-plus-1232x706.png';
@@ -12,6 +13,12 @@ export interface PromoteContentMetadataEntry {
 }
 
 export const promoteContentMetadata = [
+  {
+    id: 'desktop-microsoft-store-2026-06-10',
+    link: 'https://apps.microsoft.com/detail/9N3PM0N3SVDW',
+    targetPlatform: 'microsoft-store',
+    image: hagicodeWindowsStoreArtwork,
+  },
   {
     id: 'main-game-2026-04-29',
     link: 'https://store.steampowered.com/app/4625540/Hagicode/',
