@@ -35,6 +35,9 @@ hero:
     deliveryValue: "Static publish"
     snapshotLabel: "Site snapshot"
 sections:
+  spotlight:
+    eyebrow: "Latest promote"
+    title: "Latest promotion"
   surface:
     eyebrow: "Control surface"
     title: "Four operating lines for Index"
@@ -106,6 +109,21 @@ dataEntries:
 siteCard:
   productionBadge: "production"
   actionAriaTemplate: "{title} actions"
+spotlight:
+  category: "latest launch"
+  status: "new"
+  title: "HagiCode for Windows is now live on Microsoft Store"
+  description: "Windows users can now install HagiCode directly from Microsoft Store. The Index homepage now exposes the store entry, install guide, and Promoto showcase in one place for promotion and external linking."
+  metaAria: "Latest promotion summary"
+  meta:
+    channelLabel: "Channel"
+    channelValue: "Microsoft Store"
+    surfaceLabel: "Focus"
+    surfaceValue: "Windows desktop entry"
+  actions:
+    openStore: "Open Microsoft Store"
+    installGuide: "View install guide"
+    promoto: "Open Promoto"
 footer:
   eyebrow: "Stable routes"
   title: "Stable entries"

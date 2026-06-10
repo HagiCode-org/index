@@ -1,4 +1,9 @@
 promotions:
+  desktop-microsoft-store-2026-06-10:
+    title: "HagiCode for Windows is now on Microsoft Store"
+    description: "HagiCode for Windows is officially live on Microsoft Store. Windows users can install it directly from the storefront and stay on the store-managed update path. Open the listing and take a look."
+    cta: "Open Microsoft Store"
+    alt: "HagiCode for Windows Microsoft Store artwork"
   main-game-2026-04-29:
     title: "Wishlist It, Pretty Please"
     description: "Hagicode, the not-globally-unique but super handy Vibe Coding software, launches on April 29. Please add it to your Steam wishlist. Sob. Pretty please."

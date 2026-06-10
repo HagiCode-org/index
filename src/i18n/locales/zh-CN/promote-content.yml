@@ -1,4 +1,9 @@
 promotions:
+  desktop-microsoft-store-2026-06-10:
+    title: "HagiCode for Windows 已上线 Microsoft Store"
+    description: "HagiCode for Windows 现已正式登陆 Microsoft Store，Windows 用户可以直接从商店完成安装并接收渠道更新。现在就打开商店页看看吧。"
+    cta: "打开 Microsoft Store"
+    alt: "HagiCode for Windows Microsoft Store artwork"
   main-game-2026-04-29:
     title: "求求加入愿望单"
     description: "全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 将于 4月29日发售，快来 steam 加入愿望单吧，呜呜呜，求求了"

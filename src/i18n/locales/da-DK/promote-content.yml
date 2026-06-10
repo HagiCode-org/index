@@ -1,21 +1,26 @@
 promotions:
+  desktop-microsoft-store-2026-06-10:
+    title: HagiCode for Windows is now on Microsoft Store
+    description: HagiCode for Windows is officially live on Microsoft Store. Windows users can install it directly from the storefront and stay on the store-managed update path. Open the listing and take a look.
+    cta: Open Microsoft Store
+    alt: HagiCode for Windows Microsoft Store artwork
   main-game-2026-04-29:
-    title: "Wishlist det, please"
-    description: "Hagicode, den ikke-helt-verdensunikke men virkelig handy Vibe Coding-software, udkommer den 29. april. Læg det gerne på din Steam-wishlist. Pretty please."
-    cta: "Wishlist på Steam"
-    alt: "HagiCode-billede til Steam-butikssiden"
+    title: Wishlist det, please
+    description: Hagicode, den ikke-helt-verdensunikke men virkelig handy Vibe Coding-software, udkommer den 29. april. Læg det gerne på din Steam-wishlist. Pretty please.
+    cta: Wishlist på Steam
+    alt: HagiCode-billede til Steam-butikssiden
   main-game-steam-ea-2026-04-29:
-    title: "Early Access er endelig her"
-    description: "Hagicode, den ikke-helt-verdensunikke men virkelig handy Vibe Coding-software, er nu i Steam Early Access. Tag et kig, please."
-    cta: "Se Early Access"
-    alt: "HagiCode Early Access-billede på Steam"
+    title: Early Access er endelig her
+    description: Hagicode, den ikke-helt-verdensunikke men virkelig handy Vibe Coding-software, er nu i Steam Early Access. Tag et kig, please.
+    cta: Se Early Access
+    alt: HagiCode Early Access-billede på Steam
   hagicode-plus-bundle:
-    title: "Hagicode Plus-pakke"
-    description: "Hagicode Plus, den ikke-helt-verdensunikke men imponerende velpakkede løsning, er 15 % off med basisspillet og Turbo Engine DLC. Kig forbi på Steam. Pretty please."
-    cta: "Se pakken"
-    alt: "Hagicode Plus-pakkebillede på Steam"
+    title: Hagicode Plus-pakke
+    description: Hagicode Plus, den ikke-helt-verdensunikke men imponerende velpakkede løsning, er 15 % off med basisspillet og Turbo Engine DLC. Kig forbi på Steam. Pretty please.
+    cta: Se pakken
+    alt: Hagicode Plus-pakkebillede på Steam
   hagicode-turbo-engine-dlc:
-    title: "Turbo Engine DLC"
-    description: "Turbo Engine DLC er måske ikke globalt unikt, men det har fart på: lås op for op til 32 samtidige online-sessioner og flere tilpasningsmuligheder i dit Hagicode-workflow. Kig forbi Steam. Please."
-    cta: "Se DLC"
-    alt: "Turbo Engine DLC-billede på Steam"
+    title: Turbo Engine DLC
+    description: 'Turbo Engine DLC er måske ikke globalt unikt, men det har fart på: lås op for op til 32 samtidige online-sessioner og flere tilpasningsmuligheder i dit Hagicode-workflow. Kig forbi Steam. Please.'
+    cta: Se DLC
+    alt: Turbo Engine DLC-billede på Steam

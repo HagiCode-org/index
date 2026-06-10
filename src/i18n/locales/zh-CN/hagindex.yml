@@ -35,6 +35,9 @@ hero:
     deliveryValue: "静态发布"
     snapshotLabel: "站点快照"
 sections:
+  spotlight:
+    eyebrow: "Latest promote"
+    title: "最新推广"
   surface:
     eyebrow: "Control surface"
     title: "把 Index 划成四条主线"
@@ -106,6 +109,21 @@ dataEntries:
 siteCard:
   productionBadge: "production"
   actionAriaTemplate: "{title} 操作"
+spotlight:
+  category: "latest launch"
+  status: "new"
+  title: "HagiCode for Windows 已正式上线 Microsoft Store"
+  description: "Windows 用户现在可以直接通过 Microsoft Store 安装 HagiCode。Index 首页同步放出商店入口、安装文档和 Promoto 展示页，方便集中推广与外部引用。"
+  metaAria: "最新推广摘要"
+  meta:
+    channelLabel: "分发渠道"
+    channelValue: "Microsoft Store"
+    surfaceLabel: "推广焦点"
+    surfaceValue: "Windows 桌面入口"
+  actions:
+    openStore: "打开 Microsoft Store"
+    installGuide: "查看安装文档"
+    promoto: "打开 Promoto"
 footer:
   eyebrow: "Stable routes"
   title: "稳定入口"
