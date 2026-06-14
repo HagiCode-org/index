@@ -124,8 +124,40 @@ test('syncSecondaryProfessions keeps GLM 5.1 aligned across the published asset 
   assert.deepEqual(fallbackEntry, publishedEntry);
   assert.deepEqual(
     publishedIds.slice(publishedIds.indexOf('secondary-glm-5-codebuddy'), publishedIds.indexOf('secondary-minimax-m2-7') + 1),
-    ['secondary-glm-5-codebuddy', 'secondary-glm-5-1', 'secondary-minimax-m2-7'],
+    ['secondary-glm-5-codebuddy', 'secondary-glm-5-1', 'secondary-glm-5-2', 'secondary-minimax-m2-7'],
   );
+});
+
+test('syncSecondaryProfessions keeps GLM 5.2 aligned across the published asset and backend fallback', async () => {
+  const sourceCatalog = JSON.parse(await readFile(new URL('../src/data/secondary-professions.catalog.json', import.meta.url), 'utf8'));
+  const publishedCatalog = JSON.parse(await readFile(new URL('../public/secondary-professions/index.json', import.meta.url), 'utf8'));
+  const fallbackCatalog = JSON.parse(await readFile(new URL('../../hagicode-core/src/PCode.Web/Assets/secondary-professions.index.json', import.meta.url), 'utf8'));
+
+  const sourceEntry = sourceCatalog.items.find((item) => item.id === 'secondary-glm-5-2');
+  const publishedEntry = publishedCatalog.items.find((item) => item.id === 'secondary-glm-5-2');
+  const fallbackEntry = fallbackCatalog.items.find((item) => item.id === 'secondary-glm-5-2');
+
+  assert.deepEqual(sourceEntry, {
+    id: 'secondary-glm-5-2',
+    name: 'GLM 5.2',
+    family: 'anthropic',
+    summary: 'hero.professionCopy.secondary.glm52.summary',
+    sourceLabel: 'hero.professionCopy.sources.aiSharedAnthropicModel',
+    sortOrder: 65,
+    supportsImage: true,
+    compatiblePrimaryFamilies: ANTHROPIC_COMPATIBLE_FAMILIES,
+    defaultParameters: {
+      model: 'glm-5.2',
+      reasoning: 'high',
+    },
+  });
+  assert.deepEqual(publishedEntry, {
+    ...sourceEntry,
+    primaryProfessionId: null,
+    icon: null,
+    fieldConstraints: [],
+  });
+  assert.deepEqual(fallbackEntry, publishedEntry);
 });
 
 test('syncSecondaryProfessions check mode detects drift across published asset, fallback snapshot, and catalog entry', async (t) => {
