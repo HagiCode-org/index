@@ -55,30 +55,10 @@
       "title": "Why HagiCode Makes Claude More Effective",
       "blocks": [
         {
-          "id": "claude-vs-hagicode-grid",
-          "type": "comparison-grid",
-          "items": [
-            {
-              "id": "parallelism",
-              "label": "Parallel execution",
-              "agent": "Claude is strong inside one session.",
-              "hagicode": "HagiCode coordinates many Claude-powered sessions at once.",
-              "combinedValue": "You get parallel delivery instead of sequential waiting."
-            },
-            {
-              "id": "openspec",
-              "label": "OpenSpec workflow",
-              "agent": "Claude can reason well about implementation plans.",
-              "hagicode": "HagiCode turns those plans into tracked proposals, tasks, and archiveable change records.",
-              "combinedValue": "Decisions stay reviewable after the coding session ends."
-            },
-            {
-              "id": "agents",
-              "label": "Agent orchestration",
-              "agent": "Claude sessions do not provide a fleet view on their own.",
-              "hagicode": "HagiCode exposes identities, status, and task ownership for each active agent.",
-              "combinedValue": "Multi-agent work stays understandable to humans."
-            }
+          "id": "claude-vs-hagicode-section-2-intro",
+          "type": "rich-text",
+          "content": [
+            "Claude's raw capability is undeniable, but any AI model needs a suitable working environment to deliver it. Just as a top-tier engine needs a matching chassis and drivetrain, Claude needs a professional workbench like HagiCode to release its full potential."
           ]
         },
         {
@@ -109,47 +89,6 @@
           ]
         }
       ]
-    },
-    {
-      "id": "claude-vs-hagicode-section-3",
-      "title": "Structured Conclusion",
-      "blocks": [
-        {
-          "id": "claude-vs-hagicode-summary",
-          "type": "callout",
-          "tone": "success",
-          "title": "Bottom line",
-          "content": [
-            "Claude supplies the reasoning engine. HagiCode supplies the workspace, orchestration, and repeatable workflow that let that reasoning scale into team-grade delivery."
-          ]
-        },
-        {
-          "id": "claude-vs-hagicode-next-steps",
-          "type": "cta-group",
-          "items": [
-            {
-              "label": "View installation",
-              "href": "/installation/",
-              "variant": "primary"
-            },
-            {
-              "label": "Browse FAQ",
-              "href": "/faq/",
-              "variant": "secondary"
-            }
-          ]
-        }
-      ]
     }
-  ],
-  "cta": {
-    "primary": {
-      "label": "View installation",
-      "href": "/installation/"
-    },
-    "secondary": {
-      "label": "Browse FAQ",
-      "href": "/faq/"
-    }
-  }
+  ]
 }
