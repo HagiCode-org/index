@@ -95,6 +95,17 @@
       "lastUpdated": "2026-06-14T00:00:00.000Z"
     },
     {
+      "id": "structured-articles",
+      "title": "Structured Article Manifest",
+      "description": "公开按语言目录组织的 *-vs-hagicode 结构化文章根清单，供 Docs snapshot 与其他消费者发现 locale manifest 入口。",
+      "path": "/articles/index.json",
+      "category": "catalogs",
+      "sourceRepo": "repos/index",
+      "lastUpdated": "2026-06-17T00:00:00.000Z",
+      "status": "published",
+      "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/articles"
+    },
+    {
       "id": "steam-data",
       "title": "Steam Data",
       "description": "公开 HagiCode 本体、DLC 与 Steam 成就的共享数据集入口，覆盖 applications[]、bundles[] 与 achievements[]。",
