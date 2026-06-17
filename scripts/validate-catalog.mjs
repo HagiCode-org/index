@@ -4,6 +4,15 @@ import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { SUPPORTED_DESKTOP_LANGUAGE_CODES } from '../src/lib/desktop-language-contract.ts';
 import {
+  buildStructuredArticleDetailPath,
+  buildStructuredArticleLocaleManifest,
+  buildStructuredArticleLocaleManifestPath,
+  buildStructuredArticleRootManifest,
+  listStructuredArticleLocales,
+  listStructuredArticleSlugs,
+  loadStructuredArticleDetail,
+} from '../src/lib/structured-articles.ts';
+import {
   buildCharacterTemplateLibrary,
   coreDungeonScriptKeys,
   loadAgentPresetLibrary,
@@ -76,6 +85,7 @@ const agentTemplatesEntryId = 'agent-templates';
 const characterTemplatesEntryId = 'character-templates';
 const promotionFlagsEntryId = 'promotion-flags';
 const promotionContentEntryId = 'promotion-content';
+const structuredArticlesEntryId = 'structured-articles';
 const steamAchievementsEntryId = 'steam-achievements';
 const explicitTimezoneIsoPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/;
 const supportedCharacterTemplateModes = ['curated', 'universal'];
@@ -255,6 +265,74 @@ async function assertPublishedGeneratedRoute(sitePath, publishedRoot) {
   );
 
   return publishedValue;
+}
+
+async function assertPublishedJsonPayload(sitePath, publishedRoot) {
+  const publishedFile = resolvePublishedPath(sitePath, publishedRoot);
+
+  await access(publishedFile);
+  const publishedRaw = await readFile(publishedFile, 'utf8');
+  const publishedValue = JSON.parse(publishedRaw);
+
+  assert(
+    publishedRaw === JSON.stringify(publishedValue),
+    `${sitePath} must be published as stable minified JSON.`,
+  );
+
+  return publishedValue;
+}
+
+export async function validateStructuredArticlePublication({ publishedRoot = resolvePublishedRoot() } = {}) {
+  const locales = await listStructuredArticleLocales();
+
+  assert(locales.length > 0, 'Structured article source must contain at least one locale directory.');
+
+  const expectedRootManifest = await buildStructuredArticleRootManifest();
+  const publishedRootManifest = await assertPublishedJsonPayload('/articles/index.json', publishedRoot);
+
+  assert(
+    isDeepStrictEqual(publishedRootManifest, expectedRootManifest),
+    'Published /articles/index.json must match the structured article source manifest.',
+  );
+
+  const manifestLocales = expectedRootManifest.localeIndexes.map((entry) => entry.locale).sort((left, right) => left.localeCompare(right));
+  assert(
+    isDeepStrictEqual(manifestLocales, [...locales].sort((left, right) => left.localeCompare(right))),
+    'Structured article root manifest locales must match source locale folders.',
+  );
+
+  for (const locale of locales) {
+    const slugs = await listStructuredArticleSlugs(locale);
+    assert(slugs.length > 0, `Structured article locale ${locale} must contain at least one slug.`);
+
+    const expectedLocaleManifest = await buildStructuredArticleLocaleManifest(locale);
+    const publishedLocaleManifest = await assertPublishedJsonPayload(
+      buildStructuredArticleLocaleManifestPath(locale),
+      publishedRoot,
+    );
+
+    assert(
+      isDeepStrictEqual(publishedLocaleManifest, expectedLocaleManifest),
+      `Published ${buildStructuredArticleLocaleManifestPath(locale)} must match the source locale manifest.`,
+    );
+
+    const manifestSlugs = expectedLocaleManifest.articles.map((entry) => entry.slug).sort((left, right) => left.localeCompare(right));
+    assert(
+      isDeepStrictEqual(manifestSlugs, [...slugs].sort((left, right) => left.localeCompare(right))),
+      `Structured article locale ${locale} manifest slugs must match the locale folder contents.`,
+    );
+
+    for (const slug of slugs) {
+      const expectedDetail = await loadStructuredArticleDetail(locale, slug);
+      const publishedPath = buildStructuredArticleDetailPath(locale, slug);
+      const publishedDetail = await assertPublishedJsonPayload(publishedPath, publishedRoot);
+
+      assert(
+        isDeepStrictEqual(publishedDetail, expectedDetail),
+        `Published ${publishedPath} must match the source structured article detail.`,
+      );
+    }
+  }
 }
 
 function validateLiveBroadcastContract(payload) {
@@ -1023,6 +1101,8 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
 
   const publishedJsonCount = await assertAllPublishedJsonMinified(publishedRoot);
 
+  await validateStructuredArticlePublication({ publishedRoot });
+
   const publishedCatalog = await assertPublishedRoute('/index-catalog.json', publishedRoot);
   validateSitesCatalogContract(await assertPublishedRoute('/sites.json', publishedRoot));
   const designPayload = await assertPublishedRoute('/design.json', publishedRoot);
@@ -1077,6 +1157,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   let sawCharacterTemplatesEntry = false;
   let sawPromotionFlagsEntry = false;
   let sawPromotionContentEntry = false;
+  let sawStructuredArticlesEntry = false;
   let sawSteamAchievementsEntry = false;
 
   for (const [index, entry] of catalog.entries.entries()) {
@@ -1167,6 +1248,13 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
       assert(entry.status === 'published', 'Promotion content entry status must be published.');
     }
 
+    if (entry.id === structuredArticlesEntryId) {
+      sawStructuredArticlesEntry = true;
+      assert(entry.path === '/articles/index.json', 'Structured articles entry path must be /articles/index.json.');
+      assert(entry.sourceRepo === 'repos/index', 'Structured articles entry sourceRepo must be repos/index.');
+      assert(entry.status === 'published', 'Structured articles entry status must be published.');
+    }
+
     if (entry.id === steamAchievementsEntryId) {
       sawSteamAchievementsEntry = true;
       assert(entry.path === '/steam/achievements.json', 'Steam achievements entry path must be /steam/achievements.json.');
@@ -1182,6 +1270,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   assert(sawCharacterTemplatesEntry, 'Catalog must include a character-templates entry.');
   assert(sawPromotionFlagsEntry, 'Catalog must include a promotion-flags entry.');
   assert(sawPromotionContentEntry, 'Catalog must include a promotion-content entry.');
+  assert(sawStructuredArticlesEntry, 'Catalog must include a structured-articles entry.');
   assert(sawSteamAchievementsEntry, 'Catalog must include a steam-achievements entry.');
 
   console.log(`Validated ${catalog.entries.length} catalog entries, ${routeMappedJsonPaths.length} route-mapped JSON assets, and ${publishedJsonCount} published JSON assets.`);
