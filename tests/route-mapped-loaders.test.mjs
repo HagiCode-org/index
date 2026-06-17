@@ -19,6 +19,7 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   const steamAchievementsEntry = catalog.entries.find((entry) => entry.id === 'steam-achievements');
   const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
   const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
+  const structuredArticlesEntry = catalog.entries.find((entry) => entry.id === 'structured-articles');
 
   assert.ok(serverEntry, 'server-packages entry is required.');
   assert.ok(aboutEntry, 'about entry is required.');
@@ -27,6 +28,7 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   assert.ok(steamAchievementsEntry, 'steam-achievements entry is required.');
   assert.ok(promotionFlagsEntry, 'promotion-flags entry is required.');
   assert.ok(promotionContentEntry, 'promotion-content entry is required.');
+  assert.ok(structuredArticlesEntry, 'structured-articles entry is required.');
   assert.equal(serverEntry.path, '/server/index.json');
   assert.equal(serverEntry.historyPagePath, '/server/history/');
   assert.equal(aboutEntry.path, '/about.json');
@@ -35,6 +37,7 @@ test('loadIndexCatalog reads source-side route-mapped catalog with stable publis
   assert.equal(steamAchievementsEntry.path, '/steam/achievements.json');
   assert.equal(promotionFlagsEntry.path, '/promote.json');
   assert.equal(promotionContentEntry.path, '/promote_content.json');
+  assert.equal(structuredArticlesEntry.path, '/articles/index.json');
 });
 
 test('loadPackageHistory keeps the existing raw JSON contract for server and desktop history pages', async () => {
