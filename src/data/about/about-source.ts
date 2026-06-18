@@ -59,7 +59,7 @@ export const aboutSource = {
     {
       id: 'windows-store',
       type: 'link',
-      label: 'Windows Store',
+      label: 'Microsoft Store',
       regionPriority: 'international-first',
       url: 'https://apps.microsoft.com/detail/9N3PM0N3SVDW',
     },
