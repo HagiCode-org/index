@@ -10,6 +10,9 @@ const totalReleases = page.releases.length;
 const latestRelease = page.latestRelease;
 const updatedSummary = page.generatedAt ? page.generatedAtLabel : '未知';
 const historyKicker = page.source === 'server' ? '按版本分组的 ZIP 下载记录' : '按版本分组的完整发布记录';
+const isDesktopHistoryPage = page.source !== 'server';
+const windowsStoreUrl = 'https://apps.microsoft.com/detail/9N3PM0N3SVDW';
+const windowsStoreGuideUrl = 'https://docs.hagicode.com/installation/windows-store/';
 const sourceKindLabels: Record<VersionHistoryFileEntry['sourceKind'], string> = {
   release: 'release',
   assets: 'assets',
@@ -53,10 +56,26 @@ function getPrimaryFileActionLabel(file: VersionHistoryFileEntry): string {
           <a class="button button-secondary" href="/">
             返回首页
           </a>
-          <a class="button button-primary" href={page.sourceJsonPath} target="_blank" rel="noreferrer">
+          {isDesktopHistoryPage ? (
+            <a class="button button-primary" href={windowsStoreUrl} target="_blank" rel="noreferrer">
+              Microsoft Store
+            </a>
+          ) : null}
+          {isDesktopHistoryPage ? (
+            <a class="button button-secondary" href={windowsStoreGuideUrl} target="_blank" rel="noreferrer">
+              安装文档
+            </a>
+          ) : null}
+          <a class={`button ${isDesktopHistoryPage ? 'button-secondary' : 'button-primary'}`} href={page.sourceJsonPath} target="_blank" rel="noreferrer">
             原始 JSON
           </a>
         </div>
+
+        {isDesktopHistoryPage ? (
+          <p class="history-manual-download-note">
+            Windows 用户推荐优先通过 Microsoft Store 安装 HagiCode。此页主要用于手动下载安装包、追溯历史版本，或在 Store 不可用时查看原始分发文件。
+          </p>
+        ) : null}
       </div>
 
       <div class="history-summary-grid" aria-label={`${page.sourceLabel} 历史摘要`}>

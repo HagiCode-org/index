@@ -1307,6 +1307,19 @@
     padding-bottom: 24px;
   }
 
+  .history-manual-download-note {
+    max-width: 68ch;
+    margin: 0;
+    padding: 14px 16px;
+    border: 1px solid var(--accent-border);
+    border-radius: var(--radius-sm);
+    background:
+      linear-gradient(180deg, rgba(250, 255, 105, 0.08), rgba(8, 8, 8, 0.94));
+    color: var(--text);
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
   .history-summary-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
