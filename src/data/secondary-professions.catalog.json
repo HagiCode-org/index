@@ -1,6 +1,6 @@
 {
-  "version": "2026.06.14",
-  "publishedAt": "2026-06-14T00:00:00.000Z",
+  "version": "2026.06.21.1",
+  "publishedAt": "2026-06-21T12:00:00.000Z",
   "title": "Secondary Profession Catalog",
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
@@ -19,8 +19,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "gpt-5.5",
-        "reasoning": "high"
+        "model": "gpt-5.5"
       }
     },
     {
@@ -38,8 +37,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "gpt-5.4",
-        "reasoning": "high"
+        "model": "gpt-5.4"
       }
     },
     {
@@ -57,8 +55,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "gpt-5.3-codex",
-        "reasoning": "high"
+        "model": "gpt-5.3-codex"
       }
     },
     {
@@ -76,8 +73,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "gpt-5.2-codex",
-        "reasoning": "high"
+        "model": "gpt-5.2-codex"
       }
     },
     {
@@ -95,8 +91,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "gpt-5-mini",
-        "reasoning": "medium"
+        "model": "gpt-5-mini"
       }
     },
     {
@@ -116,8 +111,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-sonnet-4-6",
-        "reasoning": "high"
+        "model": "anthropic/claude-sonnet-4-6"
       }
     },
     {
@@ -137,8 +131,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-opus-4-7",
-        "reasoning": "high"
+        "model": "anthropic/claude-opus-4-7"
       }
     },
     {
@@ -158,8 +151,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "glm-4.7",
-        "reasoning": "high"
+        "model": "glm-4.7"
       }
     },
     {
@@ -179,8 +171,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "glm-5",
-        "reasoning": "high"
+        "model": "glm-5"
       }
     },
     {
@@ -200,8 +191,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "glm-5-turbo",
-        "reasoning": "high"
+        "model": "glm-5-turbo"
       }
     },
     {
@@ -221,8 +211,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "glm-5.0",
-        "reasoning": "high"
+        "model": "glm-5.0"
       }
     },
     {
@@ -242,8 +231,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "glm-5.1",
-        "reasoning": "high"
+        "model": "glm-5.1"
       }
     },
     {
@@ -263,8 +251,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "glm-5.2",
-        "reasoning": "high"
+        "model": "glm-5.2"
       }
     },
     {
@@ -284,8 +271,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "minimax-m2.7",
-        "reasoning": "medium"
+        "model": "minimax-m2.7"
       }
     },
     {
@@ -305,8 +291,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "minimax-m2.7-high-speed",
-        "reasoning": "medium"
+        "model": "minimax-m2.7-high-speed"
       }
     },
     {
@@ -326,8 +311,7 @@
         "pi"
       ],
       "defaultParameters": {
-        "model": "minimax-m2.5",
-        "reasoning": "medium"
+        "model": "minimax-m2.5"
       }
     },
     {
@@ -342,8 +326,7 @@
         "reasonix"
       ],
       "defaultParameters": {
-        "model": "deepseek-v4-pro",
-        "reasoning": "high"
+        "model": "deepseek-v4-pro"
       }
     },
     {
@@ -358,8 +341,7 @@
         "reasonix"
       ],
       "defaultParameters": {
-        "model": "deepseek-v4-flash",
-        "reasoning": "medium"
+        "model": "deepseek-v4-flash"
       }
     },
     {
