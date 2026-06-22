@@ -112,7 +112,6 @@ test('syncSecondaryProfessions keeps GLM 5.1 aligned across the published asset 
     compatiblePrimaryFamilies: ANTHROPIC_COMPATIBLE_FAMILIES,
     defaultParameters: {
       model: 'glm-5.1',
-      reasoning: 'high',
     },
   });
   assert.deepEqual(publishedEntry, {
@@ -148,7 +147,6 @@ test('syncSecondaryProfessions keeps GLM 5.2 aligned across the published asset 
     compatiblePrimaryFamilies: ANTHROPIC_COMPATIBLE_FAMILIES,
     defaultParameters: {
       model: 'glm-5.2',
-      reasoning: 'high',
     },
   });
   assert.deepEqual(publishedEntry, {
