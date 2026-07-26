@@ -29,6 +29,7 @@ export const MANAGED_SOURCE_REGISTRY = Object.freeze([
   Object.freeze({
     id: 'server',
     envVar: 'SERVER_INDEX_SYNC_URL',
+    defaultRemoteUrl: 'https://Dl-server.hagicode.com/index.json',
     targetPath: '/server/index.json',
     catalogEntryId: 'server-packages',
     catalog: Object.freeze({
@@ -44,6 +45,7 @@ export const MANAGED_SOURCE_REGISTRY = Object.freeze([
   Object.freeze({
     id: 'desktop',
     envVar: 'DESKTOP_INDEX_SYNC_URL',
+    defaultRemoteUrl: 'https://dl-desktop.hagicode.com/index.json',
     targetPath: '/desktop/index.json',
     catalogEntryId: 'desktop-packages',
     catalog: Object.freeze({
@@ -131,14 +133,7 @@ async function exists(targetPath) {
 
 function resolveSourceRegistry(env) {
   return MANAGED_SOURCE_REGISTRY.map((source) => {
-    const remoteUrl = env[source.envVar];
-
-    if (!remoteUrl) {
-      throw new SyncError(
-        EXIT_CODES.MISSING_METADATA,
-        `Missing required environment variable ${source.envVar} for managed source "${source.id}".`,
-      );
-    }
+    const remoteUrl = env[source.envVar] || source.defaultRemoteUrl;
 
     const requiredCatalogFields = ['title', 'description', 'category', 'sourceRepo', 'status'];
 
