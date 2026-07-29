@@ -34,7 +34,7 @@ jobs:
         run: npm ci
 
       - name: Sync managed package indexes
-        run: node ./scripts/sync-azure-index.mjs
+        run: node ./scripts/sync-r2-index.mjs
 
       - name: Validate catalog
         run: npm run validate
