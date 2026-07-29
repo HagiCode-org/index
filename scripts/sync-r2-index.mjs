@@ -28,8 +28,8 @@ export const EXIT_CODES = Object.freeze({
 export const MANAGED_SOURCE_REGISTRY = Object.freeze([
   Object.freeze({
     id: 'server',
-    envVar: 'SERVER_INDEX_SYNC_URL',
-    defaultRemoteUrl: 'https://Dl-server.hagicode.com/index.json',
+    envVar: 'SERVER_R2_INDEX_SYNC_URL',
+    defaultRemoteUrl: 'https://dl-server.hagicode.com/index.json',
     targetPath: '/server/index.json',
     catalogEntryId: 'server-packages',
     catalog: Object.freeze({
@@ -44,7 +44,7 @@ export const MANAGED_SOURCE_REGISTRY = Object.freeze([
   }),
   Object.freeze({
     id: 'desktop',
-    envVar: 'DESKTOP_INDEX_SYNC_URL',
+    envVar: 'DESKTOP_R2_INDEX_SYNC_URL',
     defaultRemoteUrl: 'https://dl-desktop.hagicode.com/index.json',
     targetPath: '/desktop/index.json',
     catalogEntryId: 'desktop-packages',
@@ -351,7 +351,7 @@ export async function publishManagedFiles(projectRoot, stagedFiles, fileOps = de
     return;
   }
 
-  const transactionRoot = await fileOps.mkdtemp(path.join(os.tmpdir(), 'index-sync-'));
+  const transactionRoot = await fileOps.mkdtemp(path.join(projectRoot, '.index-sync-'));
   const stagedDir = path.join(transactionRoot, 'stage');
   const backupDir = path.join(transactionRoot, 'backup');
   const rollbackQueue = [];

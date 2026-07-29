@@ -8,7 +8,7 @@ import {
   EXIT_CODES,
   publishManagedFiles,
   syncManagedIndexes,
-} from '../scripts/sync-azure-index.mjs';
+} from '../scripts/sync-r2-index.mjs';
 
 const noopLogger = {
   log() {},
@@ -16,11 +16,21 @@ const noopLogger = {
   error() {},
 };
 
+const testFileOps = {
+  mkdtemp,
+  mkdir,
+  writeFile,
+  rename,
+  rm,
+};
+
 const serverUrl = 'https://example.test/server/index.json';
 const desktopUrl = 'https://example.test/desktop/index.json';
+const defaultServerUrl = 'https://dl-server.hagicode.com/index.json';
+const defaultDesktopUrl = 'https://dl-desktop.hagicode.com/index.json';
 const managedEnv = {
-  SERVER_INDEX_SYNC_URL: serverUrl,
-  DESKTOP_INDEX_SYNC_URL: desktopUrl,
+  SERVER_R2_INDEX_SYNC_URL: serverUrl,
+  DESKTOP_R2_INDEX_SYNC_URL: desktopUrl,
 };
 
 function stableStringify(value) {
@@ -255,6 +265,32 @@ test('syncManagedIndexes publishes changed mirrors together and refreshes manage
   assert.equal(catalog.generatedAt, '2026-03-24T08:05:00.000Z');
 });
 
+test('publishManagedFiles keeps transaction files under the project root', async (t) => {
+  const fixture = await createFixtureProject();
+  t.after(async () => rm(fixture.projectRoot, { recursive: true, force: true }));
+
+  let transactionRoot;
+
+  await publishManagedFiles(
+    fixture.projectRoot,
+    [
+      {
+        relativePath: 'src/data/public/server/index.json',
+        content: stableStringify({ version: '2.0.0', packages: [] }),
+      },
+    ],
+    {
+      ...testFileOps,
+      async mkdtemp(prefix) {
+        transactionRoot = prefix;
+        return mkdtemp(prefix);
+      },
+    },
+  );
+
+  assert.equal(transactionRoot.startsWith(path.join(fixture.projectRoot, '.index-sync-')), true);
+});
+
 test('publishManagedFiles rolls back every managed file when a later promotion fails', async (t) => {
   const fixture = await createFixtureProject();
   t.after(async () => rm(fixture.projectRoot, { recursive: true, force: true }));
@@ -301,22 +337,38 @@ test('publishManagedFiles rolls back every managed file when a later promotion f
   assert.equal(await readFile(path.join(fixture.routeSourceRoot, 'index-catalog.json'), 'utf8'), originalCatalog);
 });
 
-test('syncManagedIndexes fails fast when required sync metadata is missing', async (t) => {
+test('syncManagedIndexes uses R2 source URLs when env overrides are absent', async (t) => {
   const fixture = await createFixtureProject();
   t.after(async () => rm(fixture.projectRoot, { recursive: true, force: true }));
 
-  await assert.rejects(
-    syncManagedIndexes({
-      projectRoot: fixture.projectRoot,
-      env: { SERVER_INDEX_SYNC_URL: serverUrl },
-      fetchImpl: createFetchMock(new Map()),
-      logger: noopLogger,
-    }),
-    (error) => {
-      assert.equal(error.exitCode, EXIT_CODES.MISSING_METADATA);
-      return true;
-    },
+  const fetchImpl = createFetchMock(
+    new Map([
+      [
+        `HEAD ${defaultServerUrl}`,
+        {
+          status: 200,
+          headers: { 'last-modified': 'Tue, 10 Mar 2026 00:00:00 GMT' },
+        },
+      ],
+      [
+        `HEAD ${defaultDesktopUrl}`,
+        {
+          status: 200,
+          headers: { 'last-modified': 'Tue, 10 Mar 2026 00:00:00 GMT' },
+        },
+      ],
+    ]),
   );
+
+  const result = await syncManagedIndexes({
+    projectRoot: fixture.projectRoot,
+    env: {},
+    fetchImpl,
+    logger: noopLogger,
+  });
+
+  assert.equal(result.outcome, 'no-change');
+  assert.deepEqual(result.unchangedSources, ['server', 'desktop']);
 });
 
 test('syncManagedIndexes aborts on invalid JSON without mutating published files', async (t) => {

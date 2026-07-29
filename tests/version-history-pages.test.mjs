@@ -178,7 +178,7 @@ test('history page normalization prefers directUrl over relative path for struct
           {
             name: 'Hagicode.Desktop.4.0.0.exe',
             path: 'v4.0.0/Hagicode.Desktop.4.0.0.exe',
-            directUrl: 'https://desktop.dl.hagicode.com/v4.0.0/Hagicode.Desktop.4.0.0.exe',
+            directUrl: 'https://dl-desktop.hagicode.com/v4.0.0/Hagicode.Desktop.4.0.0.exe',
           },
         ],
       },
@@ -187,7 +187,7 @@ test('history page normalization prefers directUrl over relative path for struct
 
   assert.equal(
     page.releases[0].files[0].href,
-    'https://desktop.dl.hagicode.com/v4.0.0/Hagicode.Desktop.4.0.0.exe',
+    'https://dl-desktop.hagicode.com/v4.0.0/Hagicode.Desktop.4.0.0.exe',
   );
 });
 
@@ -200,12 +200,12 @@ test('history page normalization keeps one file row while exposing multiple stru
         assets: [
           {
             name: 'server-v5.0.0.zip',
-            directUrl: 'https://server.dl.hagicode.com/v5.0.0/server-v5.0.0.zip',
+            directUrl: 'https://dl-server.hagicode.com/v5.0.0/server-v5.0.0.zip',
             downloadSources: [
               {
                 kind: 'official',
                 label: 'Official',
-                url: 'https://server.dl.hagicode.com/v5.0.0/server-v5.0.0.zip',
+                url: 'https://dl-server.hagicode.com/v5.0.0/server-v5.0.0.zip',
                 primary: true,
                 webSeed: true,
               },
