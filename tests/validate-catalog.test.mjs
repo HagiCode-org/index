@@ -759,7 +759,7 @@ function buildSitesCatalogFixture() {
         label: loc('官网'),
         description: loc('项目官网、产品介绍与统一入口'),
         groupId: 'core-sites',
-        url: 'https://hagicode.com/',
+        url: 'https://www.hagicode.com/',
         actionLabel: loc('进入主站'),
       },
       {
@@ -1466,7 +1466,7 @@ test('portal sites catalog exposes the approved production destinations', async 
   assert.equal(mainSiteEntry.title['zh-CN'], 'HagiCode 主站');
   assert.equal(mainSiteEntry.title['en-US'], 'HagiCode Main Site');
   assert.equal(mainSiteEntry.actionLabel['ja-JP'], '公式サイトを開く');
-  assert.equal(urlById.get('hagicode-main'), 'https://hagicode.com/');
+  assert.equal(urlById.get('hagicode-main'), 'https://www.hagicode.com/');
   assert.equal(urlById.get('hagicode-docs'), 'https://docs.hagicode.com/');
   assert.equal(urlById.get('newbe-blog'), 'https://newbe.hagicode.com/');
   assert.equal(urlById.get('index-data'), 'https://index.hagicode.com/data/');

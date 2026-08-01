@@ -23,7 +23,7 @@ test('/sites.json stays aligned with the source loader and canonical production 
   assert.equal(Array.isArray(loadedCatalog.entries), true);
 
   const expectedUrls = new Map([
-    ['hagicode-main', 'https://hagicode.com/'],
+    ['hagicode-main', 'https://www.hagicode.com/'],
     ['hagicode-docs', 'https://docs.hagicode.com/'],
     ['newbe-blog', 'https://newbe.hagicode.com/'],
     ['index-data', 'https://index.hagicode.com/data/'],

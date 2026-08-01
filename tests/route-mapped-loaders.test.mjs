@@ -71,7 +71,7 @@ test('loadSitesCatalog reads the source-side route-mapped portal catalog with ca
   assert.ok(dataMirrorEntry, 'index-data entry is required.');
   assert.ok(englishGroup, 'english core-sites group is required.');
   assert.ok(englishMainSiteEntry, 'english hagicode-main entry is required.');
-  assert.equal(mainSiteEntry.url, 'https://hagicode.com/');
+  assert.equal(mainSiteEntry.url, 'https://www.hagicode.com/');
   assert.equal(dataMirrorEntry.url, 'https://index.hagicode.com/data/');
   assert.equal(mainSiteEntry.title, 'HagiCode 主站');
   assert.equal(englishGroup.label, 'Core Sites');
