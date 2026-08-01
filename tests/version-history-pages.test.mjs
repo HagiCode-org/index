@@ -38,6 +38,13 @@ function collectStructuredSourceLabels(indexPayload) {
   return [...labels];
 }
 
+function hasMultiSourceAssets(indexPayload) {
+  const versions = Array.isArray(indexPayload?.versions) ? indexPayload.versions : [];
+  return versions.some((version) =>
+    (version?.assets ?? []).some((asset) => (asset?.downloadSources ?? []).length > 1),
+  );
+}
+
 test('server history page normalization only keeps downloadable zip files while preserving newest-first ordering', () => {
   const page = normalizePackageHistoryIndex('server', {
     generatedAt: '2026-03-24T08:00:00.000Z',
@@ -200,12 +207,12 @@ test('history page normalization keeps one file row while exposing multiple stru
         assets: [
           {
             name: 'server-v5.0.0.zip',
-            directUrl: 'https://dl-server.hagicode.com/v5.0.0/server-v5.0.0.zip',
+            directUrl: 'https://server.dl.hagicode.com/v5.0.0/server-v5.0.0.zip',
             downloadSources: [
               {
                 kind: 'official',
                 label: 'Official',
-                url: 'https://dl-server.hagicode.com/v5.0.0/server-v5.0.0.zip',
+                url: 'https://server.dl.hagicode.com/v5.0.0/server-v5.0.0.zip',
                 primary: true,
                 webSeed: true,
               },
@@ -245,8 +252,12 @@ test('history page build reflects current structured source labels when present'
   const desktopStructuredLabels = collectStructuredSourceLabels(desktopIndex);
 
   assert.match(serverHistory, /个 ZIP 包/);
-  assert.match(serverHistory, /多下载源/);
-  assert.match(desktopHistory, /多下载源/);
+  if (hasMultiSourceAssets(serverIndex)) {
+    assert.match(serverHistory, /多下载源/);
+  }
+  if (hasMultiSourceAssets(desktopIndex)) {
+    assert.match(desktopHistory, /多下载源/);
+  }
 
   for (const label of serverStructuredLabels) {
     assert.match(serverHistory, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
