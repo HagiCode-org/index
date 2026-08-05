@@ -1,15 +1,59 @@
 {
-  "version": "2026.06.21.1",
-  "publishedAt": "2026-06-21T12:00:00.000Z",
+  "version": "2026.08.05.3",
+  "publishedAt": "2026-08-05T12:00:00.000Z",
   "title": "Secondary Profession Catalog",
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
     {
-      "id": "secondary-gpt-5-5",
-      "name": "GPT 5.5",
+      "id": "secondary-gpt-5-6-sol",
+      "name": "GPT 5.6 Sol",
       "family": "gpt",
       "primaryProfessionId": null,
-      "summary": "hero.professionCopy.secondary.gpt55.summary",
+      "summary": "hero.professionCopy.secondary.gpt56Sol.summary",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
+      "sortOrder": 8,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "codex",
+        "copilot",
+        "hermes",
+        "pi",
+        "omp"
+      ],
+      "defaultParameters": {
+        "model": "gpt-5.6-sol"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-gpt-5-6-terra",
+      "name": "GPT 5.6 Terra",
+      "family": "gpt",
+      "primaryProfessionId": null,
+      "summary": "hero.professionCopy.secondary.gpt56Terra.summary",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
+      "sortOrder": 9,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "codex",
+        "copilot",
+        "hermes",
+        "pi",
+        "omp"
+      ],
+      "defaultParameters": {
+        "model": "gpt-5.6-terra"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-gpt-5-6-luna",
+      "name": "GPT 5.6 Luna",
+      "family": "gpt",
+      "primaryProfessionId": null,
+      "summary": "hero.professionCopy.secondary.gpt56Luna.summary",
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 10,
@@ -18,7 +62,30 @@
         "codex",
         "copilot",
         "hermes",
-        "pi"
+        "pi",
+        "omp"
+      ],
+      "defaultParameters": {
+        "model": "gpt-5.6-luna"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-gpt-5-5",
+      "name": "GPT 5.5",
+      "family": "gpt",
+      "primaryProfessionId": null,
+      "summary": "hero.professionCopy.secondary.gpt55.summary",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
+      "sortOrder": 11,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "codex",
+        "copilot",
+        "hermes",
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "gpt-5.5"
@@ -33,13 +100,14 @@
       "summary": "hero.professionCopy.secondary.gpt54.summary",
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
-      "sortOrder": 11,
+      "sortOrder": 12,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
         "hermes",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "gpt-5.4"
@@ -60,7 +128,8 @@
         "codex",
         "copilot",
         "hermes",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "gpt-5.3-codex"
@@ -81,7 +150,8 @@
         "codex",
         "copilot",
         "hermes",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "gpt-5.2-codex"
@@ -102,7 +172,8 @@
         "codex",
         "copilot",
         "hermes",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "gpt-5-mini"
@@ -125,7 +196,8 @@
         "hermes",
         "qoder",
         "kiro",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "anthropic/claude-sonnet-4-6"
@@ -148,7 +220,8 @@
         "hermes",
         "qoder",
         "kiro",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "anthropic/claude-opus-4-7"
@@ -171,7 +244,8 @@
         "hermes",
         "qoder",
         "kiro",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "glm-4.7"
@@ -194,7 +268,8 @@
         "hermes",
         "qoder",
         "kiro",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "glm-5"
@@ -217,7 +292,8 @@
         "hermes",
         "qoder",
         "kiro",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "glm-5-turbo"
@@ -240,10 +316,35 @@
         "hermes",
         "qoder",
         "kiro",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "glm-5.0"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-hy3-codebuddy",
+      "name": "HY3",
+      "family": "anthropic",
+      "primaryProfessionId": null,
+      "summary": "hero.professionCopy.secondary.hy3.summary",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
+      "sortOrder": 64,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
+        "hermes",
+        "qoder",
+        "kiro",
+        "pi",
+        "omp"
+      ],
+      "defaultParameters": {
+        "model": "hy3"
       },
       "fieldConstraints": []
     },
@@ -263,7 +364,8 @@
         "hermes",
         "qoder",
         "kiro",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "glm-5.1"
@@ -286,7 +388,8 @@
         "hermes",
         "qoder",
         "kiro",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "glm-5.2"
@@ -309,7 +412,8 @@
         "hermes",
         "qoder",
         "kiro",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "minimax-m2.7"
@@ -332,7 +436,8 @@
         "hermes",
         "qoder",
         "kiro",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "minimax-m2.7-high-speed"
@@ -355,7 +460,8 @@
         "hermes",
         "qoder",
         "kiro",
-        "pi"
+        "pi",
+        "omp"
       ],
       "defaultParameters": {
         "model": "minimax-m2.5"
