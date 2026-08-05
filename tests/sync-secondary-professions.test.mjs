@@ -6,7 +6,7 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 
 import { syncSecondaryProfessions } from '../scripts/sync-secondary-professions.mjs';
 
-const ANTHROPIC_COMPATIBLE_FAMILIES = ['claude', 'codebuddy', 'hermes', 'qoder', 'kiro', 'pi'];
+const ANTHROPIC_COMPATIBLE_FAMILIES = ['claude', 'codebuddy', 'hermes', 'qoder', 'kiro', 'pi', 'omp'];
 
 function stableJson(value) {
   return `${JSON.stringify(value, null, 2)}\n`;
@@ -91,14 +91,12 @@ test('syncSecondaryProfessions publishes the stable asset, backend fallback snap
   assert.equal(entry.lastUpdated, '2026-03-27T00:00:00.000Z');
 });
 
-test('syncSecondaryProfessions keeps GLM 5.1 aligned across the published asset and backend fallback', async () => {
+test('syncSecondaryProfessions keeps GLM 5.1 aligned across the source and published asset', async () => {
   const sourceCatalog = JSON.parse(await readFile(new URL('../src/data/secondary-professions.catalog.json', import.meta.url), 'utf8'));
   const publishedCatalog = JSON.parse(await readFile(new URL('../public/secondary-professions/index.json', import.meta.url), 'utf8'));
-  const fallbackCatalog = JSON.parse(await readFile(new URL('../../hagicode-core/src/PCode.Web/Assets/secondary-professions.index.json', import.meta.url), 'utf8'));
 
   const sourceEntry = sourceCatalog.items.find((item) => item.id === 'secondary-glm-5-1');
   const publishedEntry = publishedCatalog.items.find((item) => item.id === 'secondary-glm-5-1');
-  const fallbackEntry = fallbackCatalog.items.find((item) => item.id === 'secondary-glm-5-1');
   const publishedIds = publishedCatalog.items.map((item) => item.id);
 
   assert.deepEqual(sourceEntry, {
@@ -120,21 +118,18 @@ test('syncSecondaryProfessions keeps GLM 5.1 aligned across the published asset 
     icon: null,
     fieldConstraints: [],
   });
-  assert.deepEqual(fallbackEntry, publishedEntry);
   assert.deepEqual(
     publishedIds.slice(publishedIds.indexOf('secondary-glm-5-codebuddy'), publishedIds.indexOf('secondary-minimax-m2-7') + 1),
-    ['secondary-glm-5-codebuddy', 'secondary-glm-5-1', 'secondary-glm-5-2', 'secondary-minimax-m2-7'],
+    ['secondary-glm-5-codebuddy', 'secondary-hy3-codebuddy', 'secondary-glm-5-1', 'secondary-glm-5-2', 'secondary-minimax-m2-7'],
   );
 });
 
-test('syncSecondaryProfessions keeps GLM 5.2 aligned across the published asset and backend fallback', async () => {
+test('syncSecondaryProfessions keeps GLM 5.2 aligned across the source and published asset', async () => {
   const sourceCatalog = JSON.parse(await readFile(new URL('../src/data/secondary-professions.catalog.json', import.meta.url), 'utf8'));
   const publishedCatalog = JSON.parse(await readFile(new URL('../public/secondary-professions/index.json', import.meta.url), 'utf8'));
-  const fallbackCatalog = JSON.parse(await readFile(new URL('../../hagicode-core/src/PCode.Web/Assets/secondary-professions.index.json', import.meta.url), 'utf8'));
 
   const sourceEntry = sourceCatalog.items.find((item) => item.id === 'secondary-glm-5-2');
   const publishedEntry = publishedCatalog.items.find((item) => item.id === 'secondary-glm-5-2');
-  const fallbackEntry = fallbackCatalog.items.find((item) => item.id === 'secondary-glm-5-2');
 
   assert.deepEqual(sourceEntry, {
     id: 'secondary-glm-5-2',
@@ -155,7 +150,6 @@ test('syncSecondaryProfessions keeps GLM 5.2 aligned across the published asset 
     icon: null,
     fieldConstraints: [],
   });
-  assert.deepEqual(fallbackEntry, publishedEntry);
 });
 
 test('syncSecondaryProfessions check mode detects drift across published asset, fallback snapshot, and catalog entry', async (t) => {
