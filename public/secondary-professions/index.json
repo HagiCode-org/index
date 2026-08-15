@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.05.3",
-  "publishedAt": "2026-08-05T12:00:00.000Z",
+  "version": "2026.08.15.1",
+  "publishedAt": "2026-08-15T04:00:00.000Z",
   "title": "Secondary Profession Catalog",
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
@@ -393,6 +393,54 @@
       ],
       "defaultParameters": {
         "model": "glm-5.2"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-glm-5-3",
+      "name": "GLM 5.3",
+      "family": "anthropic",
+      "primaryProfessionId": null,
+      "summary": "hero.professionCopy.secondary.glm53.summary",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
+      "sortOrder": 66,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
+        "hermes",
+        "qoder",
+        "kiro",
+        "pi",
+        "omp"
+      ],
+      "defaultParameters": {
+        "model": "glm-5.3"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-minimax-3",
+      "name": "MiniMax 3",
+      "family": "anthropic",
+      "primaryProfessionId": null,
+      "summary": "hero.professionCopy.secondary.minimaxM3.summary",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
+      "sortOrder": 69,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
+        "hermes",
+        "qoder",
+        "kiro",
+        "pi",
+        "omp"
+      ],
+      "defaultParameters": {
+        "model": "minimax-m3"
       },
       "fieldConstraints": []
     },

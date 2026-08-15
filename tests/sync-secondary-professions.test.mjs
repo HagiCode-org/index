@@ -120,7 +120,15 @@ test('syncSecondaryProfessions keeps GLM 5.1 aligned across the source and publi
   });
   assert.deepEqual(
     publishedIds.slice(publishedIds.indexOf('secondary-glm-5-codebuddy'), publishedIds.indexOf('secondary-minimax-m2-7') + 1),
-    ['secondary-glm-5-codebuddy', 'secondary-hy3-codebuddy', 'secondary-glm-5-1', 'secondary-glm-5-2', 'secondary-minimax-m2-7'],
+    [
+      'secondary-glm-5-codebuddy',
+      'secondary-hy3-codebuddy',
+      'secondary-glm-5-1',
+      'secondary-glm-5-2',
+      'secondary-glm-5-3',
+      'secondary-minimax-3',
+      'secondary-minimax-m2-7',
+    ],
   );
 });
 
@@ -150,6 +158,70 @@ test('syncSecondaryProfessions keeps GLM 5.2 aligned across the source and publi
     icon: null,
     fieldConstraints: [],
   });
+});
+
+test('syncSecondaryProfessions keeps GLM 5.3 aligned and ordered across the source and published asset', async () => {
+  const sourceCatalog = JSON.parse(await readFile(new URL('../src/data/secondary-professions.catalog.json', import.meta.url), 'utf8'));
+  const publishedCatalog = JSON.parse(await readFile(new URL('../public/secondary-professions/index.json', import.meta.url), 'utf8'));
+  const sourceEntry = sourceCatalog.items.find((item) => item.id === 'secondary-glm-5-3');
+  const publishedEntry = publishedCatalog.items.find((item) => item.id === 'secondary-glm-5-3');
+  const publishedIds = publishedCatalog.items.map((item) => item.id);
+
+  assert.deepEqual(sourceEntry, {
+    id: 'secondary-glm-5-3',
+    name: 'GLM 5.3',
+    family: 'anthropic',
+    summary: 'hero.professionCopy.secondary.glm53.summary',
+    sourceLabel: 'hero.professionCopy.sources.aiSharedAnthropicModel',
+    sortOrder: 66,
+    supportsImage: true,
+    compatiblePrimaryFamilies: ANTHROPIC_COMPATIBLE_FAMILIES,
+    defaultParameters: {
+      model: 'glm-5.3',
+    },
+  });
+  assert.deepEqual(publishedEntry, {
+    ...sourceEntry,
+    primaryProfessionId: null,
+    icon: null,
+    fieldConstraints: [],
+  });
+  assert.deepEqual(
+    publishedIds.slice(publishedIds.indexOf('secondary-glm-5-2'), publishedIds.indexOf('secondary-minimax-3') + 1),
+    ['secondary-glm-5-2', 'secondary-glm-5-3', 'secondary-minimax-3'],
+  );
+});
+
+test('syncSecondaryProfessions keeps MiniMax 3 aligned and ordered across the source and published asset', async () => {
+  const sourceCatalog = JSON.parse(await readFile(new URL('../src/data/secondary-professions.catalog.json', import.meta.url), 'utf8'));
+  const publishedCatalog = JSON.parse(await readFile(new URL('../public/secondary-professions/index.json', import.meta.url), 'utf8'));
+  const sourceEntry = sourceCatalog.items.find((item) => item.id === 'secondary-minimax-3');
+  const publishedEntry = publishedCatalog.items.find((item) => item.id === 'secondary-minimax-3');
+  const publishedIds = publishedCatalog.items.map((item) => item.id);
+
+  assert.deepEqual(sourceEntry, {
+    id: 'secondary-minimax-3',
+    name: 'MiniMax 3',
+    family: 'anthropic',
+    summary: 'hero.professionCopy.secondary.minimaxM3.summary',
+    sourceLabel: 'hero.professionCopy.sources.aiSharedAnthropicModel',
+    sortOrder: 69,
+    supportsImage: true,
+    compatiblePrimaryFamilies: ANTHROPIC_COMPATIBLE_FAMILIES,
+    defaultParameters: {
+      model: 'minimax-m3',
+    },
+  });
+  assert.deepEqual(publishedEntry, {
+    ...sourceEntry,
+    primaryProfessionId: null,
+    icon: null,
+    fieldConstraints: [],
+  });
+  assert.deepEqual(
+    publishedIds.slice(publishedIds.indexOf('secondary-minimax-3'), publishedIds.indexOf('secondary-minimax-m2-5') + 1),
+    ['secondary-minimax-3', 'secondary-minimax-m2-7', 'secondary-minimax-m2-7-high-speed', 'secondary-minimax-m2-5'],
+  );
 });
 
 test('syncSecondaryProfessions check mode detects drift across published asset, fallback snapshot, and catalog entry', async (t) => {
