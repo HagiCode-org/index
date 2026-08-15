@@ -21,6 +21,7 @@ npm run build
 npm test
 npm run validate
 npm run i18n:check
+npm run sync:index
 ```
 
 ## Key Paths
