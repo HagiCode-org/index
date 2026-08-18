@@ -101,7 +101,7 @@
       "path": "/articles/index.json",
       "category": "catalogs",
       "sourceRepo": "repos/index",
-      "lastUpdated": "2026-06-17T00:00:00.000Z",
+      "lastUpdated": "2026-08-11T00:00:00.000Z",
       "status": "published",
       "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/index/src/data/articles"
     },

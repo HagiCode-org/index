@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
+import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 import {
@@ -34,6 +35,7 @@ test('structured article source exposes expected locale folders and baseline slu
   assert.equal(zhSlugs.includes('claude-vs-hagicode'), true);
   assert.equal(zhSlugs.includes('copilot-vs-hagicode'), true);
   assert.equal(zhSlugs.includes('kiro-vs-hagicode'), true);
+  assert.equal(zhSlugs.includes('omp-vs-hagicode'), true);
   assert.deepEqual(enSlugs, [
     'claude-vs-hagicode',
     'codebuddy-vs-hagicode',
@@ -44,6 +46,7 @@ test('structured article source exposes expected locale folders and baseline slu
     'hermes-vs-hagicode',
     'kimi-vs-hagicode',
     'kiro-vs-hagicode',
+    'omp-vs-hagicode',
     'opencode-vs-hagicode',
     'pi-vs-hagicode',
     'qoder-vs-hagicode',
@@ -57,8 +60,12 @@ test('structured article manifests keep canonical locale and detail paths', asyn
   const englishManifest = await buildStructuredArticleLocaleManifest('en-US');
   const chineseClaude = await loadStructuredArticleDetail('zh-CN', 'claude-vs-hagicode');
   const englishClaude = await loadStructuredArticleDetail('en-US', 'claude-vs-hagicode');
+  const catalog = JSON.parse(await readFile(path.join(projectRoot, 'src', 'data', 'public', 'index-catalog.json'), 'utf8'));
+  const structuredArticlesEntry = catalog.entries.find((entry) => entry.id === 'structured-articles');
 
   assert.equal(rootManifest.schemaVersion, '1.0.0');
+  assert.equal(structuredArticlesEntry?.path, '/articles/index.json');
+  assert.equal(structuredArticlesEntry?.lastUpdated, rootManifest.generatedAt);
   assert.deepEqual(rootManifest.localeIndexes.map((entry) => entry.path), [
     '/articles/de-DE/index.json',
     '/articles/en-US/index.json',
