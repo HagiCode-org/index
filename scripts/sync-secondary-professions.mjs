@@ -116,12 +116,13 @@ function normalizeItem(item, index) {
   assert(Number.isInteger(item.sortOrder), `items[${index}].sortOrder must be an integer.`);
   assert(typeof item.supportsImage === 'boolean', `items[${index}].supportsImage must be a boolean.`);
 
+  const normalizedSummary = normalizeString(item.summary, `items[${index}].summary`, { optional: true });
   return {
     id: normalizeString(item.id, `items[${index}].id`),
     name: normalizeString(item.name, `items[${index}].name`),
     family: normalizeString(item.family, `items[${index}].family`),
     primaryProfessionId,
-    summary: normalizeString(item.summary, `items[${index}].summary`, { optional: true }),
+    ...(normalizedSummary ? { summary: normalizedSummary } : {}),
     icon: normalizeString(item.icon, `items[${index}].icon`, { optional: true }),
     sourceLabel: normalizeString(item.sourceLabel, `items[${index}].sourceLabel`),
     sortOrder: item.sortOrder,

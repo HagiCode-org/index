@@ -119,6 +119,8 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
 const routeSourceRoot = path.join(projectRoot, 'src', 'data', 'public');
 const designVendorRoot = path.join(projectRoot, 'vendor', 'awesome-design-md', 'design-md');
+const secondaryProfessionSourcePath = path.join(projectRoot, 'src', 'data', 'secondary-professions.catalog.json');
+const secondaryProfessionPublishedPath = '/secondary-professions/index.json';
 
 function assert(condition, message) {
   if (!condition) {
@@ -151,6 +153,16 @@ function resolvePublishedPath(sitePath, publishedRoot) {
 function resolvePagePath(sitePath) {
   const normalizedPath = sitePath.replace(/^\//, '').replace(/\/$/, '');
   return path.join(projectRoot, 'src', 'pages', `${normalizedPath}.astro`);
+}
+
+function validateSecondaryProfessionCatalogContract(payload, sourceLabel) {
+  assert(payload && typeof payload === 'object' && !Array.isArray(payload), `${sourceLabel} must be an object.`);
+  assert(Array.isArray(payload.items), `${sourceLabel}.items must be an array.`);
+
+  for (const [index, item] of payload.items.entries()) {
+    assert(item && typeof item === 'object' && !Array.isArray(item), `${sourceLabel}.items[${index}] must be an object.`);
+    assert(!Object.hasOwn(item, 'summary'), `${sourceLabel}.items[${index}] must not define a default summary.`);
+  }
 }
 
 async function readJson(filePath) {
@@ -1102,6 +1114,11 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   const publishedJsonCount = await assertAllPublishedJsonMinified(publishedRoot);
 
   await validateStructuredArticlePublication({ publishedRoot });
+  validateSecondaryProfessionCatalogContract(await readJson(secondaryProfessionSourcePath), 'Secondary profession source catalog');
+  validateSecondaryProfessionCatalogContract(
+    await readJson(resolvePublishedPath(secondaryProfessionPublishedPath, publishedRoot)),
+    'Published secondary profession catalog',
+  );
 
   const publishedCatalog = await assertPublishedRoute('/index-catalog.json', publishedRoot);
   validateSitesCatalogContract(await assertPublishedRoute('/sites.json', publishedRoot));
