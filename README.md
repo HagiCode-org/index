@@ -212,6 +212,7 @@ node --env-file=.env ./scripts/update-activity-metrics.mjs
 - 发布目录：`public/secondary-professions/index.json`
 - catalog 源入口：`src/data/public/index-catalog.json` 中的 `secondary-professions`
 - 后端 fallback：`../hagicode-core/src/PCode.Web/Assets/secondary-professions.index.json`
+- 默认副职业保留可选摘要字段的契约，但源数据不提供摘要默认值；自定义和历史摘要仍可由后端读取。
 - 维护原则：副职业目录以 `repos/index` 源数据为准；不要直接手改 `public/secondary-professions/index.json` 或后端 fallback 快照。
 
 ### Character templates
