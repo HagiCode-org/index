@@ -123,6 +123,7 @@ test('syncSecondaryProfessions keeps GLM 5.1 aligned across the source and publi
     [
       'secondary-glm-5-codebuddy',
       'secondary-hy3-codebuddy',
+      'secondary-hy3-x-codebuddy',
       'secondary-glm-5-1',
       'secondary-glm-5-2',
       'secondary-glm-5-3',

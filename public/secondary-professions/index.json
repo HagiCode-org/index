@@ -1,6 +1,6 @@
 {
-  "version": "2026.08.15.1",
-  "publishedAt": "2026-08-15T04:00:00.000Z",
+  "version": "2026.08.22.1",
+  "publishedAt": "2026-08-22T04:00:00.000Z",
   "title": "Secondary Profession Catalog",
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
@@ -345,6 +345,30 @@
       ],
       "defaultParameters": {
         "model": "hy3"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-hy3-x-codebuddy",
+      "name": "HY3-X",
+      "family": "anthropic",
+      "primaryProfessionId": null,
+      "summary": "hero.professionCopy.secondary.hy3.summary",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
+      "sortOrder": 65,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
+        "hermes",
+        "qoder",
+        "kiro",
+        "pi",
+        "omp"
+      ],
+      "defaultParameters": {
+        "model": "hy3-x"
       },
       "fieldConstraints": []
     },
