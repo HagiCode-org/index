@@ -1,5 +1,6 @@
 ---
 import Analytics51LA from '@/components/51LAAnalytics.astro';
+import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
 import IndexFooter from '@/components/IndexFooter.astro';
 import VersionHistoryPage from '@/components/VersionHistoryPage.astro';
 import { loadPackageHistory } from '@/lib/load-package-history';
@@ -47,5 +48,6 @@ const canonicalUrl = 'https://index.hagicode.com/server/history/';
       <IndexFooter />
     </div>
     <Analytics51LA />
+    <GoogleAnalytics />
   </body>
 </html>

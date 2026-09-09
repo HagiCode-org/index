@@ -1,5 +1,6 @@
 ---
 import Analytics51LA from '@/components/51LAAnalytics.astro';
+import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
 import IndexFooter from '@/components/IndexFooter.astro';
 import PromotoShowcase from '@/components/PromotoShowcase.astro';
 import { promoteContentPayload } from '@/data/promote-content-source';
@@ -54,5 +55,6 @@ const rawPayloadPath = '/promote.json';
     </div>
 
     <Analytics51LA />
+    <GoogleAnalytics />
   </body>
 </html>
