@@ -1,9 +1,51 @@
 {
-  "version": "2026.08.22.1",
-  "publishedAt": "2026-08-22T04:00:00.000Z",
+  "version": "2026.09.24.1",
+  "publishedAt": "2026-09-24T16:14:44.413Z",
   "title": "Secondary Profession Catalog",
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
+    {
+      "id": "secondary-gpt-6-0-sol",
+      "name": "GPT 6.0 Sol",
+      "family": "gpt",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
+      "sortOrder": 6,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "codex",
+        "copilot",
+        "hermes",
+        "pi",
+        "omp"
+      ],
+      "defaultParameters": {
+        "model": "gpt-6.0-sol"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-gpt-6-0-luna",
+      "name": "GPT 6.0 Luna",
+      "family": "gpt",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
+      "sortOrder": 7,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "codex",
+        "copilot",
+        "hermes",
+        "pi",
+        "omp"
+      ],
+      "defaultParameters": {
+        "model": "gpt-6.0-luna"
+      },
+      "fieldConstraints": []
+    },
     {
       "id": "secondary-gpt-5-6-sol",
       "name": "GPT 5.6 Sol",
