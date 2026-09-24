@@ -21,7 +21,7 @@
         "omp"
       ],
       "defaultParameters": {
-        "model": "gpt-6.0-sol"
+        "model": "gpt-6-sol"
       },
       "fieldConstraints": []
     },
@@ -42,7 +42,7 @@
         "omp"
       ],
       "defaultParameters": {
-        "model": "gpt-6.0-luna"
+        "model": "gpt-6-luna"
       },
       "fieldConstraints": []
     },
