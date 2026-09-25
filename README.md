@@ -288,6 +288,7 @@ npm run build
 ### 包索引与历史页
 
 1. 运行 `npm run sync:index`，或更新 `src/data/public/server/index.json`、`src/data/public/desktop/index.json`。
+   同步时会优先使用 `dl-server.hagicode.com` 和 `dl-desktop.hagicode.com` 的下载源，并保留其他来源作为备选。
 2. 确认 `src/data/public/index-catalog.json` 中 managed package 条目仍包含正确的 `historyPagePath`。
 3. 若上游索引结构演进，同步更新 `src/lib/load-package-history.ts`、`src/components/VersionHistoryPage.astro`、`tests/version-history-pages.test.mjs` 与 `tests/route-mapped-loaders.test.mjs`。
 4. 执行 `npm run validate`、`npm test`、`npm run build`。
