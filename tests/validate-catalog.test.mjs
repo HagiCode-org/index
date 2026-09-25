@@ -1161,6 +1161,10 @@ async function createValidationFixture({
     generatedAt: catalog.generatedAt,
     packages: [{ version: '1.0.0' }],
   });
+  const secondaryProfessionFixture = JSON.stringify({
+    version: '1.0.0',
+    items: [{ id: 'prompt-engineer', name: 'Prompt Engineer' }],
+  });
   const supplementalTipsFixtures = [
     { fileName: 'tips-zh-Hant.json', payload: buildTipsFixture({ locale: 'zh-Hant' }) },
     { fileName: 'tips-ja-JP.json', payload: buildTipsFixture({ locale: 'ja-JP' }) },
@@ -1177,6 +1181,7 @@ async function createValidationFixture({
     JSON.stringify(libraryData),
     'utf8',
   );
+  await writeFile(path.join(srcDataDir, 'secondary-professions.catalog.json'), secondaryProfessionFixture, 'utf8');
   await writeFile(path.join(routeSourceDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
   await writeFile(path.join(routeSourceDir, 'sites.json'), JSON.stringify(sitesCatalog), 'utf8');
   await writeFile(path.join(routeSourceDir, 'design.json'), JSON.stringify(design), 'utf8');
@@ -1273,7 +1278,7 @@ async function createValidationFixture({
   }), 'utf8');
   await writeFile(
     path.join(distDir, 'secondary-professions', 'index.json'),
-    JSON.stringify({ version: '1.0.0', professions: [{ id: 'prompt-engineer', title: 'Prompt Engineer' }] }),
+    secondaryProfessionFixture,
     'utf8',
   );
   await writeFile(
