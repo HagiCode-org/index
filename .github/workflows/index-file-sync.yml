@@ -41,12 +41,7 @@ jobs:
 
       - name: Check managed file diff
         id: diff
-        run: |
-          if git diff --quiet -- src/data/public/index-catalog.json src/data/public/server/index.json src/data/public/desktop/index.json; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
+        run: node ./scripts/check-managed-index-diff.mjs >> "$GITHUB_OUTPUT"
 
       - name: Commit managed mirror updates
         if: steps.diff.outputs.changed == 'true'
