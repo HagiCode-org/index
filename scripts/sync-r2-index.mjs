@@ -30,6 +30,7 @@ export const MANAGED_SOURCE_REGISTRY = Object.freeze([
     id: 'server',
     envVar: 'SERVER_R2_INDEX_SYNC_URL',
     defaultRemoteUrl: 'https://dl-server.hagicode.com/index.json',
+    preferredDownloadHost: 'dl-server.hagicode.com',
     targetPath: '/server/index.json',
     catalogEntryId: 'server-packages',
     catalog: Object.freeze({
@@ -46,6 +47,7 @@ export const MANAGED_SOURCE_REGISTRY = Object.freeze([
     id: 'desktop',
     envVar: 'DESKTOP_R2_INDEX_SYNC_URL',
     defaultRemoteUrl: 'https://dl-desktop.hagicode.com/index.json',
+    preferredDownloadHost: 'dl-desktop.hagicode.com',
     targetPath: '/desktop/index.json',
     catalogEntryId: 'desktop-packages',
     catalog: Object.freeze({
@@ -154,9 +156,44 @@ function resolveSourceRegistry(env) {
   });
 }
 
-function normalizeJsonContent(raw, sourceId) {
+export function prioritizeDownloadHost(index, preferredHost) {
+  for (const version of index?.versions ?? []) {
+    for (const asset of version.assets ?? []) {
+      if (!Array.isArray(asset.downloadSources)) {
+        continue;
+      }
+
+      const preferred = asset.downloadSources.find(
+        (entry) => entry && typeof entry.url === 'string' && entry.url.startsWith(`https://${preferredHost}/`),
+      );
+      if (!preferred) {
+        continue;
+      }
+
+      const previousDirectUrl = asset.directUrl;
+      asset.directUrl = preferred.url;
+      if (typeof asset.torrentUrl === 'string' && typeof previousDirectUrl === 'string'
+        && asset.torrentUrl.startsWith(`${previousDirectUrl}.`)) {
+        asset.torrentUrl = `${preferred.url}${asset.torrentUrl.slice(previousDirectUrl.length)}`;
+      }
+      asset.downloadSources = [preferred, ...asset.downloadSources.filter((entry) => entry !== preferred)]
+        .map((entry) => ({ ...entry, primary: entry === preferred }));
+      if (Array.isArray(asset.webSeeds)) {
+        asset.webSeeds = [
+          ...asset.webSeeds.filter((seed) => seed === preferred.url),
+          ...asset.webSeeds.filter((seed) => seed !== preferred.url),
+        ];
+      }
+    }
+  }
+
+  return index;
+}
+
+function normalizeJsonContent(raw, sourceId, preferredDownloadHost) {
   try {
-    return stableStringify(JSON.parse(raw));
+    const parsed = JSON.parse(raw);
+    return stableStringify(preferredDownloadHost ? prioritizeDownloadHost(parsed, preferredDownloadHost) : parsed);
   } catch (error) {
     throw new SyncError(
       EXIT_CODES.INVALID_JSON,
@@ -283,7 +320,7 @@ async function downloadRemoteIndex(source, fetchImpl) {
   }
 
   const raw = await response.text();
-  const normalized = normalizeJsonContent(raw, source.id);
+  const normalized = normalizeJsonContent(raw, source.id, source.preferredDownloadHost);
 
   return {
     raw,

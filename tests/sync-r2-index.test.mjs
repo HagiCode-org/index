@@ -6,6 +6,7 @@ import { mkdtemp, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promise
 
 import {
   EXIT_CODES,
+  prioritizeDownloadHost,
   publishManagedFiles,
   syncManagedIndexes,
 } from '../scripts/sync-r2-index.mjs';
@@ -32,6 +33,42 @@ const managedEnv = {
   SERVER_R2_INDEX_SYNC_URL: serverUrl,
   DESKTOP_R2_INDEX_SYNC_URL: desktopUrl,
 };
+
+test('preferred download hosts lead each managed asset without losing alternate sources', () => {
+  for (const [id, oldHost, preferredHost] of [
+    ['server', 'server.dl.hagicode.com', 'dl-server.hagicode.com'],
+    ['desktop', 'desktop.dl.hagicode.com', 'dl-desktop.hagicode.com'],
+  ]) {
+    const artifactPath = `v1/${id}.zip`;
+    const oldUrl = `https://${oldHost}/${artifactPath}`;
+    const preferredUrl = `https://${preferredHost}/${artifactPath}`;
+    const githubUrl = `https://github.com/example/${artifactPath}`;
+    const index = {
+      versions: [{
+        assets: [{
+          directUrl: oldUrl,
+          torrentUrl: `${oldUrl}.torrent`,
+          downloadSources: [
+            { kind: 'official', url: oldUrl, primary: true, urls: { china: oldUrl, international: preferredUrl } },
+            { kind: 'github-release', url: githubUrl, primary: false },
+            { kind: 'cloudflare', url: preferredUrl, primary: false },
+          ],
+          webSeeds: [oldUrl, githubUrl, preferredUrl],
+        }],
+      }],
+    };
+
+    const asset = prioritizeDownloadHost(index, preferredHost).versions[0].assets[0];
+    assert.equal(asset.directUrl, preferredUrl);
+    assert.equal(asset.torrentUrl, `${preferredUrl}.torrent`);
+    assert.deepEqual(asset.downloadSources.map(({ kind, primary }) => [kind, primary]), [
+      ['cloudflare', true], ['official', false], ['github-release', false],
+    ]);
+    assert.deepEqual(asset.downloadSources[1].urls, { china: oldUrl, international: preferredUrl });
+    assert.deepEqual(asset.webSeeds, [preferredUrl, oldUrl, githubUrl]);
+    assert.deepEqual(prioritizeDownloadHost(index, preferredHost), index);
+  }
+});
 
 function stableStringify(value) {
   return JSON.stringify(value);
@@ -369,6 +406,39 @@ test('syncManagedIndexes uses R2 source URLs when env overrides are absent', asy
 
   assert.equal(result.outcome, 'no-change');
   assert.deepEqual(result.unchangedSources, ['server', 'desktop']);
+});
+
+test('syncManagedIndexes preserves preferred download order on future upstream snapshots', async (t) => {
+  const fixture = await createFixtureProject();
+  t.after(async () => rm(fixture.projectRoot, { recursive: true, force: true }));
+  const oldUrl = 'https://server.dl.hagicode.com/v2/server.zip';
+  const preferredUrl = 'https://dl-server.hagicode.com/v2/server.zip';
+  const fetchImpl = createFetchMock(new Map([
+    [`HEAD ${serverUrl}`, { headers: { 'last-modified': 'Tue, 24 Mar 2026 08:00:00 GMT' } }],
+    [`GET ${serverUrl}`, {
+      body: JSON.stringify({
+        versions: [{
+          version: 'v2',
+          assets: [{
+            directUrl: oldUrl,
+            downloadSources: [
+              { url: oldUrl, primary: true },
+              { url: preferredUrl, primary: false },
+            ],
+            webSeeds: [oldUrl, preferredUrl],
+          }],
+        }],
+      }),
+    }],
+    [`HEAD ${desktopUrl}`, { headers: { 'last-modified': 'Tue, 10 Mar 2026 00:00:00 GMT' } }],
+  ]));
+
+  await syncManagedIndexes({ projectRoot: fixture.projectRoot, env: managedEnv, fetchImpl, logger: noopLogger });
+  const published = JSON.parse(await readFile(path.join(fixture.routeSourceRoot, 'server', 'index.json'), 'utf8'));
+  assert.equal(published.versions[0].assets[0].directUrl, preferredUrl);
+  assert.equal(published.versions[0].assets[0].downloadSources[0].url, preferredUrl);
+  assert.equal(published.versions[0].assets[0].downloadSources[0].primary, true);
+  assert.deepEqual(published.versions[0].assets[0].webSeeds, [preferredUrl, oldUrl]);
 });
 
 test('syncManagedIndexes aborts on invalid JSON without mutating published files', async (t) => {
