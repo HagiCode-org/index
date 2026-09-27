@@ -1,26 +1,26 @@
 promotions:
   desktop-microsoft-store-2026-06-10:
-    title: HagiCode for Windows is now on Microsoft Store
-    description: HagiCode for Windows is officially live on Microsoft Store. Windows users can install it directly from the storefront and stay on the store-managed update path. Open the listing and take a look.
-    cta: Open Microsoft Store
-    alt: HagiCode for Windows Microsoft Store artwork
+    title: "HagiCode Windowsille on nyt Microsoft Storessa"
+    description: "HagiCode Windowsille on virallisesti saatavilla Microsoft Storessa. Windows-käyttäjät voivat asentaa sen suoraan kaupasta ja pysyä kaupan hallinnoimalla päivityspolulla. Avaa sivu ja käy katsomassa."
+    cta: "Avaa Microsoft Store"
+    alt: "HagiCode for Windows Microsoft Store artwork"
   main-game-2026-04-29:
-    title: Lisää toivelistalle, kiltti
-    description: Hagicode, ei ehkä maailman ainutlaatuisin mutta todella kätevä Vibe Coding -ohjelmisto, julkaistaan 29. huhtikuuta. Lisää se Steam-toivelistallesi. Kiltti.
-    cta: Lisää Steam-toivelistalle
-    alt: HagiCode-kuvitus Steam-sivulle
+    title: "Lisää toivelistallesi, ole hyvä"
+    description: "Hagicode, maailmanlaajuisesti ei-uniikki mutta super kätevä Vibe Coding -ohjelmisto, julkaistaan 29. huhtikuuta. Lisää se ole hyvä Steam-toivelistallesi. Hytky. Ole hyvä, ole hyvä."
+    cta: "Toivelista Steamissa"
+    alt: "HagiCode Steam store capsule artwork"
   main-game-steam-ea-2026-04-29:
-    title: Early Access on vihdoin täällä
-    description: Hagicode, ei ehkä maailman ainutlaatuisin mutta todella kätevä Vibe Coding -ohjelmisto, on nyt Steam Early Accessissa. Käy vilkaisemassa. Kiltti.
-    cta: Katso Early Access
-    alt: HagiCode Early Access -kuvitus Steamissa
+    title: "Early Access on viimein täällä"
+    description: "Hagicode, maailmanlaajuisesti ei-uniikki mutta super kätevä Vibe Coding -ohjelmisto, on nyt Steam Early Accessissa. Tule katsomaan. Hytky. Ole hyvä, ole hyvä."
+    cta: "Katso Early Access"
+    alt: "HagiCode Early Access Steam artwork"
   hagicode-plus-bundle:
-    title: Hagicode Plus -paketti
-    description: Hagicode Plus, ehkä ei maailman ainutlaatuisin mutta erittäin hyvin koottu paketti, on 15 % alennuksessa ja sisältää peruspelin sekä Turbo Engine DLC:n. Käy katsomassa Steamissa. Kiltti.
-    cta: Katso paketti
-    alt: Hagicode Plus -paketin kuvitus Steamissa
+    title: "Hagicode Plus -paketti"
+    description: "Hagicode Plus, maailmanlaajuisesti ei-uniikki mutta todella siististi paketoitu vaihtoehto, on 15 % alennuksessa yhdessä peruspelin ja Turbo Engine -DLC:n kanssa. Tule katsomaan Steamissa. Hytky. Ole hyvä, ole hyvä."
+    cta: "Katso paketti"
+    alt: "HagiCode Plus Steam bundle artwork"
   hagicode-turbo-engine-dlc:
-    title: Turbo Engine DLC
-    description: 'Turbo Engine DLC ei ehkä ole maailman mittakaavassa ainutlaatuinen, mutta se todella kulkee: avaa jopa 32 samanaikaista verkkosessiota ja lisää mukautusvaihtoehtoja Hagicode-työnkulkuusi. Kurkkaa Steamiin.'
-    cta: Katso DLC
-    alt: Turbo Engine DLC -kuvitus Steamissa
+    title: "Turbo Engine -DLC"
+    description: "Turbo Engine -DLC ei ole maailmanlaajuisesti uniikki, mutta se todella toimii: avaa jopa 32 yhtäaikaista online-istuntoa ja lisää mukautusvaihtoehtoja Hagicode-työnkulkuusi. Tule katsomaan Steamissa. Hytky. Ole hyvä, ole hyvä."
+    cta: "Katso DLC"
+    alt: "Turbo Engine DLC Steam artwork"

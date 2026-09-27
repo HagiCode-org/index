@@ -1,26 +1,26 @@
 promotions:
   desktop-microsoft-store-2026-06-10:
-    title: HagiCode for Windows is now on Microsoft Store
-    description: HagiCode for Windows is officially live on Microsoft Store. Windows users can install it directly from the storefront and stay on the store-managed update path. Open the listing and take a look.
-    cta: Open Microsoft Store
-    alt: HagiCode for Windows Microsoft Store artwork
+    title: "A HagiCode Windowsra most elérhető a Microsoft Store-ban"
+    description: "A HagiCode Windowsra hivatalosan elérhető a Microsoft Store-ban. A Windows-felhasználók közvetlenül a boltból telepíthetik, és a bolt által kezelt frissítési úton maradhatnak. Nyisd meg a lapot, és nézd meg."
+    cta: "Microsoft Store megnyitása"
+    alt: "HagiCode for Windows Microsoft Store artwork"
   main-game-2026-04-29:
-    title: Tedd a kívánságlistára, kérlek
-    description: A Hagicode, a nem teljesen világegyedi, de szuper hasznos Vibe Coding szoftver április 29-én jelenik meg. Kérlek, add hozzá a Steam kívánságlistádhoz. Nagyon szépen kérünk.
-    cta: Hozzáadás Steam kívánságlistához
-    alt: HagiCode Steam borítókép
+    title: "Kérlek, add a kívánságlistádra"
+    description: "A Hagicode, a nem világszerte egyedi, de szuper praktikus Vibe Coding szoftver április 29-én jelenik meg. Kérlek, add a Steam kívánságlistádra. Zokogás. Kérlek, kérlek."
+    cta: "Kívánságlista a Steamen"
+    alt: "HagiCode Steam store capsule artwork"
   main-game-steam-ea-2026-04-29:
-    title: Végre itt az Early Access
-    description: A Hagicode, a nem teljesen világegyedi, de szuper hasznos Vibe Coding szoftver már elérhető Steam Early Accessben. Nézz rá, kérlek.
-    cta: Early Access megtekintése
-    alt: HagiCode Early Access Steam borítókép
+    title: "A korai hozzáférés végre itt van"
+    description: "A Hagicode, a nem világszerte egyedi, de szuper praktikus Vibe Coding szoftver most a Steam korai hozzáférésében érhető el. Gyere, nézd meg. Zokogás. Kérlek, kérlek."
+    cta: "Korai hozzáférés megtekintése"
+    alt: "HagiCode Early Access Steam artwork"
   hagicode-plus-bundle:
-    title: Hagicode Plus csomag
-    description: 'A Hagicode Plus talán nem a világ legegyedibb csomagja, de nagyon jól van összerakva: 15% kedvezménnyel kapod meg az alapjátékot és a Turbo Engine DLC-t. Nézd meg Steamen. Kérlek.'
-    cta: Csomag megtekintése
-    alt: Hagicode Plus Steam csomagkép
+    title: "Hagicode Plus csomag"
+    description: "A Hagicode Plus, a nem világszerte egyedi, de tényleg szépen csomagolt változat 15% kedvezménnyel érhető el az alapjátékkal és a Turbo Engine DLC-vel együtt. Nézd meg a Steamen. Zokogás. Kérlek, kérlek."
+    cta: "Csomag megtekintése"
+    alt: "HagiCode Plus Steam bundle artwork"
   hagicode-turbo-engine-dlc:
-    title: Turbo Engine DLC
-    description: 'A Turbo Engine DLC lehet, hogy nem világszinten egyedi, de tényleg odateszi magát: akár 32 párhuzamos online munkamenetet és több testreszabási lehetőséget nyit meg a Hagicode workflow-dhoz. Nézz be Steamre.'
-    cta: DLC megtekintése
-    alt: Turbo Engine DLC Steam borítókép
+    title: "Turbo Engine DLC"
+    description: "A Turbo Engine DLC nem világszerte egyedi, de tényleg fut: akár 32 egyidejű online munkamenetet és több testreszabási lehetőséget old fel a Hagicode munkafolyamatodhoz. Nézd meg a Steamen. Zokogás. Kérlek, kérlek."
+    cta: "DLC megtekintése"
+    alt: "Turbo Engine DLC Steam artwork"

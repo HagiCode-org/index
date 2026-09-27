@@ -1,26 +1,26 @@
 promotions:
   desktop-microsoft-store-2026-06-10:
-    title: HagiCode for Windows is now on Microsoft Store
-    description: HagiCode for Windows is officially live on Microsoft Store. Windows users can install it directly from the storefront and stay on the store-managed update path. Open the listing and take a look.
-    cta: Open Microsoft Store
-    alt: HagiCode for Windows Microsoft Store artwork
+    title: "HagiCode för Windows finns nu i Microsoft Store"
+    description: "HagiCode för Windows är officiellt tillgängligt i Microsoft Store. Windows-användare kan installera det direkt från butiken och stanna kvar på den butiksstyrda uppdateringsvägen. Öppna sidan och titta."
+    cta: "Öppna Microsoft Store"
+    alt: "HagiCode for Windows Microsoft Store artwork"
   main-game-2026-04-29:
-    title: Önska det, snälla
-    description: Hagicode, den kanske inte helt globalt unika men väldigt smidiga Vibe Coding-mjukvaran, släpps den 29 april. Lägg till det på din Steam-önskelista. Snälla.
-    cta: Önska på Steam
-    alt: HagiCode-bild för Steam-sidan
+    title: "Lägg till den i önskelistan, snälla"
+    description: "Hagicode, Vibe Coding-mjukvaran som inte är unik i hela världen men superpraktisk, släpps den 29 april. Lägg till den i din Steam-önskelista, snälla. Snyft. Snälla, snälla."
+    cta: "Önskelista på Steam"
+    alt: "HagiCode Steam store capsule artwork"
   main-game-steam-ea-2026-04-29:
-    title: Early Access är äntligen här
-    description: Hagicode, den kanske inte helt globalt unika men väldigt smidiga Vibe Coding-mjukvaran, finns nu i Steam Early Access. Ta en titt, snälla.
-    cta: Se Early Access
-    alt: HagiCode Early Access-bild på Steam
+    title: "Early Access är äntligen här"
+    description: "Hagicode, Vibe Coding-mjukvaran som inte är unik i hela världen men superpraktisk, finns nu i Steam Early Access. Kom och titta. Snyft. Snälla, snälla."
+    cta: "Visa Early Access"
+    alt: "HagiCode Early Access Steam artwork"
   hagicode-plus-bundle:
-    title: Hagicode Plus-paket
-    description: 'Hagicode Plus är kanske inte världens mest unika paket, men det är riktigt väl sammansatt: 15 % rabatt med grundspelet och Turbo Engine DLC. Kika in på Steam. Snälla.'
-    cta: Se paketet
-    alt: Hagicode Plus-paketbild på Steam
+    title: "Hagicode Plus-paket"
+    description: "Hagicode Plus, alternativet som inte är unikt i hela världen men verkligen snyggt paketerat, har 15 % rabatt tillsammans med basspelet och Turbo Engine-DLC:n. Kom och titta på Steam. Snyft. Snälla, snälla."
+    cta: "Visa paket"
+    alt: "HagiCode Plus Steam bundle artwork"
   hagicode-turbo-engine-dlc:
-    title: Turbo Engine DLC
-    description: 'Turbo Engine DLC kanske inte är globalt unikt, men det levererar på riktigt: lås upp upp till 32 samtidiga onlinesessioner och fler anpassningsmöjligheter för ditt Hagicode-workflow. Ta en titt på Steam.'
-    cta: Se DLC
-    alt: Turbo Engine DLC-bild på Steam
+    title: "Turbo Engine-DLC"
+    description: "Turbo Engine-DLC:n är inte unik i hela världen, men den kör verkligen: lås upp upp till 32 samtidiga onlinesessioner och fler anpassningsmöjligheter för ditt Hagicode-flöde. Kom och titta på Steam. Snyft. Snälla, snälla."
+    cta: "Visa DLC"
+    alt: "Turbo Engine DLC Steam artwork"

@@ -1,26 +1,26 @@
 promotions:
   desktop-microsoft-store-2026-06-10:
-    title: HagiCode for Windows is now on Microsoft Store
-    description: HagiCode for Windows is officially live on Microsoft Store. Windows users can install it directly from the storefront and stay on the store-managed update path. Open the listing and take a look.
-    cta: Open Microsoft Store
-    alt: HagiCode for Windows Microsoft Store artwork
+    title: "Το HagiCode για Windows είναι τώρα στο Microsoft Store"
+    description: "Το HagiCode για Windows είναι επίσημα διαθέσιμο στο Microsoft Store. Οι χρήστες Windows μπορούν να το εγκαταστήσουν απευθείας από το κατάστημα και να παραμείνουν στη διαδρομή ενημερώσεων που διαχειρίζεται το κατάστημα. Ανοίξτε τη σελίδα και ρίξτε μια ματιά."
+    cta: "Άνοιγμα Microsoft Store"
+    alt: "HagiCode for Windows Microsoft Store artwork"
   main-game-2026-04-29:
-    title: Βάλτε το στη wishlist, σας παρακαλώ
-    description: Το Hagicode, το όχι και τόσο μοναδικό παγκοσμίως αλλά πολύ πρακτικό λογισμικό για Vibe Coding, κυκλοφορεί στις 29 Απριλίου. Προσθέστε το στη wishlist σας στο Steam. Σας παρακαλούμε πολύ.
-    cta: Wishlist στο Steam
-    alt: Εικαστικό HagiCode για τη σελίδα του Steam
+    title: "Προσθέστε το στη λίστα επιθυμιών, παρακαλώ"
+    description: "Το Hagicode, το λογισμικό Vibe Coding που δεν είναι μοναδικό παγκοσμίως αλλά είναι υπερβολικά πρακτικό, κυκλοφορεί στις 29 Απριλίου. Προσθέστε το παρακαλώ στη λίστα επιθυμιών σας στο Steam. Λυγμός. Παρακαλώ, παρακαλώ."
+    cta: "Λίστα επιθυμιών στο Steam"
+    alt: "HagiCode Steam store capsule artwork"
   main-game-steam-ea-2026-04-29:
-    title: Το Early Access είναι επιτέλους εδώ
-    description: Το Hagicode, το όχι και τόσο μοναδικό παγκοσμίως αλλά πολύ πρακτικό λογισμικό για Vibe Coding, βρίσκεται πλέον σε Steam Early Access. Ρίξτε μια ματιά. Σας παρακαλούμε.
-    cta: Δείτε το Early Access
-    alt: Εικαστικό HagiCode Early Access στο Steam
+    title: "Η Early Access ήρθε επιτέλους"
+    description: "Το Hagicode, το λογισμικό Vibe Coding που δεν είναι μοναδικό παγκοσμίως αλλά είναι υπερβολικά πρακτικό, είναι τώρα σε Early Access στο Steam. Ελάτε να ρίξετε μια ματιά. Λυγμός. Παρακαλώ, παρακαλώ."
+    cta: "Προβολή Early Access"
+    alt: "HagiCode Early Access Steam artwork"
   hagicode-plus-bundle:
-    title: Πακέτο Hagicode Plus
-    description: Το Hagicode Plus, ίσως όχι το πιο μοναδικό πακέτο στον κόσμο αλλά εξαιρετικά καλοστημένο, έχει 15% έκπτωση και περιλαμβάνει το βασικό παιχνίδι μαζί με το Turbo Engine DLC. Δείτε το στο Steam. Σας παρακαλούμε.
-    cta: Δείτε το πακέτο
-    alt: Εικαστικό του πακέτου Hagicode Plus στο Steam
+    title: "Πακέτο Hagicode Plus"
+    description: "Το Hagicode Plus, η επιλογή που δεν είναι μοναδική παγκοσμίως αλλά είναι πραγματικά όμορφα συσκευασμένη, έχει έκπτωση 15% μαζί με το βασικό παιχνίδι και το DLC Turbo Engine. Ελάτε να το δείτε στο Steam. Λυγμός. Παρακαλώ, παρακαλώ."
+    cta: "Προβολή πακέτου"
+    alt: "HagiCode Plus Steam bundle artwork"
   hagicode-turbo-engine-dlc:
-    title: Turbo Engine DLC
-    description: 'Το Turbo Engine DLC ίσως να μην είναι κάτι μοναδικό παγκοσμίως, αλλά πραγματικά αποδίδει: ξεκλειδώνει έως και 32 ταυτόχρονες online συνεδρίες και περισσότερες επιλογές παραμετροποίησης για το workflow σας στο Hagicode. Ρίξτε μια ματιά στο Steam.'
-    cta: Δείτε το DLC
-    alt: Εικαστικό Turbo Engine DLC στο Steam
+    title: "DLC Turbo Engine"
+    description: "Το DLC Turbo Engine δεν είναι μοναδικό παγκοσμίως, αλλά πραγματικά τρέχει: ξεκλειδώστε έως και 32 ταυτόχρονες online συνεδρίες και περισσότερες επιλογές προσαρμογής για τη ροή εργασίας σας στο Hagicode. Ελάτε να ρίξετε μια ματιά στο Steam. Λυγμός. Παρακαλώ, παρακαλώ."
+    cta: "Προβολή DLC"
+    alt: "Turbo Engine DLC Steam artwork"
