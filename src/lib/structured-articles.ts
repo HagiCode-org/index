@@ -272,10 +272,11 @@ function validateStructuredArticleBlock(block: unknown, fieldName: string): Stru
           variantValue === 'primary' || variantValue === 'secondary',
           `${itemField}.variant must be primary or secondary.`,
         );
+        const validatedVariant: 'primary' | 'secondary' = variantValue;
 
         return {
           ...normalized,
-          variant: variantValue,
+          variant: validatedVariant,
         };
       });
 
