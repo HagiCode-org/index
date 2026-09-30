@@ -53,6 +53,15 @@ test('human-readable pages use only the shared HagiLight footer and promotion sh
   assert.doesNotMatch(homepage, /portal-spotlight|Latest promotion|最新推广/u);
 });
 
+test('shared robots discovery points to the sitemap index', async () => {
+  const robots = await readFile(path.join(publishedRoot, 'robots.txt'), 'utf8');
+  const sitemap = await readFile(path.join(publishedRoot, 'sitemap-index.xml'), 'utf8');
+
+  assert.match(robots, /User-agent: \*/u);
+  assert.match(robots, /Sitemap: https:\/\/index\.hagicode\.com\/sitemap-index\.xml/u);
+  assert.match(sitemap, /https:\/\/index\.hagicode\.com\/sitemap-\d+\.xml/u);
+});
+
 test('promotion JSON remains published at its stable compressed URLs', async () => {
   for (const filePath of ['promote.json', 'promote_content.json']) {
     const payload = await readFile(path.join(publishedRoot, filePath), 'utf8');

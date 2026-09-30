@@ -1,10 +1,10 @@
 import { defineConfig } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
+import { hagilight } from '@hagicode/hagilight/integration';
 
 export default defineConfig({
   site: 'https://index.hagicode.com',
   output: 'static',
-  integrations: [sitemap()],
+  integrations: [hagilight()],
   vite: {
     define: {
       'import.meta.env.VITE_51LA_ID': JSON.stringify(

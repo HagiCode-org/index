@@ -33,9 +33,9 @@
     "sync:secondary-professions": "node ./scripts/sync-secondary-professions.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.1",
-    "@hagicode/hagilight": "^0.3.1",
-    "astro": "^6.0.7",
+    "@hagicode/hagilight": "^0.4.0",
+    "@hagicode/hagilight-core": "^0.4.0",
+    "astro": "^7.3.5",
     "js-yaml": "^4.1.1"
   },
   "devDependencies": {
