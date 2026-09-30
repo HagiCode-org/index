@@ -12,6 +12,21 @@
 - 为 `HagiCode Server` 与 `HagiCode Desktop` 生成独立版本历史页：`/server/history/` 与 `/desktop/history/`。
 - 维护 `activity-metrics` 快照与 catalog 摘要，并保持 `/activity-metrics.json` 路由稳定。
 - 保持既有 JSON URL 不变，例如 `/index-catalog.json`、`/activity-metrics.json`、`/server/index.json`、`/desktop/index.json`、`/presets/index.json`。
+- 人类可读页面在各自 Astro 页面中使用 HagiLight Footer 与 PromotoBanner；门户页/数据页仍拥有各自的 header 和页面内容。
+- `/promoto` 是独立的数据审核工具，不是第二份站点级推广卡片。
+
+## 独立构建与验证
+
+从 `repos/index/` 运行：
+
+```bash
+npm install
+npm test
+npm run build
+npm run validate
+```
+
+`npm run build` 生成 Astro 静态页面，随后压缩并校验发布 JSON。该站点独立构建，不需要启动后端 API。
 
 ## JSON 发布格式
 
@@ -23,7 +38,7 @@
 
 ## hagi18n 本地化工作流
 
-HagIndex 使用 hagi18n 风格的 YAML 源文件维护门户、页脚、Promoto 展示页与 `/promote_content.json` 的人类可读文案。
+HagIndex 使用 hagi18n 风格的 YAML 源文件维护门户、`/promoto` 展示页与 `/promote_content.json` 的人类可读文案。Footer 链接与站点级推广由 HagiLight 集中维护，不在此处重复翻译。
 
 - 配置文件：`hagi18n.yaml`
 - 29 语言 published-content locale source of truth：`src/i18n/locale-metadata.ts`
