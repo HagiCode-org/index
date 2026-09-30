@@ -3,8 +3,9 @@ import Analytics51LA from '@/components/51LAAnalytics.astro';
 import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
 import AboutSection from '@/components/AboutSection.astro';
 import IndexCard from '@/components/IndexCard.astro';
-import IndexFooter from '@/components/IndexFooter.astro';
+import Footer from '@hagicode/hagilight/Footer';
 import IndexHero from '@/components/IndexHero.astro';
+import PromotoBanner from '@hagicode/hagilight/PromotoBanner';
 import { loadAboutPayload } from '@/lib/load-about';
 import { loadIndexCatalog } from '@/lib/load-index-catalog';
 import '@/styles/global.css';
@@ -156,7 +157,8 @@ const dataSurfaces = [
         <AboutSection about={about} />
       </main>
 
-      <IndexFooter />
+      <PromotoBanner locale="zh-CN" />
+      <Footer locale="zh-CN" />
       <p class="sr-only" id="copy-status" aria-live="polite"></p>
     </div>
 

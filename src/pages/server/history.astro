@@ -1,8 +1,9 @@
 ---
 import Analytics51LA from '@/components/51LAAnalytics.astro';
 import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
-import IndexFooter from '@/components/IndexFooter.astro';
+import Footer from '@hagicode/hagilight/Footer';
 import VersionHistoryPage from '@/components/VersionHistoryPage.astro';
+import PromotoBanner from '@hagicode/hagilight/PromotoBanner';
 import { loadPackageHistory } from '@/lib/load-package-history';
 import '@/styles/global.css';
 
@@ -45,7 +46,8 @@ const canonicalUrl = 'https://index.hagicode.com/server/history/';
         <VersionHistoryPage page={page} />
       </main>
 
-      <IndexFooter />
+      <PromotoBanner locale="zh-CN" />
+      <Footer locale="zh-CN" />
     </div>
     <Analytics51LA />
     <GoogleAnalytics />

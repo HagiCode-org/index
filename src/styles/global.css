@@ -187,12 +187,10 @@
   .hero-panel,
   .portal-section,
   .portal-group-card,
-  .portal-spotlight-card,
   .catalog-section,
   .about-section,
   .about-overview-card,
   .about-group-card,
-  .site-footer,
   .index-card,
   .portal-site-card,
   .portal-surface-card,
@@ -217,10 +215,8 @@
   .hero-panel,
   .portal-section,
   .portal-group-card,
-  .portal-spotlight-card,
   .catalog-section,
   .about-section,
-  .site-footer,
   .index-card,
   .portal-site-card,
   .portal-surface-card,
@@ -319,7 +315,6 @@
   .button:focus-visible,
   .hero-route-chip:focus-visible,
   .about-link-chip:focus-visible,
-  .footer-link:focus-visible,
   .promoto-filter-option input:focus-visible + span,
   .promoto-search-field input:focus-visible {
     outline: 2px solid var(--accent);
@@ -329,8 +324,7 @@
   .hero-panel,
   .portal-section,
   .catalog-section,
-  .about-section,
-  .site-footer {
+  .about-section {
     padding: 24px;
   }
 
@@ -393,7 +387,6 @@
   .eyebrow,
   .hero-kicker,
   .card-category,
-  .footer-column-title,
   .status-badge,
   .history-summary-label,
   .activity-summary-title,
@@ -445,10 +438,9 @@
   .card-heading h2,
   .portal-group-head h3,
   .portal-site-copy h3,
-  .portal-spotlight-copy h3,
   .hero-signal-card h2,
   .promoto-card-copy h2,
-  .site-footer h2 {
+  .about-overview-title {
     font-family: var(--font-display);
     color: var(--text);
     letter-spacing: -0.05em;
@@ -471,7 +463,6 @@
   .hero-lede,
   .portal-group-head > p,
   .portal-site-copy p,
-  .portal-spotlight-copy p,
   .portal-site-domain,
   .about-overview-text,
   .about-group-head > p,
@@ -605,7 +596,6 @@
   .portal-surface-grid,
   .portal-snapshot-grid,
   .portal-group-grid,
-  .portal-spotlight-meta,
   .about-link-grid,
   .about-contact-grid,
   .about-qr-grid,
@@ -684,7 +674,7 @@
   .portal-site-domain code,
   .card-meta dd code,
   .promoto-card-id code,
-  .footer-link code {
+  .promoto-card-id code {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -718,8 +708,6 @@
   .hero-route-chip:focus-visible,
   .about-link-chip:hover,
   .about-link-chip:focus-visible,
-  .footer-link:hover,
-  .footer-link:focus-visible,
   .portal-site-card:hover,
   .portal-site-card:focus-within,
   .portal-surface-card:hover,
@@ -738,7 +726,6 @@
 
   .hero-signal-card,
   .portal-group-card,
-  .portal-spotlight-card,
   .about-overview-card,
   .about-group-card,
   .index-card,
@@ -761,82 +748,6 @@
     font-size: 1.8rem;
     font-weight: 800;
     line-height: 0.94;
-  }
-
-  .portal-spotlight-section {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .portal-spotlight-section::after {
-    content: "";
-    position: absolute;
-    inset: auto -88px -108px auto;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(22, 101, 52, 0.18), transparent 66%);
-    pointer-events: none;
-  }
-
-  .portal-spotlight-card {
-    position: relative;
-    border-color: var(--accent-border);
-    background:
-      linear-gradient(135deg, rgba(18, 34, 22, 0.86) 0%, rgba(12, 12, 12, 0.96) 54%, rgba(8, 8, 8, 0.99) 100%);
-    box-shadow: var(--shadow-2);
-  }
-
-  .portal-spotlight-layout {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.8fr);
-    align-items: start;
-  }
-
-  .portal-spotlight-copy {
-    display: grid;
-    gap: 10px;
-    max-width: 56rem;
-  }
-
-  .portal-spotlight-copy h3 {
-    font-size: clamp(2rem, 5vw, 3.35rem);
-    font-weight: 900;
-    line-height: 0.95;
-  }
-
-  .portal-spotlight-copy p {
-    max-width: 50rem;
-    font-size: 1.02rem;
-  }
-
-  .portal-spotlight-meta {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .portal-spotlight-meta div {
-    padding: 16px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--line);
-    background: rgba(20, 20, 20, 0.88);
-    box-shadow: var(--shadow-inset);
-  }
-
-  .portal-spotlight-meta dt {
-    color: var(--muted);
-    font-size: 0.84rem;
-  }
-
-  .portal-spotlight-meta dd {
-    margin-top: 8px;
-    color: var(--text);
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.04;
-    overflow-wrap: anywhere;
   }
 
   .hero-signal-meta,
@@ -1789,63 +1700,6 @@
     line-height: 0.98;
   }
 
-  .site-footer {
-    margin-top: 24px;
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(220px, 1fr));
-    gap: 18px;
-  }
-
-  .footer-intro {
-    display: grid;
-    gap: 12px;
-  }
-
-  .site-footer h2 {
-    font-size: clamp(1.9rem, 4vw, 3rem);
-    font-weight: 900;
-    line-height: 0.96;
-  }
-
-  .footer-intro p:not(.eyebrow) {
-    color: var(--muted);
-  }
-
-  .footer-column {
-    display: grid;
-    gap: 12px;
-    align-content: start;
-  }
-
-  .footer-link-list {
-    display: grid;
-    gap: 10px;
-  }
-
-  .footer-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    min-height: 48px;
-    padding: 12px 14px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--line);
-    background: rgba(14, 14, 14, 0.92);
-    transition:
-      transform 180ms ease,
-      border-color 180ms ease,
-      color 180ms ease,
-      box-shadow 180ms ease;
-  }
-
-  .footer-link span {
-    font-weight: 700;
-  }
-
   .sr-only {
     position: absolute;
     width: 1px;
@@ -1887,7 +1741,6 @@
     .portal-group-card,
     .catalog-section,
     .about-section,
-    .site-footer,
     .history-release-card,
     .promoto-hero,
     .promoto-filters,
@@ -1960,10 +1813,6 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .footer-grid {
-      grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(240px, 1fr));
-      gap: 20px;
-    }
   }
 
   @media (min-width: 1920px) {
@@ -1982,7 +1831,6 @@
     .portal-group-card,
     .catalog-section,
     .about-section,
-    .site-footer,
     .history-release-card,
     .promoto-hero,
     .promoto-filters,
@@ -2036,31 +1884,22 @@
       padding: 18px 20px;
     }
 
-    .footer-grid {
-      grid-template-columns: minmax(0, 1.45fr) repeat(3, minmax(260px, 1fr));
-    }
   }
 
   @media (max-width: 1200px) {
     .hero-grid,
     .history-hero-grid,
     .promoto-hero,
-    .portal-spotlight-layout,
-    .about-layout,
-    .footer-grid {
+    .about-layout {
       grid-template-columns: 1fr;
     }
 
-    .footer-grid {
-      gap: 20px;
-    }
   }
 
   @media (max-width: 1024px) {
     .hero-route-strip,
     .hero-metrics,
     .portal-snapshot-grid,
-    .portal-spotlight-meta,
     .about-summary-grid,
     .history-summary-grid,
     .history-latest-meta,
@@ -2087,7 +1926,6 @@
     .hero-route-strip,
     .portal-surface-grid,
     .portal-snapshot-grid,
-    .portal-spotlight-meta,
     .promoto-card-grid,
     .promoto-metrics,
     .promoto-filters,
@@ -2133,7 +1971,6 @@
     .portal-group-card,
     .catalog-section,
     .about-section,
-    .site-footer,
     .index-card,
     .portal-site-card,
     .portal-surface-card,
@@ -2212,10 +2049,6 @@
       min-width: 1320px;
     }
 
-    .footer-link {
-      flex-direction: column;
-      align-items: flex-start;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -2238,8 +2071,6 @@
     .hero-route-chip:focus-visible,
     .about-link-chip:hover,
     .about-link-chip:focus-visible,
-    .footer-link:hover,
-    .footer-link:focus-visible,
     .portal-site-card:hover,
     .portal-site-card:focus-within,
     .portal-surface-card:hover,

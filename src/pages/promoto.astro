@@ -1,8 +1,9 @@
 ---
 import Analytics51LA from '@/components/51LAAnalytics.astro';
 import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
-import IndexFooter from '@/components/IndexFooter.astro';
+import Footer from '@hagicode/hagilight/Footer';
 import PromotoShowcase from '@/components/PromotoShowcase.astro';
+import PromotoBanner from '@hagicode/hagilight/PromotoBanner';
 import { promoteContentPayload } from '@/data/promote-content-source';
 import { getLocaleNamespace, getString } from '@/i18n/runtime';
 import '@/styles/global.css';
@@ -51,7 +52,8 @@ const rawPayloadPath = '/promote.json';
         />
       </main>
 
-      <IndexFooter />
+      <PromotoBanner locale="zh-CN" />
+      <Footer locale="zh-CN" />
     </div>
 
     <Analytics51LA />

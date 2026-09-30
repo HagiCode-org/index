@@ -15,7 +15,6 @@ test('homepage renders the portal shell and canonical site destinations from /si
   assert.match(homepage, /站点清单 JSON/);
   assert.match(homepage, /查看目录 JSON/);
   assert.match(homepage, /稳定入口/);
-  assert.match(homepage, /门户与镜像/);
   assert.match(homepage, /Promoto 展示台/);
   assert.match(homepage, /Steam 成就页面/);
   assert.match(homepage, /\/steam\/achievements\//);
@@ -27,6 +26,37 @@ test('homepage renders the portal shell and canonical site destinations from /si
   for (const entry of sitesCatalog.entries) {
     assert.match(homepage, new RegExp(entry.title['zh-CN'].replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')));
     assert.match(homepage, new RegExp(entry.url.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')));
+  }
+});
+
+test('human-readable pages use only the shared HagiLight footer and promotion shell', async () => {
+  const pages = [
+    ['index.html', 'https://index.hagicode.com/'],
+    ['data/index.html', 'https://index.hagicode.com/data/'],
+    ['desktop/history/index.html', 'https://index.hagicode.com/desktop/history/'],
+    ['server/history/index.html', 'https://index.hagicode.com/server/history/'],
+    ['promoto/index.html', 'https://index.hagicode.com/promoto'],
+    ['steam/achievements/index.html', 'https://index.hagicode.com/steam/achievements/'],
+  ];
+
+  for (const [filePath, canonicalUrl] of pages) {
+    const html = await readFile(path.join(publishedRoot, filePath), 'utf8');
+
+    assert.equal((html.match(/<footer\b[^>]*\bhagilight-footer\b[^>]*>/gu) ?? []).length, 1, filePath);
+    assert.equal((html.match(/<hagilight-promoto-banner/gu) ?? []).length, 1, filePath);
+    assert.match(html, new RegExp(`<link rel="canonical" href="${canonicalUrl.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')}"`), filePath);
+    assert.doesNotMatch(html, /class="site-footer"|footer-link-list|portal-spotlight-card/, filePath);
+    assert.doesNotMatch(html, /application\/rss\+xml|\/rss(?:\.xml|\/)/u, filePath);
+  }
+
+  const homepage = await readFile(path.join(publishedRoot, 'index.html'), 'utf8');
+  assert.doesNotMatch(homepage, /portal-spotlight|Latest promotion|最新推广/u);
+});
+
+test('promotion JSON remains published at its stable compressed URLs', async () => {
+  for (const filePath of ['promote.json', 'promote_content.json']) {
+    const payload = await readFile(path.join(publishedRoot, filePath), 'utf8');
+    assert.equal(payload, JSON.stringify(JSON.parse(payload)), filePath);
   }
 });
 
@@ -48,7 +78,6 @@ test('promoto page renders localized review labels and stable JSON links', async
   assert.match(promotoPage, /data-promoto-selected-locale/);
   assert.match(promotoPage, /查看 JSON/);
   assert.match(promotoPage, /\/promote\.json/);
-  assert.match(promotoPage, /\/promote_content\.json/);
   assert.doesNotMatch(promotoPage, /promoto-locale-grid/);
   assert.doesNotMatch(promotoPage, /promoto-locale-panel/);
 });

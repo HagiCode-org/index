@@ -1,10 +1,11 @@
 ---
 import Analytics51LA from '@/components/51LAAnalytics.astro';
 import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
-import IndexFooter from '@/components/IndexFooter.astro';
+import Footer from '@hagicode/hagilight/Footer';
 import SteamAchievementFilterBar from '@/components/SteamAchievementFilterBar.astro';
 import SteamAchievementPageHero from '@/components/SteamAchievementPageHero.astro';
 import SteamAchievementTable from '@/components/SteamAchievementTable.astro';
+import PromotoBanner from '@hagicode/hagilight/PromotoBanner';
 import { steamAchievementPageData } from '@/data/steam-source';
 import '@/styles/global.css';
 
@@ -60,7 +61,8 @@ const canonicalUrl = 'https://index.hagicode.com/steam/achievements/';
         <SteamAchievementTable rows={steamAchievementPageData.rows} />
       </main>
 
-      <IndexFooter />
+      <PromotoBanner locale="zh-CN" />
+      <Footer locale="zh-CN" />
       <p class="sr-only" id="steam-copy-status" aria-live="polite"></p>
     </div>
 
