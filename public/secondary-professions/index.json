@@ -658,6 +658,57 @@
         "model": "gemini-2.5-flash-lite"
       },
       "fieldConstraints": []
+    },
+    {
+      "id": "secondary-junie-sonnet",
+      "name": "Junie Sonnet",
+      "family": "junie",
+      "primaryProfessionId": "profession-junie",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersJunieCliModel",
+      "sortOrder": 84,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "junie"
+      ],
+      "defaultParameters": {
+        "model": "sonnet"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-junie-gpt",
+      "name": "Junie GPT",
+      "family": "junie",
+      "primaryProfessionId": "profession-junie",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersJunieCliModel",
+      "sortOrder": 85,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "junie"
+      ],
+      "defaultParameters": {
+        "model": "gpt"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-junie-gemini",
+      "name": "Junie Gemini",
+      "family": "junie",
+      "primaryProfessionId": "profession-junie",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersJunieCliModel",
+      "sortOrder": 86,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "junie"
+      ],
+      "defaultParameters": {
+        "model": "gemini"
+      },
+      "fieldConstraints": []
     }
   ]
 }
