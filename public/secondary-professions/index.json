@@ -1,9 +1,31 @@
 {
-  "version": "2026.09.24.1",
-  "publishedAt": "2026-09-24T16:14:44.413Z",
+  "version": "2026.10.01.1",
+  "publishedAt": "2026-10-01T03:23:06.679Z",
   "title": "Secondary Profession Catalog",
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
+    {
+      "id": "secondary-gpt-6-1-sol",
+      "name": "GPT 6.1 Sol",
+      "family": "gpt",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
+      "sortOrder": 5,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "codex",
+        "copilot",
+        "hermes",
+        "pi",
+        "omp",
+        "junie"
+      ],
+      "defaultParameters": {
+        "model": "gpt-6.1-sol"
+      },
+      "fieldConstraints": []
+    },
     {
       "id": "secondary-gpt-6-0-sol",
       "name": "GPT 6.0 Sol",
@@ -18,7 +40,8 @@
         "copilot",
         "hermes",
         "pi",
-        "omp"
+        "omp",
+        "junie"
       ],
       "defaultParameters": {
         "model": "gpt-6-sol"
@@ -39,7 +62,8 @@
         "copilot",
         "hermes",
         "pi",
-        "omp"
+        "omp",
+        "junie"
       ],
       "defaultParameters": {
         "model": "gpt-6-luna"
@@ -60,7 +84,8 @@
         "copilot",
         "hermes",
         "pi",
-        "omp"
+        "omp",
+        "junie"
       ],
       "defaultParameters": {
         "model": "gpt-5.6-sol"
@@ -81,7 +106,8 @@
         "copilot",
         "hermes",
         "pi",
-        "omp"
+        "omp",
+        "junie"
       ],
       "defaultParameters": {
         "model": "gpt-5.6-terra"
@@ -102,7 +128,8 @@
         "copilot",
         "hermes",
         "pi",
-        "omp"
+        "omp",
+        "junie"
       ],
       "defaultParameters": {
         "model": "gpt-5.6-luna"
@@ -123,7 +150,8 @@
         "copilot",
         "hermes",
         "pi",
-        "omp"
+        "omp",
+        "junie"
       ],
       "defaultParameters": {
         "model": "gpt-5.5"
@@ -144,7 +172,8 @@
         "copilot",
         "hermes",
         "pi",
-        "omp"
+        "omp",
+        "junie"
       ],
       "defaultParameters": {
         "model": "gpt-5.4"
@@ -165,7 +194,8 @@
         "copilot",
         "hermes",
         "pi",
-        "omp"
+        "omp",
+        "junie"
       ],
       "defaultParameters": {
         "model": "gpt-5.3-codex"
@@ -186,7 +216,8 @@
         "copilot",
         "hermes",
         "pi",
-        "omp"
+        "omp",
+        "junie"
       ],
       "defaultParameters": {
         "model": "gpt-5.2-codex"
@@ -207,7 +238,8 @@
         "copilot",
         "hermes",
         "pi",
-        "omp"
+        "omp",
+        "junie"
       ],
       "defaultParameters": {
         "model": "gpt-5-mini"
@@ -656,91 +688,6 @@
       ],
       "defaultParameters": {
         "model": "gemini-2.5-flash-lite"
-      },
-      "fieldConstraints": []
-    },
-    {
-      "id": "secondary-junie-default",
-      "name": "Junie Default",
-      "family": "junie",
-      "primaryProfessionId": "profession-junie",
-      "icon": null,
-      "sourceLabel": "hero.professionCopy.sources.aiProvidersJunieCliModel",
-      "sortOrder": 84,
-      "supportsImage": true,
-      "compatiblePrimaryFamilies": [
-        "junie"
-      ],
-      "defaultParameters": {
-        "model": "Default"
-      },
-      "fieldConstraints": []
-    },
-    {
-      "id": "secondary-junie-sonnet",
-      "name": "Junie Sonnet",
-      "family": "junie",
-      "primaryProfessionId": "profession-junie",
-      "icon": null,
-      "sourceLabel": "hero.professionCopy.sources.aiProvidersJunieCliModel",
-      "sortOrder": 85,
-      "supportsImage": true,
-      "compatiblePrimaryFamilies": [
-        "junie"
-      ],
-      "defaultParameters": {
-        "model": "sonnet"
-      },
-      "fieldConstraints": []
-    },
-    {
-      "id": "secondary-junie-opus",
-      "name": "Junie Opus",
-      "family": "junie",
-      "primaryProfessionId": "profession-junie",
-      "icon": null,
-      "sourceLabel": "hero.professionCopy.sources.aiProvidersJunieCliModel",
-      "sortOrder": 86,
-      "supportsImage": true,
-      "compatiblePrimaryFamilies": [
-        "junie"
-      ],
-      "defaultParameters": {
-        "model": "opus"
-      },
-      "fieldConstraints": []
-    },
-    {
-      "id": "secondary-junie-gpt",
-      "name": "Junie GPT",
-      "family": "junie",
-      "primaryProfessionId": "profession-junie",
-      "icon": null,
-      "sourceLabel": "hero.professionCopy.sources.aiProvidersJunieCliModel",
-      "sortOrder": 87,
-      "supportsImage": true,
-      "compatiblePrimaryFamilies": [
-        "junie"
-      ],
-      "defaultParameters": {
-        "model": "gpt"
-      },
-      "fieldConstraints": []
-    },
-    {
-      "id": "secondary-junie-grok",
-      "name": "Junie Grok",
-      "family": "junie",
-      "primaryProfessionId": "profession-junie",
-      "icon": null,
-      "sourceLabel": "hero.professionCopy.sources.aiProvidersJunieCliModel",
-      "sortOrder": 88,
-      "supportsImage": true,
-      "compatiblePrimaryFamilies": [
-        "junie"
-      ],
-      "defaultParameters": {
-        "model": "grok"
       },
       "fieldConstraints": []
     }
