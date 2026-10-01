@@ -571,8 +571,8 @@
       }
     },
     {
-      "id": "secondary-junie-sonnet",
-      "name": "Junie Sonnet",
+      "id": "secondary-junie-default",
+      "name": "Junie Default",
       "family": "junie",
       "primaryProfessionId": "profession-junie",
       "icon": null,
@@ -583,13 +583,13 @@
         "junie"
       ],
       "defaultParameters": {
-        "model": "sonnet"
+        "model": "Default"
       },
       "fieldConstraints": []
     },
     {
-      "id": "secondary-junie-gpt",
-      "name": "Junie GPT",
+      "id": "secondary-junie-sonnet",
+      "name": "Junie Sonnet",
       "family": "junie",
       "primaryProfessionId": "profession-junie",
       "icon": null,
@@ -600,13 +600,13 @@
         "junie"
       ],
       "defaultParameters": {
-        "model": "gpt"
+        "model": "sonnet"
       },
       "fieldConstraints": []
     },
     {
-      "id": "secondary-junie-gemini",
-      "name": "Junie Gemini",
+      "id": "secondary-junie-opus",
+      "name": "Junie Opus",
       "family": "junie",
       "primaryProfessionId": "profession-junie",
       "icon": null,
@@ -617,7 +617,41 @@
         "junie"
       ],
       "defaultParameters": {
-        "model": "gemini"
+        "model": "opus"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-junie-gpt",
+      "name": "Junie GPT",
+      "family": "junie",
+      "primaryProfessionId": "profession-junie",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersJunieCliModel",
+      "sortOrder": 87,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "junie"
+      ],
+      "defaultParameters": {
+        "model": "gpt"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-junie-grok",
+      "name": "Junie Grok",
+      "family": "junie",
+      "primaryProfessionId": "profession-junie",
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersJunieCliModel",
+      "sortOrder": 88,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "junie"
+      ],
+      "defaultParameters": {
+        "model": "grok"
       },
       "fieldConstraints": []
     }
