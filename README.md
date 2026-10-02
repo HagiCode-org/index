@@ -15,6 +15,8 @@
 - 人类可读页面在各自 Astro 页面中使用 HagiLight Footer 与 PromotoBanner；门户页/数据页仍拥有各自的 header 和页面内容。
 - `/promoto` 是独立的数据审核工具，不是第二份站点级推广卡片。
 
+Hagilight 0.5.0 publishes valid empty `/rss.xml` and `/rss.en.xml` feeds by default. It does not extract entries from the site's JSON catalog.
+
 ## 独立构建与验证
 
 从 `repos/index/` 运行：
