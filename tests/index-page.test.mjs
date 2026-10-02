@@ -46,7 +46,8 @@ test('human-readable pages use only the shared HagiLight footer and promotion sh
     assert.equal((html.match(/<hagilight-promoto-banner/gu) ?? []).length, 1, filePath);
     assert.match(html, new RegExp(`<link rel="canonical" href="${canonicalUrl.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')}"`), filePath);
     assert.doesNotMatch(html, /class="site-footer"|footer-link-list|portal-spotlight-card/, filePath);
-    assert.doesNotMatch(html, /application\/rss\+xml|\/rss(?:\.xml|\/)/u, filePath);
+    assert.ok(html.includes('https://index.hagicode.com/rss.xml'), filePath);
+    assert.ok(html.includes('https://index.hagicode.com/rss.xml'), filePath);
   }
 
   const homepage = await readFile(path.join(publishedRoot, 'index.html'), 'utf8');
