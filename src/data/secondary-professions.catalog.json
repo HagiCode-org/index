@@ -230,7 +230,7 @@
         "omp"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-opus-5-5"
+        "model": "claude-opus-5-5"
       }
     },
     {
@@ -250,7 +250,7 @@
         "omp"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-opus-5"
+        "model": "claude-opus-5"
       }
     },
     {
@@ -270,7 +270,7 @@
         "omp"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-sonnet-5-5"
+        "model": "claude-sonnet-5-5"
       }
     },
     {
@@ -290,7 +290,7 @@
         "omp"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-sonnet-5"
+        "model": "claude-sonnet-5"
       }
     },
     {
@@ -310,7 +310,7 @@
         "omp"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-haiku-4-5"
+        "model": "claude-haiku-4-5"
       }
     },
     {
@@ -330,7 +330,7 @@
         "omp"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-opus-4-8"
+        "model": "claude-opus-4-8"
       }
     },
     {
@@ -350,7 +350,7 @@
         "omp"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-opus-4-7"
+        "model": "claude-opus-4-7"
       }
     },
     {
@@ -370,7 +370,7 @@
         "omp"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-opus-4-6"
+        "model": "claude-opus-4-6"
       }
     },
     {
@@ -390,7 +390,7 @@
         "omp"
       ],
       "defaultParameters": {
-        "model": "anthropic/claude-sonnet-4-6"
+        "model": "claude-sonnet-4-6"
       }
     },
     {
