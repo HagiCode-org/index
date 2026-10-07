@@ -220,7 +220,6 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 40,
       "supportsImage": true,
-      "summary": "For complex work and everyday tasks · Org default",
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -241,7 +240,6 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 41,
       "supportsImage": true,
-      "summary": "For complex tasks",
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -262,7 +260,6 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 42,
       "supportsImage": true,
-      "summary": "Most efficient for simpler tasks",
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -283,7 +280,6 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 43,
       "supportsImage": true,
-      "summary": "Most efficient for everyday tasks",
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -304,7 +300,6 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 44,
       "supportsImage": true,
-      "summary": "Fastest for quick answers",
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -325,7 +320,6 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 45,
       "supportsImage": true,
-      "summary": "Best for everyday, complex tasks",
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -346,7 +340,6 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 46,
       "supportsImage": true,
-      "summary": "Best for everyday, complex tasks",
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -367,7 +360,6 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 47,
       "supportsImage": true,
-      "summary": "Best for everyday, complex tasks",
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -388,7 +380,6 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 48,
       "supportsImage": true,
-      "summary": "Efficient for routine tasks",
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
