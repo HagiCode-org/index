@@ -35,10 +35,10 @@ promotions:
     cta: "デザインギャラリーを見る"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec ドキュメント：仕様駆動のワークフロー"
-    description: "十の言語で提供される OpenSpec のドキュメントを読み、アイデアを提案から設計、タスクを経てアーカイブへと導く仕様駆動のワークフローを学びましょう。"
-    cta: "OpenSpec ドキュメントを読む"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec：AI がコードを書く前に、計画をすり合わせる"
+    description: "OpenSpec は、AI コーディングのための軽量なスペック層です。変更内容を伝えると、AI が提案、スペック、設計、タスクを下書きします。内容を確認してから実装し、完了後は生きたスペックとしてアーカイブ。硬直したフェーズはなく、既存のコードベースや普段使っている AI アシスタントにもそのまま使えます。"
+    cta: "OpenSpec を知る"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute ドキュメント：ひとつのエンドポイントで多数の AI プロバイダーへ"
     description: "OmniRoute が、多数の AI プロバイダーとモデルをひとつのエンドポイントでルーティングし、無料枠への対応と自動フォールバックでコーディングツールを止めない仕組みを学びましょう。"

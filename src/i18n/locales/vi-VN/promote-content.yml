@@ -35,10 +35,10 @@ promotions:
     cta: "Duyệt thư viện thiết kế"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: quy trình làm việc dẫn dắt bởi đặc tả"
-    description: "Đọc tài liệu OpenSpec bằng mười ngôn ngữ và tìm hiểu quy trình làm việc dẫn dắt bởi đặc tả, đưa một ý tưởng từ đề xuất qua thiết kế và tác vụ đến lưu trữ."
-    cta: "Đọc tài liệu OpenSpec"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: thống nhất kế hoạch trước khi AI viết mã"
+    description: "OpenSpec là lớp đặc tả nhẹ cho lập trình cùng AI. Mô tả một thay đổi, xem lại đề xuất, đặc tả, thiết kế và tác vụ do AI soạn, sau đó triển khai và lưu trữ thành các đặc tả luôn cập nhật. Không có giai đoạn cứng nhắc, phù hợp với cơ sở mã sẵn có và các trợ lý AI bạn đang dùng."
+    cta: "Tìm hiểu OpenSpec"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: một điểm cuối cho nhiều nhà cung cấp AI"
     description: "Tìm hiểu cách OmniRoute định tuyến nhiều nhà cung cấp và mô hình AI qua một điểm cuối duy nhất, với hỗ trợ gói miễn phí và dự phòng tự động để các công cụ lập trình của bạn luôn hoạt động."

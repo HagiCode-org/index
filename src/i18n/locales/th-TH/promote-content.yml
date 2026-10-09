@@ -35,10 +35,10 @@ promotions:
     cta: "เรียกดูแกลเลอรีดีไซน์"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: เวิร์กโฟลว์ที่ขับเคลื่อนด้วยสเปก"
-    description: "อ่านเอกสาร OpenSpec ในสิบภาษา และเรียนรู้เวิร์กโฟลว์ที่ขับเคลื่อนด้วยสเปก ซึ่งพาไอเดียจากข้อเสนอผ่านการออกแบบและงานย่อยไปจนถึงการเก็บถาวร"
-    cta: "อ่านเอกสาร OpenSpec"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: ตกลงแผนให้ตรงกันก่อนที่ AI จะเขียนโค้ด"
+    description: "OpenSpec คือเลเยอร์สเปกแบบเบาสำหรับการเขียนโค้ดด้วย AI อธิบายการเปลี่ยนแปลง ตรวจทานข้อเสนอ สเปก การออกแบบ และงานย่อยที่ AI ร่างให้ จากนั้นลงมือทำและเก็บถาวรเป็นสเปกที่มีชีวิต ไม่มีขั้นตอนตายตัว และใช้ได้กับโค้ดเบสเดิมรวมถึงผู้ช่วย AI ที่คุณใช้อยู่แล้ว"
+    cta: "ทำความรู้จัก OpenSpec"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: เอนด์พอยต์เดียวสำหรับผู้ให้บริการ AI จำนวนมาก"
     description: "เรียนรู้ว่า OmniRoute ส่งต่อผู้ให้บริการและโมเดล AI จำนวนมากผ่านเอนด์พอยต์เดียวได้อย่างไร พร้อมรองรับแผนฟรีและการสำรองอัตโนมัติ เพื่อให้เครื่องมือเขียนโค้ดของคุณทำงานต่อได้"

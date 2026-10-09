@@ -35,10 +35,10 @@ promotions:
     cta: "Bekijk de designgalerij"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: de specificatiegestuurde workflow"
-    description: "Lees de OpenSpec-documentatie in tien talen en leer de specificatiegestuurde workflow die een idee van voorstel via ontwerp en taken naar archief brengt."
-    cta: "Lees de OpenSpec-documentatie"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: spreek het plan af voordat je AI code schrijft"
+    description: "OpenSpec is een lichte specificatielaag voor programmeren met AI. Beschrijf een wijziging, beoordeel het voorstel, de specificaties, het ontwerp en de taken die je AI opstelt, bouw het daarna en archiveer het in levende specificaties. Geen starre fasen, en het past bij bestaande codebases en de AI-assistenten die je al gebruikt."
+    cta: "Ontdek OpenSpec"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: één endpoint voor veel AI-providers"
     description: "Ontdek hoe OmniRoute veel AI-providers en modellen via één enkel endpoint routeert, met ondersteuning voor gratis tiers en automatische fallback, zodat je codeertools blijven werken."

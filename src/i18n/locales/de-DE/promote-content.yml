@@ -35,10 +35,10 @@ promotions:
     cta: "Designgalerie durchstöbern"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: der spezifikationsgetriebene Workflow"
-    description: "Lies die OpenSpec-Dokumentation in zehn Sprachen und lerne den spezifikationsgetriebenen Workflow kennen, der eine Idee vom Vorschlag über Design und Aufgaben bis zum Archiv führt."
-    cta: "OpenSpec-Dokumentation lesen"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: Erst den Plan abstimmen, dann schreibt die KI Code"
+    description: "OpenSpec ist eine schlanke Spezifikationsebene für KI-Coding. Beschreibe eine Änderung, prüfe Vorschlag, Spezifikationen, Design und Aufgaben, die deine KI entwirft, setze sie dann um und archiviere sie in lebendigen Spezifikationen. Keine starren Phasen, passend für bestehende Codebasen und die KI-Assistenten, die du schon nutzt."
+    cta: "OpenSpec entdecken"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: ein Endpunkt für viele KI-Anbieter"
     description: "Erfahre, wie OmniRoute viele KI-Anbieter und Modelle über einen einzigen Endpunkt routet, mit Unterstützung für kostenlose Kontingente und automatischem Fallback, damit deine Coding-Tools weiterlaufen."

@@ -35,10 +35,10 @@ promotions:
     cta: "Telusuri galeri desain"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: alur kerja berbasis spesifikasi"
-    description: "Baca dokumentasi OpenSpec dalam sepuluh bahasa dan pelajari alur kerja berbasis spesifikasi yang membawa sebuah ide dari proposal, melalui desain dan tugas, hingga arsip."
-    cta: "Baca dokumentasi OpenSpec"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: sepakati rencana sebelum AI menulis kode"
+    description: "OpenSpec adalah lapisan spesifikasi ringan untuk pemrograman dengan AI. Jelaskan sebuah perubahan, tinjau proposal, spesifikasi, desain, dan tugas yang disusun AI Anda, lalu bangun dan arsipkan menjadi spesifikasi yang hidup. Tanpa fase yang kaku, dan cocok untuk basis kode yang sudah ada serta asisten AI yang sudah Anda gunakan."
+    cta: "Kenali OpenSpec"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: satu endpoint untuk banyak penyedia AI"
     description: "Pelajari bagaimana OmniRoute merutekan banyak penyedia dan model AI melalui satu endpoint, dengan dukungan paket gratis dan fallback otomatis agar alat pemrograman Anda tetap berjalan."

@@ -35,10 +35,10 @@ promotions:
     cta: "Sfoglia la galleria di design"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: il workflow guidato dalle specifiche"
-    description: "Leggi la documentazione di OpenSpec in dieci lingue e scopri il workflow guidato dalle specifiche che porta un'idea dalla proposta all'archivio, passando per progettazione e attività."
-    cta: "Leggi la documentazione di OpenSpec"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: concorda il piano prima che l'IA scriva codice"
+    description: "OpenSpec è un livello di specifiche leggero per la programmazione con l'IA. Descrivi una modifica, rivedi la proposta, le specifiche, il design e le attività redatte dalla tua IA, poi realizzala e archiviala in specifiche vive. Nessuna fase rigida, e si adatta ai codebase esistenti e agli assistenti IA che usi già."
+    cta: "Scopri OpenSpec"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: un solo endpoint per molti provider di IA"
     description: "Scopri come OmniRoute instrada molti provider e modelli di IA attraverso un unico endpoint, con supporto per i piani gratuiti e fallback automatico, così i tuoi strumenti di programmazione continuano a funzionare."

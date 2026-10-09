@@ -35,10 +35,10 @@ promotions:
     cta: "Tasarım galerisine göz atın"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: şartname odaklı iş akışı"
-    description: "OpenSpec belgelerini on dilde okuyun ve bir fikri öneriden tasarım ve görevler üzerinden arşive taşıyan şartname odaklı iş akışını öğrenin."
-    cta: "OpenSpec belgelerini okuyun"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: yapay zekâ kod yazmadan önce planda anlaşın"
+    description: "OpenSpec, yapay zekâ ile kodlama için hafif bir şartname katmanıdır. Bir değişikliği tarif edin, yapay zekânızın hazırladığı öneriyi, şartnameleri, tasarımı ve görevleri inceleyin, ardından uygulayıp yaşayan şartnameler olarak arşivleyin. Katı aşamalar yoktur; mevcut kod tabanlarına ve zaten kullandığınız yapay zekâ asistanlarına uyum sağlar."
+    cta: "OpenSpec'i keşfedin"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: birçok yapay zekâ sağlayıcısı için tek uç nokta"
     description: "OmniRoute'un birçok yapay zekâ sağlayıcısını ve modelini tek bir uç nokta üzerinden nasıl yönlendirdiğini, ücretsiz katman desteği ve otomatik yedeğe geçişle kodlama araçlarınızın çalışmaya devam etmesini nasıl sağladığını öğrenin."

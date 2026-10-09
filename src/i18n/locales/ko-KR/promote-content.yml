@@ -35,10 +35,10 @@ promotions:
     cta: "디자인 갤러리 둘러보기"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: 스펙 기반 워크플로"
-    description: "열 가지 언어로 제공되는 OpenSpec 문서를 읽고, 아이디어를 제안에서 설계와 작업을 거쳐 보관까지 이끄는 스펙 기반 워크플로를 배워 보세요."
-    cta: "OpenSpec 문서 읽기"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: AI가 코드를 쓰기 전에 계획부터 합의하세요"
+    description: "OpenSpec은 AI 코딩을 위한 가벼운 스펙 계층입니다. 변경 사항을 설명하면 AI가 제안, 스펙, 설계, 작업을 초안으로 작성하고, 검토를 거쳐 구현한 뒤 살아 있는 스펙으로 보관합니다. 경직된 단계 없이 기존 코드베이스와 이미 쓰고 있는 AI 어시스턴트에 그대로 적용할 수 있습니다."
+    cta: "OpenSpec 알아보기"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: 하나의 엔드포인트로 여러 AI 제공업체를"
     description: "OmniRoute가 여러 AI 제공업체와 모델을 하나의 엔드포인트로 라우팅하고, 무료 요금제 지원과 자동 폴백으로 코딩 도구가 계속 동작하게 하는 방법을 알아보세요."

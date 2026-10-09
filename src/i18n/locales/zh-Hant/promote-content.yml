@@ -35,10 +35,10 @@ promotions:
     cta: "瀏覽設計畫廊"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec 文件：規範驅動的開發流程"
-    description: "閱讀十種語言的 OpenSpec 文件，了解把想法從提案、設計、任務一路推進到歸檔的規範驅動工作流程。"
-    cta: "閱讀 OpenSpec 文件"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec：先對齊規範，再讓 AI 寫程式碼"
+    description: "OpenSpec 是面向 AI 程式開發的輕量規範層：先描述一項變更，由 AI 起草提案、規範、設計與任務，你審閱確認後再動手實作，完成後歸檔為持續更新的規範。沒有僵化的階段門檻，適用於既有程式碼庫，並能搭配你正在使用的各類 AI 助手。"
+    cta: "了解 OpenSpec"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute 文件：一個端點連接眾多 AI 服務商"
     description: "了解 OmniRoute 如何透過同一個端點路由眾多 AI 服務商與模型，並支援免費額度與自動回退，讓你的編碼工具持續可用。"

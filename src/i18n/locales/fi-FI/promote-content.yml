@@ -35,10 +35,10 @@ promotions:
     cta: "Selaa suunnittelugalleriaa"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: määrittelylähtöinen työnkulku"
-    description: "Lue OpenSpec-dokumentaatio kymmenellä kielellä ja opi määrittelylähtöinen työnkulku, joka vie idean ehdotuksesta suunnittelun ja tehtävien kautta arkistoon."
-    cta: "Lue OpenSpec-dokumentaatio"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: sovi suunnitelmasta ennen kuin tekoäly kirjoittaa koodia"
+    description: "OpenSpec on kevyt määrittelykerros tekoälyavusteiseen koodaukseen. Kuvaa muutos, tarkista tekoälysi laatima ehdotus, määrittelyt, suunnitelma ja tehtävät, toteuta muutos ja arkistoi se elävään määrittelyyn. Ei jäykkiä vaiheita, ja se sopii olemassa oleviin koodikantoihin ja jo käyttämiisi tekoälyavustajiin."
+    cta: "Tutustu OpenSpeciin"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: yksi päätepiste monille tekoälypalveluntarjoajille"
     description: "Opi, miten OmniRoute reitittää monia tekoälypalveluntarjoajia ja malleja yhden päätepisteen kautta, ilmaisten tasojen tuella ja automaattisella varavaihtoehdolla, jotta koodaustyökalusi pysyvät toiminnassa."

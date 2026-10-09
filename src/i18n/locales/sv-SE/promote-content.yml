@@ -35,10 +35,10 @@ promotions:
     cta: "Bläddra i designgalleriet"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: det specifikationsdrivna arbetsflödet"
-    description: "Läs OpenSpec-dokumentationen på tio språk och lär dig det specifikationsdrivna arbetsflödet som för en idé från förslag via design och uppgifter till arkiv."
-    cta: "Läs OpenSpec-dokumentationen"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: bli överens om planen innan AI:n skriver kod"
+    description: "OpenSpec är ett lätt specifikationslager för AI-kodning. Beskriv en ändring, granska förslaget, specifikationerna, designen och uppgifterna som din AI tar fram, bygg den sedan och arkivera den i levande specifikationer. Inga stela faser, och det passar befintliga kodbaser och de AI-assistenter du redan använder."
+    cta: "Utforska OpenSpec"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: en endpoint för många AI-leverantörer"
     description: "Lär dig hur OmniRoute dirigerar många AI-leverantörer och modeller genom en enda endpoint, med stöd för gratisnivåer och automatisk reservväxling så att dina kodverktyg fortsätter fungera."

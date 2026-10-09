@@ -35,10 +35,10 @@ promotions:
     cta: "Browse the Design Gallery"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: The Spec-Driven Workflow"
-    description: "Read the OpenSpec documentation in ten languages and learn the spec-driven workflow that carries an idea from proposal through design and tasks to archive."
-    cta: "Read the OpenSpec Docs"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: Agree on the Plan Before Your AI Writes Code"
+    description: "OpenSpec is a lightweight spec layer for AI coding. Describe a change, review the proposal, specs, design, and tasks your AI drafts, then build it and archive it into living specs. No rigid phases, and it fits existing codebases and the AI assistants you already use."
+    cta: "Explore OpenSpec"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: One Endpoint for Many AI Providers"
     description: "Learn how OmniRoute routes many AI providers and models through a single endpoint, with free-tier support and automatic fallback so your coding tools keep working."

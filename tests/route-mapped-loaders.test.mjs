@@ -435,7 +435,12 @@ test('sub-site promotions publish active flags and complete localized content', 
     assert.equal(content.image.alt.length > 0, true, id);
   }
 
-  assert.match(promoteContent.contents.find((entry) => entry.id === 'subsite-openspec').title['zh-CN'], /OpenSpec/);
+  const openspecContent = promoteContent.contents.find((entry) => entry.id === 'subsite-openspec');
+  assert.match(openspecContent.title['zh-CN'], /OpenSpec/);
+  assert.match(openspecContent.description['en-US'], /proposal/);
+  assert.match(openspecContent.description['zh-CN'], /提案/);
+  assert.doesNotMatch(openspecContent.description['en-US'], /docs|documentation/i);
+  assert.doesNotMatch(openspecContent.description['zh-CN'], /文档/);
   assert.match(promoteContent.contents.find((entry) => entry.id === 'subsite-omniroute').title['en-US'], /OmniRoute/);
   assert.match(promoteContent.contents.find((entry) => entry.id === 'subsite-design').description['en-US'], /DESIGN\.md/);
 });

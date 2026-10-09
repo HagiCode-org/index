@@ -35,10 +35,10 @@ promotions:
     cta: "Procházet galerii designů"
     alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
   subsite-openspec:
-    title: "OpenSpec Docs: workflow řízený specifikacemi"
-    description: "Čtěte dokumentaci OpenSpec v deseti jazycích a naučte se workflow řízený specifikacemi, který provede nápad od návrhu přes design a úkoly až po archivaci."
-    cta: "Číst dokumentaci OpenSpec"
-    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+    title: "OpenSpec: dohodněte plán, než AI napíše kód"
+    description: "OpenSpec je odlehčená vrstva specifikací pro programování s AI. Popište změnu, zkontrolujte návrh, specifikace, design a úkoly, které AI připraví, pak ji implementujte a archivujte do živých specifikací. Bez pevných fází, vhodné pro existující kódové báze i AI asistenty, které už používáte."
+    cta: "Prozkoumat OpenSpec"
+    alt: "OpenSpec banner: agree on the spec, then build with AI"
   subsite-omniroute:
     title: "OmniRoute Docs: jeden koncový bod pro mnoho AI poskytovatelů"
     description: "Zjistěte, jak OmniRoute směruje mnoho AI poskytovatelů a modelů přes jediný koncový bod, s podporou bezplatných tarifů a automatickým přepnutím, aby vaše programovací nástroje fungovaly dál."
