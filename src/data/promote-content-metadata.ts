@@ -4,6 +4,10 @@ import hagicodeCapsule from '@/assets/steam/hagicode/1232x706.png';
 import hagicodeEaCapsule from '@/assets/steam/hagicode/920x430.png';
 import hagicodePlusCapsule from '@/assets/steam/hagicode-plus/hagicode-plus-1232x706.png';
 import turboEngineCapsule from '@/assets/steam/turboEngine/hagicode-turbo-engine-promo-1232x706.png';
+import subSiteAwesomeBanner from '@/assets/promote/sub-sites/awesome.png';
+import subSiteDesignBanner from '@/assets/promote/sub-sites/design.png';
+import subSiteOpenSpecBanner from '@/assets/promote/sub-sites/openspec.png';
+import subSiteOmniRouteBanner from '@/assets/promote/sub-sites/omniroute.png';
 
 export interface PromoteContentMetadataEntry {
   readonly id: string;
@@ -42,5 +46,29 @@ export const promoteContentMetadata = [
     link: 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/',
     targetPlatform: 'steam',
     image: turboEngineCapsule,
+  },
+  {
+    id: 'subsite-awesome',
+    link: 'https://awesome.hagicode.com/',
+    targetPlatform: 'website',
+    image: subSiteAwesomeBanner,
+  },
+  {
+    id: 'subsite-design',
+    link: 'https://design.hagicode.com/',
+    targetPlatform: 'website',
+    image: subSiteDesignBanner,
+  },
+  {
+    id: 'subsite-openspec',
+    link: 'https://openspec.hagicode.com/',
+    targetPlatform: 'website',
+    image: subSiteOpenSpecBanner,
+  },
+  {
+    id: 'subsite-omniroute',
+    link: 'https://omniroute.hagicode.com/',
+    targetPlatform: 'website',
+    image: subSiteOmniRouteBanner,
   },
 ] as const satisfies readonly PromoteContentMetadataEntry[];

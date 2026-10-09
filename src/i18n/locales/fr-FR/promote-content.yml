@@ -24,3 +24,23 @@ promotions:
     description: "Le DLC Turbo Engine n'est pas unique au monde, mais il tourne vraiment : débloquez jusqu'à 32 sessions en ligne simultanées et plus d'options de personnalisation pour votre workflow Hagicode. Venez y jeter un œil sur Steam. Snif. S'il vous plaît, s'il vous plaît."
     cta: "Voir le DLC"
     alt: "Turbo Engine DLC Steam artwork"
+  subsite-awesome:
+    title: "Awesome Site : des collections open source sélectionnées"
+    description: "Trouvez votre prochain outil, idée ou source d'inspiration dans des collections open source sélectionnées par la communauté. Choisissez un sujet, lisez dans votre langue et suivez le lien vers la source d'origine."
+    cta: "Explorer Awesome Site"
+    alt: "Awesome Site banner: community-curated open-source collections"
+  subsite-design:
+    title: "Awesome Design : une galerie de DESIGN.md"
+    description: "Parcourez des systèmes de design sélectionnés grâce à des aperçus en direct et à des références README, puis copiez un DESIGN.md dans votre projet et laissez votre agent IA créer une page qui lui ressemble."
+    cta: "Parcourir la galerie de design"
+    alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
+  subsite-openspec:
+    title: "OpenSpec Docs : le workflow piloté par les spécifications"
+    description: "Lisez la documentation d'OpenSpec en dix langues et découvrez le workflow piloté par les spécifications qui mène une idée de la proposition à l'archivage, en passant par la conception et les tâches."
+    cta: "Lire la documentation OpenSpec"
+    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+  subsite-omniroute:
+    title: "OmniRoute Docs : un seul point d'accès pour de nombreux fournisseurs d'IA"
+    description: "Découvrez comment OmniRoute achemine de nombreux fournisseurs et modèles d'IA via un seul point d'accès, avec prise en charge des offres gratuites et repli automatique pour que vos outils de codage continuent de fonctionner."
+    cta: "Lire la documentation OmniRoute"
+    alt: "OmniRoute Docs banner: one endpoint for many AI providers"

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updatedAt": "2026-06-10T00:00:00+08:00",
+  "updatedAt": "2026-10-09T00:00:00+08:00",
   "promotes": [
     {
       "id": "desktop-microsoft-store-2026-06-10",
@@ -24,6 +24,22 @@
     {
       "id": "hagicode-turbo-engine-dlc",
       "on": false
+    },
+    {
+      "id": "subsite-awesome",
+      "on": true
+    },
+    {
+      "id": "subsite-design",
+      "on": true
+    },
+    {
+      "id": "subsite-openspec",
+      "on": true
+    },
+    {
+      "id": "subsite-omniroute",
+      "on": true
     }
   ]
 }

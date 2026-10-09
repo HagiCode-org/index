@@ -24,3 +24,23 @@ promotions:
     description: "Turbo Engine DLC is not globally unique, but it really can run: unlock up to 32 concurrent online sessions and more customization options for your Hagicode workflow. Come peek on Steam. Sob. Pretty please."
     cta: "View DLC"
     alt: "Turbo Engine DLC Steam artwork"
+  subsite-awesome:
+    title: "Awesome Site: Curated Open-Source Collections"
+    description: "Find your next tool, idea, or inspiration in community-curated open-source collections. Pick a topic, read in your language, and follow the link back to the original source."
+    cta: "Explore Awesome Site"
+    alt: "Awesome Site banner: community-curated open-source collections"
+  subsite-design:
+    title: "Awesome Design: A DESIGN.md Gallery"
+    description: "Browse curated design systems through live previews and README references, then copy a DESIGN.md into your project and let your AI agent build a page that matches."
+    cta: "Browse the Design Gallery"
+    alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
+  subsite-openspec:
+    title: "OpenSpec Docs: The Spec-Driven Workflow"
+    description: "Read the OpenSpec documentation in ten languages and learn the spec-driven workflow that carries an idea from proposal through design and tasks to archive."
+    cta: "Read the OpenSpec Docs"
+    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+  subsite-omniroute:
+    title: "OmniRoute Docs: One Endpoint for Many AI Providers"
+    description: "Learn how OmniRoute routes many AI providers and models through a single endpoint, with free-tier support and automatic fallback so your coding tools keep working."
+    cta: "Read the OmniRoute Docs"
+    alt: "OmniRoute Docs banner: one endpoint for many AI providers"

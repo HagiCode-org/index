@@ -29,7 +29,7 @@ validatePromotionLocalization(promoteContentMetadata.map((entry) => entry.id));
 
 export const promoteContentPayload: PromoteContentPayload = {
   version: '1.0.0',
-  updatedAt: '2026-06-10T00:00:00.000Z',
+  updatedAt: '2026-10-09T00:00:00.000Z',
   contents: promoteContentMetadata.map((entry) => ({
     id: entry.id,
     title: createLocalizedPromotionField(entry.id, 'title'),

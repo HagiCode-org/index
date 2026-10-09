@@ -24,3 +24,23 @@ promotions:
     description: "Το DLC Turbo Engine δεν είναι μοναδικό παγκοσμίως, αλλά πραγματικά τρέχει: ξεκλειδώστε έως και 32 ταυτόχρονες online συνεδρίες και περισσότερες επιλογές προσαρμογής για τη ροή εργασίας σας στο Hagicode. Ελάτε να ρίξετε μια ματιά στο Steam. Λυγμός. Παρακαλώ, παρακαλώ."
     cta: "Προβολή DLC"
     alt: "Turbo Engine DLC Steam artwork"
+  subsite-awesome:
+    title: "Awesome Site: επιμελημένες συλλογές ανοιχτού κώδικα"
+    description: "Βρείτε το επόμενο εργαλείο, ιδέα ή έμπνευσή σας σε συλλογές ανοιχτού κώδικα που επιμελείται η κοινότητα. Επιλέξτε ένα θέμα, διαβάστε στη γλώσσα σας και ακολουθήστε τον σύνδεσμο προς την αρχική πηγή."
+    cta: "Εξερευνήστε το Awesome Site"
+    alt: "Awesome Site banner: community-curated open-source collections"
+  subsite-design:
+    title: "Awesome Design: μια γκαλερί DESIGN.md"
+    description: "Περιηγηθείτε σε επιμελημένα συστήματα σχεδίασης μέσω ζωντανών προεπισκοπήσεων και αναφορών README, έπειτα αντιγράψτε ένα DESIGN.md στο έργο σας και αφήστε τον AI πράκτορά σας να δημιουργήσει μια αντίστοιχη σελίδα."
+    cta: "Περιηγηθείτε στη γκαλερί σχεδίασης"
+    alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
+  subsite-openspec:
+    title: "OpenSpec Docs: η ροή εργασίας με γνώμονα τις προδιαγραφές"
+    description: "Διαβάστε την τεκμηρίωση του OpenSpec σε δέκα γλώσσες και μάθετε τη ροή εργασίας με γνώμονα τις προδιαγραφές, που οδηγεί μια ιδέα από την πρόταση μέσω σχεδιασμού και εργασιών έως την αρχειοθέτηση."
+    cta: "Διαβάστε την τεκμηρίωση του OpenSpec"
+    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+  subsite-omniroute:
+    title: "OmniRoute Docs: ένα σημείο πρόσβασης για πολλούς παρόχους AI"
+    description: "Μάθετε πώς το OmniRoute δρομολογεί πολλούς παρόχους και μοντέλα AI μέσω ενός ενιαίου σημείου πρόσβασης, με υποστήριξη δωρεάν επιπέδων και αυτόματη εναλλακτική δρομολόγηση, ώστε τα εργαλεία προγραμματισμού σας να συνεχίζουν να λειτουργούν."
+    cta: "Διαβάστε την τεκμηρίωση του OmniRoute"
+    alt: "OmniRoute Docs banner: one endpoint for many AI providers"

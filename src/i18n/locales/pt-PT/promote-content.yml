@@ -24,3 +24,23 @@ promotions:
     description: "O DLC Turbo Engine não é único no mundo, mas realmente funciona: desbloqueie até 32 sessões online simultâneas e mais opções de personalização para o seu fluxo de trabalho Hagicode. Venha dar uma vista de olhos na Steam. Soluço. Por favor, por favor."
     cta: "Ver o DLC"
     alt: "Turbo Engine DLC Steam artwork"
+  subsite-awesome:
+    title: "Awesome Site: coleções de código aberto selecionadas"
+    description: "Encontre a sua próxima ferramenta, ideia ou inspiração em coleções de código aberto selecionadas pela comunidade. Escolha um tema, leia no seu idioma e siga a ligação de volta à fonte original."
+    cta: "Explorar o Awesome Site"
+    alt: "Awesome Site banner: community-curated open-source collections"
+  subsite-design:
+    title: "Awesome Design: uma galeria de DESIGN.md"
+    description: "Navegue por sistemas de design selecionados com pré-visualizações em direto e referências do README, depois copie um DESIGN.md para o seu projeto e deixe o seu agente de IA criar uma página que condiga."
+    cta: "Navegar pela galeria de design"
+    alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
+  subsite-openspec:
+    title: "OpenSpec Docs: o fluxo de trabalho orientado por especificações"
+    description: "Leia a documentação do OpenSpec em dez idiomas e conheça o fluxo de trabalho orientado por especificações que leva uma ideia da proposta ao arquivo, passando por design e tarefas."
+    cta: "Ler a documentação do OpenSpec"
+    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+  subsite-omniroute:
+    title: "OmniRoute Docs: um endpoint para muitos fornecedores de IA"
+    description: "Saiba como o OmniRoute encaminha muitos fornecedores e modelos de IA através de um único endpoint, com suporte para planos gratuitos e alternativa automática para que as suas ferramentas de programação continuem a funcionar."
+    cta: "Ler a documentação do OmniRoute"
+    alt: "OmniRoute Docs banner: one endpoint for many AI providers"

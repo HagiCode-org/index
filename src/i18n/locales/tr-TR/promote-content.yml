@@ -24,3 +24,23 @@ promotions:
     description: "Turbo Engine DLC dünyada eşsiz değil ama gerçekten çalışıyor: Hagicode iş akışın için 32'ye kadar eş zamanlı çevrimiçi oturumun ve daha fazla özelleştirme seçeneğinin kilidini aç. Gel Steam'de bir bak. Hıçk. Lütfen, lütfen."
     cta: "DLC'yi gör"
     alt: "Turbo Engine DLC Steam artwork"
+  subsite-awesome:
+    title: "Awesome Site: özenle seçilmiş açık kaynak koleksiyonları"
+    description: "Bir sonraki aracınızı, fikrinizi veya ilham kaynağınızı topluluk tarafından özenle seçilmiş açık kaynak koleksiyonlarında bulun. Bir konu seçin, kendi dilinizde okuyun ve bağlantıyı izleyerek özgün kaynağa dönün."
+    cta: "Awesome Site'ı keşfedin"
+    alt: "Awesome Site banner: community-curated open-source collections"
+  subsite-design:
+    title: "Awesome Design: bir DESIGN.md galerisi"
+    description: "Özenle seçilmiş tasarım sistemlerine canlı önizlemeler ve README başvuruları üzerinden göz atın, ardından bir DESIGN.md dosyasını projenize kopyalayın ve yapay zekâ ajanınızın uyumlu bir sayfa oluşturmasını sağlayın."
+    cta: "Tasarım galerisine göz atın"
+    alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
+  subsite-openspec:
+    title: "OpenSpec Docs: şartname odaklı iş akışı"
+    description: "OpenSpec belgelerini on dilde okuyun ve bir fikri öneriden tasarım ve görevler üzerinden arşive taşıyan şartname odaklı iş akışını öğrenin."
+    cta: "OpenSpec belgelerini okuyun"
+    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+  subsite-omniroute:
+    title: "OmniRoute Docs: birçok yapay zekâ sağlayıcısı için tek uç nokta"
+    description: "OmniRoute'un birçok yapay zekâ sağlayıcısını ve modelini tek bir uç nokta üzerinden nasıl yönlendirdiğini, ücretsiz katman desteği ve otomatik yedeğe geçişle kodlama araçlarınızın çalışmaya devam etmesini nasıl sağladığını öğrenin."
+    cta: "OmniRoute belgelerini okuyun"
+    alt: "OmniRoute Docs banner: one endpoint for many AI providers"

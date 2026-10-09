@@ -1584,6 +1584,48 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.equal(turboPromotionContent?.link, 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/');
 });
 
+test('sub-site promotions resolve between flags and content, stay open-ended, and avoid volatile counts', async () => {
+  const promotePath = path.join(projectRoot, 'src', 'data', 'public', 'promote.json');
+  const promoteContentPath = path.join(projectRoot, process.env.INDEX_BUILD_ROOT ?? 'dist', 'promote_content.json');
+  const promote = JSON.parse(await readFile(promotePath, 'utf8'));
+  const promoteContent = JSON.parse(await readFile(promoteContentPath, 'utf8'));
+  const existingIds = [
+    'desktop-microsoft-store-2026-06-10',
+    'main-game-2026-04-29',
+    'main-game-steam-ea-2026-04-29',
+    'hagicode-plus-bundle',
+    'hagicode-turbo-engine-dlc',
+  ];
+  const subSiteIds = ['subsite-awesome', 'subsite-design', 'subsite-openspec', 'subsite-omniroute'];
+
+  assert.deepEqual(promote.promotes.slice(0, existingIds.length).map((entry) => entry.id), existingIds);
+  assert.deepEqual(promote.promotes.slice(existingIds.length).map((entry) => entry.id), subSiteIds);
+  assert.equal(new Set(promote.promotes.map((entry) => entry.id)).size, promote.promotes.length);
+  assert.equal(new Set(promoteContent.contents.map((entry) => entry.id)).size, promoteContent.contents.length);
+
+  for (const id of subSiteIds) {
+    const flag = promote.promotes.find((entry) => entry.id === id);
+    const content = promoteContent.contents.find((entry) => entry.id === id);
+
+    assert.ok(flag, `${id} flag is required.`);
+    assert.ok(content, `${id} content must resolve from its flag.`);
+    assert.equal(flag.on, true, id);
+    assert.equal('startTime' in flag, false, id);
+    assert.equal('endTime' in flag, false, id);
+    assert.equal(typeof content.image.alt, 'string', id);
+    assert.equal(content.image.alt.trim().length > 0, true, id);
+    assert.doesNotMatch(content.description['en-US'], /\d/u, `${id} en-US description`);
+    assert.doesNotMatch(content.description['zh-CN'], /\d/u, `${id} zh-CN description`);
+
+    for (const field of ['title', 'description', 'cta']) {
+      for (const locale of supportedPromotoLocales) {
+        const value = content[field][locale];
+        assert.equal(typeof value === 'string' && value.trim().length > 0, true, `${id} ${field} ${locale}`);
+      }
+    }
+  }
+});
+
 test('catalog validation keeps legacy promotion content without cta parseable', async () => {
   const promoteContent = buildPromoteContentFixture();
   for (const entry of promoteContent.contents) {

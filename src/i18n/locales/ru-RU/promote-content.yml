@@ -24,3 +24,23 @@ promotions:
     description: "DLC Turbo Engine не уникален во всём мире, но реально работает: открывает до 32 одновременных онлайн-сессий и больше вариантов настройки вашего рабочего процесса Hagicode. Загляните в Steam. Хлюп. Пожалуйста, пожалуйста."
     cta: "Смотреть DLC"
     alt: "Turbo Engine DLC Steam artwork"
+  subsite-awesome:
+    title: "Awesome Site: тщательно отобранные коллекции с открытым исходным кодом"
+    description: "Найдите свой следующий инструмент, идею или источник вдохновения в коллекциях с открытым исходным кодом, которые отобрало сообщество. Выберите тему, читайте на своём языке и переходите по ссылке к первоисточнику."
+    cta: "Изучить Awesome Site"
+    alt: "Awesome Site banner: community-curated open-source collections"
+  subsite-design:
+    title: "Awesome Design: галерея DESIGN.md"
+    description: "Просматривайте отобранные дизайн-системы с живыми превью и ссылками на README, затем скопируйте DESIGN.md в свой проект и поручите ИИ-агенту создать подходящую страницу."
+    cta: "Открыть галерею дизайна"
+    alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
+  subsite-openspec:
+    title: "OpenSpec Docs: рабочий процесс на основе спецификаций"
+    description: "Читайте документацию OpenSpec на десяти языках и изучите рабочий процесс на основе спецификаций, который ведёт идею от предложения через дизайн и задачи к архиву."
+    cta: "Читать документацию OpenSpec"
+    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+  subsite-omniroute:
+    title: "OmniRoute Docs: одна конечная точка для множества ИИ-провайдеров"
+    description: "Узнайте, как OmniRoute маршрутизирует множество ИИ-провайдеров и моделей через одну конечную точку, с поддержкой бесплатных тарифов и автоматическим переключением на резерв, чтобы ваши инструменты для программирования продолжали работать."
+    cta: "Читать документацию OmniRoute"
+    alt: "OmniRoute Docs banner: one endpoint for many AI providers"

@@ -24,3 +24,23 @@ promotions:
     description: "Das Turbo Engine DLC ist nicht global einzigartig, aber es läuft wirklich: Schalte bis zu 32 gleichzeitige Online-Sitzungen und mehr Anpassungsoptionen für deinen Hagicode-Workflow frei. Schau auf Steam vorbei. Schluchz. Bitte, bitte."
     cta: "DLC ansehen"
     alt: "Turbo Engine DLC Steam artwork"
+  subsite-awesome:
+    title: "Awesome Site: kuratierte Open-Source-Sammlungen"
+    description: "Finde dein nächstes Tool, deine nächste Idee oder Inspiration in von der Community kuratierten Open-Source-Sammlungen. Wähle ein Thema, lies in deiner Sprache und folge dem Link zurück zur ursprünglichen Quelle."
+    cta: "Awesome Site entdecken"
+    alt: "Awesome Site banner: community-curated open-source collections"
+  subsite-design:
+    title: "Awesome Design: eine DESIGN.md-Galerie"
+    description: "Stöbere durch kuratierte Designsysteme mit Live-Vorschauen und README-Verweisen, kopiere dann eine DESIGN.md in dein Projekt und lass deinen KI-Agenten eine passende Seite bauen."
+    cta: "Designgalerie durchstöbern"
+    alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
+  subsite-openspec:
+    title: "OpenSpec Docs: der spezifikationsgetriebene Workflow"
+    description: "Lies die OpenSpec-Dokumentation in zehn Sprachen und lerne den spezifikationsgetriebenen Workflow kennen, der eine Idee vom Vorschlag über Design und Aufgaben bis zum Archiv führt."
+    cta: "OpenSpec-Dokumentation lesen"
+    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+  subsite-omniroute:
+    title: "OmniRoute Docs: ein Endpunkt für viele KI-Anbieter"
+    description: "Erfahre, wie OmniRoute viele KI-Anbieter und Modelle über einen einzigen Endpunkt routet, mit Unterstützung für kostenlose Kontingente und automatischem Fallback, damit deine Coding-Tools weiterlaufen."
+    cta: "OmniRoute-Dokumentation lesen"
+    alt: "OmniRoute Docs banner: one endpoint for many AI providers"

@@ -24,3 +24,23 @@ promotions:
     description: "DLC Turbo Engine tidak unik di seluruh dunia, tetapi benar-benar bisa berjalan: buka hingga 32 sesi online bersamaan dan lebih banyak opsi kustomisasi untuk alur kerja Hagicode Anda. Mari intip di Steam. Hik. Tolong, tolong."
     cta: "Lihat DLC"
     alt: "Turbo Engine DLC Steam artwork"
+  subsite-awesome:
+    title: "Awesome Site: koleksi sumber terbuka pilihan"
+    description: "Temukan alat, ide, atau inspirasi berikutnya dalam koleksi sumber terbuka pilihan komunitas. Pilih topik, baca dalam bahasa Anda, dan ikuti tautan kembali ke sumber aslinya."
+    cta: "Jelajahi Awesome Site"
+    alt: "Awesome Site banner: community-curated open-source collections"
+  subsite-design:
+    title: "Awesome Design: galeri DESIGN.md"
+    description: "Telusuri sistem desain pilihan melalui pratinjau langsung dan referensi README, lalu salin DESIGN.md ke proyek Anda dan biarkan agen AI Anda membangun halaman yang serasi."
+    cta: "Telusuri galeri desain"
+    alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
+  subsite-openspec:
+    title: "OpenSpec Docs: alur kerja berbasis spesifikasi"
+    description: "Baca dokumentasi OpenSpec dalam sepuluh bahasa dan pelajari alur kerja berbasis spesifikasi yang membawa sebuah ide dari proposal, melalui desain dan tugas, hingga arsip."
+    cta: "Baca dokumentasi OpenSpec"
+    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+  subsite-omniroute:
+    title: "OmniRoute Docs: satu endpoint untuk banyak penyedia AI"
+    description: "Pelajari bagaimana OmniRoute merutekan banyak penyedia dan model AI melalui satu endpoint, dengan dukungan paket gratis dan fallback otomatis agar alat pemrograman Anda tetap berjalan."
+    cta: "Baca dokumentasi OmniRoute"
+    alt: "OmniRoute Docs banner: one endpoint for many AI providers"

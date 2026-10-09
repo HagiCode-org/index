@@ -24,3 +24,23 @@ promotions:
     description: "全球不唯一但是真的很能跑的 Turbo Engine DLC 可解锁 32 个并发上线和更多自定义选项，让 Hagicode 工作流更顺手，快来 steam 看看吧，呜呜呜，求求了"
     cta: "查看 DLC"
     alt: "Turbo Engine DLC Steam artwork"
+  subsite-awesome:
+    title: "Awesome Site：社区精选开源合集"
+    description: "在开源社区精心整理的合集中，找到下一个工具、想法或灵感。从感兴趣的主题出发，用熟悉的语言阅读，再回到原始来源深入探索。"
+    cta: "探索精选合集"
+    alt: "Awesome Site banner: community-curated open-source collections"
+  subsite-design:
+    title: "Awesome Design：DESIGN.md 设计系统画廊"
+    description: "通过实时预览与 README 参考浏览精选设计系统，再把 DESIGN.md 复制进你的项目，让 AI 代理按它构建风格一致的页面。"
+    cta: "浏览设计画廊"
+    alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
+  subsite-openspec:
+    title: "OpenSpec 文档：规范驱动的开发流程"
+    description: "阅读十种语言的 OpenSpec 文档，了解把想法从提案、设计、任务一路推进到归档的规范驱动工作流。"
+    cta: "阅读 OpenSpec 文档"
+    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+  subsite-omniroute:
+    title: "OmniRoute 文档：一个端点连接众多 AI 服务商"
+    description: "了解 OmniRoute 如何通过同一个端点路由众多 AI 服务商与模型，并支持免费额度与自动回退，让你的编码工具持续可用。"
+    cta: "查看 OmniRoute 文档"
+    alt: "OmniRoute Docs banner: one endpoint for many AI providers"

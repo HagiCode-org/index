@@ -9,6 +9,12 @@ import { loadSitesCatalog } from '../src/lib/load-sites-catalog.ts';
 import { loadRouteMappedJson } from '../src/lib/json-publication.ts';
 
 const supportedPromotoLocales = [...SUPPORTED_DESKTOP_LANGUAGE_CODES].sort();
+const subSitePromotions = [
+  ['subsite-awesome', 'https://awesome.hagicode.com/'],
+  ['subsite-design', 'https://design.hagicode.com/'],
+  ['subsite-openspec', 'https://openspec.hagicode.com/'],
+  ['subsite-omniroute', 'https://omniroute.hagicode.com/'],
+];
 
 test('loadIndexCatalog reads source-side route-mapped catalog with stable published paths', async () => {
   const catalog = await loadIndexCatalog();
@@ -314,6 +320,10 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
     ['endTime', 'id', 'on', 'startTime'],
     ['id', 'on'],
     ['id', 'on'],
+    ['id', 'on'],
+    ['id', 'on'],
+    ['id', 'on'],
+    ['id', 'on'],
   ]);
 
   assert.equal(promoteContent.version, '1.0.0');
@@ -403,4 +413,29 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.equal(turboPromotionContent.cta['es-ES'], 'Ver DLC');
   assert.equal(turboPromotionContent.link, 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/');
   assert.equal(turboPromotionContent.targetPlatform, 'steam');
+});
+
+test('sub-site promotions publish active flags and complete localized content', async () => {
+  const promote = await loadRouteMappedJson('/promote.json');
+  const promoteContent = await loadRouteMappedJson('/promote_content.json');
+
+  for (const [id, link] of subSitePromotions) {
+    const flag = promote.promotes.find((entry) => entry.id === id);
+    const content = promoteContent.contents.find((entry) => entry.id === id);
+
+    assert.ok(flag, `${id} flag is required.`);
+    assert.equal(flag.on, true, id);
+    assert.ok(content, `${id} content is required.`);
+    assert.deepEqual(Object.keys(content).sort(), ['cta', 'description', 'id', 'image', 'link', 'targetPlatform', 'title'], id);
+    assert.equal(content.link, link, id);
+    assert.equal(content.targetPlatform, 'website', id);
+    for (const field of ['title', 'description', 'cta']) {
+      assert.deepEqual(Object.keys(content[field]).sort(), supportedPromotoLocales, `${id} ${field}`);
+    }
+    assert.equal(content.image.alt.length > 0, true, id);
+  }
+
+  assert.match(promoteContent.contents.find((entry) => entry.id === 'subsite-openspec').title['zh-CN'], /OpenSpec/);
+  assert.match(promoteContent.contents.find((entry) => entry.id === 'subsite-omniroute').title['en-US'], /OmniRoute/);
+  assert.match(promoteContent.contents.find((entry) => entry.id === 'subsite-design').description['en-US'], /DESIGN\.md/);
 });

@@ -24,3 +24,23 @@ promotions:
     description: "A Turbo Engine DLC nem világszerte egyedi, de tényleg fut: akár 32 egyidejű online munkamenetet és több testreszabási lehetőséget old fel a Hagicode munkafolyamatodhoz. Nézd meg a Steamen. Zokogás. Kérlek, kérlek."
     cta: "DLC megtekintése"
     alt: "Turbo Engine DLC Steam artwork"
+  subsite-awesome:
+    title: "Awesome Site: válogatott nyílt forráskódú gyűjtemények"
+    description: "Találd meg a következő eszközödet, ötletedet vagy inspirációdat a közösség által válogatott nyílt forráskódú gyűjteményekben. Válassz egy témát, olvass a saját nyelvedén, és kövesd a linket az eredeti forráshoz."
+    cta: "Fedezd fel az Awesome Site-ot"
+    alt: "Awesome Site banner: community-curated open-source collections"
+  subsite-design:
+    title: "Awesome Design: DESIGN.md galéria"
+    description: "Böngéssz válogatott designrendszerek között élő előnézetekkel és README-hivatkozásokkal, majd másolj egy DESIGN.md fájlt a projektedbe, és hagyd, hogy az AI-ügynököd illeszkedő oldalt építsen."
+    cta: "Böngéssz a designgalériában"
+    alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
+  subsite-openspec:
+    title: "OpenSpec Docs: a specifikációvezérelt munkafolyamat"
+    description: "Olvasd az OpenSpec dokumentációját tíz nyelven, és ismerd meg a specifikációvezérelt munkafolyamatot, amely egy ötletet a javaslattól a tervezésen és a feladatokon át az archiválásig visz."
+    cta: "Olvasd az OpenSpec dokumentációját"
+    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+  subsite-omniroute:
+    title: "OmniRoute Docs: egyetlen végpont sok AI-szolgáltatóhoz"
+    description: "Tudd meg, hogyan irányítja az OmniRoute sok AI-szolgáltató és modell forgalmát egyetlen végponton keresztül, ingyenes csomagok támogatásával és automatikus tartalékváltással, hogy a kódolóeszközeid tovább működjenek."
+    cta: "Olvasd az OmniRoute dokumentációját"
+    alt: "OmniRoute Docs banner: one endpoint for many AI providers"

@@ -24,3 +24,23 @@ promotions:
     description: "El DLC Turbo Engine no es único en el mundo, pero de verdad funciona: desbloquea hasta 32 sesiones en línea simultáneas y más opciones de personalización para tu flujo de trabajo con Hagicode. Ven a echarle un vistazo en Steam. Sollozo. Por favor, por favor."
     cta: "Ver el DLC"
     alt: "Turbo Engine DLC Steam artwork"
+  subsite-awesome:
+    title: "Awesome Site: colecciones de código abierto seleccionadas"
+    description: "Encuentra tu próxima herramienta, idea o inspiración en colecciones de código abierto seleccionadas por la comunidad. Elige un tema, lee en tu idioma y sigue el enlace de vuelta a la fuente original."
+    cta: "Explorar Awesome Site"
+    alt: "Awesome Site banner: community-curated open-source collections"
+  subsite-design:
+    title: "Awesome Design: una galería de DESIGN.md"
+    description: "Explora sistemas de diseño seleccionados con vistas previas en vivo y referencias de README; luego copia un DESIGN.md en tu proyecto y deja que tu agente de IA cree una página que coincida."
+    cta: "Explorar la galería de diseño"
+    alt: "Awesome Design banner: a gallery of DESIGN.md design systems"
+  subsite-openspec:
+    title: "OpenSpec Docs: el flujo de trabajo basado en especificaciones"
+    description: "Lee la documentación de OpenSpec en diez idiomas y aprende el flujo de trabajo basado en especificaciones que lleva una idea desde la propuesta, pasando por el diseño y las tareas, hasta el archivo."
+    cta: "Leer la documentación de OpenSpec"
+    alt: "OpenSpec Docs banner: the spec-driven workflow documentation"
+  subsite-omniroute:
+    title: "OmniRoute Docs: un solo endpoint para muchos proveedores de IA"
+    description: "Descubre cómo OmniRoute enruta muchos proveedores y modelos de IA a través de un único endpoint, con compatibilidad con niveles gratuitos y respaldo automático para que tus herramientas de programación sigan funcionando."
+    cta: "Leer la documentación de OmniRoute"
+    alt: "OmniRoute Docs banner: one endpoint for many AI providers"
