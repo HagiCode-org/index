@@ -83,6 +83,7 @@ npm run i18n:prune
 - 放进 YAML：页面标题、导航标签、页脚文字、按钮文字、Promoto 筛选/状态文案、推广标题、描述、CTA、图片 alt。
 - 留在 TypeScript/JSON：公开路由、href、外部链接、promotion ID、平台 ID、时间戳、图片 import、图片尺寸与格式描述。
 - `/promote_content.json` 的公开 shape 不变；`src/data/promote-content-metadata.ts` 只维护稳定元数据，`src/data/promote-content-source.ts` 从生成资源组合本地化字段。
+- `subsite-awesome`、`subsite-design`、`subsite-openspec`、`subsite-omniroute` 是四个子站（awesome、design、openspec、omniroute）的常驻推广条目：在 `src/data/public/promote.json` 中以 `on: true` 发布，没有 `startTime` 和 `endTime`，因此发布后即生效且不会自动过期。要下线其中一个，把对应记录的 `on` 改为 `false`（或加上 `endTime`）即可；内容条目仍会保留在 `/promote_content.json` 与 `/promoto` 中，无需改动文案。它们的描述不写具体数字，避免随上游内容变化而过时。
 - `/sites.json` 的 localized field 也跟随这套 29 语言 published-content contract 扩展，但公开路径与 payload shape 保持不变。
 - 此变更范围只覆盖 outward-facing published content；`index.hagicode.com` 的 page shell 仍保持当前单语言路由模型，不在这里引入 localized routes、全站 language selector 或整站 UI i18n。
 
