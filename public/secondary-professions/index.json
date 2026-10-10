@@ -362,6 +362,29 @@
       "fieldConstraints": []
     },
     {
+      "id": "secondary-claude-haiku-5-5",
+      "name": "Haiku 5.5",
+      "family": "anthropic",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
+      "sortOrder": 49,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
+        "hermes",
+        "qoder",
+        "kiro",
+        "pi",
+        "omp"
+      ],
+      "defaultParameters": {
+        "model": "claude-haiku-5-5"
+      },
+      "fieldConstraints": []
+    },
+    {
       "id": "secondary-claude-opus-4-8",
       "name": "Opus 4.8",
       "family": "anthropic",
