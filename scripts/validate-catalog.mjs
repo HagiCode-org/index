@@ -89,6 +89,7 @@ const structuredArticlesEntryId = 'structured-articles';
 const steamAchievementsEntryId = 'steam-achievements';
 const explicitTimezoneIsoPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/;
 const supportedCharacterTemplateModes = ['curated', 'universal'];
+const promotePlatforms = ['web', 'hagicode'];
 const requiredPromotoLocaleCodes = [...SUPPORTED_DESKTOP_LANGUAGE_CODES];
 const tipsRouteConfigs = [
   { sitePath: '/tips-en-US.json', locale: 'en-US' },
@@ -440,6 +441,21 @@ function validatePromoteContract(payload) {
     assert(!seenIds.has(entry.id), `Duplicate promote id ${entry.id}.`);
     seenIds.add(entry.id);
     assert(typeof entry.on === 'boolean', `${fieldName} on must be a boolean.`);
+
+    assert(
+      Array.isArray(entry.platforms) && entry.platforms.length > 0,
+      `Promote entry ${entry.id} platforms must be a non-empty array of ${promotePlatforms.join(', ')}.`,
+    );
+    const seenPlatforms = new Set();
+    for (const platform of entry.platforms) {
+      assert(typeof platform === 'string', `Promote entry ${entry.id} platforms must contain only strings.`);
+      assert(
+        promotePlatforms.includes(platform),
+        `Promote entry ${entry.id} platforms contains unknown value ${JSON.stringify(platform)}; allowed values are ${promotePlatforms.join(', ')}.`,
+      );
+      assert(!seenPlatforms.has(platform), `Promote entry ${entry.id} platforms lists ${platform} more than once.`);
+      seenPlatforms.add(platform);
+    }
 
     for (const field of ['startTime', 'endTime']) {
       if (field in entry && entry[field] !== undefined) {

@@ -1,45 +1,54 @@
 {
   "version": "1.0.0",
-  "updatedAt": "2026-10-09T00:00:00+08:00",
+  "updatedAt": "2026-10-10T00:00:00+08:00",
   "promotes": [
     {
       "id": "desktop-microsoft-store-2026-06-10",
-      "on": true
+      "on": true,
+      "platforms": ["web"]
     },
     {
       "id": "main-game-2026-04-29",
       "on": true,
-      "endTime": "2026-04-29T00:00:00+08:00"
+      "endTime": "2026-04-29T00:00:00+08:00",
+      "platforms": ["web"]
     },
     {
       "id": "main-game-steam-ea-2026-04-29",
       "on": false,
       "startTime": "2026-04-29T00:00:00+08:00",
-      "endTime": "2026-05-13T14:24:33+08:00"
+      "endTime": "2026-05-13T14:24:33+08:00",
+      "platforms": ["web"]
     },
     {
       "id": "hagicode-plus-bundle",
-      "on": false
+      "on": false,
+      "platforms": ["web"]
     },
     {
       "id": "hagicode-turbo-engine-dlc",
-      "on": false
+      "on": false,
+      "platforms": ["web"]
     },
     {
       "id": "subsite-awesome",
-      "on": true
+      "on": true,
+      "platforms": ["web", "hagicode"]
     },
     {
       "id": "subsite-design",
-      "on": true
+      "on": true,
+      "platforms": ["web", "hagicode"]
     },
     {
       "id": "subsite-openspec",
-      "on": true
+      "on": true,
+      "platforms": ["web", "hagicode"]
     },
     {
       "id": "subsite-omniroute",
-      "on": true
+      "on": true,
+      "platforms": ["web", "hagicode"]
     }
   ]
 }

@@ -315,15 +315,26 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.equal(plusPromotion.on, false);
   assert.equal(turboPromotion.on, false);
   assert.deepEqual(promote.promotes.map((entry) => Object.keys(entry).sort()), [
-    ['id', 'on'],
-    ['endTime', 'id', 'on'],
-    ['endTime', 'id', 'on', 'startTime'],
-    ['id', 'on'],
-    ['id', 'on'],
-    ['id', 'on'],
-    ['id', 'on'],
-    ['id', 'on'],
-    ['id', 'on'],
+    ['id', 'on', 'platforms'],
+    ['endTime', 'id', 'on', 'platforms'],
+    ['endTime', 'id', 'on', 'platforms', 'startTime'],
+    ['id', 'on', 'platforms'],
+    ['id', 'on', 'platforms'],
+    ['id', 'on', 'platforms'],
+    ['id', 'on', 'platforms'],
+    ['id', 'on', 'platforms'],
+    ['id', 'on', 'platforms'],
+  ]);
+  assert.deepEqual(promote.promotes.map((entry) => [entry.id, entry.platforms]), [
+    ['desktop-microsoft-store-2026-06-10', ['web']],
+    ['main-game-2026-04-29', ['web']],
+    ['main-game-steam-ea-2026-04-29', ['web']],
+    ['hagicode-plus-bundle', ['web']],
+    ['hagicode-turbo-engine-dlc', ['web']],
+    ['subsite-awesome', ['web', 'hagicode']],
+    ['subsite-design', ['web', 'hagicode']],
+    ['subsite-openspec', ['web', 'hagicode']],
+    ['subsite-omniroute', ['web', 'hagicode']],
   ]);
 
   assert.equal(promoteContent.version, '1.0.0');
@@ -425,6 +436,7 @@ test('sub-site promotions publish active flags and complete localized content', 
 
     assert.ok(flag, `${id} flag is required.`);
     assert.equal(flag.on, true, id);
+    assert.deepEqual(flag.platforms, ['web', 'hagicode'], id);
     assert.ok(content, `${id} content is required.`);
     assert.deepEqual(Object.keys(content).sort(), ['cta', 'description', 'id', 'image', 'link', 'targetPlatform', 'title'], id);
     assert.equal(content.link, link, id);

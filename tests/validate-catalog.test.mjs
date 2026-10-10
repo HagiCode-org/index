@@ -259,19 +259,23 @@ function buildPromoteFixture() {
         id: 'main-game-2026-04-29',
         on: true,
         endTime: '2026-04-29T00:00:00+08:00',
+        platforms: ['web'],
       },
       {
         id: 'main-game-steam-ea-2026-04-29',
         on: true,
         startTime: '2026-04-29T00:00:00+08:00',
+        platforms: ['web'],
       },
       {
         id: 'hagicode-plus-bundle',
         on: false,
+        platforms: ['web'],
       },
       {
         id: 'hagicode-turbo-engine-dlc',
         on: false,
+        platforms: ['web'],
       },
     ],
   };
@@ -1603,6 +1607,16 @@ test('sub-site promotions resolve between flags and content, stay open-ended, an
   assert.equal(new Set(promote.promotes.map((entry) => entry.id)).size, promote.promotes.length);
   assert.equal(new Set(promoteContent.contents.map((entry) => entry.id)).size, promoteContent.contents.length);
 
+  for (const entry of promote.promotes) {
+    assert.ok(entry.platforms.includes('web'), `${entry.id} must stay displayable on the web platform.`);
+  }
+
+  for (const id of existingIds) {
+    const flag = promote.promotes.find((entry) => entry.id === id);
+
+    assert.deepEqual(flag.platforms, ['web'], `${id} platforms`);
+  }
+
   for (const id of subSiteIds) {
     const flag = promote.promotes.find((entry) => entry.id === id);
     const content = promoteContent.contents.find((entry) => entry.id === id);
@@ -1612,6 +1626,7 @@ test('sub-site promotions resolve between flags and content, stay open-ended, an
     assert.equal(flag.on, true, id);
     assert.equal('startTime' in flag, false, id);
     assert.equal('endTime' in flag, false, id);
+    assert.deepEqual(flag.platforms, ['web', 'hagicode'], `${id} platforms`);
     assert.equal(typeof content.image.alt, 'string', id);
     assert.equal(content.image.alt.trim().length > 0, true, id);
     assert.doesNotMatch(content.description['en-US'], /\d/u, `${id} en-US description`);
@@ -1794,6 +1809,7 @@ test('catalog validation fails when a scheduled promotion flag does not resolve 
     id: 'missing-future-promotion-id',
     on: false,
     startTime: '2026-04-29T00:00:00+08:00',
+    platforms: ['web'],
   };
 
   const tempDir = await createValidationFixture({
@@ -1864,6 +1880,102 @@ test('catalog validation rejects invalid promotion schedule metadata', async () 
       },
     );
   }
+});
+
+test('catalog validation rejects unusable promotion platform declarations', async () => {
+  const entryId = 'main-game-2026-04-29';
+  const invalidCases = [
+    {
+      label: 'missing platforms',
+      mutate(promote) {
+        delete promote.promotes[0].platforms;
+      },
+      expected: new RegExp(`Promote entry ${entryId} platforms must be a non-empty array`),
+    },
+    {
+      label: 'empty platforms',
+      mutate(promote) {
+        promote.promotes[0].platforms = [];
+      },
+      expected: new RegExp(`Promote entry ${entryId} platforms must be a non-empty array`),
+    },
+    {
+      label: 'platforms that is not an array',
+      mutate(promote) {
+        promote.promotes[0].platforms = 'web';
+      },
+      expected: new RegExp(`Promote entry ${entryId} platforms must be a non-empty array`),
+    },
+    {
+      label: 'non-string platform',
+      mutate(promote) {
+        promote.promotes[0].platforms = ['web', 7];
+      },
+      expected: new RegExp(`Promote entry ${entryId} platforms must contain only strings\\.`),
+    },
+    {
+      label: 'duplicate platform',
+      mutate(promote) {
+        promote.promotes[0].platforms = ['web', 'hagicode', 'web'];
+      },
+      expected: new RegExp(`Promote entry ${entryId} platforms lists web more than once\\.`),
+    },
+    {
+      label: 'unknown platform',
+      mutate(promote) {
+        promote.promotes[0].platforms = ['web', 'desktop'];
+      },
+      expected: new RegExp(`Promote entry ${entryId} platforms contains unknown value "desktop"`),
+    },
+    {
+      label: 'wrong-case platform',
+      mutate(promote) {
+        promote.promotes[0].platforms = ['Web'];
+      },
+      expected: new RegExp(`Promote entry ${entryId} platforms contains unknown value "Web"`),
+    },
+    {
+      label: 'padded platform',
+      mutate(promote) {
+        promote.promotes[0].platforms = [' web'];
+      },
+      expected: new RegExp(`Promote entry ${entryId} platforms contains unknown value " web"`),
+    },
+  ];
+
+  for (const testCase of invalidCases) {
+    const promote = buildPromoteFixture();
+    testCase.mutate(promote);
+    const tempDir = await createValidationFixture({
+      catalog: buildCatalogFixture(),
+      promote,
+    });
+
+    await assert.rejects(
+      () =>
+        execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+          cwd: tempDir,
+        }),
+      (error) => {
+        assert.match(error.stderr, testCase.expected, testCase.label);
+        return true;
+      },
+    );
+  }
+});
+
+test('catalog validation accepts a promotion that declares both web and hagicode platforms', async () => {
+  const promote = buildPromoteFixture();
+  promote.promotes[0].platforms = ['web', 'hagicode'];
+
+  const tempDir = await createValidationFixture({
+    catalog: buildCatalogFixture(),
+    promote,
+  });
+
+  await execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+    cwd: tempDir,
+  });
 });
 
 test('catalog validation fails when a Steam promoteId does not resolve to promotion content', async () => {
