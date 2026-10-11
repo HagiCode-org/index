@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 
 import { loadDesignCatalog } from '../src/lib/load-design-catalog.ts';
 import { SUPPORTED_DESKTOP_LANGUAGE_CODES } from '../src/lib/desktop-language-contract.ts';
@@ -455,4 +457,38 @@ test('sub-site promotions publish active flags and complete localized content', 
   assert.doesNotMatch(openspecContent.description['zh-CN'], /文档/);
   assert.match(promoteContent.contents.find((entry) => entry.id === 'subsite-omniroute').title['en-US'], /OmniRoute/);
   assert.match(promoteContent.contents.find((entry) => entry.id === 'subsite-design').description['en-US'], /DESIGN\.md/);
+});
+
+test('published promote_content.json is minified and gives each entry three distinct tier src values', async () => {
+  const raw = await readFile(path.join(process.cwd(), process.env.INDEX_BUILD_ROOT ?? 'dist', 'promote_content.json'), 'utf8');
+  const payload = JSON.parse(raw);
+
+  assert.equal(raw, JSON.stringify(payload));
+
+  for (const content of payload.contents) {
+    const sources = content.image.sources.map((source) => source.src);
+
+    assert.equal(sources.length, 3, content.id);
+    assert.equal(new Set(sources).size, 3, content.id);
+  }
+});
+
+test('promotion route-mapped JSON keeps business fields and orders each image fallback chain', async () => {
+  const promoteContent = await loadRouteMappedJson('/promote_content.json');
+
+  for (const content of promoteContent.contents) {
+    assert.deepEqual(Object.keys(content).sort(), ['cta', 'description', 'id', 'image', 'link', 'targetPlatform', 'title'], content.id);
+
+    const { sources, ...descriptor } = content.image;
+    assert.deepEqual(Object.keys(descriptor).sort(), ['alt', 'format', 'height', 'src', 'width'], content.id);
+
+    const original = descriptor.format === 'jpg' ? 'jpeg' : descriptor.format;
+    const expectedFormats = [...['avif', 'webp'].filter((format) => format !== original), descriptor.format];
+    assert.deepEqual(sources.map((source) => source.format), expectedFormats, content.id);
+    assert.deepEqual(
+      sources.at(-1),
+      { format: descriptor.format, type: `image/${original}`, src: descriptor.src, width: descriptor.width, height: descriptor.height },
+      content.id,
+    );
+  }
 });

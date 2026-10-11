@@ -1,5 +1,9 @@
 import { createImageDescriptor, type ImageDescriptor } from '@/data/image-descriptor';
-import { promoteContentMetadata } from '@/data/promote-content-metadata';
+import { createImageSources, type ImageSource } from '@/data/image-source-chain';
+import {
+  promoteContentMetadata,
+  type PromoteContentMetadataEntry,
+} from '@/data/promote-content-metadata';
 import {
   createLocalizedPromotionField,
   getDefaultPromotionAlt,
@@ -16,7 +20,7 @@ export interface PromoteContentEntry {
   readonly cta: PromoteLocalizedField;
   readonly link: string;
   readonly targetPlatform: string;
-  readonly image: ImageDescriptor;
+  readonly image: ImageDescriptor & { readonly sources: readonly ImageSource[] };
 }
 
 export interface PromoteContentPayload {
@@ -27,18 +31,27 @@ export interface PromoteContentPayload {
 
 validatePromotionLocalization(promoteContentMetadata.map((entry) => entry.id));
 
-export const promoteContentPayload: PromoteContentPayload = {
-  version: '1.0.0',
-  updatedAt: '2026-10-09T00:00:00.000Z',
-  contents: promoteContentMetadata.map((entry) => ({
+async function createPromoteContentEntry(entry: PromoteContentMetadataEntry): Promise<PromoteContentEntry> {
+  const image = createImageDescriptor(entry.image, {
+    alt: getDefaultPromotionAlt(entry.id),
+  });
+
+  return {
     id: entry.id,
     title: createLocalizedPromotionField(entry.id, 'title'),
     description: createLocalizedPromotionField(entry.id, 'description'),
     cta: createLocalizedPromotionField(entry.id, 'cta'),
     link: entry.link,
     targetPlatform: entry.targetPlatform,
-    image: createImageDescriptor(entry.image, {
-      alt: getDefaultPromotionAlt(entry.id),
-    }),
-  })),
+    image: {
+      ...image,
+      sources: await createImageSources(entry.image, image.format),
+    },
+  };
+}
+
+export const promoteContentPayload: PromoteContentPayload = {
+  version: '1.0.0',
+  updatedAt: '2026-10-09T00:00:00.000Z',
+  contents: await Promise.all(promoteContentMetadata.map(createPromoteContentEntry)),
 };

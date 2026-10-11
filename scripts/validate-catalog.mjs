@@ -17,6 +17,7 @@ import {
   coreDungeonScriptKeys,
   loadAgentPresetLibrary,
 } from './build-agent-preset-library.mjs';
+import { detectImageType, readImageDimensions } from './image-file-inspection.mjs';
 
 const requiredFields = [
   'id',
@@ -542,6 +543,113 @@ function validatePromoteContentContract(payload) {
       assert(typeof entry.imageUrl === 'string' && entry.imageUrl.trim().length > 0, `${fieldName} imageUrl must be a non-empty string when present.`);
     }
   });
+}
+
+const promoteChainTierFormats = ['avif', 'webp'];
+const promoteChainSrcPattern = /^\/_astro\/[A-Za-z0-9._-]+$/;
+
+function mediaTypeForImageFormat(format) {
+  return `image/${format === 'jpg' ? 'jpeg' : format}`;
+}
+
+function expectedPromoteChainFormats(originalFormat) {
+  const canonicalOriginal = originalFormat === 'jpg' ? 'jpeg' : originalFormat;
+  return [...promoteChainTierFormats.filter((format) => format !== canonicalOriginal), originalFormat];
+}
+
+async function readPublishedFileOrNull(sitePath, publishedRoot) {
+  try {
+    return await readFile(resolvePublishedPath(sitePath, publishedRoot));
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return null;
+    }
+
+    throw error;
+  }
+}
+
+export async function validatePromoteImageChains(payload, publishedRoot) {
+  for (const entry of payload.contents) {
+    const label = `Promote content ${entry.id}`;
+    const { image } = entry;
+    const sources = image.sources;
+
+    assert(Array.isArray(sources) && sources.length > 0, `${label} image.sources is required and must be a non-empty array.`);
+
+    const expectedFormats = expectedPromoteChainFormats(image.format);
+    const seenFormats = new Set();
+    const tierFiles = new Map();
+
+    for (const [index, source] of sources.entries()) {
+      assert(source && typeof source === 'object' && !Array.isArray(source), `${label} image.sources[${index}] must be an object.`);
+      assert(index < expectedFormats.length, `${label} image.sources[${index}] (${source.format}) is an unexpected extra tier.`);
+
+      const tier = `${label} image.sources[${index}] (${source.format})`;
+
+      assert(!seenFormats.has(source.format), `${tier} repeats format ${source.format}.`);
+      seenFormats.add(source.format);
+      assert(
+        source.format === expectedFormats[index],
+        `${tier} is out of order; expected ${expectedFormats[index]} at position ${index}.`,
+      );
+      assert(
+        source.type === mediaTypeForImageFormat(source.format),
+        `${tier} type must be ${mediaTypeForImageFormat(source.format)}, found ${source.type}.`,
+      );
+      assert(
+        typeof source.src === 'string' && promoteChainSrcPattern.test(source.src) && !source.src.includes('..'),
+        `${tier} src must be a root-relative /_astro/<file> path, found ${source.src}.`,
+      );
+
+      if (index === expectedFormats.length - 1) {
+        assert(
+          source.src === image.src && source.format === image.format && source.width === image.width && source.height === image.height,
+          `${tier} must mirror image.src, format, width and height of the original.`,
+        );
+      }
+
+      assert(
+        source.width === image.width && source.height === image.height,
+        `${tier} width and height must be ${image.width}x${image.height}, found ${source.width}x${source.height}.`,
+      );
+
+      const bytes = await readPublishedFileOrNull(source.src, publishedRoot);
+
+      assert(bytes !== null, `${tier} file ${source.src} is missing from the published output.`);
+
+      const detectedType = detectImageType(bytes);
+
+      assert(
+        detectedType === source.type.slice('image/'.length),
+        `${tier} file ${source.src} is ${detectedType ?? 'not a recognised image'}, but its type is ${source.type}.`,
+      );
+
+      const dimensions = readImageDimensions(bytes);
+
+      assert(
+        dimensions !== null && dimensions.width === image.width && dimensions.height === image.height,
+        `${tier} file ${source.src} is ${dimensions ? `${dimensions.width}x${dimensions.height}` : 'unreadable'}, expected ${image.width}x${image.height}.`,
+      );
+
+      tierFiles.set(source.format, { src: source.src, size: bytes.length });
+    }
+
+    assert(
+      sources.length === expectedFormats.length,
+      `${label} image.sources is missing tier ${expectedFormats[sources.length]}.`,
+    );
+
+    const avif = tierFiles.get('avif');
+    const webp = tierFiles.get('webp');
+
+    if (avif && webp) {
+      assert(
+        avif.size < webp.size,
+        `${label} AVIF tier ${avif.src} (${avif.size} bytes) is not smaller than WebP tier ${webp.src} (${webp.size} bytes).`,
+      );
+    }
+  }
 }
 
 function validateSteamContract(payload) {
@@ -1150,6 +1258,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   }
   const promoteContentPayload = await assertPublishedRoute('/promote_content.json', publishedRoot);
   validatePromoteContentContract(promoteContentPayload);
+  await validatePromoteImageChains(promoteContentPayload, publishedRoot);
   await assertPublishedRoute('/server/index.json', publishedRoot);
   await assertPublishedRoute('/desktop/index.json', publishedRoot);
   const steamPayload = await assertPublishedRoute('/steam/index.json', publishedRoot);

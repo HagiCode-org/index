@@ -16,6 +16,7 @@ import {
 } from '../src/lib/structured-articles.ts';
 import { buildCharacterTemplateLibrary } from '../scripts/build-agent-preset-library.mjs';
 import { validateGeneratedImageDescriptor } from '../scripts/validate-catalog.mjs';
+import { writeImageFixtureFile } from './helpers/image-fixtures.mjs';
 
 const execFileAsync = promisify(execFile);
 const testDir = path.dirname(fileURLToPath(import.meta.url));
@@ -39,6 +40,20 @@ function buildImageDescriptorFixture({ variant } = {}) {
     format: 'png',
     alt: 'HagiCode Steam artwork',
     ...(variant === undefined ? {} : { variant }),
+  };
+}
+
+function buildImageWithSourcesFixture(image) {
+  const base = image.src.replace(/\.[a-z]+$/, '');
+  const size = { width: image.width, height: image.height };
+
+  return {
+    ...image,
+    sources: [
+      { format: 'avif', type: 'image/avif', src: `${base}.avif`, ...size },
+      { format: 'webp', type: 'image/webp', src: `${base}.webp`, ...size },
+      { format: image.format, type: `image/${image.format}`, src: image.src, ...size },
+    ],
   };
 }
 
@@ -345,7 +360,7 @@ function buildPromoteContentFixture() {
         }),
         link: 'https://store.steampowered.com/app/4625540/Hagicode/',
         targetPlatform: 'steam',
-        image: buildImageDescriptorFixture(),
+        image: buildImageWithSourcesFixture(buildImageDescriptorFixture()),
       },
       {
         id: 'main-game-steam-ea-2026-04-29',
@@ -387,7 +402,7 @@ function buildPromoteContentFixture() {
         }),
         link: 'https://store.steampowered.com/app/4625540/Hagicode/',
         targetPlatform: 'steam',
-        image: buildImageDescriptorFixture(),
+        image: buildImageWithSourcesFixture(buildImageDescriptorFixture()),
       },
       {
         id: 'hagicode-plus-bundle',
@@ -429,7 +444,7 @@ function buildPromoteContentFixture() {
         }),
         link: 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/',
         targetPlatform: 'steam',
-        image: buildImageDescriptorFixture(),
+        image: buildImageWithSourcesFixture(buildImageDescriptorFixture()),
       },
       {
         id: 'hagicode-turbo-engine-dlc',
@@ -471,7 +486,7 @@ function buildPromoteContentFixture() {
         }),
         link: 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/',
         targetPlatform: 'steam',
-        image: buildImageDescriptorFixture(),
+        image: buildImageWithSourcesFixture(buildImageDescriptorFixture()),
       },
     ],
   };
@@ -1101,6 +1116,7 @@ async function createValidationFixture({
   const validateScriptPath = path.join(projectRoot, 'scripts', 'validate-catalog.mjs');
   const minifyScriptPath = path.join(projectRoot, 'scripts', 'minify-published-json.mjs');
   const buildScriptPath = path.join(projectRoot, 'scripts', 'build-agent-preset-library.mjs');
+  const imageInspectionScriptPath = path.join(projectRoot, 'scripts', 'image-file-inspection.mjs');
   const desktopLanguageContractPath = path.join(projectRoot, 'src', 'lib', 'desktop-language-contract.ts');
   const localeMetadataPath = path.join(projectRoot, 'src', 'i18n', 'locale-metadata.ts');
   const structuredArticlesLibPath = path.join(projectRoot, 'src', 'lib', 'structured-articles.ts');
@@ -1143,6 +1159,11 @@ async function createValidationFixture({
   await writeFile(
     path.join(scriptsDir, 'build-agent-preset-library.mjs'),
     await readFile(buildScriptPath, 'utf8'),
+    'utf8',
+  );
+  await writeFile(
+    path.join(scriptsDir, 'image-file-inspection.mjs'),
+    await readFile(imageInspectionScriptPath, 'utf8'),
     'utf8',
   );
   await writeFile(
@@ -1213,6 +1234,9 @@ async function createValidationFixture({
     await writeFile(path.join(distDir, entry.fileName), JSON.stringify(entry.payload), 'utf8');
   }
   await writeFile(path.join(distDir, 'promote_content.json'), JSON.stringify(promoteContent), 'utf8');
+  for (const source of buildPromoteContentFixture().contents.flatMap((entry) => entry.image.sources)) {
+    await writeImageFixtureFile(distDir, source);
+  }
   await writeFile(path.join(distDir, 'about.json'), JSON.stringify(about), 'utf8');
   await writeFile(path.join(distDir, 'server', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
@@ -1730,6 +1754,147 @@ test('catalog validation rejects invalid generated image descriptors directly', 
       () => validateGeneratedImageDescriptor(testCase.image, testCase.options.requireVariant ? 'Steam application[0] images[0]' : 'Promote content[0] image', testCase.options),
       testCase.expected,
       testCase.label,
+    );
+  }
+});
+
+test('catalog validation rejects broken promotion image fallback chains', async () => {
+  const avifSrc = '/_astro/hagicode.ABC123.avif';
+  const webpSrc = '/_astro/hagicode.ABC123.webp';
+  const invalidCases = [
+    {
+      label: 'missing sources',
+      mutate(promoteContent) {
+        delete promoteContent.contents[0].image.sources;
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources is required and must be a non-empty array\./,
+    },
+    {
+      label: 'empty sources',
+      mutate(promoteContent) {
+        promoteContent.contents[0].image.sources = [];
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources is required and must be a non-empty array\./,
+    },
+    {
+      label: 'non-object tier',
+      mutate(promoteContent) {
+        promoteContent.contents[0].image.sources[1] = 'webp';
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[1\] must be an object\./,
+    },
+    {
+      label: 'extra tier',
+      mutate(promoteContent) {
+        promoteContent.contents[0].image.sources.push({ format: 'avif', type: 'image/avif', src: avifSrc, width: 1232, height: 706 });
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[3\] \(avif\) is an unexpected extra tier\./,
+    },
+    {
+      label: 'repeated format',
+      mutate(promoteContent) {
+        promoteContent.contents[0].image.sources[1] = { ...promoteContent.contents[0].image.sources[0] };
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[1\] \(avif\) repeats format avif\./,
+    },
+    {
+      label: 'out of order tiers',
+      mutate(promoteContent) {
+        const sources = promoteContent.contents[0].image.sources;
+        [sources[0], sources[1]] = [sources[1], sources[0]];
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[0\] \(webp\) is out of order; expected avif at position 0\./,
+    },
+    {
+      label: 'wrong media type',
+      mutate(promoteContent) {
+        promoteContent.contents[0].image.sources[1].type = 'image/jpeg';
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[1\] \(webp\) type must be image\/webp, found image\/jpeg\./,
+    },
+    {
+      label: 'absolute src',
+      mutate(promoteContent) {
+        promoteContent.contents[0].image.sources[0].src = 'https://index.hagicode.com/_astro/hagicode.ABC123.avif';
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[0\] \(avif\) src must be a root-relative \/_astro\/<file> path/,
+    },
+    {
+      label: 'path traversal src',
+      mutate(promoteContent) {
+        promoteContent.contents[0].image.sources[1].src = '/_astro/../hagicode.ABC123.webp';
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[1\] \(webp\) src must be a root-relative/,
+    },
+    {
+      label: 'original tier not mirroring image',
+      mutate(promoteContent) {
+        promoteContent.contents[0].image.sources[2].width = 1000;
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[2\] \(png\) must mirror image\.src, format, width and height of the original\./,
+    },
+    {
+      label: 'tier dimensions drift',
+      mutate(promoteContent) {
+        promoteContent.contents[0].image.sources[0].width = 600;
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[0\] \(avif\) width and height must be 1232x706, found 600x706\./,
+    },
+    {
+      label: 'missing tier',
+      mutate(promoteContent) {
+        promoteContent.contents[0].image.sources.pop();
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources is missing tier png\./,
+    },
+    {
+      label: 'tier file missing',
+      mutate(promoteContent) {
+        promoteContent.contents[0].image.sources[0].src = '/_astro/hagicode-missing.avif';
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[0\] \(avif\) file \/_astro\/hagicode-missing\.avif is missing from the published output\./,
+    },
+    {
+      label: 'tier bytes do not match its type',
+      async mutateFiles(publishedRoot) {
+        await writeImageFixtureFile(publishedRoot, { src: webpSrc, format: 'avif', width: 1232, height: 706 });
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[1\] \(webp\) file \/_astro\/hagicode\.ABC123\.webp is avif, but its type is image\/webp\./,
+    },
+    {
+      label: 'tier file dimensions drift',
+      async mutateFiles(publishedRoot) {
+        await writeImageFixtureFile(publishedRoot, { src: webpSrc, format: 'webp', width: 600, height: 706 });
+      },
+      expected: /Promote content main-game-2026-04-29 image\.sources\[1\] \(webp\) file \/_astro\/hagicode\.ABC123\.webp is 600x706, expected 1232x706\./,
+    },
+    {
+      label: 'AVIF tier larger than WebP tier',
+      async mutateFiles(publishedRoot) {
+        await writeImageFixtureFile(publishedRoot, { src: avifSrc, format: 'avif', width: 1232, height: 706, byteLength: 4096 });
+      },
+      expected: /Promote content main-game-2026-04-29 AVIF tier \/_astro\/hagicode\.ABC123\.avif \(4096 bytes\) is not smaller than WebP tier \/_astro\/hagicode\.ABC123\.webp \(2048 bytes\)\./,
+    },
+  ];
+
+  for (const testCase of invalidCases) {
+    const promoteContent = buildPromoteContentFixture();
+    testCase.mutate?.(promoteContent);
+    const tempDir = await createValidationFixture({
+      catalog: buildCatalogFixture(),
+      promoteContent,
+    });
+    await testCase.mutateFiles?.(path.join(tempDir, 'dist'));
+
+    await assert.rejects(
+      () =>
+        execNodeAsync(['./scripts/validate-catalog.mjs', '--published-root', 'dist'], {
+          cwd: tempDir,
+        }),
+      (error) => {
+        assert.match(error.stderr, testCase.expected, testCase.label);
+        return true;
+      },
     );
   }
 });
