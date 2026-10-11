@@ -31,10 +31,6 @@ const dataEntryLinks = [
     href: '/steam/achievements/',
   },
   {
-    id: 'sitesJson',
-    href: '/sites.json',
-  },
-  {
     id: 'indexCatalog',
     href: '/index-catalog.json',
   },
@@ -124,7 +120,6 @@ const canonicalUrl = 'https://index.hagicode.com/';
         </div>
         <nav class="site-header-actions" aria-label={getString(copy, 'header.navAria')}>
           <a class="header-link" href="/data/">{getString(copy, 'header.nav.dataPage')}</a>
-          <a class="header-link" href="/sites.json" target="_blank" rel="noreferrer">{getString(copy, 'header.nav.sitesJson')}</a>
           <a class="header-link" href="/index-catalog.json" target="_blank" rel="noreferrer">{getString(copy, 'header.nav.catalogJson')}</a>
         </nav>
       </header>
@@ -138,7 +133,6 @@ const canonicalUrl = 'https://index.hagicode.com/';
           generatedAtLabel={portalGeneratedLabel}
           featuredEntries={featuredEntries}
           dataPagePath="/data/"
-          sitesJsonPath="/sites.json"
           catalogPath="/index-catalog.json"
         />
 

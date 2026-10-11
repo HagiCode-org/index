@@ -32,7 +32,6 @@ const requiredFields = [
 
 const fileBackedRouteMappedJsonPaths = [
   '/index-catalog.json',
-  '/sites.json',
   '/design.json',
   '/live-broadcast.json',
   '/legal-documents.json',
@@ -1245,7 +1244,7 @@ export async function validateCatalog({ publishedRoot = resolvePublishedRoot() }
   );
 
   const publishedCatalog = await assertPublishedRoute('/index-catalog.json', publishedRoot);
-  validateSitesCatalogContract(await assertPublishedRoute('/sites.json', publishedRoot));
+  validateSitesCatalogContract(await readJson(path.join(projectRoot, 'src', 'data', 'sites-catalog.json')));
   const designPayload = await assertPublishedRoute('/design.json', publishedRoot);
   validateDesignContract(designPayload);
   await assertDesignVendorAvailable();

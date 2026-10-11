@@ -9,16 +9,19 @@ import { loadSitesCatalog, loadSitesCatalogSource } from '../src/lib/load-sites-
 const projectRoot = path.resolve(import.meta.dirname, '..');
 const publishedRoot = path.resolve(projectRoot, process.env.INDEX_BUILD_ROOT ?? 'dist');
 
-test('/sites.json stays aligned with the source loader and canonical production URLs', async () => {
+test('internal sites catalog stays aligned with the source loader and canonical production URLs', async () => {
   const sourceCatalog = JSON.parse(
-    await readFile(path.join(projectRoot, 'src', 'data', 'public', 'sites.json'), 'utf8'),
+    await readFile(path.join(projectRoot, 'src', 'data', 'sites-catalog.json'), 'utf8'),
   );
-  const publishedCatalog = JSON.parse(await readFile(path.join(publishedRoot, 'sites.json'), 'utf8'));
   const loadedCatalog = await loadSitesCatalog();
   const sourceLoadedCatalog = await loadSitesCatalogSource();
 
-  assert.deepEqual(publishedCatalog, sourceCatalog);
   assert.deepEqual(sourceLoadedCatalog, sourceCatalog);
+  assert.equal(
+    await readFile(path.join(publishedRoot, 'sites.json'), 'utf8').then(() => true, () => false),
+    false,
+    'sites.json must no longer be published',
+  );
   assert.equal(Array.isArray(loadedCatalog.groups), true);
   assert.equal(Array.isArray(loadedCatalog.entries), true);
 
@@ -35,7 +38,7 @@ test('/sites.json stays aligned with the source loader and canonical production 
     ['trait-builder', 'https://trait.hagicode.com/'],
   ]);
 
-  for (const entry of publishedCatalog.entries) {
+  for (const entry of sourceCatalog.entries) {
     const expectedUrl = expectedUrls.get(entry.id);
     if (expectedUrl) {
       assert.equal(entry.url, expectedUrl);

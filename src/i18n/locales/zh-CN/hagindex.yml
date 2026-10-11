@@ -7,7 +7,6 @@ header:
   navAria: "门户快捷入口"
   nav:
     dataPage: "数据页"
-    sitesJson: "站点 JSON"
     catalogJson: "查看目录 JSON"
 hero:
   eyebrow: "index.hagicode.com"
@@ -15,7 +14,6 @@ hero:
   title: "HagiCode Index 站群总控台"
   actions:
     dataMirror: "打开数据镜像"
-    sitesJson: "站点清单 JSON"
   routesAria: "首页重点出口"
   routes:
     catalog: "目录索引"
@@ -76,9 +74,6 @@ dataEntries:
   steamAchievements:
     title: "Steam 成就页面"
     description: "面向开发者浏览的成就目录、图标预览和稳定公开路径。"
-  sitesJson:
-    title: "站点导航 JSON"
-    description: "供其他站点页脚与工具站同步站群清单。"
   indexCatalog:
     title: "目录索引 JSON"
     description: "公开索引目录与状态元数据。"

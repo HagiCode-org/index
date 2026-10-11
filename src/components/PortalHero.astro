@@ -10,7 +10,6 @@ interface Props {
   generatedAtLabel: string;
   featuredEntries: SitesCatalogEntry[];
   dataPagePath: string;
-  sitesJsonPath: string;
   catalogPath: string;
 }
 
@@ -22,7 +21,6 @@ const {
   generatedAtLabel,
   featuredEntries,
   dataPagePath,
-  sitesJsonPath,
   catalogPath,
 } = Astro.props;
 const copy = getLocaleNamespace('hagindex');
@@ -45,9 +43,6 @@ const copy = getLocaleNamespace('hagindex');
         ))}
         <a class="button button-secondary" href={dataPagePath}>
           {getString(copy, 'hero.actions.dataMirror')}
-        </a>
-        <a class="button button-tertiary" href={sitesJsonPath} target="_blank" rel="noreferrer">
-          {getString(copy, 'hero.actions.sitesJson')}
         </a>
       </div>
 

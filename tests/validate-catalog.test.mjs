@@ -1207,8 +1207,8 @@ async function createValidationFixture({
     'utf8',
   );
   await writeFile(path.join(srcDataDir, 'secondary-professions.catalog.json'), secondaryProfessionFixture, 'utf8');
+  await writeFile(path.join(srcDataDir, 'sites-catalog.json'), JSON.stringify(sitesCatalog), 'utf8');
   await writeFile(path.join(routeSourceDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
-  await writeFile(path.join(routeSourceDir, 'sites.json'), JSON.stringify(sitesCatalog), 'utf8');
   await writeFile(path.join(routeSourceDir, 'design.json'), JSON.stringify(design), 'utf8');
   await writeFile(path.join(routeSourceDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(routeSourceDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
@@ -1223,7 +1223,6 @@ async function createValidationFixture({
   await writeFile(path.join(routeSourceDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(routeSourceDir, 'steam', 'index.json'), JSON.stringify(steam), 'utf8');
   await writeFile(path.join(distDir, 'index-catalog.json'), JSON.stringify(catalog), 'utf8');
-  await writeFile(path.join(distDir, 'sites.json'), JSON.stringify(sitesCatalog), 'utf8');
   await writeFile(path.join(distDir, 'design.json'), JSON.stringify(design), 'utf8');
   await writeFile(path.join(distDir, 'live-broadcast.json'), JSON.stringify(liveBroadcast), 'utf8');
   await writeFile(path.join(distDir, 'legal-documents.json'), JSON.stringify(legalDocuments), 'utf8');
@@ -1484,7 +1483,7 @@ test('catalog exposes design theme catalog entry at the canonical JSON route', a
 });
 
 test('portal sites catalog exposes the approved production destinations', async () => {
-  const sitesCatalogPath = path.join(projectRoot, 'src', 'data', 'public', 'sites.json');
+  const sitesCatalogPath = path.join(projectRoot, 'src', 'data', 'sites-catalog.json');
   const sitesCatalog = JSON.parse(await readFile(sitesCatalogPath, 'utf8'));
   const urlById = new Map(sitesCatalog.entries.map((entry) => [entry.id, entry.url]));
   const coreGroup = sitesCatalog.groups.find((group) => group.id === 'core-sites');

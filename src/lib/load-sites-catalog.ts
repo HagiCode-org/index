@@ -3,7 +3,8 @@ import {
   DESKTOP_LANGUAGES,
   type DesktopLanguageCode,
 } from './desktop-language-contract.ts';
-import { loadRouteMappedJson } from './json-publication.ts';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 
 export type SitesCatalogLocalizedField = Readonly<Record<DesktopLanguageCode, string>>;
 
@@ -162,7 +163,8 @@ function normalizeEntry(rawEntry: unknown, locale: DesktopLanguageCode): SitesCa
 }
 
 export async function loadSitesCatalogSource(): Promise<SitesCatalogSource> {
-  const parsed = await loadRouteMappedJson<Partial<SitesCatalogSource>>('/sites.json');
+  const raw = await readFile(path.join(process.cwd(), 'src', 'data', 'sites-catalog.json'), 'utf8');
+  const parsed = JSON.parse(raw) as Partial<SitesCatalogSource>;
 
   if (typeof parsed.version !== 'string' || parsed.version.trim().length === 0) {
     throw new Error('Sites catalog must define a version string.');
