@@ -304,7 +304,6 @@ export const steamPayload: SteamPayload = {
       displayName: 'HagiCode',
       kind: 'application',
       parentKey: null,
-      promoteId: 'main-game-2026-04-29',
       storeAppId: '4625540',
       storeUrl: 'https://store.steampowered.com/app/4625540/Hagicode/',
       platformAppIds: {

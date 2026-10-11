@@ -4,26 +4,6 @@ promotions:
     description: "HagiCode for Windows 现已正式登陆 Microsoft Store，Windows 用户可以直接从商店完成安装并接收渠道更新。现在就打开商店页看看吧。"
     cta: "打开 Microsoft Store"
     alt: "HagiCode for Windows Microsoft Store artwork"
-  main-game-2026-04-29:
-    title: "求求加入愿望单"
-    description: "全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 将于 4月29日发售，快来 steam 加入愿望单吧，呜呜呜，求求了"
-    cta: "加入愿望单"
-    alt: "HagiCode Steam store capsule artwork"
-  main-game-steam-ea-2026-04-29:
-    title: "终于上架 EA 啦"
-    description: "全球不唯一但是超级好用的 Vibe Coding 软件 Hagicode 已经在 steam 开启 EA 抢先体验啦，快来看看吧，呜呜呜，求求了"
-    cta: "查看抢先体验"
-    alt: "HagiCode Early Access Steam artwork"
-  hagicode-plus-bundle:
-    title: "Hagicode Plus 套装"
-    description: "全球不唯一但是很会打包的 Hagicode Plus 现享 15% off，组合本体与 Turbo Engine DLC，一口气补齐体验，快来 steam 看看吧，呜呜呜，求求了"
-    cta: "查看套装"
-    alt: "Hagicode Plus Steam bundle artwork"
-  hagicode-turbo-engine-dlc:
-    title: "Turbo Engine DLC"
-    description: "全球不唯一但是真的很能跑的 Turbo Engine DLC 可解锁 32 个并发上线和更多自定义选项，让 Hagicode 工作流更顺手，快来 steam 看看吧，呜呜呜，求求了"
-    cta: "查看 DLC"
-    alt: "Turbo Engine DLC Steam artwork"
   subsite-awesome:
     title: "Awesome Site：社区精选开源合集"
     description: "在开源社区精心整理的合集中，找到下一个工具、想法或灵感。从感兴趣的主题出发，用熟悉的语言阅读，再回到原始来源深入探索。"

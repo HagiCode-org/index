@@ -4,26 +4,6 @@ promotions:
     description: "HagiCode für Windows ist offiziell im Microsoft Store verfügbar. Windows-Nutzer können es direkt aus dem Store installieren und bleiben auf dem store-verwalteten Update-Pfad. Öffne den Eintrag und schau vorbei."
     cta: "Microsoft Store öffnen"
     alt: "HagiCode for Windows Microsoft Store artwork"
-  main-game-2026-04-29:
-    title: "Bitte auf die Wunschliste setzen"
-    description: "Hagicode, die nicht global einzigartige, aber super praktische Vibe-Coding-Software, erscheint am 29. April. Bitte füge sie deiner Steam-Wunschliste hinzu. Schluchz. Bitte, bitte."
-    cta: "Auf Steam wunschlisten"
-    alt: "HagiCode Steam store capsule artwork"
-  main-game-steam-ea-2026-04-29:
-    title: "Early Access ist endlich da"
-    description: "Hagicode, die nicht global einzigartige, aber super praktische Vibe-Coding-Software, ist jetzt im Steam Early Access. Schau doch mal vorbei. Schluchz. Bitte, bitte."
-    cta: "Early Access ansehen"
-    alt: "HagiCode Early Access Steam artwork"
-  hagicode-plus-bundle:
-    title: "Hagicode Plus Paket"
-    description: "Hagicode Plus, die nicht global einzigartige, aber toll zusammengestellte Option, gibt es 15 % günstiger zusammen mit dem Basisspiel und dem Turbo Engine DLC. Schau auf Steam vorbei. Schluchz. Bitte, bitte."
-    cta: "Paket ansehen"
-    alt: "HagiCode Plus Steam bundle artwork"
-  hagicode-turbo-engine-dlc:
-    title: "Turbo Engine DLC"
-    description: "Das Turbo Engine DLC ist nicht global einzigartig, aber es läuft wirklich: Schalte bis zu 32 gleichzeitige Online-Sitzungen und mehr Anpassungsoptionen für deinen Hagicode-Workflow frei. Schau auf Steam vorbei. Schluchz. Bitte, bitte."
-    cta: "DLC ansehen"
-    alt: "Turbo Engine DLC Steam artwork"
   subsite-awesome:
     title: "Awesome Site: kuratierte Open-Source-Sammlungen"
     description: "Finde dein nächstes Tool, deine nächste Idee oder Inspiration in von der Community kuratierten Open-Source-Sammlungen. Wähle ein Thema, lies in deiner Sprache und folge dem Link zurück zur ursprünglichen Quelle."

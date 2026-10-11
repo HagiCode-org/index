@@ -4,26 +4,6 @@ promotions:
     description: "HagiCode para Windows está oficialmente disponível na Microsoft Store. Os utilizadores do Windows podem instalá-lo diretamente a partir da loja e manter-se no percurso de atualizações gerido pela loja. Abra a página e dê uma vista de olhos."
     cta: "Abrir Microsoft Store"
     alt: "HagiCode for Windows Microsoft Store artwork"
-  main-game-2026-04-29:
-    title: "Por favor, adicione à sua lista de desejos"
-    description: "Hagicode, o software de Vibe Coding não único no mundo, mas super prático, lança-se a 29 de abril. Por favor, adicione-o à sua lista de desejos da Steam. Soluço. Por favor, por favor."
-    cta: "Adicionar aos desejos na Steam"
-    alt: "HagiCode Steam store capsule artwork"
-  main-game-steam-ea-2026-04-29:
-    title: "O Acesso Antecipado finalmente chegou"
-    description: "Hagicode, o software de Vibe Coding não único no mundo, mas super prático, já está em Acesso Antecipado na Steam. Venha dar uma vista de olhos. Soluço. Por favor, por favor."
-    cta: "Ver Acesso Antecipado"
-    alt: "HagiCode Early Access Steam artwork"
-  hagicode-plus-bundle:
-    title: "Pacote Hagicode Plus"
-    description: "Hagicode Plus, a opção não única no mundo, mas verdadeiramente bem conjugada, tem 15% de desconto com o jogo base e o DLC Turbo Engine. Venha ver na Steam. Soluço. Por favor, por favor."
-    cta: "Ver o pacote"
-    alt: "HagiCode Plus Steam bundle artwork"
-  hagicode-turbo-engine-dlc:
-    title: "DLC Turbo Engine"
-    description: "O DLC Turbo Engine não é único no mundo, mas realmente funciona: desbloqueie até 32 sessões online simultâneas e mais opções de personalização para o seu fluxo de trabalho Hagicode. Venha dar uma vista de olhos na Steam. Soluço. Por favor, por favor."
-    cta: "Ver o DLC"
-    alt: "Turbo Engine DLC Steam artwork"
   subsite-awesome:
     title: "Awesome Site: coleções de código aberto selecionadas"
     description: "Encontre a sua próxima ferramenta, ideia ou inspiração em coleções de código aberto selecionadas pela comunidade. Escolha um tema, leia no seu idioma e siga a ligação de volta à fonte original."

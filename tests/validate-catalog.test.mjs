@@ -1531,15 +1531,7 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   const promotionFlagsEntry = catalog.entries.find((entry) => entry.id === 'promotion-flags');
   const promotionContentEntry = catalog.entries.find((entry) => entry.id === 'promotion-content');
   const microsoftStorePromotion = promote.promotes.find((entry) => entry.id === 'desktop-microsoft-store-2026-06-10');
-  const mainPromotion = promote.promotes.find((entry) => entry.id === 'main-game-2026-04-29');
-  const eaPromotion = promote.promotes.find((entry) => entry.id === 'main-game-steam-ea-2026-04-29');
-  const plusPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-plus-bundle');
-  const turboPromotion = promote.promotes.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
   const microsoftStorePromotionContent = promoteContent.contents.find((entry) => entry.id === 'desktop-microsoft-store-2026-06-10');
-  const mainPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-2026-04-29');
-  const eaPromotionContent = promoteContent.contents.find((entry) => entry.id === 'main-game-steam-ea-2026-04-29');
-  const plusPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-plus-bundle');
-  const turboPromotionContent = promoteContent.contents.find((entry) => entry.id === 'hagicode-turbo-engine-dlc');
 
   assert.ok(promotionFlagsEntry, 'promotion-flags entry is required.');
   assert.ok(promotionContentEntry, 'promotion-content entry is required.');
@@ -1550,15 +1542,6 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.equal(promotionContentEntry.sourceRepo, 'repos/index');
   assert.equal(promotionContentEntry.status, 'published');
   assert.equal(microsoftStorePromotion?.on, true);
-  assert.equal(mainPromotion?.on, true);
-  assert.equal(mainPromotion?.endTime, '2026-04-29T00:00:00+08:00');
-  assert.equal(eaPromotion?.on, false);
-  assert.equal(eaPromotion?.startTime, '2026-04-29T00:00:00+08:00');
-  assert.equal(eaPromotion?.endTime, '2026-05-13T14:24:33+08:00');
-  assert.equal(Date.parse(mainPromotion.endTime), Date.parse(eaPromotion.startTime));
-  assert.equal(Date.parse(eaPromotion.startTime) < Date.parse(eaPromotion.endTime), true);
-  assert.equal(plusPromotion?.on, false);
-  assert.equal(turboPromotion?.on, false);
   assert.deepEqual(Object.keys(microsoftStorePromotionContent?.title ?? {}).sort(), supportedPromotoLocales);
   assert.deepEqual(Object.keys(microsoftStorePromotionContent?.description ?? {}).sort(), supportedPromotoLocales);
   assert.deepEqual(Object.keys(microsoftStorePromotionContent?.cta ?? {}).sort(), supportedPromotoLocales);
@@ -1571,45 +1554,6 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.equal(microsoftStorePromotionContent?.image.alt, 'HagiCode for Windows Microsoft Store artwork');
   assert.equal(microsoftStorePromotionContent?.link, 'https://apps.microsoft.com/detail/9N3PM0N3SVDW');
   assert.equal(microsoftStorePromotionContent?.targetPlatform, 'microsoft-store');
-  assert.deepEqual(Object.keys(mainPromotionContent?.title ?? {}).sort(), supportedPromotoLocales);
-  assert.deepEqual(Object.keys(mainPromotionContent?.description ?? {}).sort(), supportedPromotoLocales);
-  assert.deepEqual(Object.keys(mainPromotionContent?.cta ?? {}).sort(), supportedPromotoLocales);
-  assert.match(mainPromotionContent?.description['zh-CN'], /Vibe Coding/);
-  assert.match(mainPromotionContent?.description['zh-CN'], /求求了/);
-  assert.doesNotMatch(mainPromotionContent?.description['zh-CN'] ?? '', /游戏将于/);
-  assert.equal(eaPromotionContent?.title['zh-CN'], '终于上架 EA 啦');
-  assert.equal(eaPromotionContent?.title['en-US'], 'Early Access Is Finally Here');
-  assert.equal(eaPromotionContent?.title['ja-JP'], 'ついに早期アクセス開始');
-  assert.match(eaPromotionContent?.description['zh-CN'] ?? '', /steam/i);
-  assert.match(eaPromotionContent?.description['zh-CN'] ?? '', /EA|抢先体验/);
-  assert.match(eaPromotionContent?.description['zh-CN'] ?? '', /呜呜呜/);
-  assert.match(eaPromotionContent?.description['zh-CN'] ?? '', /求求了/);
-  assert.match(eaPromotionContent?.description['en-US'] ?? '', /Steam/);
-  assert.match(eaPromotionContent?.description['en-US'] ?? '', /Early Access|EA/);
-  assert.match(eaPromotionContent?.description['en-US'] ?? '', /Sob/);
-  assert.match(eaPromotionContent?.description['en-US'] ?? '', /Pretty please/);
-  assert.equal(mainPromotionContent?.cta['zh-CN'], '加入愿望单');
-  assert.equal(mainPromotionContent?.cta['en-US'], 'Wishlist on Steam');
-  assert.equal(typeof mainPromotionContent?.image.src, 'string');
-  assert.equal(Number.isInteger(mainPromotionContent?.image.width), true);
-  assert.equal(Number.isInteger(mainPromotionContent?.image.height), true);
-  assert.equal(typeof mainPromotionContent?.image.format, 'string');
-  assert.equal(mainPromotionContent?.image.alt, 'HagiCode Steam store capsule artwork');
-  assert.equal(eaPromotionContent?.cta['zh-CN'], '查看抢先体验');
-  assert.equal(eaPromotionContent?.cta['en-US'], 'View Early Access');
-  assert.equal(eaPromotionContent?.image.alt, 'HagiCode Early Access Steam artwork');
-  assert.equal(eaPromotionContent?.link, 'https://store.steampowered.com/app/4625540/Hagicode/');
-  assert.equal(eaPromotionContent?.targetPlatform, 'steam');
-  assert.match(plusPromotionContent?.description['zh-CN'], /15% off/);
-  assert.match(plusPromotionContent?.description['zh-CN'], /呜呜呜/);
-  assert.equal(plusPromotionContent?.cta['zh-CN'], '查看套装');
-  assert.equal(plusPromotionContent?.cta['en-US'], 'View Bundle');
-  assert.equal(plusPromotionContent?.link, 'https://store.steampowered.com/bundle/73989/Hagicode_Plus/');
-  assert.match(turboPromotionContent?.description['zh-CN'], /32/);
-  assert.match(turboPromotionContent?.description['zh-CN'], /求求了/);
-  assert.equal(turboPromotionContent?.cta['zh-CN'], '查看 DLC');
-  assert.equal(turboPromotionContent?.cta['en-US'], 'View DLC');
-  assert.equal(turboPromotionContent?.link, 'https://store.steampowered.com/app/4635480/Hagicode__Turbo_Engine/');
 });
 
 test('sub-site promotions resolve between flags and content, stay open-ended, and avoid volatile counts', async () => {
@@ -1619,10 +1563,6 @@ test('sub-site promotions resolve between flags and content, stay open-ended, an
   const promoteContent = JSON.parse(await readFile(promoteContentPath, 'utf8'));
   const existingIds = [
     'desktop-microsoft-store-2026-06-10',
-    'main-game-2026-04-29',
-    'main-game-steam-ea-2026-04-29',
-    'hagicode-plus-bundle',
-    'hagicode-turbo-engine-dlc',
   ];
   const subSiteIds = ['subsite-awesome', 'subsite-design', 'subsite-openspec', 'subsite-omniroute'];
 

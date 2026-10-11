@@ -4,26 +4,6 @@ promotions:
     description: "HagiCode til Windows er officielt tilgængelig i Microsoft Store. Windows-brugere kan installere det direkte fra butikken og blive på den butiksstyrede opdateringssti. Åbn siden og kig med."
     cta: "Åbn Microsoft Store"
     alt: "HagiCode for Windows Microsoft Store artwork"
-  main-game-2026-04-29:
-    title: "Læg den på ønskelisten, tak"
-    description: "Hagicode, Vibe Coding-softwaren, der ikke er unik i hele verden, men super praktisk, udkommer den 29. april. Læg den venligst på din Steam-ønskeliste. Hulk. Tak, tak."
-    cta: "Ønskeliste på Steam"
-    alt: "HagiCode Steam store capsule artwork"
-  main-game-steam-ea-2026-04-29:
-    title: "Early Access er endelig her"
-    description: "Hagicode, Vibe Coding-softwaren, der ikke er unik i hele verden, men super praktisk, er nu i Steam Early Access. Kom og kig med. Hulk. Tak, tak."
-    cta: "Se Early Access"
-    alt: "HagiCode Early Access Steam artwork"
-  hagicode-plus-bundle:
-    title: "Hagicode Plus-pakke"
-    description: "Hagicode Plus, muligheden der ikke er unik i hele verden, men virkelig flot pakket, giver 15 % rabat sammen med grundspillet og Turbo Engine-DLC'en. Kom og kig på Steam. Hulk. Tak, tak."
-    cta: "Se pakken"
-    alt: "HagiCode Plus Steam bundle artwork"
-  hagicode-turbo-engine-dlc:
-    title: "Turbo Engine-DLC"
-    description: "Turbo Engine-DLC'en er ikke unik i hele verden, men den kører virkelig: lås op for op til 32 samtidige onlinesessioner og flere tilpasningsmuligheder til dit Hagicode-workflow. Kom og kig på Steam. Hulk. Tak, tak."
-    cta: "Se DLC"
-    alt: "Turbo Engine DLC Steam artwork"
   subsite-awesome:
     title: "Awesome Site: kuraterede open source-samlinger"
     description: "Find dit næste værktøj, din næste idé eller inspiration i open source-samlinger kurateret af fællesskabet. Vælg et emne, læs på dit eget sprog, og følg linket tilbage til den oprindelige kilde."

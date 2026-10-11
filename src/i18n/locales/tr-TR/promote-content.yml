@@ -4,26 +4,6 @@ promotions:
     description: "HagiCode for Windows resmi olarak Microsoft Store'da yerini aldı. Windows kullanıcıları mağazadan doğrudan yükleyebilir ve mağaza tarafından yönetilen güncelleme yolunda kalabilir. Sayfayı açıp bir göz at."
     cta: "Microsoft Store'u aç"
     alt: "HagiCode for Windows Microsoft Store artwork"
-  main-game-2026-04-29:
-    title: "Lütfen dilek listene ekle"
-    description: "Hagicode, dünyada eşsiz olmayan ama son derece pratik Vibe Coding yazılımı, 29 Nisan'da çıkıyor. Lütfen Steam dilek listene ekle. Hıçk. Lütfen, lütfen."
-    cta: "Steam'de dilek listesine ekle"
-    alt: "HagiCode Steam store capsule artwork"
-  main-game-steam-ea-2026-04-29:
-    title: "Erken Erişim sonunda burada"
-    description: "Hagicode, dünyada eşsiz olmayan ama son derece pratik Vibe Coding yazılımı, artık Steam Erken Erişim'de. Gel bir göz at. Hıçk. Lütfen, lütfen."
-    cta: "Erken Erişimi gör"
-    alt: "HagiCode Early Access Steam artwork"
-  hagicode-plus-bundle:
-    title: "Hagicode Plus Paketi"
-    description: "Hagicode Plus, dünyada eşsiz olmayan ama gerçekten güzel paketlenmiş seçenek, temel oyun ve Turbo Engine DLC ile birlikte %15 indirimli. Gel Steam'de bir bak. Hıçk. Lütfen, lütfen."
-    cta: "Paketi gör"
-    alt: "HagiCode Plus Steam bundle artwork"
-  hagicode-turbo-engine-dlc:
-    title: "Turbo Engine DLC"
-    description: "Turbo Engine DLC dünyada eşsiz değil ama gerçekten çalışıyor: Hagicode iş akışın için 32'ye kadar eş zamanlı çevrimiçi oturumun ve daha fazla özelleştirme seçeneğinin kilidini aç. Gel Steam'de bir bak. Hıçk. Lütfen, lütfen."
-    cta: "DLC'yi gör"
-    alt: "Turbo Engine DLC Steam artwork"
   subsite-awesome:
     title: "Awesome Site: özenle seçilmiş açık kaynak koleksiyonları"
     description: "Bir sonraki aracınızı, fikrinizi veya ilham kaynağınızı topluluk tarafından özenle seçilmiş açık kaynak koleksiyonlarında bulun. Bir konu seçin, kendi dilinizde okuyun ve bağlantıyı izleyerek özgün kaynağa dönün."

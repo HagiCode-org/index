@@ -4,26 +4,6 @@ promotions:
     description: "Το HagiCode για Windows είναι επίσημα διαθέσιμο στο Microsoft Store. Οι χρήστες Windows μπορούν να το εγκαταστήσουν απευθείας από το κατάστημα και να παραμείνουν στη διαδρομή ενημερώσεων που διαχειρίζεται το κατάστημα. Ανοίξτε τη σελίδα και ρίξτε μια ματιά."
     cta: "Άνοιγμα Microsoft Store"
     alt: "HagiCode for Windows Microsoft Store artwork"
-  main-game-2026-04-29:
-    title: "Προσθέστε το στη λίστα επιθυμιών, παρακαλώ"
-    description: "Το Hagicode, το λογισμικό Vibe Coding που δεν είναι μοναδικό παγκοσμίως αλλά είναι υπερβολικά πρακτικό, κυκλοφορεί στις 29 Απριλίου. Προσθέστε το παρακαλώ στη λίστα επιθυμιών σας στο Steam. Λυγμός. Παρακαλώ, παρακαλώ."
-    cta: "Λίστα επιθυμιών στο Steam"
-    alt: "HagiCode Steam store capsule artwork"
-  main-game-steam-ea-2026-04-29:
-    title: "Η Early Access ήρθε επιτέλους"
-    description: "Το Hagicode, το λογισμικό Vibe Coding που δεν είναι μοναδικό παγκοσμίως αλλά είναι υπερβολικά πρακτικό, είναι τώρα σε Early Access στο Steam. Ελάτε να ρίξετε μια ματιά. Λυγμός. Παρακαλώ, παρακαλώ."
-    cta: "Προβολή Early Access"
-    alt: "HagiCode Early Access Steam artwork"
-  hagicode-plus-bundle:
-    title: "Πακέτο Hagicode Plus"
-    description: "Το Hagicode Plus, η επιλογή που δεν είναι μοναδική παγκοσμίως αλλά είναι πραγματικά όμορφα συσκευασμένη, έχει έκπτωση 15% μαζί με το βασικό παιχνίδι και το DLC Turbo Engine. Ελάτε να το δείτε στο Steam. Λυγμός. Παρακαλώ, παρακαλώ."
-    cta: "Προβολή πακέτου"
-    alt: "HagiCode Plus Steam bundle artwork"
-  hagicode-turbo-engine-dlc:
-    title: "DLC Turbo Engine"
-    description: "Το DLC Turbo Engine δεν είναι μοναδικό παγκοσμίως, αλλά πραγματικά τρέχει: ξεκλειδώστε έως και 32 ταυτόχρονες online συνεδρίες και περισσότερες επιλογές προσαρμογής για τη ροή εργασίας σας στο Hagicode. Ελάτε να ρίξετε μια ματιά στο Steam. Λυγμός. Παρακαλώ, παρακαλώ."
-    cta: "Προβολή DLC"
-    alt: "Turbo Engine DLC Steam artwork"
   subsite-awesome:
     title: "Awesome Site: επιμελημένες συλλογές ανοιχτού κώδικα"
     description: "Βρείτε το επόμενο εργαλείο, ιδέα ή έμπνευσή σας σε συλλογές ανοιχτού κώδικα που επιμελείται η κοινότητα. Επιλέξτε ένα θέμα, διαβάστε στη γλώσσα σας και ακολουθήστε τον σύνδεσμο προς την αρχική πηγή."

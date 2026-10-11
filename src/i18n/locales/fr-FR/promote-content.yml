@@ -4,26 +4,6 @@ promotions:
     description: "HagiCode pour Windows est officiellement disponible sur le Microsoft Store. Les utilisateurs Windows peuvent l'installer directement depuis la boutique et rester sur le canal de mise à jour géré par le store. Ouvrez la page et jetez-y un œil."
     cta: "Ouvrir le Microsoft Store"
     alt: "HagiCode for Windows Microsoft Store artwork"
-  main-game-2026-04-29:
-    title: "Ajoutez-la à votre liste de souhaits, s'il vous plaît"
-    description: "Hagicode, le logiciel de Vibe Coding pas unique au monde mais super pratique, sort le 29 avril. Ajoutez-la à votre liste de souhaits Steam. Snif. S'il vous plaît, s'il vous plaît."
-    cta: "Mettre en liste de souhaits sur Steam"
-    alt: "HagiCode Steam store capsule artwork"
-  main-game-steam-ea-2026-04-29:
-    title: "L'Accès Anticipé est enfin arrivé"
-    description: "Hagicode, le logiciel de Vibe Coding pas unique au monde mais super pratique, est désormais en Accès Anticipé sur Steam. Venez jeter un œil. Snif. S'il vous plaît, s'il vous plaît."
-    cta: "Voir l'Accès Anticipé"
-    alt: "HagiCode Early Access Steam artwork"
-  hagicode-plus-bundle:
-    title: "Pack Hagicode Plus"
-    description: "Hagicode Plus, l'option pas unique au monde mais vraiment bien packagée, est à -15 % avec le jeu de base et le DLC Turbo Engine. Venez y faire un tour sur Steam. Snif. S'il vous plaît, s'il vous plaît."
-    cta: "Voir le pack"
-    alt: "HagiCode Plus Steam bundle artwork"
-  hagicode-turbo-engine-dlc:
-    title: "DLC Turbo Engine"
-    description: "Le DLC Turbo Engine n'est pas unique au monde, mais il tourne vraiment : débloquez jusqu'à 32 sessions en ligne simultanées et plus d'options de personnalisation pour votre workflow Hagicode. Venez y jeter un œil sur Steam. Snif. S'il vous plaît, s'il vous plaît."
-    cta: "Voir le DLC"
-    alt: "Turbo Engine DLC Steam artwork"
   subsite-awesome:
     title: "Awesome Site : des collections open source sélectionnées"
     description: "Trouvez votre prochain outil, idée ou source d'inspiration dans des collections open source sélectionnées par la communauté. Choisissez un sujet, lisez dans votre langue et suivez le lien vers la source d'origine."

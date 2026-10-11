@@ -4,26 +4,6 @@ promotions:
     description: "HagiCode за Windows е официално наличен в Microsoft Store. Потребителите на Windows могат да го инсталират директно от магазина и да останат в управлявания от магазина път за обновяване. Отворете страницата и погледнете."
     cta: "Отвори Microsoft Store"
     alt: "HagiCode for Windows Microsoft Store artwork"
-  main-game-2026-04-29:
-    title: "Моля, добавете го в списъка с желания"
-    description: "Hagicode, софтуерът за Vibe Coding, който не е уникален в световен мащаб, но е супер удобен, излиза на 29 април. Моля, добавете го във вашия списък с желания в Steam. Хълц. Моля, моля."
-    cta: "Добави в желания в Steam"
-    alt: "HagiCode Steam store capsule artwork"
-  main-game-steam-ea-2026-04-29:
-    title: "Ранният достъп най-после е тук"
-    description: "Hagicode, софтуерът за Vibe Coding, който не е уникален в световен мащаб, но е супер удобен, вече е в Ранен достъп в Steam. Елате да погледнете. Хълц. Моля, моля."
-    cta: "Виж Ранен достъп"
-    alt: "HagiCode Early Access Steam artwork"
-  hagicode-plus-bundle:
-    title: "Пакет Hagicode Plus"
-    description: "Hagicode Plus, опцията, която не е уникална в световен мащаб, но е наистина добре опакована, е с 15% отстъпка заедно с основната игра и DLC Turbo Engine. Елате да разгледате в Steam. Хълц. Моля, моля."
-    cta: "Виж пакета"
-    alt: "HagiCode Plus Steam bundle artwork"
-  hagicode-turbo-engine-dlc:
-    title: "DLC Turbo Engine"
-    description: "DLC Turbo Engine не е уникален в световен мащаб, но наистина работи: отключва до 32 едновременни онлайн сесии и повече опции за персонализиране на вашия работен процес с Hagicode. Елате да погледнете в Steam. Хълц. Моля, моля."
-    cta: "Виж DLC"
-    alt: "Turbo Engine DLC Steam artwork"
   subsite-awesome:
     title: "Awesome Site: подбрани колекции с отворен код"
     description: "Намерете следващия си инструмент, идея или вдъхновение в колекции с отворен код, подбрани от общността. Изберете тема, четете на своя език и последвайте връзката към оригиналния източник."

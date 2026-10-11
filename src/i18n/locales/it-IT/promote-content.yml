@@ -4,26 +4,6 @@ promotions:
     description: "HagiCode per Windows è ufficialmente disponibile su Microsoft Store. Gli utenti Windows possono installarlo direttamente dal negozio e rimanere sul percorso di aggiornamento gestito dallo store. Apri la scheda e dagli un'occhiata."
     cta: "Apri Microsoft Store"
     alt: "HagiCode for Windows Microsoft Store artwork"
-  main-game-2026-04-29:
-    title: "Aggiungila alla lista dei desideri, per favore"
-    description: "Hagicode, il software di Vibe Coding non unico al mondo ma super pratico, esce il 29 aprile. Aggiungilo alla tua lista dei desideri su Steam. Singhiozzo. Per favore, per favore."
-    cta: "Aggiungi alla lista su Steam"
-    alt: "HagiCode Steam store capsule artwork"
-  main-game-steam-ea-2026-04-29:
-    title: "L'Accesso Anticipato è finalmente arrivato"
-    description: "Hagicode, il software di Vibe Coding non unico al mondo ma super pratico, è ora in Accesso Anticipato su Steam. Vieni a dare un'occhiata. Singhiozzo. Per favore, per favore."
-    cta: "Vedi l'Accesso Anticipato"
-    alt: "HagiCode Early Access Steam artwork"
-  hagicode-plus-bundle:
-    title: "Pacchetto Hagicode Plus"
-    description: "Hagicode Plus, l'opzione non unica al mondo ma davvero ben confezionata, ha il 15% di sconto insieme al gioco base e al DLC Turbo Engine. Vieni a vederlo su Steam. Singhiozzo. Per favore, per favore."
-    cta: "Vedi il pacchetto"
-    alt: "HagiCode Plus Steam bundle artwork"
-  hagicode-turbo-engine-dlc:
-    title: "DLC Turbo Engine"
-    description: "Il DLC Turbo Engine non è unico al mondo, ma corre davvero: sblocca fino a 32 sessioni online simultanee e più opzioni di personalizzazione per il tuo flusso di lavoro Hagicode. Vieni a dargli un'occhiata su Steam. Singhiozzo. Per favore, per favore."
-    cta: "Vedi il DLC"
-    alt: "Turbo Engine DLC Steam artwork"
   subsite-awesome:
     title: "Awesome Site: collezioni open source selezionate"
     description: "Trova il tuo prossimo strumento, idea o ispirazione in collezioni open source selezionate dalla community. Scegli un argomento, leggi nella tua lingua e segui il link per tornare alla fonte originale."

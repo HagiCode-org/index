@@ -4,26 +4,6 @@ promotions:
     description: "HagiCode for Windows が Microsoft Store で正式に利用可能になりました。Windows ユーザーはストアから直接インストールでき、ストア管理のアップデート手段を利用できます。ページを開いてご覧ください。"
     cta: "Microsoft Store を開く"
     alt: "HagiCode for Windows Microsoft Store artwork"
-  main-game-2026-04-29:
-    title: "ウィッシュリストに追加してください、お願い"
-    description: "Hagicode は、世界で一意ではないけれど超便利な Vibe Coding ソフトで、4月29日に発売します。Steam ウィッシュリストに追加してください。えんえん。お願い、お願い。"
-    cta: "Steam でウィッシュリストに追加"
-    alt: "HagiCode Steam store capsule artwork"
-  main-game-steam-ea-2026-04-29:
-    title: "Early Access ついに登場"
-    description: "Hagicode は、世界で一意ではないけれど超便利な Vibe Coding ソフトで、Steam の Early Access に登場しました。ぜひ覗きに来てください。えんえん。お願い、お願い。"
-    cta: "Early Access を見る"
-    alt: "HagiCode Early Access Steam artwork"
-  hagicode-plus-bundle:
-    title: "Hagicode Plus バンドル"
-    description: "Hagicode Plus は、世界で一意ではないけれど見事にまとめられたオプションで、本体と Turbo Engine DLC とのセットが 15% オフです。Steam でぜひご覧ください。えんえん。お願い、お願い。"
-    cta: "バンドルを見る"
-    alt: "HagiCode Plus Steam bundle artwork"
-  hagicode-turbo-engine-dlc:
-    title: "Turbo Engine DLC"
-    description: "Turbo Engine DLC は世界で一意ではありませんが、本当に動きます。Hagicode のワークフロー向けに、最大 32 の同時オンラインセッションとさらに多くのカスタマイズオプションを解放します。Steam で覗いてみてください。えんえん。お願い、お願い。"
-    cta: "DLC を見る"
-    alt: "Turbo Engine DLC Steam artwork"
   subsite-awesome:
     title: "Awesome Site：コミュニティが厳選したオープンソースのコレクション"
     description: "コミュニティが厳選したオープンソースのコレクションから、次のツールやアイデア、ひらめきを見つけましょう。トピックを選び、慣れた言語で読み、リンクをたどって元の情報源へ。"

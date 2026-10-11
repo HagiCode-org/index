@@ -4,26 +4,6 @@ promotions:
     description: "HagiCode pro Windows je oficiálně dostupný v Microsoft Store. Uživatelé Windows jej mohou nainstalovat přímo z obchodu a zůstat na cestě aktualizací spravované obchodem. Otevřete stránku a podívejte se."
     cta: "Otevřít Microsoft Store"
     alt: "HagiCode for Windows Microsoft Store artwork"
-  main-game-2026-04-29:
-    title: "Přidejte ji prosím do seznamu přání"
-    description: "Hagicode, software pro Vibe Coding, který není celosvětově jedinečný, ale je super praktický, vychází 29. dubna. Přidejte ho prosím do svého seznamu přání na Steamu. Vzlyk. Prosím, prosím."
-    cta: "Přidat do přání na Steamu"
-    alt: "HagiCode Steam store capsule artwork"
-  main-game-steam-ea-2026-04-29:
-    title: "Brzký přístup je konečně tady"
-    description: "Hagicode, software pro Vibe Coding, který není celosvětově jedinečný, ale je super praktický, je nyní v předběžném přístupu na Steamu. Přijďte se podívat. Vzlyk. Prosím, prosím."
-    cta: "Zobrazit předběžný přístup"
-    alt: "HagiCode Early Access Steam artwork"
-  hagicode-plus-bundle:
-    title: "Balíček Hagicode Plus"
-    description: "Hagicode Plus, možnost, která není celosvětově jedinečná, ale je opravdu pěkně zabalená, má 15% slevu spolu se základní hrou a DLC Turbo Engine. Přijďte se podívat na Steam. Vzlyk. Prosím, prosím."
-    cta: "Zobrazit balíček"
-    alt: "HagiCode Plus Steam bundle artwork"
-  hagicode-turbo-engine-dlc:
-    title: "DLC Turbo Engine"
-    description: "DLC Turbo Engine není celosvětově jedinečné, ale opravdu funguje: odemkne až 32 souběžných online sezení a více možností přizpůsobení pro váš pracovní postup Hagicode. Přijďte se podívat na Steam. Vzlyk. Prosím, prosím."
-    cta: "Zobrazit DLC"
-    alt: "Turbo Engine DLC Steam artwork"
   subsite-awesome:
     title: "Awesome Site: kurátorované open-source kolekce"
     description: "Najděte svůj další nástroj, nápad nebo inspiraci v open-source kolekcích vybraných komunitou. Vyberte si téma, čtěte ve svém jazyce a následujte odkaz zpět k původnímu zdroji."
