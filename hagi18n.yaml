@@ -2,32 +2,13 @@ localesRoot: src/i18n/locales
 repoRoot: .
 baseLocale: en-US
 targetLocales:
-  - bg-BG
-  - cs-CZ
-  - da-DK
   - de-DE
-  - el-GR
-  - es-419
   - es-ES
-  - fi-FI
   - fr-FR
-  - hu-HU
-  - id-ID
-  - it-IT
   - ja-JP
   - ko-KR
-  - nb-NO
-  - nl-NL
-  - pl-PL
   - pt-BR
-  - pt-PT
-  - ro-RO
   - ru-RU
-  - sv-SE
-  - th-TH
-  - tr-TR
-  - uk-UA
-  - vi-VN
   - zh-CN
   - zh-Hant
 doctor:

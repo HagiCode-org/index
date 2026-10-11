@@ -711,7 +711,7 @@ function buildCatalogFixture({
       {
         id: 'promotion-content',
         title: 'Promotion Content',
-        description: '公开 29 种语言的促销标题、描述与跳转链接，供各站点按 promoteId 渲染推广卡片。',
+        description: '公开 10 种语言的促销标题、描述与跳转链接，供各站点按 promoteId 渲染推广卡片。',
         path: '/promote_content.json',
         category: 'catalogs',
         sourceRepo: 'repos/index',

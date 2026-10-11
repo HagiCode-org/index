@@ -74,13 +74,13 @@ npm run validate
 HagIndex 使用 hagi18n 风格的 YAML 源文件维护门户、`/promoto` 展示页与 `/promote_content.json` 的人类可读文案。Footer 链接与站点级推广由 HagiLight 集中维护，不在此处重复翻译。
 
 - 配置文件：`hagi18n.yaml`
-- 29 语言 published-content locale source of truth：`src/i18n/locale-metadata.ts`
+- 10 语言 published-content locale source of truth：`src/i18n/locale-metadata.ts`
 - 站点参考实现：`../site/src/i18n/locale-metadata.ts`（仅用于对齐，不作为运行时依赖）
 - YAML 源目录：`src/i18n/locales/<locale>/`
 - 必需 namespace：`hagindex.yml`、`promoto.yml`、`promote-content.yml`
 - 生成产物：`src/i18n/generated-locales/<locale>/<namespace>.json`
 
-当前 published-content locale catalog 与 `repos/site` 保持 29 个 canonical locale 对齐，并显式维护 canonical code、native label、short label、alias 与 fallback chain。维护者在新增或调整 locale 时，必须同步更新：
+当前 published-content locale catalog 与 `repos/site` 保持 10 个 canonical locale 对齐，并显式维护 canonical code、native label、short label、alias 与 fallback chain。维护者在新增或调整 locale 时，必须同步更新：
 
 1. `src/i18n/locale-metadata.ts`
 2. `src/i18n/config.ts`
@@ -121,7 +121,7 @@ npm run i18n:prune
   - 数值的先后顺序没有意义，约定把 `web` 写在前面。要下线某条推广，仍然把 `on` 改为 `false`，不要把 `platforms` 清空。
   - 目前的分配规则：推广 Hagicode 产品本身的条目（目前是 Microsoft Store）是 `["web"]`；其他推广（例如四个子站）是 `["web", "hagicode"]`。以后新增 `platforms` 的值，只需在 `scripts/validate-catalog.mjs` 的 `promotePlatforms` 中追加，并实现对应的消费方，文档结构不变。
   - `platforms` 与 `/promote_content.json` 里的 `targetPlatform` 是两回事：前者决定“在哪个展示面显示”，只出现在 `promote.json`；后者描述被推广的产品在哪里（`steam`、`website`、`microsoft-store`），只出现在内容文件里。两者互不推导，内容条目也不需要 `platforms`。
-- `/sites.json` 的 localized field 也跟随这套 29 语言 published-content contract 扩展，但公开路径与 payload shape 保持不变。
+- `/sites.json` 的 localized field 也跟随这套 10 语言 published-content contract 扩展，但公开路径与 payload shape 保持不变。
 - 此变更范围只覆盖 outward-facing published content；`index.hagicode.com` 的 page shell 仍保持当前单语言路由模型，不在这里引入 localized routes、全站 language selector 或整站 UI i18n。
 
 ## Source / Public 边界
