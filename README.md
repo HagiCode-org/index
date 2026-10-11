@@ -119,7 +119,7 @@ npm run i18n:prune
   - `web`：可展示在网站上。共享横幅（`@hagicode/hagilight-core`）只展示 `platforms` 含 `web` 的条目。
   - `hagicode`：为将来 Hagicode 自身内的展示位预留，目前没有任何消费方读取它。在其他消费方（docs、桌面端等）开始按 `platforms` 过滤之前，不要发布只含 `hagicode` 的条目。
   - 数值的先后顺序没有意义，约定把 `web` 写在前面。要下线某条推广，仍然把 `on` 改为 `false`，不要把 `platforms` 清空。
-  - 目前的分配规则：推广 Hagicode 产品本身的条目（Microsoft Store、Steam 愿望单与抢先体验、Hagicode Plus 捆绑包、Turbo Engine DLC）是 `["web"]`；其他推广（例如四个子站）是 `["web", "hagicode"]`。以后新增 `platforms` 的值，只需在 `scripts/validate-catalog.mjs` 的 `promotePlatforms` 中追加，并实现对应的消费方，文档结构不变。
+  - 目前的分配规则：推广 Hagicode 产品本身的条目（目前是 Microsoft Store）是 `["web"]`；其他推广（例如四个子站）是 `["web", "hagicode"]`。以后新增 `platforms` 的值，只需在 `scripts/validate-catalog.mjs` 的 `promotePlatforms` 中追加，并实现对应的消费方，文档结构不变。
   - `platforms` 与 `/promote_content.json` 里的 `targetPlatform` 是两回事：前者决定“在哪个展示面显示”，只出现在 `promote.json`；后者描述被推广的产品在哪里（`steam`、`website`、`microsoft-store`），只出现在内容文件里。两者互不推导，内容条目也不需要 `platforms`。
 - `/sites.json` 的 localized field 也跟随这套 29 语言 published-content contract 扩展，但公开路径与 payload shape 保持不变。
 - 此变更范围只覆盖 outward-facing published content；`index.hagicode.com` 的 page shell 仍保持当前单语言路由模型，不在这里引入 localized routes、全站 language selector 或整站 UI i18n。
