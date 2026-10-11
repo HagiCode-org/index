@@ -38,6 +38,37 @@ npm run validate
 
 维护者不需要、也不应该为了线上体积手工压缩源 JSON。请继续把可维护性放在 source 文件里，把发布格式交给构建后的 minify 与 verify 步骤。
 
+## /promote_content.json 图片 fallback 链
+
+每条推广内容的 `image` 多出一个附加字段 `sources`，列出同一张图的多种格式，按客户端应优先尝试的顺序排列：
+
+1. AVIF（`image/avif`）
+2. WebP（`image/webp`）
+3. 原图（与 `image.src`、`image.format`、`image.width`、`image.height` 完全相同，始终是最后一项）
+
+下面是一条条目的结构示意（路径为占位符，实际 hash 以构建产物为准）：
+
+```json
+"image": {
+  "src": "/_astro/awesome.ABC123.png",
+  "width": 1280,
+  "height": 720,
+  "format": "png",
+  "alt": "...",
+  "sources": [
+    { "format": "avif", "type": "image/avif", "src": "/_astro/awesome.DEF456.avif", "width": 1280, "height": 720 },
+    { "format": "webp", "type": "image/webp", "src": "/_astro/awesome.GHI789.webp", "width": 1280, "height": 720 },
+    { "format": "png", "type": "image/png", "src": "/_astro/awesome.ABC123.png", "width": 1280, "height": 720 }
+  ]
+}
+```
+
+- 客户端规则：按 `sources` 的顺序逐项检查，取第一个自己能解码的 `type`，请求它的 `src`。原图即使在 AVIF/WebP 可用时也保留在最后一项，作为最后的回退。
+- 路径解析：`src` 是根相对路径（以 `/_astro/` 开头），必须相对于提供该 JSON 的源站 `https://index.hagicode.com` 解析，例如 `new URL(src, 'https://index.hagicode.com')`。不要把它直接当作当前页面域名下的路径使用。
+- 兼容性：`image.sources` 是附加字段。`id`、`title`、`description`、`cta`、`link`、`targetPlatform`，以及 `image` 中原有的 `src`、`width`、`height`、`format`、`alt` 均不变。hagilight 0.8.0 不读取 `sources`，共享横幅仍只使用 `image.src`；能按 `sources` 回退的 hagilight 版本尚未发布。
+- 生成位置：`src/data/image-source-chain.ts` 通过 Astro `getImage` 生成 AVIF 与 WebP 派生图，`src/data/promote-content-source.ts` 把结果挂到每个条目上。Steam 数据（`/steam/index.json`、`/steam/achievements.json`）不包含 `sources`。
+- 校验：`scripts/validate-catalog.mjs` 检查每个条目的链顺序、类型、路径、尺寸和文件头，并要求 AVIF 文件小于同一条目的 WebP 文件。
+
 ## hagi18n 本地化工作流
 
 HagIndex 使用 hagi18n 风格的 YAML 源文件维护门户、`/promoto` 展示页与 `/promote_content.json` 的人类可读文案。Footer 链接与站点级推广由 HagiLight 集中维护，不在此处重复翻译。
@@ -82,7 +113,7 @@ npm run i18n:prune
 
 - 放进 YAML：页面标题、导航标签、页脚文字、按钮文字、Promoto 筛选/状态文案、推广标题、描述、CTA、图片 alt。
 - 留在 TypeScript/JSON：公开路由、href、外部链接、promotion ID、平台 ID、时间戳、图片 import、图片尺寸与格式描述。
-- `/promote_content.json` 的公开 shape 不变；`src/data/promote-content-metadata.ts` 只维护稳定元数据，`src/data/promote-content-source.ts` 从生成资源组合本地化字段。
+- `/promote_content.json` 的公开 shape 只新增一个字段 `image.sources`（见上文“图片 fallback 链”），其余字段与路径不变；`src/data/promote-content-metadata.ts` 只维护稳定元数据，`src/data/promote-content-source.ts` 从生成资源组合本地化字段与图片 fallback 链。
 - `subsite-awesome`、`subsite-design`、`subsite-openspec`、`subsite-omniroute` 是四个子站（awesome、design、openspec、omniroute）的常驻推广条目：在 `src/data/public/promote.json` 中以 `on: true` 发布，没有 `startTime` 和 `endTime`，因此发布后即生效且不会自动过期。要下线其中一个，把对应记录的 `on` 改为 `false`（或加上 `endTime`）即可；内容条目仍会保留在 `/promote_content.json` 与 `/promoto` 中，无需改动文案。它们的描述不写具体数字，避免随上游内容变化而过时。
 - `src/data/public/promote.json` 的每条记录必须带 `platforms`：一个非空、无重复的数组，标明该推广可以展示在哪些平台。构建校验（`npm run validate`）只接受下面两个值，大小写和空白都要完全一致，拼错、留空或重复都会让构建失败，并在报错里写出条目 `id`。
   - `web`：可展示在网站上。共享横幅（`@hagicode/hagilight-core`）只展示 `platforms` 含 `web` 的条目。
