@@ -7,7 +7,7 @@
 - 托管公开 JSON 索引与静态资源。不提供服务端 API。
 - 根路由 `/` 现在是 HagiCode 站点导航门户，集中展示主站、文档、Builder、Soul、Trait 与数据镜像入口。
 - `/data/` 承接旧首页的人类可读数据内容，继续展示 catalog 卡片、about 镜像与原始 JSON 动作。
-- 用 `src/data/public/sites.json` 作为门户站点入口的权威源文件，并由 Astro 在构建期发布为 `/sites.json`。
+- 用 `src/data/sites-catalog.json` 作为门户站点入口的内部权威源文件，仅供门户首页渲染使用，不再发布为 `/sites.json`。
 - 用 `src/data/public/index-catalog.json` 作为数据镜像页展示与外部程序发现 JSON 资产的权威源文件，并由 Astro 在构建期发布为 `/index-catalog.json`。
 - 为 `HagiCode Server` 与 `HagiCode Desktop` 生成独立版本历史页：`/server/history/` 与 `/desktop/history/`。
 - 维护 `activity-metrics` 快照与 catalog 摘要，并保持 `/activity-metrics.json` 路由稳定。
@@ -121,7 +121,7 @@ npm run i18n:prune
   - 数值的先后顺序没有意义，约定把 `web` 写在前面。要下线某条推广，仍然把 `on` 改为 `false`，不要把 `platforms` 清空。
   - 目前的分配规则：推广 Hagicode 产品本身的条目（目前是 Microsoft Store）是 `["web"]`；其他推广（例如四个子站）是 `["web", "hagicode"]`。以后新增 `platforms` 的值，只需在 `scripts/validate-catalog.mjs` 的 `promotePlatforms` 中追加，并实现对应的消费方，文档结构不变。
   - `platforms` 与 `/promote_content.json` 里的 `targetPlatform` 是两回事：前者决定“在哪个展示面显示”，只出现在 `promote.json`；后者描述被推广的产品在哪里（`steam`、`website`、`microsoft-store`），只出现在内容文件里。两者互不推导，内容条目也不需要 `platforms`。
-- `/sites.json` 的 localized field 也跟随这套 10 语言 published-content contract 扩展，但公开路径与 payload shape 保持不变。
+- 门户站点目录的 localized field 也跟随这套 10 语言 contract 扩展；该目录只作为内部源文件，不对外发布。
 - 此变更范围只覆盖 outward-facing published content；`index.hagicode.com` 的 page shell 仍保持当前单语言路由模型，不在这里引入 localized routes、全站 language selector 或整站 UI i18n。
 
 ## Source / Public 边界
@@ -133,7 +133,6 @@ npm run i18n:prune
 | 公开路由 | 权威源 | 路由实现 | 类型 |
 | --- | --- | --- | --- |
 | `/index-catalog.json` | `src/data/public/index-catalog.json` | `src/pages/index-catalog.json.ts` | file-backed |
-| `/sites.json` | `src/data/public/sites.json` | `src/pages/sites.json.ts` | file-backed |
 | `/activity-metrics.json` | `src/data/public/activity-metrics.json` | `src/pages/activity-metrics.json.ts` | file-backed |
 | `/live-broadcast.json` | `src/data/public/live-broadcast.json` | `src/pages/live-broadcast.json.ts` | file-backed |
 | `/server/index.json` | `src/data/public/server/index.json` | `src/pages/server/index.json.ts` | file-backed |
@@ -148,10 +147,9 @@ npm run i18n:prune
 - about 图片必须通过 Astro import 进入 `/about.json`；不要直接写 `/about/*.png`、`/about/*.jpg` 或任何 staging 路径。
 - Astro 构建负责输出 route-mapped JSON；生产构建随后统一压缩发布目录中的所有 JSON 产物。
 
-`/sites.json` 与 `/index-catalog.json` 的职责不同：
+门户站点目录不再发布为公开 JSON。`src/data/sites-catalog.json` 只供门户首页读取，描述用户应该前往哪些生产站点或站内稳定路径。
 
-- `/sites.json`：门户站点目录。描述用户应该前往哪些生产站点或站内稳定路径。
-- `/index-catalog.json`：公开 JSON 资产目录。描述程序和维护者需要核对的 JSON 入口，不混入外站导航语义。
+`/index-catalog.json`：公开 JSON 资产目录。描述程序和维护者需要核对的 JSON 入口，不混入外站导航语义。
 
 ### 2. 非 route-mapped JSON：仍以 `public/` 或其他 source 目录驱动
 
@@ -380,7 +378,7 @@ npm run build
 
 - `npm run verify:json-routes`：校验 route-mapped JSON 的公开输出、minify 状态与生成路由契约（含 `/about.json`）。
 - `npm run validate`：构建临时 Astro 输出，并校验 source/build 语义一致、公开路由存在且 JSON 已 minify。
-- `npm test`：覆盖版本历史归一化、按版本分组文件清单、`files[]` 回退、不可下载文件可见性、route-mapped loader 契约、portal/data 页分流、`/sites.json` 与 `/index-catalog.json` 的职责校验、catalog 漂移检测、活动摘要同步、同日重跑、90 天滚动、pretty JSON 拒绝与 `/about.json` 结构校验。
+- `npm test`：覆盖版本历史归一化、按版本分组文件清单、`files[]` 回退、不可下载文件可见性、route-mapped loader 契约、portal/data 页分流、门户站点内部目录与 `/index-catalog.json` 的职责校验、catalog 漂移检测、活动摘要同步、同日重跑、90 天滚动、pretty JSON 拒绝与 `/about.json` 结构校验。
 - `npm run build`：生成最终静态站点，并再次验证 route-mapped JSON 输出。
 
 ## 生产部署
@@ -391,7 +389,7 @@ npm run build
 - 发布 payload 契约：分支根目录保留 `esa.jsonc`，静态站点和 JSON 公开产物统一放在 `dist/`
 - 所需 GitHub 权限：deploy job 需要 `contents: write`
 - 所需托管设置：托管层应读取 `gh-pages/esa.jsonc`，并把 `gh-pages/dist/` 作为发布目录
-- 首次部署检查：确认 `dist/` 内仍包含 `/sites.json`、`/index-catalog.json`、历史页及镜像资产，然后验证 `https://index.hagicode.com`
+- 首次部署检查：确认 `dist/` 内仍包含 `/index-catalog.json`、历史页及镜像资产，且不再包含 `/sites.json`，然后验证 `https://index.hagicode.com`
 - 回滚方式：回退 source 提交或从旧提交重新运行工作流，让 CI 重新发布上一个稳定快照
 
 ## 维护边界

@@ -27,7 +27,8 @@ npm run sync:index
 ## Key Paths
 
 - `src/pages/`: Astro routes
-- `src/data/public/`: source-of-truth JSON assets (sites.json, index-catalog.json)
+- `src/data/public/`: source-of-truth JSON assets (index-catalog.json)
+- `src/data/sites-catalog.json`: internal portal site catalog, read only by the homepage; not published
 - `scripts/`: JSON minification, validation, and generation helpers
 - `public/`: static assets published alongside built JSON
 
