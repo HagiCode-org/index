@@ -33,9 +33,9 @@
     "sync:secondary-professions": "node ./scripts/sync-secondary-professions.mjs"
   },
   "dependencies": {
-    "@hagicode/hagilight": "0.7.0",
-    "@hagicode/hagilight-core": "0.7.0",
-    "astro": "^7.3.5",
+    "@hagicode/hagilight": "0.8.0",
+    "@hagicode/hagilight-core": "0.8.0",
+    "astro": "^7.3.8",
     "js-yaml": "^4.1.1"
   },
   "devDependencies": {
