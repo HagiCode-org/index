@@ -36,14 +36,18 @@ test('structured article source exposes expected locale folders and baseline slu
   assert.equal(zhSlugs.includes('copilot-vs-hagicode'), true);
   assert.equal(zhSlugs.includes('kiro-vs-hagicode'), true);
   assert.equal(zhSlugs.includes('omp-vs-hagicode'), true);
+  assert.equal(zhSlugs.includes('junie-vs-hagicode'), true);
+  assert.equal(zhSlugs.includes('dsh-vs-hagicode'), true);
   assert.deepEqual(enSlugs, [
     'claude-vs-hagicode',
     'codebuddy-vs-hagicode',
     'codex-vs-hagicode',
     'copilot-vs-hagicode',
     'deepagents-vs-hagicode',
+    'dsh-vs-hagicode',
     'gemini-vs-hagicode',
     'hermes-vs-hagicode',
+    'junie-vs-hagicode',
     'kimi-vs-hagicode',
     'kiro-vs-hagicode',
     'omp-vs-hagicode',
