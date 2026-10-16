@@ -3,12 +3,12 @@
   "slug": "gemini-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "en-US",
-  "updatedAt": "2026-06-17T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "Gemini CLI vs HagiCode: Features and Comparison",
-    "description": "Understand Google Gemini CLI's key features, multimodal capabilities, and Google ecosystem integration, and see how HagiCode turns Gemini's multimodal power into production-grade programming through multi-threaded parallelism, OpenSpec proposals, AI commits, Preset Tasks, gamified UI, Agents management, Monospecs, Vault, and OmniRoute."
+    "description": "Understand Google Gemini CLI's key features, multimodal capabilities, and Google ecosystem integration, and see how HagiCode turns Gemini's multimodal power into production-grade programming through multi-threaded parallelism, OpenSpec proposals, AI commits, HagiTasks, gamified UI, Agents management, Monospecs, Vault, and OmniRoute. Also covers the shared tool-call view and TokenMonitor status-bar usage."
   },
-  "summary": "Google Gemini CLI is Google's official terminal AI programming tool. With Gemini's multimodal understanding, ultra-long context window, and deep Google Cloud ecosystem connections, it has carved out a unique position in AI programming. However, Gemini CLI is fundamentally a command-line entry point for model capabilities, while HagiCode is a desktop workbench designed for AI programming scenarios. Together, they transform Gemini's distinctive advantages into genuinely usable production-grade development experiences.",
+  "summary": "Google Gemini CLI is Google's official terminal AI programming tool. With Gemini's multimodal understanding, ultra-long context window, and deep Google Cloud ecosystem connections, it has carved out a unique position in AI programming. However, Gemini CLI is fundamentally a command-line entry point for model capabilities, while HagiCode is a desktop workbench designed for AI programming scenarios. Together, they transform Gemini's distinctive advantages into genuinely usable production-grade development experiences. It also covers the shared tool-call view and optional TokenMonitor usage in the status bar.",
   "sections": [
     {
       "id": "gemini-vs-hagicode-section-1",
@@ -122,16 +122,16 @@
             },
             {
               "id": "gemini-vs-hagicode-section-2-item-5",
-              "title": "Preset Task: Templatize Gemini's multimodal capabilities",
+              "title": "HagiTask: Templatize Gemini's multimodal capabilities",
               "content": [
                 "Gemini's capabilities are strong, but manually typing out requirements each time isn't efficient. More importantly, the community has already produced a wealth of high-quality Skills — from code review templates to full-stack CRUD generators, from automatic documentation generation to test case orchestration. These proven practices are scattered everywhere with no unified place to host and invoke them.",
-                "HagiCode's Preset Task mechanism is designed to solve this problem. It's more than just shortcut commands — it's an extensible Skills integration platform:",
-                "Preset Task upgrades your collaboration with Gemini from 'communicating from scratch every time' to 'standing on the community's shoulders, one-click invocation of mature workflows.' You pick the template, Gemini executes — this is true workflow automation, and the whole process is visually delightful."
+                "HagiCode's HagiTask mechanism is designed to solve this problem. It's more than just shortcut commands — it's an extensible Skills integration platform:",
+                "HagiTask upgrades your collaboration with Gemini from 'communicating from scratch every time' to 'standing on the community's shoulders, one-click invocation of mature workflows.' You pick the template, Gemini executes — this is true workflow automation, and the whole process is visually delightful."
               ],
               "bullets": [
-                "Community Skills ready to use: HagiCode supports importing popular community Skills as Preset Tasks. You don't need to craft complex prompts from scratch — the community has already accumulated a wealth of high-quality task templates. Import and use immediately — new CRUD modules, comprehensive code reviews, API documentation generation — all have ready-made solutions.",
+                "Community Skills ready to use: HagiCode supports importing popular community Skills as HagiTasks. You don't need to craft complex prompts from scratch — the community has already accumulated a wealth of high-quality task templates. Import and use immediately — new CRUD modules, comprehensive code reviews, API documentation generation — all have ready-made solutions.",
                 "Extensible Skills system: If you have unique project requirements or team conventions, HagiCode lets you customize and compose on top of community Skills. You can adjust checklists, add team coding standards, or even chain multiple Skills into a complete development pipeline, building your own team's task template library.",
-                "Visual operations, goodbye to the tedium of plain text: This is the fundamental difference between HagiCode and pure command-line tools. Choosing a Preset Task doesn't require typing commands and assembling parameters in the terminal — it's done through a carefully designed visual interface. Click to select tasks, dropdown menus to switch parameters, drag-and-drop to reorder tasks — every step has clear visual feedback and status indicators. The human-machine interaction shifts from 'writing code to invoke AI' to 'using a UI to direct AI.'"
+                "Visual operations, goodbye to the tedium of plain text: This is the fundamental difference between HagiCode and pure command-line tools. Choosing a HagiTask doesn't require typing commands and assembling parameters in the terminal — it's done through a carefully designed visual interface. Click to select tasks, dropdown menus to switch parameters, drag-and-drop to reorder tasks — every step has clear visual feedback and status indicators. The human-machine interaction shifts from 'writing code to invoke AI' to 'using a UI to direct AI.'"
               ]
             },
             {
@@ -205,6 +205,32 @@
                 "Tune different model routes for different workloads, such as fast coding, deep review, or architecture planning.",
                 "Adjust cost and capability once at the routing layer instead of reworking each individual workflow."
               ]
+            },
+            {
+              "id": "gemini-vs-hagicode-section-2-item-11",
+              "title": "Unified tool-call view: see Gemini CLI's tool use in one consistent shape",
+              "content": [
+                "HagiCode attaches one typed tool-call shape to every tool-use and tool-result message. It records the tool kind, its input fields, status, result text or images, any error, and timing. The shape is computed from stored data, so session history and live updates show the same view.",
+                "The same shape covers every provider, so Gemini CLI tool calls look like those of every other agent in your workspace. You read one format instead of learning each CLI's raw output."
+              ],
+              "bullets": [
+                "One shape for every provider: shell, file, search, fetch and MCP calls are presented consistently;",
+                "Failed calls carry a readable error message;",
+                "Raster tool images are carried as data URIs."
+              ]
+            },
+            {
+              "id": "gemini-vs-hagicode-section-2-item-12",
+              "title": "Usage at a glance: today's tokens and cost in the status bar",
+              "content": [
+                "HagiCode can show today's token usage and cost from the TokenMonitor desktop app in its status bar. The integration is optional and off by default.",
+                "It reads TokenMonitor's local data file or a TokenMonitor HostHub on a schedule and keeps only today's total tokens and cost. The status bar stays a quick glance rather than a full usage report."
+              ],
+              "bullets": [
+                "Nothing is read until you turn the integration on;",
+                "The HostHub secret is write-only and is never returned or logged after you save it;",
+                "An invalid HostHub address is rejected when you save it."
+              ]
             }
           ]
         }
@@ -227,8 +253,10 @@
           "type": "bullet-list",
           "items": [
             "Gemini provides vision: multimodal understanding, ultra-long context, Google Search integration;",
-            "HagiCode provides efficiency: multi-threaded parallelism, Agents fleet management, OpenSpec proposals, AI commits, Code Server editor, Preset Tasks;",
+            "HagiCode provides efficiency: multi-threaded parallelism, Agents fleet management, OpenSpec proposals, AI commits, Code Server editor, HagiTasks;",
             "HagiCode expands boundaries: Monospecs lets Gemini understand cross-repo project relationships, Vault gives Gemini cross-session long-term memory, OmniRoute frees Gemini from model subscription lock-in;",
+            "Tool-call view: one consistent shape for every provider's tool use, in history and live updates;",
+            "Usage at a glance: optional TokenMonitor status-bar view of today's tokens and cost;",
             "Together they provide an experience: traceable decision chains, automated daily tasks, a genuinely enjoyable interface, and a long-term AI partner that truly understands your project landscape and can be freely configured with any model source."
           ]
         }

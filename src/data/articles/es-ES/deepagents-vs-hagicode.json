@@ -3,12 +3,12 @@
   "slug": "deepagents-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "es-ES",
-  "updatedAt": "2026-06-17T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "DeepAgents vs HagiCode: funciones y comparación",
-    "description": "Comprende las funciones clave de DeepAgents, su ecosistema LangChain y su arquitectura técnica, y ve cómo HagiCode lleva a DeepAgents al siguiente nivel a través del multithreading, las propuestas OpenSpec, los commits IA, las Preset Tasks, la UI gamificada, la gestión de Agents, los Monospecs, el Vault y OmniRoute."
+    "description": "Comprende las funciones clave de DeepAgents, su ecosistema LangChain y su arquitectura técnica, y ve cómo HagiCode lleva a DeepAgents al siguiente nivel a través del multithreading, las propuestas OpenSpec, los commits IA, las HagiTasks, la UI gamificada, la gestión de Agents, los Monospecs, el Vault y OmniRoute. También cubre la vista compartida de llamadas a herramientas y el consumo de TokenMonitor en la barra de estado."
   },
-  "summary": "DeepAgents es la herramienta CLI oficial de Agent IA de LangChain, construida sobre el framework profundo de orquestación de Agent de LangChain. Se centra en la descomposición automática de tareas complejas, la orquestación coordinada de múltiples herramientas y la conciencia de estado, y es particularmente adecuado para tareas de desarrollo complejas y multi-paso. Sin embargo, DeepAgents es una herramienta de orquestación CLI, y HagiCode es un workbench que proporciona gestión multi-repo, persistencia de conocimiento y un entorno de desarrollo visualizado. Ambos juntos elevan la capacidad de orquestación a una experiencia de desarrollo completa.",
+  "summary": "DeepAgents es la herramienta CLI oficial de Agent IA de LangChain, construida sobre el framework profundo de orquestación de Agent de LangChain. Se centra en la descomposición automática de tareas complejas, la orquestación coordinada de múltiples herramientas y la conciencia de estado, y es particularmente adecuado para tareas de desarrollo complejas y multi-paso. Sin embargo, DeepAgents es una herramienta de orquestación CLI, y HagiCode es un workbench que proporciona gestión multi-repo, persistencia de conocimiento y un entorno de desarrollo visualizado. Ambos juntos elevan la capacidad de orquestación a una experiencia de desarrollo completa. También cubre la vista compartida de llamadas a herramientas y el consumo opcional de TokenMonitor en la barra de estado.",
   "sections": [
     {
       "id": "deepagents-vs-hagicode-section-1",
@@ -122,16 +122,16 @@
             },
             {
               "id": "deepagents-vs-hagicode-section-2-item-5",
-              "title": "Preset Task: convertir en plantilla las capacidades complejas de orquestación de DeepAgents",
+              "title": "HagiTask: convertir en plantilla las capacidades complejas de orquestación de DeepAgents",
               "content": [
                 "Las capacidades de DeepAgents son fuertes, pero teclear manualmente los requisitos cada vez no es eficiente. Más importante aún, la comunidad ya ha producido una riqueza de Skills de alta calidad — desde plantillas de revisión de código hasta generadores CRUD full-stack, desde generación automática de documentación hasta orquestación de casos de prueba. Estas prácticas probadas están dispersas por todas partes sin un lugar unificado para hostearlas e invocarlas.",
-                "El mecanismo Preset Task de HagiCode está diseñado para resolver este problema. Es más que solo comandos de atajo — es una plataforma de integración de Skills extensible:",
-                "Preset Task mejora tu colaboración con DeepAgents de 'comunicar desde cero cada vez' a 'apoyarse en los hombros de la comunidad, invocación de un clic de flujos de trabajo maduros'. Tú eliges la plantilla, DeepAgents ejecuta — esta es verdadera automatización de flujo de trabajo, y todo el proceso es visualmente delicioso."
+                "El mecanismo HagiTask de HagiCode está diseñado para resolver este problema. Es más que solo comandos de atajo — es una plataforma de integración de Skills extensible:",
+                "HagiTask mejora tu colaboración con DeepAgents de 'comunicar desde cero cada vez' a 'apoyarse en los hombros de la comunidad, invocación de un clic de flujos de trabajo maduros'. Tú eliges la plantilla, DeepAgents ejecuta — esta es verdadera automatización de flujo de trabajo, y todo el proceso es visualmente delicioso."
               ],
               "bullets": [
-                "Skills comunitarias listas para usar: HagiCode soporta importar Skills comunitarias populares como Preset Tasks. No necesitas elaborar prompts complejos desde cero — la comunidad ya ha acumulado una riqueza de plantillas de tareas de alta calidad. Importa y usa inmediatamente — nuevos módulos CRUD, revisiones de código integrales, generación de documentación de API — todo tiene soluciones hechas.",
+                "Skills comunitarias listas para usar: HagiCode soporta importar Skills comunitarias populares como HagiTasks. No necesitas elaborar prompts complejos desde cero — la comunidad ya ha acumulado una riqueza de plantillas de tareas de alta calidad. Importa y usa inmediatamente — nuevos módulos CRUD, revisiones de código integrales, generación de documentación de API — todo tiene soluciones hechas.",
                 "Sistema de Skills extensible: si tienes requisitos de proyecto únicos o convenciones de equipo, HagiCode te permite personalizar y componer sobre las Skills comunitarias. Puedes ajustar checklists, añadir estándares de codificación del equipo, o incluso encadenar múltiples Skills en un pipeline de desarrollo completo, construyendo la biblioteca de plantillas de tareas de tu propio equipo.",
-                "Operaciones visuales, adiós a la tediosidad del texto plano: esta es la diferencia fundamental entre HagiCode y las herramientas puramente de línea de comandos. Elegir una Preset Task no requiere teclear comandos y ensamblar parámetros en la terminal — se hace a través de una interfaz visual cuidadosamente diseñada. Clic para seleccionar tareas, menús desplegables para cambiar parámetros, arrastrar y soltar para reordenar tareas — cada paso tiene feedback visual claro e indicadores de estado. La interacción humano-máquina pasa de 'escribir código para invocar IA' a 'usar una UI para dirigir IA'."
+                "Operaciones visuales, adiós a la tediosidad del texto plano: esta es la diferencia fundamental entre HagiCode y las herramientas puramente de línea de comandos. Elegir una HagiTask no requiere teclear comandos y ensamblar parámetros en la terminal — se hace a través de una interfaz visual cuidadosamente diseñada. Clic para seleccionar tareas, menús desplegables para cambiar parámetros, arrastrar y soltar para reordenar tareas — cada paso tiene feedback visual claro e indicadores de estado. La interacción humano-máquina pasa de 'escribir código para invocar IA' a 'usar una UI para dirigir IA'."
               ]
             },
             {
@@ -205,6 +205,32 @@
                 "Ajusta diferentes rutas de modelo para diferentes cargas de trabajo, como codificación rápida, revisión profunda o planificación de arquitectura.",
                 "Ajusta costo y capacidad una vez en la capa de enrutamiento en lugar de reworkizar cada flujo de trabajo individual."
               ]
+            },
+            {
+              "id": "deepagents-vs-hagicode-section-2-item-11",
+              "title": "Vista unificada de llamadas a herramientas: consulta el uso de herramientas de DeepAgents con un formato coherente",
+              "content": [
+                "HagiCode asocia un único formato tipado de llamada a herramienta a cada mensaje de uso de herramienta y de resultado. Registra el tipo de herramienta, sus campos de entrada, el estado, el texto o las imágenes del resultado, cualquier error y los tiempos. El formato se calcula a partir de los datos almacenados, así que el historial de la sesión y las actualizaciones en vivo muestran la misma vista.",
+                "El mismo formato sirve para todos los proveedores, de modo que las llamadas a herramientas de DeepAgents se ven igual que las de cualquier otro agente de tu espacio de trabajo. Lees un solo formato en lugar de aprender la salida en bruto de cada CLI."
+              ],
+              "bullets": [
+                "Un solo formato para todos los proveedores: las llamadas de shell, archivos, búsqueda, fetch y MCP se presentan de forma coherente;",
+                "Las llamadas fallidas incluyen un mensaje de error legible;",
+                "Las imágenes raster de las herramientas se transportan como data URI."
+              ]
+            },
+            {
+              "id": "deepagents-vs-hagicode-section-2-item-12",
+              "title": "Consumo de un vistazo: los tokens y el coste de hoy en la barra de estado",
+              "content": [
+                "HagiCode puede mostrar en su barra de estado el consumo de tokens y el coste de hoy procedentes de la aplicación de escritorio TokenMonitor. La integración es opcional y viene desactivada por defecto.",
+                "Lee periódicamente el archivo de datos local de TokenMonitor o un HostHub de TokenMonitor y conserva únicamente el total de tokens y el coste de hoy. La barra de estado sigue siendo una consulta rápida, no un informe de consumo completo."
+              ],
+              "bullets": [
+                "No se lee nada hasta que activas la integración;",
+                "El secreto del HostHub es de solo escritura: una vez guardado, nunca se devuelve ni se registra;",
+                "Una dirección de HostHub no válida se rechaza al guardarla."
+              ]
             }
           ]
         }
@@ -227,8 +253,10 @@
           "type": "bullet-list",
           "items": [
             "DeepAgents proporciona orquestación: descomposición automática de tareas, coordinación multi-herramienta, conciencia de estado y ajuste dinámico;",
-            "HagiCode proporciona eficiencia: multithreading, gestión de flota de Agents, propuestas OpenSpec, commits IA, editor Code Server, Preset Tasks;",
+            "HagiCode proporciona eficiencia: multithreading, gestión de flota de Agents, propuestas OpenSpec, commits IA, editor Code Server, HagiTasks;",
             "HagiCode expande fronteras: Monospecs deja que DeepAgents entienda relaciones de proyecto cross-repo, Vault da a DeepAgents memoria a largo plazo cross-sesión, OmniRoute libera a DeepAgents del bloqueo de suscripción de modelo;",
+            "Vista de llamadas a herramientas: un formato coherente para el uso de herramientas de cualquier proveedor, en el historial y en las actualizaciones en vivo;",
+            "Consumo de un vistazo: vista opcional de TokenMonitor en la barra de estado con los tokens y el coste de hoy;",
             "Juntos proporcionan una experiencia: cadenas de decisión rastreables, tareas diarias automatizadas, una interfaz agradable, y un compañero IA a largo plazo que realmente entiende tu paisaje de proyecto y puede configurarse libremente con cualquier fuente de modelo."
           ]
         }

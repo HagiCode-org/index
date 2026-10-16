@@ -3,12 +3,12 @@
   "slug": "qoder-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "pt-BR",
-  "updatedAt": "2026-06-17T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "QoderCLI vs HagiCode: recursos e comparação",
-    "description": "Entenda as funções principais do QoderCLI, suas características técnicas e seu ecossistema de aplicação, e veja como o HagiCode eleva o QoderCLI ao próximo nível através de multithreading, propostas OpenSpec, commits de IA, Preset Tasks, UI gamificada, gestão de Agents, Monospecs, Vault e OmniRoute."
+    "description": "Entenda as funções principais do QoderCLI, suas características técnicas e seu ecossistema de aplicação, e veja como o HagiCode eleva o QoderCLI ao próximo nível através de multithreading, propostas OpenSpec, commits de IA, HagiTasks, UI gamificada, gestão de Agents, Monospecs, Vault e OmniRoute. Cobre também a visão compartilhada de chamadas de ferramenta e o uso do TokenMonitor na barra de status."
   },
-  "summary": "O QoderCLI é uma ferramenta CLI de programação com IA moderna com interação fluida, gestão de contexto eficiente e chamadas de ferramentas flexíveis. Com um design que coloca a experiência do desenvolvedor em primeiro lugar, ele oferece conversas multi-turno naturais e fluxos de trabalho eficientes. No entanto, o QoderCLI é uma ferramenta de terminal, e o HagiCode é uma workbench com gestão multi-repo, persistência de conhecimento e fluxo de trabalho visual. Ambos juntos estendem a experiência fluida do QoderCLI a um processo de desenvolvimento completo.",
+  "summary": "O QoderCLI é uma ferramenta CLI de programação com IA moderna com interação fluida, gestão de contexto eficiente e chamadas de ferramentas flexíveis. Com um design que coloca a experiência do desenvolvedor em primeiro lugar, ele oferece conversas multi-turno naturais e fluxos de trabalho eficientes. No entanto, o QoderCLI é uma ferramenta de terminal, e o HagiCode é uma workbench com gestão multi-repo, persistência de conhecimento e fluxo de trabalho visual. Ambos juntos estendem a experiência fluida do QoderCLI a um processo de desenvolvimento completo. Ele também cobre a visão compartilhada de chamadas de ferramenta e o uso opcional do TokenMonitor na barra de status.",
   "sections": [
     {
       "id": "qoder-vs-hagicode-section-1",
@@ -122,16 +122,16 @@
             },
             {
               "id": "qoder-vs-hagicode-section-2-item-5",
-              "title": "Preset Task: criar templates da codificação fluida do Qoder",
+              "title": "HagiTask: criar templates da codificação fluida do Qoder",
               "content": [
                 "As capacidades do Qoder são fortes, mas digitar manualmente os requisitos toda vez não é eficiente. Mais importante, a comunidade já produziu uma riqueza de Skills de alta qualidade — de templates de revisão de código a geradores CRUD full-stack, de geração automática de documentação a orquestração de casos de teste. Essas práticas comprovadas estão espalhadas por toda parte sem um lugar unificado para hospedá-las e invocá-las.",
-                "O mecanismo Preset Task do HagiCode é projetado para resolver esse problema. É mais do que apenas comandos de atalho — é uma plataforma de integração de Skills extensível:",
-                "O Preset Task eleva sua colaboração com Qoder de 'comunicar do zero toda vez' para 'apoiar-se nos ombros da comunidade, invocação com um clique de fluxos de trabalho maduros'. Você escolhe o template, Qoder executa — essa é verdadeira automação de fluxo de trabalho, e todo o processo é visualmente delicioso."
+                "O mecanismo HagiTask do HagiCode é projetado para resolver esse problema. É mais do que apenas comandos de atalho — é uma plataforma de integração de Skills extensível:",
+                "O HagiTask eleva sua colaboração com Qoder de 'comunicar do zero toda vez' para 'apoiar-se nos ombros da comunidade, invocação com um clique de fluxos de trabalho maduros'. Você escolhe o template, Qoder executa — essa é verdadeira automação de fluxo de trabalho, e todo o processo é visualmente delicioso."
               ],
               "bullets": [
-                "Skills de comunidade prontas para usar: o HagiCode suporta a importação de Skills populares da comunidade como Preset Tasks. Você não precisa elaborar prompts complexos do zero — a comunidade já acumulou uma riqueza de templates de tarefas de alta qualidade. Importe e use imediatamente — novos módulos CRUD, revisões de código abrangentes, geração de documentação de API — todos têm soluções prontas.",
+                "Skills de comunidade prontas para usar: o HagiCode suporta a importação de Skills populares da comunidade como HagiTasks. Você não precisa elaborar prompts complexos do zero — a comunidade já acumulou uma riqueza de templates de tarefas de alta qualidade. Importe e use imediatamente — novos módulos CRUD, revisões de código abrangentes, geração de documentação de API — todos têm soluções prontas.",
                 "Sistema de Skills extensível: se você tem requisitos de projeto únicos ou convenções de equipe, o HagiCode permite que você personalize e componha sobre as Skills da comunidade. Você pode ajustar checklists, adicionar padrões de codificação da equipe, ou até encadear múltiplas Skills em um pipeline de desenvolvimento completo, construindo a biblioteca de templates de tarefas do seu próprio time.",
-                "Operações visuais, adeus à tedição de texto simples: esta é a diferença fundamental entre o HagiCode e ferramentas puramente de linha de comando. Escolher uma Preset Task não exige digitar comandos e montar parâmetros no terminal — é feito através de uma interface visual cuidadosamente projetada. Clique para selecionar tarefas, menus suspensos para trocar parâmetros, arrastar e soltar para reordenar tarefas — cada passo tem feedback visual claro e indicadores de status. A interação humano-máquina muda de 'escrever código para invocar IA' para 'usar uma UI para dirigir a IA'."
+                "Operações visuais, adeus à tedição de texto simples: esta é a diferença fundamental entre o HagiCode e ferramentas puramente de linha de comando. Escolher uma HagiTask não exige digitar comandos e montar parâmetros no terminal — é feito através de uma interface visual cuidadosamente projetada. Clique para selecionar tarefas, menus suspensos para trocar parâmetros, arrastar e soltar para reordenar tarefas — cada passo tem feedback visual claro e indicadores de status. A interação humano-máquina muda de 'escrever código para invocar IA' para 'usar uma UI para dirigir a IA'."
               ]
             },
             {
@@ -205,6 +205,32 @@
                 "Ajuste diferentes rotas de modelo para diferentes cargas de trabalho, como codificação rápida, revisão profunda ou planejamento de arquitetura.",
                 "Ajuste custo e capacidade uma vez na camada de roteamento em vez de retrabalhar cada fluxo de trabalho individual."
               ]
+            },
+            {
+              "id": "qoder-vs-hagicode-section-2-item-11",
+              "title": "Visão unificada de chamadas de ferramenta: veja o uso de ferramentas de QoderCLI em um formato consistente",
+              "content": [
+                "O HagiCode anexa um único formato tipado de chamada de ferramenta a cada mensagem de uso e de resultado de ferramenta. Ele registra o tipo da ferramenta, seus campos de entrada, o status, o texto ou as imagens do resultado, qualquer erro e o tempo gasto. O formato é calculado a partir dos dados armazenados, então o histórico da sessão e as atualizações ao vivo mostram a mesma visão.",
+                "O mesmo formato vale para todos os provedores, então as chamadas de ferramenta de QoderCLI ficam parecidas com as de qualquer outro agente do seu workspace. Você lê um único formato em vez de aprender a saída bruta de cada CLI."
+              ],
+              "bullets": [
+                "Um formato para todos os provedores: chamadas de shell, arquivos, busca, fetch e MCP são apresentadas de forma consistente;",
+                "Chamadas com falha trazem uma mensagem de erro legível;",
+                "Imagens raster de ferramentas são transportadas como data URI."
+              ]
+            },
+            {
+              "id": "qoder-vs-hagicode-section-2-item-12",
+              "title": "Uso num relance: tokens e custo de hoje na barra de status",
+              "content": [
+                "O HagiCode pode exibir na barra de status os tokens consumidos e o custo de hoje, vindos do aplicativo desktop TokenMonitor. A integração é opcional e vem desativada por padrão.",
+                "Ela lê o arquivo de dados local do TokenMonitor ou um HostHub do TokenMonitor em intervalos regulares e guarda apenas o total de tokens e o custo de hoje. A barra de status continua sendo uma olhada rápida, não um relatório completo de uso."
+              ],
+              "bullets": [
+                "Nada é lido até você ativar a integração;",
+                "O segredo do HostHub é somente de escrita e nunca é devolvido nem registrado em log depois de salvo;",
+                "Um endereço de HostHub inválido é rejeitado ao salvar."
+              ]
             }
           ]
         }
@@ -227,8 +253,10 @@
           "type": "bullet-list",
           "items": [
             "O Qoder fornece fluidez: gestão de contexto eficiente, chamadas de ferramentas rápidas, conversa natural;",
-            "O HagiCode fornece eficiência: multithreading, gestão de frota de Agents, propostas OpenSpec, commits de IA, editor Code Server, Preset Tasks;",
+            "O HagiCode fornece eficiência: multithreading, gestão de frota de Agents, propostas OpenSpec, commits de IA, editor Code Server, HagiTasks;",
             "O HagiCode expande fronteiras: Monospecs permite que o Qoder entenda relações de projeto cross-repo, o Vault dá ao Qoder memória de longo prazo cross-sessão, o OmniRoute libera o Qoder do lock-in de assinatura de modelo;",
+            "Visão de chamadas de ferramenta: um formato consistente para o uso de ferramentas de todos os provedores, no histórico e nas atualizações ao vivo;",
+            "Uso num relance: visão opcional do TokenMonitor na barra de status com os tokens e o custo de hoje;",
             "Juntos eles fornecem uma experiência: cadeias de decisão rastreáveis, tarefas diárias automatizadas, uma interface agradável, e um parceiro de IA de longo prazo que realmente entende sua paisagem de projeto e pode ser livremente configurado com qualquer fonte de modelo."
           ]
         }

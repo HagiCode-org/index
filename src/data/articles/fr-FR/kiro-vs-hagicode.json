@@ -3,12 +3,12 @@
   "slug": "kiro-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "fr-FR",
-  "updatedAt": "2026-06-17T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "Kiro CLI vs HagiCode : fonctionnalités et comparaison",
-    "description": "Comprenez les fonctions clés de Kiro CLI, ses caractéristiques techniques et son expérience développeur, et voyez comment HagiCode porte Kiro CLI au niveau supérieur via le multithreading, les propositions OpenSpec, les commits IA, les Preset Tasks, l'UI gamifiée, la gestion des Agents, les Monospecs, le Vault et OmniRoute."
+    "description": "Comprenez les fonctions clés de Kiro CLI, ses caractéristiques techniques et son expérience développeur, et voyez comment HagiCode porte Kiro CLI au niveau supérieur via le multithreading, les propositions OpenSpec, les commits IA, les HagiTasks, l'UI gamifiée, la gestion des Agents, les Monospecs, le Vault et OmniRoute. Couvre aussi la vue unifiée des appels d'outils et l'usage TokenMonitor dans la barre d'état."
   },
-  "summary": "Kiro CLI est un outil CLI de programmation IA focalisé sur l'expérience développeur, conçu autour de la simplicité, de l'affinement et de l'efficacité. Avec un onboarding rapide, une génération de code précise et un feedback d'interaction clair, il est connu pour une expérience de codage agréable. Cependant, Kiro CLI est un outil terminal, et HagiCode est un atelier avec gestion multi-repo, persistance des connaissances et workflow visuel. Les deux ensemble étendent l'expérience affinée de Kiro à un processus de développement complet.",
+  "summary": "Kiro CLI est un outil CLI de programmation IA focalisé sur l'expérience développeur, conçu autour de la simplicité, de l'affinement et de l'efficacité. Avec un onboarding rapide, une génération de code précise et un feedback d'interaction clair, il est connu pour une expérience de codage agréable. Cependant, Kiro CLI est un outil terminal, et HagiCode est un atelier avec gestion multi-repo, persistance des connaissances et workflow visuel. Les deux ensemble étendent l'expérience affinée de Kiro à un processus de développement complet. Il couvre aussi la vue unifiée des appels d'outils et l'usage TokenMonitor facultatif dans la barre d'état.",
   "sections": [
     {
       "id": "kiro-vs-hagicode-section-1",
@@ -122,16 +122,16 @@
             },
             {
               "id": "kiro-vs-hagicode-section-2-item-5",
-              "title": "Preset Task : modéliser les capacités de codage précis de Kiro",
+              "title": "HagiTask : modéliser les capacités de codage précis de Kiro",
               "content": [
                 "Les capacités de Kiro sont fortes, mais taper manuellement les exigences à chaque fois n'est pas efficace. Plus important encore, la communauté a déjà produit une richesse de Skills de haute qualité — des modèles de revue de code aux générateurs CRUD full-stack, de la génération automatique de documentation à l'orchestration de cas de test. Ces pratiques éprouvées sont dispersées partout sans endroit unifié pour les héberger et les invoquer.",
-                "Le mécanisme Preset Task de HagiCode est conçu pour résoudre ce problème. C'est plus que de simples commandes raccourcies — c'est une plateforme d'intégration Skills extensible :",
-                "Preset Task met à niveau votre collaboration avec Kiro de 'communiquer à partir de zéro à chaque fois' à 'se tenir sur les épaules de la communauté, invoquer en un clic des workflows matures'. Vous choisissez le modèle, Kiro exécute — c'est la véritable automatisation de workflow, et tout le processus est visuellement délicieux."
+                "Le mécanisme HagiTask de HagiCode est conçu pour résoudre ce problème. C'est plus que de simples commandes raccourcies — c'est une plateforme d'intégration Skills extensible :",
+                "HagiTask met à niveau votre collaboration avec Kiro de 'communiquer à partir de zéro à chaque fois' à 'se tenir sur les épaules de la communauté, invoquer en un clic des workflows matures'. Vous choisissez le modèle, Kiro exécute — c'est la véritable automatisation de workflow, et tout le processus est visuellement délicieux."
               ],
               "bullets": [
-                "Compétences communautaires prêtes à l'emploi : HagiCode prend en charge l'import de Skills communautaires populaires en tant que Preset Tasks. Vous n'avez pas besoin de concevoir des prompts complexes à partir de zéro — la communauté a déjà accumulé une richesse de modèles de tâches de haute qualité. Importez et utilisez immédiatement : nouveaux modules CRUD, revues de code complètes, génération de documentation d'API — tout a des solutions prêtes.",
+                "Compétences communautaires prêtes à l'emploi : HagiCode prend en charge l'import de Skills communautaires populaires en tant que HagiTasks. Vous n'avez pas besoin de concevoir des prompts complexes à partir de zéro — la communauté a déjà accumulé une richesse de modèles de tâches de haute qualité. Importez et utilisez immédiatement : nouveaux modules CRUD, revues de code complètes, génération de documentation d'API — tout a des solutions prêtes.",
                 "Système de Skills extensible : si vous avez des exigences de projet uniques ou des conventions d'équipe, HagiCode vous permet de personnaliser et composer par-dessus les Skills communautaires. Vous pouvez ajuster les checklists, ajouter des standards de codage d'équipe, voire chaîner plusieurs Skills en un pipeline de développement complet, construisant ainsi la bibliothèque de modèles de tâches de votre équipe.",
-                "Opérations visuelles, adieu à la tediousness du texte brut : c'est la différence fondamentale entre HagiCode et les outils purement en ligne de commande. Choisir une Preset Task n'exige pas de taper des commandes et d'assembler des paramètres dans le terminal — cela se fait via une interface visuelle soigneusement conçue. Cliquez pour sélectionner des tâches, menus déroulants pour changer de paramètres, glisser-déposer pour réordonner les tâches — chaque étape a un retour visuel clair et des indicateurs de statut. L'interaction homme-machine passe de 'écrire du code pour invoquer l'IA' à 'utiliser une UI pour diriger l'IA'."
+                "Opérations visuelles, adieu à la tediousness du texte brut : c'est la différence fondamentale entre HagiCode et les outils purement en ligne de commande. Choisir une HagiTask n'exige pas de taper des commandes et d'assembler des paramètres dans le terminal — cela se fait via une interface visuelle soigneusement conçue. Cliquez pour sélectionner des tâches, menus déroulants pour changer de paramètres, glisser-déposer pour réordonner les tâches — chaque étape a un retour visuel clair et des indicateurs de statut. L'interaction homme-machine passe de 'écrire du code pour invoquer l'IA' à 'utiliser une UI pour diriger l'IA'."
               ]
             },
             {
@@ -205,6 +205,32 @@
                 "Ajustez différentes routes de modèle pour différentes charges de travail, comme le codage rapide, la revue approfondie ou la planification d'architecture.",
                 "Ajustez les coûts et capacités une fois sur la couche de routage au lieu de retravailler chaque workflow individuel."
               ]
+            },
+            {
+              "id": "kiro-vs-hagicode-section-2-item-11",
+              "title": "Vue unifiée des appels d'outils : consultez l'usage des outils de Kiro CLI sous une forme cohérente",
+              "content": [
+                "HagiCode associe une même structure typée d'appel d'outil à chaque message d'utilisation d'outil et de résultat d'outil. Elle consigne le type d'outil, ses champs d'entrée, son statut, le texte ou les images du résultat, l'éventuelle erreur et la durée. Cette structure est calculée à partir des données stockées : l'historique de la session et les mises à jour en direct affichent donc la même vue.",
+                "La même structure couvre tous les fournisseurs, de sorte que les appels d'outils de Kiro CLI ressemblent à ceux des autres agents de votre espace de travail. Vous lisez un seul format au lieu d'apprendre la sortie brute de chaque CLI."
+              ],
+              "bullets": [
+                "Une seule structure pour tous les fournisseurs : les appels shell, fichier, recherche, fetch et MCP sont présentés de façon cohérente ;",
+                "Les appels en échec portent un message d'erreur lisible ;",
+                "Les images d'outils raster sont transmises sous forme de data URI."
+              ]
+            },
+            {
+              "id": "kiro-vs-hagicode-section-2-item-12",
+              "title": "L'usage en un coup d'œil : tokens et coût du jour dans la barre d'état",
+              "content": [
+                "HagiCode peut afficher dans sa barre d'état la consommation de tokens et le coût du jour issus de l'application de bureau TokenMonitor. L'intégration est facultative et désactivée par défaut.",
+                "Elle lit à intervalle régulier le fichier de données local de TokenMonitor ou un HostHub TokenMonitor, et ne conserve que le total de tokens et le coût du jour. La barre d'état reste donc un simple coup d'œil, et non un rapport d'usage complet."
+              ],
+              "bullets": [
+                "Rien n'est lu tant que vous n'activez pas l'intégration ;",
+                "Le secret du HostHub est en écriture seule : il n'est jamais renvoyé ni journalisé une fois enregistré ;",
+                "Une adresse de HostHub invalide est refusée à l'enregistrement."
+              ]
             }
           ]
         }
@@ -227,8 +253,10 @@
           "type": "bullet-list",
           "items": [
             "Kiro fournit la précision : génération de code exacte, feedback d'interaction clair, onboarding ultra-rapide ;",
-            "HagiCode fournit l'efficacité : multithreading, gestion de flotte d'Agents, propositions OpenSpec, commits IA, éditeur Code Server, Preset Tasks ;",
+            "HagiCode fournit l'efficacité : multithreading, gestion de flotte d'Agents, propositions OpenSpec, commits IA, éditeur Code Server, HagiTasks ;",
             "HagiCode étend les frontières : Monospecs laisse Kiro comprendre les relations de projet cross-repo, Vault donne à Kiro une mémoire à long terme cross-session, OmniRoute libère Kiro du verrouillage d'abonnement de modèle ;",
+            "Vue des appels d'outils : une structure cohérente pour l'usage des outils de chaque fournisseur, dans l'historique comme en direct ;",
+            "L'usage en un coup d'œil : vue TokenMonitor facultative des tokens et du coût du jour dans la barre d'état ;",
             "Ensemble ils fournissent une expérience : chaînes de décision traçables, tâches quotidiennes automatisées, une interface agréable, et un partenaire IA à long terme qui comprend vraiment votre paysage de projet et peut être librement configuré avec n'importe quelle source de modèle."
           ]
         }

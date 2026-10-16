@@ -3,12 +3,12 @@
   "slug": "pi-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "zh-CN",
-  "updatedAt": "2026-06-18T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "Pi CLI 对比 HagiCode:功能与差异",
-    "description": "了解 Pi CLI 以 provider 为中心的工作方式、会话控制和工具治理能力，并从多线程并行、OpenSpec 提案、AI 提交、Preset Task、游戏化界面、Agents 管理、Monospecs、Vault 和 OmniRoute 等角度，看 HagiCode 如何把 Pi 变成生产级的 AI 编程工作台。"
+    "description": "了解 Pi CLI 以 provider 为中心的工作方式、会话控制和工具治理能力，并从多线程并行、OpenSpec 提案、AI 提交、HagiTask、游戏化界面、Agents 管理、Monospecs、Vault 和 OmniRoute 等角度，看 HagiCode 如何把 Pi 变成生产级的 AI 编程工作台。同时涵盖共用的工具调用视图与 TokenMonitor 状态栏用量。包含可恢复同一次运行的交互式提问。"
   },
-  "summary": "Pi CLI 是一个强调 provider 解耦的灵活 AI 编程入口。它通过可配置的 thinking 模式、会话持久化控制以及显式的工具开关，让开发者能够更细粒度地决定 AI 助手该如何工作。不过 Pi CLI 本质上仍然是一个命令行入口，而 HagiCode 是一个完整的 AI 编程工作台。两者结合，才能把 Pi 从“可配置 CLI”升级为“日常开发环境”。",
+  "summary": "Pi CLI 是一个强调 provider 解耦的灵活 AI 编程入口。它通过可配置的 thinking 模式、会话持久化控制以及显式的工具开关，让开发者能够更细粒度地决定 AI 助手该如何工作。不过 Pi CLI 本质上仍然是一个命令行入口，而 HagiCode 是一个完整的 AI 编程工作台。两者结合，才能把 Pi 从“可配置 CLI”升级为“日常开发环境”。它还涵盖共用的工具调用视图，以及状态栏中可选的 TokenMonitor 用量显示。Pi CLI 可以在运行中提出结构化问题，你回答后运行即可继续。",
   "sections": [
     {
       "id": "pi-vs-hagicode-section-1",
@@ -35,7 +35,7 @@
                 "Pi 在架构层面有几个值得注意的特点：",
                 "结构化 CLI 运行时：在 HagiCode Core 中，Pi 以一个很薄的适配层接入共享 libs runtime，对外维持稳定的产品契约，对内复用统一的 CLI 进程处理能力。",
                 "会话感知执行：Pi 既可以复用已有会话状态，也可以在 noSession 模式下进行完全无状态执行。它既适合长线程开发，也适合那些不希望上下文污染的单次任务。",
-                "支持流式输出与工具调用：Pi 支持 streaming、tool calls 和 system messages。它不是一个只会“一问一答”的命令包装器，而是能够进入更完整 AI 编程工作流的运行节点。"
+                "支持流式输出与工具调用：Pi 会在输出产生时即时流式返回（Pi 0.84 及更高版本为增量片段，0.78.x 为完整快照），并支持 tool calls 和 system messages。它不是一个只会“一问一答”的命令包装器，而是能够进入更完整 AI 编程工作流的运行节点。"
               ]
             },
             {
@@ -123,11 +123,11 @@
             },
             {
               "id": "pi-vs-hagicode-section-2-item-5",
-              "title": "Preset Task：把 Pi 的常见工作流封装成可复用模板",
+              "title": "HagiTask：把 Pi 的常见工作流封装成可复用模板",
               "content": [
                 "Pi 的灵活性很强，但如果每次都要手动重述 provider 选择、工具边界和任务框架，本身就是一种浪费。",
-                "HagiCode 的 Preset Task 机制，就是把这些重复出现的模式整理成可复用模板。它做的不只是“快捷指令”，更是一个可扩展的 Skills 集成平台：",
-                "Preset Task 让你和 Pi 的协作从“每次都重新搭流程”升级为“直接挑流程并执行”。这时，配置能力才真正变成工程效率。"
+                "HagiCode 的 HagiTask 机制，就是把这些重复出现的模式整理成可复用模板。它做的不只是“快捷指令”，更是一个可扩展的 Skills 集成平台：",
+                "HagiTask 让你和 Pi 的协作从“每次都重新搭流程”升级为“直接挑流程并执行”。这时，配置能力才真正变成工程效率。"
               ],
               "bullets": [
                 "社区 Skills 即装即用：把成熟的审查、重构、CRUD、文档生成流程直接导入使用。",
@@ -206,6 +206,45 @@
                 "针对快速编码、深度审查、架构规划等不同任务配置不同模型路线。",
                 "在路由层一次调整成本与能力配置，而不是逐个工作流重复折腾。"
               ]
+            },
+            {
+              "id": "pi-vs-hagicode-section-2-item-11",
+              "title": "统一工具调用视图：以一致的形态查看 Pi CLI 的工具使用",
+              "content": [
+                "HagiCode 会为每条工具调用消息和工具结果消息附加同一种类型化的工具调用结构，包括工具类型、输入字段、状态、结果文本或图片、错误信息以及耗时。该结构由已存储的数据计算得出，因此会话历史与实时更新显示的内容一致。",
+                "无论使用哪个提供方，工具调用都采用同一种格式。Pi CLI 的工具调用因此与工作区中其他 Agent 的调用保持一致，你无需分别适应每个 CLI 的原始输出。"
+              ],
+              "bullets": [
+                "所有提供方共用一种结构，shell、文件、搜索、抓取与 MCP 调用的呈现方式保持一致；",
+                "失败的调用会附带可读的错误信息；",
+                "栅格格式的工具图片以 data URI 形式传递。"
+              ]
+            },
+            {
+              "id": "pi-vs-hagicode-section-2-item-12",
+              "title": "一目了然：在状态栏查看今日的 Token 用量与费用",
+              "content": [
+                "HagiCode 可以在状态栏中显示来自 TokenMonitor 桌面应用的今日 Token 用量与费用。该集成为可选功能，默认关闭。",
+                "它会定时读取 TokenMonitor 的本地数据文件或 TokenMonitor HostHub，只保留今日的 Token 总量和费用。状态栏因此用于快速查看，而不是完整的用量报告。"
+              ],
+              "bullets": [
+                "未开启集成前不会读取任何数据；",
+                "HostHub 密钥只写不读，保存后不会再返回或写入日志；",
+                "无效的 HostHub 地址会在保存时被拒绝。"
+              ]
+            },
+            {
+              "id": "pi-vs-hagicode-section-2-item-13",
+              "title": "交互式提问：让 Pi CLI 提问，并在同一次运行中继续",
+              "content": [
+                "当 Pi CLI 需要做出决定时，可以在运行过程中向你提出结构化问题。HagiCode 会在会话中展示该问题，会话状态从执行中变为等待回复，你的回答会让同一次运行继续。",
+                "如果运行已经结束，例如重启或超时之后，你的回答会作为普通消息发送到同一会话中，工作得以继续。"
+              ],
+              "bullets": [
+                "CLI 同时提出的多个问题可以在一次提交中一并作答；",
+                "未在 30 分钟内回答的问题会过期，仍可通过后续消息补充回答；",
+                "按 CLI 通过交互控制设置启用，由你决定允许哪些 Agent 提问。"
+              ]
             }
           ]
         }
@@ -228,8 +267,11 @@
           "type": "bullet-list",
           "items": [
             "Pi 提供控制力：provider 路由、thinking 配置、会话行为和工具治理；",
-            "HagiCode 提供效率：多线程并行、Agents 编队管理、OpenSpec 提案、AI 提交、Code Server 编辑器、Preset Task；",
+            "HagiCode 提供效率：多线程并行、Agents 编队管理、OpenSpec 提案、AI 提交、Code Server 编辑器、HagiTask；",
             "HagiCode 拓展边界：Monospecs 让 Pi 理解跨仓库项目关系，Vault 让 Pi 拥有跨会话长期记忆，OmniRoute 让 Pi 的 provider-first 工作流在团队里可持续放大；",
+            "工具调用视图：所有提供方的工具使用都采用一致的结构，历史记录与实时更新保持一致；",
+            "一目了然：可选的 TokenMonitor 状态栏显示今日 Token 用量与费用；",
+            "交互式提问：回答 Agent 的结构化问题，让同一次运行继续；",
             "两者结合提供体验：可追溯的决策链、自动化的日常事务、让人愉悦的操作界面，以及一个真正了解你项目全景、可自由配置模型来源的长期 AI 搭档。"
           ]
         }

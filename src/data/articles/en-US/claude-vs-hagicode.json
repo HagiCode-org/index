@@ -3,12 +3,12 @@
   "slug": "claude-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "en-US",
-  "updatedAt": "2026-06-17T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "Claude Code vs HagiCode: Features and Comparison",
-    "description": "Understand Claude's key features, model characteristics, and plugin ecosystem, and see how HagiCode takes Claude's power to the next level through multi-threaded parallelism, OpenSpec proposals, AI commits, Preset Tasks, gamified UI, Agents management, Monospecs, Vault, and OmniRoute."
+    "description": "Understand Claude's key features, model characteristics, and plugin ecosystem, and see how HagiCode takes Claude's power to the next level through multi-threaded parallelism, OpenSpec proposals, AI commits, HagiTasks, gamified UI, Agents management, Monospecs, Vault, and OmniRoute. Also covers the shared tool-call view and TokenMonitor status-bar usage. Includes interactive questions that resume the same run. Includes the agent work panel for subagents and monitors."
   },
-  "summary": "Claude is widely recognized as one of the most powerful AI coding assistants in the world. With its ultra-long context window, deep reasoning capabilities, and highly secure model alignment, it has earned the trust of countless developers. However, Claude itself is a carrier of model capability, while HagiCode is a desktop workbench purpose-built for AI programming scenarios. Each excels in its domain, and using them together truly unleashes Claude's full power.",
+  "summary": "Claude is widely recognized as one of the most powerful AI coding assistants in the world. With its ultra-long context window, deep reasoning capabilities, and highly secure model alignment, it has earned the trust of countless developers. However, Claude itself is a carrier of model capability, while HagiCode is a desktop workbench purpose-built for AI programming scenarios. Each excels in its domain, and using them together truly unleashes Claude's full power. It also covers the shared tool-call view and optional TokenMonitor usage in the status bar. Claude Code can ask structured questions during a run, and the run continues once you answer. HagiCode also lists the subagents and monitors that a Claude Code run is still waiting on.",
   "sections": [
     {
       "id": "claude-vs-hagicode-section-1",
@@ -122,16 +122,16 @@
             },
             {
               "id": "claude-vs-hagicode-section-2-item-5",
-              "title": "Preset Task: One-click trigger high-frequency workflows, integrated with the community Skills ecosystem",
+              "title": "HagiTask: One-click trigger high-frequency workflows, integrated with the community Skills ecosystem",
               "content": [
                 "Claude's capabilities are strong, but manually typing out requirements each time isn't efficient. More importantly, the community has already produced a wealth of high-quality Skills — from code review templates to full-stack CRUD generators, from automatic documentation generation to test case orchestration. These proven practices are scattered everywhere with no unified place to host and invoke them.",
-                "HagiCode's Preset Task mechanism is designed to solve this problem. It's more than just shortcut commands — it's an extensible Skills integration platform:",
-                "Preset Task upgrades your collaboration with Claude from 'communicating from scratch every time' to 'standing on the community's shoulders, one-click invocation of mature workflows.' You pick the template, Claude executes — this is true workflow automation, and the whole process is visually delightful."
+                "HagiCode's HagiTask mechanism is designed to solve this problem. It's more than just shortcut commands — it's an extensible Skills integration platform:",
+                "HagiTask upgrades your collaboration with Claude from 'communicating from scratch every time' to 'standing on the community's shoulders, one-click invocation of mature workflows.' You pick the template, Claude executes — this is true workflow automation, and the whole process is visually delightful."
               ],
               "bullets": [
-                "Community Skills ready to use: HagiCode supports importing popular community Skills as Preset Tasks. You don't need to craft complex prompts from scratch — the community has already accumulated a wealth of high-quality task templates. Import and use immediately — new CRUD modules, comprehensive code reviews, API documentation generation — all have ready-made solutions.",
+                "Community Skills ready to use: HagiCode supports importing popular community Skills as HagiTasks. You don't need to craft complex prompts from scratch — the community has already accumulated a wealth of high-quality task templates. Import and use immediately — new CRUD modules, comprehensive code reviews, API documentation generation — all have ready-made solutions.",
                 "Extensible Skills system: If you have unique project requirements or team conventions, HagiCode lets you customize and compose on top of community Skills. You can adjust checklists, add team coding standards, or even chain multiple Skills into a complete development pipeline, building your own team's task template library.",
-                "Visual operations, goodbye to the tedium of plain text: This is the fundamental difference between HagiCode and pure command-line tools. Choosing a Preset Task doesn't require typing commands and assembling parameters in the terminal — it's done through a carefully designed visual interface. Click to select tasks, dropdown menus to switch parameters, drag-and-drop to reorder tasks — every step has clear visual feedback and status indicators. The human-machine interaction shifts from 'writing code to invoke AI' to 'using a UI to direct AI.'"
+                "Visual operations, goodbye to the tedium of plain text: This is the fundamental difference between HagiCode and pure command-line tools. Choosing a HagiTask doesn't require typing commands and assembling parameters in the terminal — it's done through a carefully designed visual interface. Click to select tasks, dropdown menus to switch parameters, drag-and-drop to reorder tasks — every step has clear visual feedback and status indicators. The human-machine interaction shifts from 'writing code to invoke AI' to 'using a UI to direct AI.'"
               ]
             },
             {
@@ -205,6 +205,58 @@
                 "One access strategy, multi-CLI reuse: The model catalog, endpoint settings, and subscription policies you configure in OmniRoute are shared by all CLIs connected to HagiCode. No need to configure each CLI separately — maintenance costs drop dramatically.",
                 "Cost and capability decoupled: When a model's price increases or a new model launches, you only need to adjust once at the OmniRoute layer, and all active Agents automatically take the new route. You won't be forced to switch CLIs because of a model change, nor forced to accept high subscription prices because your CLI is too comfortable to leave."
               ]
+            },
+            {
+              "id": "claude-vs-hagicode-section-2-item-11",
+              "title": "Unified tool-call view: see Claude Code's tool use in one consistent shape",
+              "content": [
+                "HagiCode attaches one typed tool-call shape to every tool-use and tool-result message. It records the tool kind, its input fields, status, result text or images, any error, and timing. The shape is computed from stored data, so session history and live updates show the same view.",
+                "The same shape covers every provider, so Claude Code tool calls look like those of every other agent in your workspace. You read one format instead of learning each CLI's raw output."
+              ],
+              "bullets": [
+                "One shape for every provider: shell, file, search, fetch and MCP calls are presented consistently;",
+                "Failed calls carry a readable error message;",
+                "Raster tool images are carried as data URIs."
+              ]
+            },
+            {
+              "id": "claude-vs-hagicode-section-2-item-12",
+              "title": "Usage at a glance: today's tokens and cost in the status bar",
+              "content": [
+                "HagiCode can show today's token usage and cost from the TokenMonitor desktop app in its status bar. The integration is optional and off by default.",
+                "It reads TokenMonitor's local data file or a TokenMonitor HostHub on a schedule and keeps only today's total tokens and cost. The status bar stays a quick glance rather than a full usage report."
+              ],
+              "bullets": [
+                "Nothing is read until you turn the integration on;",
+                "The HostHub secret is write-only and is never returned or logged after you save it;",
+                "An invalid HostHub address is rejected when you save it."
+              ]
+            },
+            {
+              "id": "claude-vs-hagicode-section-2-item-13",
+              "title": "Interactive questions: let Claude Code ask, then continue the same run",
+              "content": [
+                "When Claude Code needs a decision, it can ask you a structured question during the run. HagiCode shows the question in the conversation, the session status changes from executing to waiting for a reply, and your answer lets the same run continue.",
+                "If the run has already ended, for example after a restart or a timeout, your answer is sent as a normal message in the same session so the work can carry on."
+              ],
+              "bullets": [
+                "Questions the CLI asks at the same time can be answered together in one submission;",
+                "A question that is not answered within 30 minutes expires and can still be answered through a follow-up message;",
+                "Enabled per CLI by the interactive-control setting, so you decide where agents may ask."
+              ]
+            },
+            {
+              "id": "claude-vs-hagicode-section-2-item-14",
+              "title": "Agent work panel: know why a run is still going",
+              "content": [
+                "While a run is still executing, Claude Code may be waiting on subagents or monitors. HagiCode lists that work with its status, so you can see what the run is waiting for instead of guessing.",
+                "The list is kept in memory for the current run and is recovered when you refresh the page during a wait."
+              ],
+              "bullets": [
+                "Subagents and monitors that the host is waiting on are listed with their status;",
+                "The list is not saved with the conversation history;",
+                "Background commands that the host does not wait for are not listed."
+              ]
             }
           ]
         }
@@ -227,8 +279,12 @@
           "type": "bullet-list",
           "items": [
             "Claude provides intelligence: ultra-long context, deep reasoning, safety alignment;",
-            "HagiCode provides efficiency: multi-threaded parallelism, Agents fleet management, OpenSpec proposals, AI commits, Code Server editor, Preset Tasks;",
+            "HagiCode provides efficiency: multi-threaded parallelism, Agents fleet management, OpenSpec proposals, AI commits, Code Server editor, HagiTasks;",
             "HagiCode expands boundaries: Monospecs lets Claude understand cross-repo project relationships, Vault gives Claude cross-session long-term memory, OmniRoute frees Claude from model subscription lock-in;",
+            "Tool-call view: one consistent shape for every provider's tool use, in history and live updates;",
+            "Usage at a glance: optional TokenMonitor status-bar view of today's tokens and cost;",
+            "Interactive questions: answer the agent's structured questions and let the same run continue;",
+            "Agent work panel: see which subagents and monitors a run is still waiting on;",
             "Together they provide an experience: traceable decision chains, automated daily tasks, a genuinely enjoyable interface, and a long-term AI partner that truly understands your project landscape and can be freely configured with any model source."
           ]
         }

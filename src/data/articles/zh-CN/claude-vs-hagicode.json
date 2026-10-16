@@ -3,12 +3,12 @@
   "slug": "claude-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "zh-CN",
-  "updatedAt": "2026-06-17T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "Claude Code 对比 HagiCode:功能与差异",
-    "description": "了解 Claude 的主要功能、模型特点和插件生态，并从多线程并行、OpenSpec 提案、AI 提交、Preset Task、游戏化界面、Agents 管理、Monospecs、Vault 和 OmniRoute 等角度，看 HagiCode 如何让 Claude 的实力更上一层楼。"
+    "description": "了解 Claude 的主要功能、模型特点和插件生态，并从多线程并行、OpenSpec 提案、AI 提交、HagiTask、游戏化界面、Agents 管理、Monospecs、Vault 和 OmniRoute 等角度，看 HagiCode 如何让 Claude 的实力更上一层楼。同时涵盖共用的工具调用视图与 TokenMonitor 状态栏用量。包含可恢复同一次运行的交互式提问。包含列出子 Agent 与监控任务的 Agent 工作面板。"
   },
-  "summary": "Claude 是目前全球公认最强大的 AI 编程助手之一，凭借超长上下文窗口、深度推理能力和高度安全的模型对齐，赢得了大量开发者的信赖。不过 Claude 本身是一个模型能力的载体，而 HagiCode 是一个专门为 AI 编程场景设计的桌面工作台——两者各有所长，配合使用才能真正发挥 Claude 的全部实力。",
+  "summary": "Claude 是目前全球公认最强大的 AI 编程助手之一，凭借超长上下文窗口、深度推理能力和高度安全的模型对齐，赢得了大量开发者的信赖。不过 Claude 本身是一个模型能力的载体，而 HagiCode 是一个专门为 AI 编程场景设计的桌面工作台——两者各有所长，配合使用才能真正发挥 Claude 的全部实力。它还涵盖共用的工具调用视图，以及状态栏中可选的 TokenMonitor 用量显示。Claude Code 可以在运行中提出结构化问题，你回答后运行即可继续。此外，HagiCode 还会列出 Claude Code 运行仍在等待的子 Agent 与监控任务。",
   "sections": [
     {
       "id": "claude-vs-hagicode-section-1",
@@ -122,16 +122,16 @@
             },
             {
               "id": "claude-vs-hagicode-section-2-item-5",
-              "title": "Preset Task：一键触发高频工作流，整合社区 Skills 生态",
+              "title": "HagiTask：一键触发高频工作流，整合社区 Skills 生态",
               "content": [
                 "Claude 的能力很强，但每次都要手动打字描述需求确实不够高效。更关键的是，市面上已经涌现了大量社区贡献的优质 Skills——从代码审查模板到全栈 CRUD 生成器，从文档自动生成到测试用例编排，这些经过验证的实践方案散落在各处，没有一个统一的地方来承载和调用。",
-                "HagiCode 的 Preset Task 机制就是为解决这个问题而设计的。它做的不只是\"快捷指令\"，更是一个可扩展的 Skills 集成平台：",
-                "Preset Task 让你和 Claude 之间的协作从\"每次都要从头沟通\"升级为\"站在社区的肩膀上，一键调用成熟流程\"。你选好模板，Claude 负责执行——这是真正的工作流自动化，而且整个过程赏心悦目。"
+                "HagiCode 的 HagiTask 机制就是为解决这个问题而设计的。它做的不只是\"快捷指令\"，更是一个可扩展的 Skills 集成平台：",
+                "HagiTask 让你和 Claude 之间的协作从\"每次都要从头沟通\"升级为\"站在社区的肩膀上，一键调用成熟流程\"。你选好模板，Claude 负责执行——这是真正的工作流自动化，而且整个过程赏心悦目。"
               ],
               "bullets": [
-                "社区 Skills 即装即用：HagiCode 支持将市面上流行的 Skills 导入为 Preset Task。你不需要从头编写复杂的 prompt，社区已经沉淀了大量高质量的任务模板，直接导入就能用——新增 CRUD 模块、全面代码审查、API 文档生成，都有现成的方案。",
+                "社区 Skills 即装即用：HagiCode 支持将市面上流行的 Skills 导入为 HagiTask。你不需要从头编写复杂的 prompt，社区已经沉淀了大量高质量的任务模板，直接导入就能用——新增 CRUD 模块、全面代码审查、API 文档生成，都有现成的方案。",
                 "可扩展的 Skills 体系：如果你有独特的项目需求或团队规范，HagiCode 允许你在社区 Skills 的基础之上进行定制和组合。你可以调整检查清单、添加团队编码规范、甚至把多个 Skills 串联成一条完整的开发流水线，打造属于你自己团队的任务模板库。",
-                "可视化操作，告别纯文本的枯燥：这是 HagiCode 与其他纯命令行工具最根本的区别。选择 Preset Task 不再需要在终端里敲命令、拼参数，而是通过精心设计的可视化界面完成——鼠标点击选择任务、下拉菜单切换参数、拖拽调整任务顺序，每一步都有清晰的视觉反馈和状态提示。把人机交互从\"写代码来调用 AI\"变成了\"用 UI 来指挥 AI\"。"
+                "可视化操作，告别纯文本的枯燥：这是 HagiCode 与其他纯命令行工具最根本的区别。选择 HagiTask 不再需要在终端里敲命令、拼参数，而是通过精心设计的可视化界面完成——鼠标点击选择任务、下拉菜单切换参数、拖拽调整任务顺序，每一步都有清晰的视觉反馈和状态提示。把人机交互从\"写代码来调用 AI\"变成了\"用 UI 来指挥 AI\"。"
               ]
             },
             {
@@ -205,6 +205,58 @@
                 "一套接入策略多 CLI 复用：你在 OmniRoute 里配置好的模型目录、端点设置和订阅策略，所有接入 HagiCode 的 CLI 都能共享。不需要在每个 CLI 里各自配置一遍，维护成本大幅降低。",
                 "成本与能力解耦：当某个模型涨价或新模型发布时，你只需要在 OmniRoute 层做一次调整，所有使用中的 Agent 都会自动走新路由。你不会因为\"换模型\"而被强迫\"换 CLI\"，也不会因为\"CLI 很顺手\"而被迫\"接受高价订阅\"。"
               ]
+            },
+            {
+              "id": "claude-vs-hagicode-section-2-item-11",
+              "title": "统一工具调用视图：以一致的形态查看 Claude Code 的工具使用",
+              "content": [
+                "HagiCode 会为每条工具调用消息和工具结果消息附加同一种类型化的工具调用结构，包括工具类型、输入字段、状态、结果文本或图片、错误信息以及耗时。该结构由已存储的数据计算得出，因此会话历史与实时更新显示的内容一致。",
+                "无论使用哪个提供方，工具调用都采用同一种格式。Claude Code 的工具调用因此与工作区中其他 Agent 的调用保持一致，你无需分别适应每个 CLI 的原始输出。"
+              ],
+              "bullets": [
+                "所有提供方共用一种结构，shell、文件、搜索、抓取与 MCP 调用的呈现方式保持一致；",
+                "失败的调用会附带可读的错误信息；",
+                "栅格格式的工具图片以 data URI 形式传递。"
+              ]
+            },
+            {
+              "id": "claude-vs-hagicode-section-2-item-12",
+              "title": "一目了然：在状态栏查看今日的 Token 用量与费用",
+              "content": [
+                "HagiCode 可以在状态栏中显示来自 TokenMonitor 桌面应用的今日 Token 用量与费用。该集成为可选功能，默认关闭。",
+                "它会定时读取 TokenMonitor 的本地数据文件或 TokenMonitor HostHub，只保留今日的 Token 总量和费用。状态栏因此用于快速查看，而不是完整的用量报告。"
+              ],
+              "bullets": [
+                "未开启集成前不会读取任何数据；",
+                "HostHub 密钥只写不读，保存后不会再返回或写入日志；",
+                "无效的 HostHub 地址会在保存时被拒绝。"
+              ]
+            },
+            {
+              "id": "claude-vs-hagicode-section-2-item-13",
+              "title": "交互式提问：让 Claude Code 提问，并在同一次运行中继续",
+              "content": [
+                "当 Claude Code 需要做出决定时，可以在运行过程中向你提出结构化问题。HagiCode 会在会话中展示该问题，会话状态从执行中变为等待回复，你的回答会让同一次运行继续。",
+                "如果运行已经结束，例如重启或超时之后，你的回答会作为普通消息发送到同一会话中，工作得以继续。"
+              ],
+              "bullets": [
+                "CLI 同时提出的多个问题可以在一次提交中一并作答；",
+                "未在 30 分钟内回答的问题会过期，仍可通过后续消息补充回答；",
+                "按 CLI 通过交互控制设置启用，由你决定允许哪些 Agent 提问。"
+              ]
+            },
+            {
+              "id": "claude-vs-hagicode-section-2-item-14",
+              "title": "Agent 工作面板：了解运行为何仍在继续",
+              "content": [
+                "当运行仍在执行时，Claude Code 可能正在等待子 Agent 或监控任务。HagiCode 会列出这些工作及其状态，让你清楚运行在等待什么，而不必猜测。",
+                "该列表保存在内存中并与当前运行关联；在等待期间刷新页面时，列表会被恢复。"
+              ],
+              "bullets": [
+                "宿主正在等待的子 Agent 与监控任务会附带状态列出；",
+                "该列表不会随会话历史一同保存；",
+                "宿主不等待的后台命令不会被列出。"
+              ]
             }
           ]
         }
@@ -227,8 +279,12 @@
           "type": "bullet-list",
           "items": [
             "Claude 提供智力：超长上下文、深度推理、安全对齐；",
-            "HagiCode 提供效率：多线程并行、Agents 编队管理、OpenSpec 提案、AI 提交、Code Server 编辑器、Preset Task；",
+            "HagiCode 提供效率：多线程并行、Agents 编队管理、OpenSpec 提案、AI 提交、Code Server 编辑器、HagiTask；",
             "HagiCode 拓展边界：Monospecs 让 Claude 理解跨仓库项目关系，Vault 让 Claude 拥有跨会话长期记忆，OmniRoute 让 Claude 突破模型订阅的锁死；",
+            "工具调用视图：所有提供方的工具使用都采用一致的结构，历史记录与实时更新保持一致；",
+            "一目了然：可选的 TokenMonitor 状态栏显示今日 Token 用量与费用；",
+            "交互式提问：回答 Agent 的结构化问题，让同一次运行继续；",
+            "Agent 工作面板：查看运行仍在等待哪些子 Agent 与监控任务；",
             "两者结合提供体验：可追溯的决策链、自动化的日常事务、让人愉悦的操作界面，以及一个真正了解你项目全景、可自由配置模型来源的长期 AI 搭档。"
           ]
         }

@@ -3,12 +3,12 @@
   "slug": "reasonix-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "pt-BR",
-  "updatedAt": "2026-06-18T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "Reasonix CLI vs HagiCode: recursos e comparação",
-    "description": "Entenda os controles de raciocínio do Reasonix CLI, suas guardrails de orçamento e seu fluxo de trabalho amigável a transcrições, e veja como o HagiCode transforma o Reasonix em uma plataforma de programação com IA de grau produção através de multithreading, propostas OpenSpec, commits de IA, Preset Tasks, UI gamificada, gestão de Agents, Monospecs, Vault e OmniRoute."
+    "description": "Entenda o fluxo de trabalho de ferramentas ACP do Reasonix CLI, suas referências de modelo explícitas e as perguntas de escolha única, e veja como o HagiCode transforma o Reasonix em uma plataforma de programação com IA de grau produção através de multithreading, propostas OpenSpec, commits de IA, HagiTasks, UI gamificada, gestão de Agents, Monospecs, Vault e OmniRoute. Cobre também a visão compartilhada de chamadas de ferramenta e o uso do TokenMonitor na barra de status. Inclui perguntas interativas que retomam a mesma execução."
   },
-  "summary": "O Reasonix CLI é uma interface de codificação com IA de raciocínio-primeiro construída para desenvolvedores que querem ajustar esforço, orçamento, captura de transcrição e agressividade de execução diretamente da linha de comando. Com orquestração de ferramentas baseada em ACP e comportamento de runtime configurável, ele é bem adaptado para trabalho de engenharia deliberado e inspeccionável. No entanto, o Reasonix permanece uma ferramenta de terminal, e o HagiCode adiciona a orquestração, a memória de fluxo de trabalho e a superfície multi-agente necessárias para uso de produção diário.",
+  "summary": "O Reasonix CLI é uma interface de codificação com IA baseada em ACP construída para desenvolvedores que querem referências de modelo explícitas e um interruptor de execução claro diretamente da linha de comando. Com orquestração de ferramentas baseada em ACP e comportamento de runtime configurável, ele é bem adaptado para trabalho de engenharia deliberado e inspeccionável. No entanto, o Reasonix permanece uma ferramenta de terminal, e o HagiCode adiciona a orquestração, a memória de fluxo de trabalho e a superfície multi-agente necessárias para uso de produção diário. Ele também cobre a visão compartilhada de chamadas de ferramenta e o uso opcional do TokenMonitor na barra de status. Reasonix CLI pode fazer perguntas estruturadas durante uma execução, e a execução continua assim que você responde.",
   "sections": [
     {
       "id": "reasonix-vs-hagicode-section-1",
@@ -22,10 +22,10 @@
               "id": "reasonix-vs-hagicode-section-1-item-1",
               "title": "Funções principais",
               "content": [
-                "As forças do Reasonix CLI giram em torno de raciocínio controlável e execução inspeccionável:",
-                "Controle de esforço de raciocínio: o Reasonix expõe uma configuração de esforço para que você possa decidir quanta profundidade de raciocínio uma tarefa merece. Isso é valioso quando você quer distinguir entre trabalho de implementação rápida e análise técnica mais lenta e deliberada.",
-                "Guardrails de orçamento e agressividade: o Reasonix inclui controles como budgetUsd e enableYolo, permitindo equilibrar consciência de custo contra audácia de execução dependendo de quão exploratória ou restrita a tarefa deveria ser.",
-                "Fluxo de trabalho amigável a transcrições: o Reasonix pode escrever saída de transcrição para um caminho designado, facilitando preservar, auditar e revisar como um turno de codificação se desenrolou após o fato."
+                "As forças do Reasonix CLI giram em torno de configuração explícita e um fluxo de perguntas claro:",
+                "Interruptor de execução explícito: enableYolo vem desativado por padrão e é definido na profissão primária, então a escolha entre execução cautelosa e mais ousada é deliberada, não implícita.",
+                "Referências de modelo definidas: model deve ser uma referência de provedor ou provedor/modelo definida na sua configuração do Reasonix, então o roteamento permanece explícito e um modelo não definido faz o turno falhar com um erro claro.",
+                "Perguntas de escolha única: quando o Reasonix faz uma pergunta, o HagiCode apresenta uma resposta por pergunta, então a resposta sempre corresponde a uma opção que o Reasonix ofereceu."
               ]
             },
             {
@@ -44,7 +44,7 @@
               "content": [
                 "O valor ecossistêmico do Reasonix vem de operação CLI disciplinada em vez de empacotamento chamativo:",
                 "Encaixe de fluxo de trabalho de raciocínio-primeiro: o Reasonix é bem adaptado a equipes que se importam com planejamento deliberado, decisões revisáveis e restrições operacionais explícitas em vez de maximizar velocidade bruta o tempo todo.",
-                "Suporte a transcrição e auditoria: porque a captura de transcrição é parte da superfície de runtime, o Reasonix se encaixa em fluxos de trabalho onde explicabilidade e revisão posterior importam tanto quanto a resposta imediata.",
+                "Trilha de auditoria das perguntas: cada pergunta e a resposta escolhida são armazenadas com a sessão, então uma revisão posterior pode ver o que foi perguntado e como foi respondido.",
                 "Flexibilidade de modelo e rota: o Reasonix mantém a escolha de modelo configurável em vez de bloquear o fluxo de trabalho a um caminho de provedor, o que facilita adaptar quando requisitos de custo, qualidade ou política mudam."
               ]
             }
@@ -85,11 +85,11 @@
             },
             {
               "id": "reasonix-vs-hagicode-section-2-item-2",
-              "title": "Sessões de proposta OpenSpec: vincular escolhas de esforço e orçamento a propostas documentadas",
+              "title": "Sessões de proposta OpenSpec: vincular referências de modelo e escolhas de execução a propostas documentadas",
               "content": [
                 "No desenvolvimento diário, o caos mais comum não é a incapacidade de escrever código — é fazer um monte de mudanças e depois esquecer por que você as fez, o que você mudou e como essas mudanças se relacionam entre si.",
                 "O fluxo de trabalho de proposta OpenSpec integrado no HagiCode resolve fundamentalmente esse problema. Cada tarefa de desenvolvimento inicia como uma proposta:",
-                "Essa estrutura dá ao Reasonix um lugar para registrar não apenas decisões de implementação mas também por que um certo nível de esforço, teto de orçamento ou estilo de execução foi selecionado para a tarefa."
+                "Essa estrutura dá ao Reasonix um lugar para registrar não apenas decisões de implementação mas também por que uma certa referência de modelo ou estilo de execução foi selecionado para a tarefa."
               ],
               "bullets": [
                 "Primeiro, anote qual problema esta tarefa resolve e por que esta abordagem faz sentido;",
@@ -109,7 +109,7 @@
             },
             {
               "id": "reasonix-vs-hagicode-section-2-item-4",
-              "title": "Editor de navegador Code Server: ir da transcrição de raciocínio a edições de arquivo exatas",
+              "title": "Editor de navegador Code Server: ir da análise do Reasonix a edições de arquivo exatas",
               "content": [
                 "Depois que Reasonix analisa o código, identifica o arquivo problemático e localiza o número exato da linha, o momento desconfortável familiar ocorre: você precisa sair da janela de conversa de IA, voltar ao seu IDE, encontrar o arquivo novamente e saltar manualmente para a posição certa. Essa quebra de contexto da análise para a edição não apenas interrompe seu fluxo mas mantém o valor da IA em 'dizer a você onde está o problema' em vez de 'ajudar você a entrar diretamente no modo de edição'.",
                 "O editor de navegador baseado em Code Server integrado no HagiCode é projetado especificamente para resolver essa quebra:",
@@ -123,11 +123,11 @@
             },
             {
               "id": "reasonix-vs-hagicode-section-2-item-5",
-              "title": "Preset Task: criar templates dos fluxos de trabalho recorrentes de revisão e planejamento do Reasonix",
+              "title": "HagiTask: criar templates dos fluxos de trabalho recorrentes de revisão e planejamento do Reasonix",
               "content": [
-                "O Reasonix é particularmente útil para tarefas recorrentes de revisão, planejamento e tipo auditoria, mas remontar as mesmas configurações de esforço, guardrails e instruções manualmente toda vez é wasteful.",
-                "O mecanismo Preset Task do HagiCode transforma esses fluxos de trabalho repetidos em templates reutilizáveis. É mais do que comandos de atalho — é uma plataforma de integração de Skills extensível:",
-                "O Preset Task eleva sua colaboração com o Reasonix de 'redescrever o processo toda vez' para 'lançar o processo preparado e focar no resultado'."
+                "O Reasonix é particularmente útil para tarefas recorrentes de revisão, planejamento e tipo auditoria, mas remontar as mesmas referências de modelo, guardrails e instruções manualmente toda vez é wasteful.",
+                "O mecanismo HagiTask do HagiCode transforma esses fluxos de trabalho repetidos em templates reutilizáveis. É mais do que comandos de atalho — é uma plataforma de integração de Skills extensível:",
+                "O HagiTask eleva sua colaboração com o Reasonix de 'redescrever o processo toda vez' para 'lançar o processo preparado e focar no resultado'."
               ],
               "bullets": [
                 "Skills de comunidade prontas para usar: comece a partir de templates existentes de revisão, documentação, refactor e entrega em vez de projetar cada fluxo de trabalho do zero.",
@@ -137,7 +137,7 @@
             },
             {
               "id": "reasonix-vs-hagicode-section-2-item-6",
-              "title": "Interface gamificada: tornar legíveis esforço, orçamento e progresso",
+              "title": "Interface gamificada: tornar legíveis o progresso e o estado operacional",
               "content": [
                 "A programação em si pode ser tediosa, mas também pode ser divertida. O design de interface gamificado do HagiCode rompe com a experiência fria de ferramentas de linha de comando:",
                 "O Reasonix fornece raciocínio disciplinado, o HagiCode fornece experiência — juntos, eles transformam um fluxo de trabalho de terminal estrito em um workspace onde progresso, marcos e estado operacional permanecem visíveis."
@@ -145,7 +145,7 @@
               "bullets": [
                 "Feedback visual claro: veja o que está rodando, esperando, bloqueado ou concluído sem penteiar texto cru de terminal.",
                 "Visualização de conquistas e progresso: propostas, commits e pontos de checagem de entrega se tornam marcos visíveis em vez de estado de fundo oculto.",
-                "Menor carga cognitiva: configurações de esforço e trabalho de raciocínio de longa duração se sentem mais gerenciáveis quando o workspace circundante ajuda você a se orientar."
+                "Menor carga cognitiva: trabalho de raciocínio de longa duração se sente mais gerenciável quando o workspace circundante ajuda você a se orientar."
               ]
             },
             {
@@ -159,7 +159,7 @@
               "bullets": [
                 "Visualização de identidade e status do Agente: veja num relance qual Agente está rodando, esperando, bloqueado ou pronto para arquivar.",
                 "Vinculação tarefa-para-Agente: propostas, revisões, refatorações e trabalho de teste podem ser atribuídos cada um a um Agente dedicado.",
-                "Configuração de Agente independente: diferentes Agentes podem usar diferentes níveis de esforço, rotas de modelo, Skills e escopos de contexto sem interferir entre si."
+                "Configuração de Agente independente: diferentes Agentes podem usar diferentes referências de modelo, Skills e escopos de contexto sem interferir entre si."
               ]
             },
             {
@@ -206,6 +206,45 @@
                 "Ajuste diferentes rotas de modelo para diferentes cargas de trabalho, como codificação rápida, revisão profunda ou planejamento de arquitetura.",
                 "Ajuste custo e capacidade uma vez na camada de roteamento em vez de retrabalhar cada fluxo de trabalho individual."
               ]
+            },
+            {
+              "id": "reasonix-vs-hagicode-section-2-item-11",
+              "title": "Visão unificada de chamadas de ferramenta: veja o uso de ferramentas de Reasonix CLI em um formato consistente",
+              "content": [
+                "O HagiCode anexa um único formato tipado de chamada de ferramenta a cada mensagem de uso e de resultado de ferramenta. Ele registra o tipo da ferramenta, seus campos de entrada, o status, o texto ou as imagens do resultado, qualquer erro e o tempo gasto. O formato é calculado a partir dos dados armazenados, então o histórico da sessão e as atualizações ao vivo mostram a mesma visão.",
+                "O mesmo formato vale para todos os provedores, então as chamadas de ferramenta de Reasonix CLI ficam parecidas com as de qualquer outro agente do seu workspace. Você lê um único formato em vez de aprender a saída bruta de cada CLI."
+              ],
+              "bullets": [
+                "Um formato para todos os provedores: chamadas de shell, arquivos, busca, fetch e MCP são apresentadas de forma consistente;",
+                "Chamadas com falha trazem uma mensagem de erro legível;",
+                "Imagens raster de ferramentas são transportadas como data URI."
+              ]
+            },
+            {
+              "id": "reasonix-vs-hagicode-section-2-item-12",
+              "title": "Uso num relance: tokens e custo de hoje na barra de status",
+              "content": [
+                "O HagiCode pode exibir na barra de status os tokens consumidos e o custo de hoje, vindos do aplicativo desktop TokenMonitor. A integração é opcional e vem desativada por padrão.",
+                "Ela lê o arquivo de dados local do TokenMonitor ou um HostHub do TokenMonitor em intervalos regulares e guarda apenas o total de tokens e o custo de hoje. A barra de status continua sendo uma olhada rápida, não um relatório completo de uso."
+              ],
+              "bullets": [
+                "Nada é lido até você ativar a integração;",
+                "O segredo do HostHub é somente de escrita e nunca é devolvido nem registrado em log depois de salvo;",
+                "Um endereço de HostHub inválido é rejeitado ao salvar."
+              ]
+            },
+            {
+              "id": "reasonix-vs-hagicode-section-2-item-13",
+              "title": "Perguntas interativas: deixe Reasonix CLI perguntar e depois continuar a mesma execução",
+              "content": [
+                "Quando Reasonix CLI precisa de uma decisão, pode fazer uma pergunta estruturada durante a execução. O HagiCode mostra a pergunta na conversa, o status da sessão muda de em execução para aguardando resposta, e a sua resposta faz a mesma execução continuar.",
+                "Se a execução já terminou, por exemplo após uma reinicialização ou um timeout, a sua resposta é enviada como uma mensagem normal na mesma sessão, para que o trabalho possa seguir adiante."
+              ],
+              "bullets": [
+                "Perguntas feitas pela CLI ao mesmo tempo podem ser respondidas juntas em um único envio;",
+                "Uma pergunta sem resposta em 30 minutos expira e ainda pode ser respondida por meio de uma mensagem de acompanhamento;",
+                "Ativado por CLI na configuração de controle interativo, para que você decida onde os agentes podem perguntar."
+              ]
             }
           ]
         }
@@ -227,9 +266,12 @@
           "id": "reasonix-vs-hagicode-section-3-bullets",
           "type": "bullet-list",
           "items": [
-            "O Reasonix fornece disciplina: controle de esforço de raciocínio, guardrails de orçamento, execução amigável a transcrições e fluxos de trabalho CLI capazes de ferramentas;",
-            "O HagiCode fornece eficiência: multithreading, gestão de frota de Agents, propostas OpenSpec, commits de IA, editor Code Server, Preset Tasks;",
+            "O Reasonix fornece disciplina: referências de modelo explícitas, um interruptor de execução explícito, perguntas de escolha única e fluxos de trabalho CLI capazes de ferramentas;",
+            "O HagiCode fornece eficiência: multithreading, gestão de frota de Agents, propostas OpenSpec, commits de IA, editor Code Server, HagiTasks;",
             "O HagiCode expande fronteiras: Monospecs permite que o Reasonix entenda relações de projeto cross-repo, o Vault dá ao Reasonix memória de longo prazo cross-sessão, o OmniRoute mantém o roteamento de modelo flexível por baixo de um fluxo de trabalho estável;",
+            "Visão de chamadas de ferramenta: um formato consistente para o uso de ferramentas de todos os provedores, no histórico e nas atualizações ao vivo;",
+            "Uso num relance: visão opcional do TokenMonitor na barra de status com os tokens e o custo de hoje;",
+            "Perguntas interativas: responda às perguntas estruturadas do agente e deixe a mesma execução continuar;",
             "Juntos eles fornecem uma experiência: cadeias de decisão rastreáveis, tarefas diárias automatizadas, uma interface agradável, e um parceiro de IA de longo prazo que realmente entende sua paisagem de projeto e pode ser livremente configurado com qualquer fonte de modelo."
           ]
         }

@@ -3,12 +3,12 @@
   "slug": "hermes-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "de-DE",
-  "updatedAt": "2026-06-17T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "Hermes Agent vs. HagiCode: Funktionen im Vergleich",
-    "description": "Verstehen Sie Hermes Agents wichtigsten Funktionen, Schlussfassungseigenschaften und Forschungshintergrund und sehen Sie, wie HagiCode Hermes durch Multithreading, OpenSpec-Vorschläge, KI-Commits, Preset Tasks, gamifiziertes UI, Agents-Verwaltung, Monospecs, Vault und OmniRoute auf die nächste Stufe hebt."
+    "description": "Verstehen Sie Hermes Agents wichtigsten Funktionen, Schlussfassungseigenschaften und Forschungshintergrund und sehen Sie, wie HagiCode Hermes durch Multithreading, OpenSpec-Vorschläge, KI-Commits, HagiTasks, gamifiziertes UI, Agents-Verwaltung, Monospecs, Vault und OmniRoute auf die nächste Stufe hebt. Behandelt außerdem die gemeinsame Tool-Call-Ansicht und die TokenMonitor-Nutzung in der Statusleiste."
   },
-  "summary": "Hermes ist Nous Researchs KI-Agent-CLI-Tool, gebaut auf der Kernphilosophie, KI echte autonome Agent-Fähigkeiten zu geben. Es glänzt in autonomer Planung, mehrstufiger autonomer Ausführung und tiefem Schlussfolgern und Selbst-Korrektur und kann komplexe Entwicklungsaufgaben mit reduziertem menschlichen Eingreifen vorantreiben. Hermes ist jedoch ein reines CLI-Agent-Tool, und HagiCode ist eine Werkbank, die visuelles Management, Wissens-Persistenz und Workflow-Strukturierung liefert. Beide zusammen heben Hermes' Autonomie zu einer sicher zu verwaltenden und nachzuverfolgenden Entwicklungserfahrung.",
+  "summary": "Hermes ist Nous Researchs KI-Agent-CLI-Tool, gebaut auf der Kernphilosophie, KI echte autonome Agent-Fähigkeiten zu geben. Es glänzt in autonomer Planung, mehrstufiger autonomer Ausführung und tiefem Schlussfolgern und Selbst-Korrektur und kann komplexe Entwicklungsaufgaben mit reduziertem menschlichen Eingreifen vorantreiben. Hermes ist jedoch ein reines CLI-Agent-Tool, und HagiCode ist eine Werkbank, die visuelles Management, Wissens-Persistenz und Workflow-Strukturierung liefert. Beide zusammen heben Hermes' Autonomie zu einer sicher zu verwaltenden und nachzuverfolgenden Entwicklungserfahrung. Zusätzlich deckt es die gemeinsame Tool-Call-Ansicht und die optionale TokenMonitor-Nutzungsanzeige in der Statusleiste ab.",
   "sections": [
     {
       "id": "hermes-vs-hagicode-section-1",
@@ -122,16 +122,16 @@
             },
             {
               "id": "hermes-vs-hagicode-section-2-item-5",
-              "title": "Preset Task: Hermes' autonome Fähigkeiten templatefizieren",
+              "title": "HagiTask: Hermes' autonome Fähigkeiten templatefizieren",
               "content": [
                 "Hermess Fähigkeiten sind stark, aber das manuelle Eintippen von Anforderungen jedes Mal ist nicht effizient. Wichtiger noch: Die Community hat bereits einen Reichtum hochwertiger Skills hervorgebracht — von Code-Review-Vorlagen bis zu Full-Stack-CRUD-Generatoren, von automatischer Dokumentationserstellung bis zur Orchestrierung von Testfällen. Diese erprobten Praktiken sind überall verstreut, ohne einen einheitlichen Ort, an dem sie gehostet und aufgerufen werden.",
-                "HagiCodes Preset-Task-Mechanismus wurde entwickelt, um dieses Problem zu lösen. Er ist mehr als nur Abkürzungsbefehle — er ist eine erweiterbare Skills-Integrationsplattform:",
-                "Preset Task wertet Ihre Zusammenarbeit mit Hermes von 'jedes Mal von Grund auf kommunizieren' zu 'auf den Schultern der Community stehen, reife Workflows mit einem Klick aufrufen' auf. Sie wählen die Vorlage, Hermes führt aus — das ist echte Workflow-Automatisierung, und der gesamte Prozess ist visuell erfreulich."
+                "HagiCodes HagiTask-Mechanismus wurde entwickelt, um dieses Problem zu lösen. Er ist mehr als nur Abkürzungsbefehle — er ist eine erweiterbare Skills-Integrationsplattform:",
+                "HagiTask wertet Ihre Zusammenarbeit mit Hermes von 'jedes Mal von Grund auf kommunizieren' zu 'auf den Schultern der Community stehen, reife Workflows mit einem Klick aufrufen' auf. Sie wählen die Vorlage, Hermes führt aus — das ist echte Workflow-Automatisierung, und der gesamte Prozess ist visuell erfreulich."
               ],
               "bullets": [
-                "Sofort einsatzbereite Community-Skills: HagiCode unterstützt den Import beliebter Community-Skills als Preset Tasks. Sie müssen keine komplexen Prompts von Grund auf neu erstellen — die Community hat bereits eine Fülle hochwertiger Aufgabenvorlagen angesammelt. Importieren und sofort nutzen: neue CRUD-Module, umfassende Code-Reviews, API-Dokumentationserstellung — für alles gibt es fertige Lösungen.",
+                "Sofort einsatzbereite Community-Skills: HagiCode unterstützt den Import beliebter Community-Skills als HagiTasks. Sie müssen keine komplexen Prompts von Grund auf neu erstellen — die Community hat bereits eine Fülle hochwertiger Aufgabenvorlagen angesammelt. Importieren und sofort nutzen: neue CRUD-Module, umfassende Code-Reviews, API-Dokumentationserstellung — für alles gibt es fertige Lösungen.",
                 "Erweiterbares Skills-System: Wenn Sie besondere Projektanforderungen oder Teamkonventionen haben, können Sie auf den Community-Skills aufsetzen und kombinieren. Sie können Checklisten anpassen, Team-Coding-Standards hinzufügen oder sogar mehrere Skills zu einer vollständigen Entwicklungspipeline verketten und so eine Aufgabenvorlagenbibliothek für Ihr Team aufbauen.",
-                "Visuelle Operationen, verabschieden Sie sich von der Langeweile von Klartext: Das ist der fundamentale Unterschied zwischen HagiCode und reinen Kommandozeilen-Tools. Die Auswahl eines Preset Tasks erfordert kein Eintippen von Befehlen und Zusammensetzen von Parametern im Terminal — sie erfolgt über eine sorgfältig gestaltete visuelle Oberfläche. Klicken Sie, um Aufgaben auszuwählen, Dropdown-Menüs, um Parameter zu wechseln, Drag-and-Drop, um Aufgaben neu anzuordnen — jeder Schritt hat klares visuelles Feedback und Statusanzeigen. Die Mensch-Maschine-Interaktion verschiebt sich von 'Code schreiben, um KI aufzurufen' zu 'UI nutzen, um KI zu dirigieren'."
+                "Visuelle Operationen, verabschieden Sie sich von der Langeweile von Klartext: Das ist der fundamentale Unterschied zwischen HagiCode und reinen Kommandozeilen-Tools. Die Auswahl eines HagiTasks erfordert kein Eintippen von Befehlen und Zusammensetzen von Parametern im Terminal — sie erfolgt über eine sorgfältig gestaltete visuelle Oberfläche. Klicken Sie, um Aufgaben auszuwählen, Dropdown-Menüs, um Parameter zu wechseln, Drag-and-Drop, um Aufgaben neu anzuordnen — jeder Schritt hat klares visuelles Feedback und Statusanzeigen. Die Mensch-Maschine-Interaktion verschiebt sich von 'Code schreiben, um KI aufzurufen' zu 'UI nutzen, um KI zu dirigieren'."
               ]
             },
             {
@@ -205,6 +205,32 @@
                 "Stimmen Sie verschiedene Modell-Routen auf verschiedene Workloads ab, etwa schnelles Codieren, tiefgreifende Reviews oder Architekturplanung.",
                 "Passen Sie Kosten und Fähigkeiten einmal auf der Routing-Ebene an, statt jeden einzelnen Workflow zu überarbeiten."
               ]
+            },
+            {
+              "id": "hermes-vs-hagicode-section-2-item-11",
+              "title": "Einheitliche Tool-Call-Ansicht: Die Tool-Nutzung von Hermes Agent in einer konsistenten Form sehen",
+              "content": [
+                "HagiCode hängt an jede Tool-Use- und Tool-Result-Nachricht dieselbe typisierte Tool-Call-Struktur an. Sie erfasst die Tool-Art, die Eingabefelder, den Status, Ergebnistext oder Bilder, einen eventuellen Fehler und die Zeitangaben. Die Struktur wird aus den gespeicherten Daten berechnet, sodass Session-Verlauf und Live-Updates dieselbe Ansicht zeigen.",
+                "Dieselbe Struktur gilt für jeden Provider, daher sehen die Tool-Aufrufe von Hermes Agent genauso aus wie die jedes anderen Agents in Ihrem Workspace. Sie lesen ein einziges Format, statt die Rohausgabe jeder CLI einzeln lernen zu müssen."
+              ],
+              "bullets": [
+                "Eine Struktur für alle Provider: Shell-, Datei-, Such-, Fetch- und MCP-Aufrufe werden einheitlich dargestellt;",
+                "Fehlgeschlagene Aufrufe enthalten eine lesbare Fehlermeldung;",
+                "Raster-Bilder aus Tools werden als Data-URIs übertragen."
+              ]
+            },
+            {
+              "id": "hermes-vs-hagicode-section-2-item-12",
+              "title": "Nutzung auf einen Blick: Heutige Tokens und Kosten in der Statusleiste",
+              "content": [
+                "HagiCode kann in der Statusleiste den heutigen Token-Verbrauch und die Kosten aus der TokenMonitor-Desktop-App anzeigen. Die Integration ist optional und standardmäßig deaktiviert.",
+                "Sie liest in regelmäßigen Abständen die lokale Datendatei von TokenMonitor oder einen TokenMonitor HostHub aus und behält nur die heutige Gesamtzahl der Tokens und die Kosten. Die Statusleiste bleibt damit ein schneller Überblick und wird kein vollständiger Nutzungsbericht."
+              ],
+              "bullets": [
+                "Solange Sie die Integration nicht aktivieren, werden keine Daten gelesen;",
+                "Das HostHub-Secret ist nur beschreibbar und wird nach dem Speichern weder zurückgegeben noch protokolliert;",
+                "Eine ungültige HostHub-Adresse wird beim Speichern abgelehnt."
+              ]
             }
           ]
         }
@@ -227,8 +253,10 @@
           "type": "bullet-list",
           "items": [
             "Hermes liefert Autonomie: autonome Planung, mehrstufige Ausführung, tiefes Schlussfolgern, Selbst-Korrektur;",
-            "HagiCode liefert Effizienz: Multithreading, Agents-Flottenverwaltung, OpenSpec-Vorschläge, KI-Commits, Code-Server-Editor, Preset Tasks;",
+            "HagiCode liefert Effizienz: Multithreading, Agents-Flottenverwaltung, OpenSpec-Vorschläge, KI-Commits, Code-Server-Editor, HagiTasks;",
             "HagiCode erweitert Grenzen: Monospecs lässt Hermes Repo-übergreifende Projektbeziehungen verstehen, Vault gibt Hermes sitzungsübergreifendes Langzeitgedächtnis, OmniRoute befreit Hermes aus dem Modell-Abonnement-Lock-in;",
+            "Tool-Call-Ansicht: eine einheitliche Struktur für die Tool-Nutzung jedes Providers, in Verlauf und Live-Updates;",
+            "Nutzung auf einen Blick: optionale TokenMonitor-Anzeige der heutigen Tokens und Kosten in der Statusleiste;",
             "Zusammen liefern sie eine Erfahrung: nachverfolgbare Entscheidungsketten, automatisierte Routineaufgaben, ein genussvolles Interface und ein langfristiger KI-Partner, der Ihre Projektlandschaft wirklich versteht und frei mit jeder Modellquelle konfiguriert werden kann."
           ]
         }

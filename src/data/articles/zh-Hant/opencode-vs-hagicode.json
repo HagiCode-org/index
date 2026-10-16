@@ -3,12 +3,12 @@
   "slug": "opencode-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "zh-Hant",
-  "updatedAt": "2026-06-17T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "OpenCode 對比 HagiCode:功能與差異",
-    "description": "了解 OpenCode 的主要功能、開源架构和社区生态，并從多線程并行、OpenSpec 提案、AI 提交、Preset Task、游戏化界麵、Agents 管理、Monospecs、Vault 和 OmniRoute 等角度，看 HagiCode 如何讓 OpenCode 從单人 CLI 工具升级為团隊级 AI 编程平台。"
+    "description": "了解 OpenCode 的主要功能、開源架构和社区生态，并從多線程并行、OpenSpec 提案、AI 提交、HagiTask、游戏化界麵、Agents 管理、Monospecs、Vault 和 OmniRoute 等角度，看 HagiCode 如何讓 OpenCode 從单人 CLI 工具升级為团隊级 AI 编程平台。同時涵蓋共用的工具呼叫檢視與 TokenMonitor 狀態列用量。"
   },
-  "summary": "OpenCode 是一個開源 AI 编碼助手 CLI 工具，以\"靈活、可定制、社区驅動\"為核心理念。它支持通過 ACP 协议與多种 AI 模型對接，讓開發者可以自由選择後端模型和交互方式。不過 OpenCode 本质上是一個靈活的单體 CLI 工具，而 HagiCode 是一個麵向团隊和複杂項目的 AI 编程工作台——两者配合，才能把 OpenCode 的靈活性從\"個人生产力\"扩展為\"团隊协作生产力\"。",
+  "summary": "OpenCode 是一個開源 AI 编碼助手 CLI 工具，以\"靈活、可定制、社区驅動\"為核心理念。它支持通過 ACP 协议與多种 AI 模型對接，讓開發者可以自由選择後端模型和交互方式。不過 OpenCode 本质上是一個靈活的单體 CLI 工具，而 HagiCode 是一個麵向团隊和複杂項目的 AI 编程工作台——两者配合，才能把 OpenCode 的靈活性從\"個人生产力\"扩展為\"团隊协作生产力\"。它也涵蓋了共用的工具呼叫檢視，以及狀態列中選用的 TokenMonitor 用量顯示。",
   "sections": [
     {
       "id": "opencode-vs-hagicode-section-1",
@@ -122,16 +122,16 @@
             },
             {
               "id": "opencode-vs-hagicode-section-2-item-5",
-              "title": "Preset Task：讓 OpenCode 的開源靈活性模板化",
+              "title": "HagiTask：讓 OpenCode 的開源靈活性模板化",
               "content": [
                 "OpenCode 的能力很強，但每次都要手動打字描述需求確實不夠高效。更關鍵的是，市面上已經湧現了大量社群貢獻的優質 Skills——從程式碼審查模板到全棧 CRUD 生成器，從文件自動生成到測試用例編排，這些經過驗證的實踐方案散落在各處，沒有一個統一的地方來承載和調用。",
-                "HagiCode 的 Preset Task 機制就是為解決這個問題而設計的。它做的不只是「快捷指令」，更是一個可擴展的 Skills 整合平台：",
-                "Preset Task 讓你和 OpenCode 之間的協作從「每次都要從頭溝通」升級為「站在社群的肩膀上，一鍵調用成熟流程」。你選好模板，OpenCode 負責執行——這是真正的工作流自動化，而且整個過程賞心悅目。"
+                "HagiCode 的 HagiTask 機制就是為解決這個問題而設計的。它做的不只是「快捷指令」，更是一個可擴展的 Skills 整合平台：",
+                "HagiTask 讓你和 OpenCode 之間的協作從「每次都要從頭溝通」升級為「站在社群的肩膀上，一鍵調用成熟流程」。你選好模板，OpenCode 負責執行——這是真正的工作流自動化，而且整個過程賞心悅目。"
               ],
               "bullets": [
-                "社群 Skills 即裝即用：HagiCode 支援將市面上流行的 Skills 匯入為 Preset Task。你不需要從頭編寫複雜的 prompt，社群已經沉澱了大量高品質的任務模板，直接匯入就能用——新增 CRUD 模組、全面程式碼審查、API 文件生成，都有現成的方案。",
+                "社群 Skills 即裝即用：HagiCode 支援將市面上流行的 Skills 匯入為 HagiTask。你不需要從頭編寫複雜的 prompt，社群已經沉澱了大量高品質的任務模板，直接匯入就能用——新增 CRUD 模組、全面程式碼審查、API 文件生成，都有現成的方案。",
                 "可擴展的 Skills 體系：如果你有獨特的專案需求或團隊規範，HagiCode 允許你在社群 Skills 的基礎上進行定製和組合。你可以調整檢查清單、加入團隊編碼規範、甚至把多個 Skills 串聯成一條完整的開發流水線，打造屬於自己團隊的任務模板庫。",
-                "視覺化操作，告別純文字的枯燥：這是 HagiCode 與其他純命令列工具最根本的區別。選擇 Preset Task 不再需要在終端裡敲命令、拼參數，而是透過精心設計的視覺化介面完成——滑鼠點選選擇任務、下拉選單切換參數、拖曳調整任務順序，每一步都有清晰的視覺回饋和狀態提示。把人機互動從「寫程式碼來調用 AI」變成了「用 UI 來指揮 AI」。"
+                "視覺化操作，告別純文字的枯燥：這是 HagiCode 與其他純命令列工具最根本的區別。選擇 HagiTask 不再需要在終端裡敲命令、拼參數，而是透過精心設計的視覺化介面完成——滑鼠點選選擇任務、下拉選單切換參數、拖曳調整任務順序，每一步都有清晰的視覺回饋和狀態提示。把人機互動從「寫程式碼來調用 AI」變成了「用 UI 來指揮 AI」。"
               ]
             },
             {
@@ -205,6 +205,32 @@
                 "針對快速編碼、深度審查、架構規劃等不同任務配置不同模型路線。",
                 "在路由層一次調整成本與能力配置，而不是逐個工作流重複折騰。"
               ]
+            },
+            {
+              "id": "opencode-vs-hagicode-section-2-item-11",
+              "title": "統一的工具呼叫檢視：以一致的樣貌查看 OpenCode 的工具使用",
+              "content": [
+                "HagiCode 會為每則工具使用與工具結果訊息附上同一種具型別的工具呼叫結構，內容涵蓋工具類型、輸入欄位、狀態、結果文字或圖片、錯誤訊息與耗時。這個結構是由已儲存的資料即時計算而來，因此會話歷史與即時更新看到的內容完全一致。",
+                "不論使用哪個供應商，工具呼叫都採用同一種格式，所以 OpenCode 的工具呼叫會和工作區裡其他 Agent 的呼叫長得一樣。你只需要看懂一種格式，不必再逐一熟悉各個 CLI 的原始輸出。"
+              ],
+              "bullets": [
+                "所有供應商共用同一種結構，shell、檔案、搜尋、擷取與 MCP 呼叫的呈現方式一致；",
+                "失敗的呼叫會附上易讀的錯誤訊息；",
+                "點陣圖格式的工具圖片會以 data URI 傳遞。"
+              ]
+            },
+            {
+              "id": "opencode-vs-hagicode-section-2-item-12",
+              "title": "用量一目瞭然：在狀態列查看今日 Token 用量與費用",
+              "content": [
+                "HagiCode 可以在狀態列顯示 TokenMonitor 桌面應用程式提供的今日 Token 用量與費用。這項整合是選用功能，預設為關閉。",
+                "它會定時讀取 TokenMonitor 的本機資料檔或 TokenMonitor HostHub，只保留今日的 Token 總量與費用。狀態列因此只用來快速瞄一眼，而不是完整的用量報表。"
+              ],
+              "bullets": [
+                "在你開啟整合之前，不會讀取任何資料；",
+                "HostHub 金鑰只能寫入，儲存後不會再被回傳或寫進記錄檔；",
+                "無效的 HostHub 位址會在儲存時被拒絕。"
+              ]
             }
           ]
         }
@@ -227,8 +253,10 @@
           "type": "bullet-list",
           "items": [
             "OpenCode 提供自由：开源透明、多模型灵活接入、社区驱动；",
-            "HagiCode 提供效率：多線程並行、Agents 編隊管理、OpenSpec 提案、AI 提交、Code Server 編輯器、Preset Task；",
+            "HagiCode 提供效率：多線程並行、Agents 編隊管理、OpenSpec 提案、AI 提交、Code Server 編輯器、HagiTask；",
             "HagiCode 拓展邊界：Monospecs 讓 OpenCode 理解跨倉庫專案關係，Vault 讓 OpenCode 擁有跨會話長期記憶，OmniRoute 讓 OpenCode 突破模型訂閱的鎖死；",
+            "工具呼叫檢視：所有供應商的工具使用都採用一致的結構，歷史記錄與即時更新相同；",
+            "用量一目瞭然：選用的 TokenMonitor 狀態列，顯示今日的 Token 用量與費用；",
             "兩者結合提供體驗：可追溯的決策鏈、自動化的日常事務、讓人愉悅的操作介面，以及一個真正了解你專案全景、可自由配置模型來源的長期 AI 搭檔。"
           ]
         }

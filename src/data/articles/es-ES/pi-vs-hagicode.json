@@ -3,12 +3,12 @@
   "slug": "pi-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "es-ES",
-  "updatedAt": "2026-06-18T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "Pi CLI vs HagiCode: funciones y comparación",
-    "description": "Comprende el flujo de trabajo proveedor-primero de Pi CLI, sus controles de sesión y su gobernanza de herramientas, y ve cómo HagiCode transforma a Pi en un workbench de programación IA de grado producción a través del multithreading, las propuestas OpenSpec, los commits IA, las Preset Tasks, la UI gamificada, la gestión de Agents, los Monospecs, el Vault y OmniRoute."
+    "description": "Comprende el flujo de trabajo proveedor-primero de Pi CLI, sus controles de sesión y su gobernanza de herramientas, y ve cómo HagiCode transforma a Pi en un workbench de programación IA de grado producción a través del multithreading, las propuestas OpenSpec, los commits IA, las HagiTasks, la UI gamificada, la gestión de Agents, los Monospecs, el Vault y OmniRoute. También cubre la vista compartida de llamadas a herramientas y el consumo de TokenMonitor en la barra de estado. Incluye preguntas interactivas que reanudan la misma ejecución."
   },
-  "summary": "Pi CLI es una interfaz de codificación IA flexible construida para acceso a modelo agnóstico al proveedor. Con modos de pensamiento configurables, controles de persistencia de sesión y gating explícito de herramientas, da a los desarrolladores control granular fino sobre cómo se comporta un asistente de codificación IA. Sin embargo, Pi CLI todavía es fundamentalmente un punto de entrada de terminal, mientras que HagiCode es un workbench de programación IA completo. Juntos, convierten a Pi de una CLI configurable en un entorno de desarrollo diario completo.",
+  "summary": "Pi CLI es una interfaz de codificación IA flexible construida para acceso a modelo agnóstico al proveedor. Con modos de pensamiento configurables, controles de persistencia de sesión y gating explícito de herramientas, da a los desarrolladores control granular fino sobre cómo se comporta un asistente de codificación IA. Sin embargo, Pi CLI todavía es fundamentalmente un punto de entrada de terminal, mientras que HagiCode es un workbench de programación IA completo. Juntos, convierten a Pi de una CLI configurable en un entorno de desarrollo diario completo. También cubre la vista compartida de llamadas a herramientas y el consumo opcional de TokenMonitor en la barra de estado. Pi CLI puede hacer preguntas estructuradas durante una ejecución, y la ejecución continúa en cuanto respondes.",
   "sections": [
     {
       "id": "pi-vs-hagicode-section-1",
@@ -35,7 +35,7 @@
                 "Pi tiene varias características arquitectónicas notables:",
                 "Runtime CLI estructurado: en HagiCode Core, Pi está integrado como un adaptador delgado sobre el runtime libs compartido, preservando un contrato orientado a producto estable mientras delega el manejo del proceso CLI subyacente a una capa de proveedor común.",
                 "Ejecución consciente de sesión: Pi puede tanto reutilizar estado de sesión persistido como correr en modo completamente sin estado. Eso lo hace adecuado tanto para hilos de desarrollo de larga duración como para tareas one-shot limpias donde el estado arrastrado sería indeseable.",
-                "Respuestas en streaming y capaces de herramientas: Pi soporta salida en streaming, llamadas a herramientas y mensajes del sistema. No es solo un wrapper de prompt fire-and-forget; puede participar en flujos de trabajo de programación IA más ricos que necesitan ejecución interactiva."
+                "Respuestas en streaming y capaces de herramientas: Pi transmite la salida a medida que llega (fragmentos incrementales en Pi 0.84 y posteriores, instantáneas completas en 0.78.x) y soporta llamadas a herramientas y mensajes del sistema. No es solo un wrapper de prompt fire-and-forget; puede participar en flujos de trabajo de programación IA más ricos que necesitan ejecución interactiva."
               ]
             },
             {
@@ -123,11 +123,11 @@
             },
             {
               "id": "pi-vs-hagicode-section-2-item-5",
-              "title": "Preset Task: empaquetar los flujos de trabajo de Pi como planos de comando reutilizables",
+              "title": "HagiTask: empaquetar los flujos de trabajo de Pi como planos de comando reutilizables",
               "content": [
                 "La flexibilidad de Pi es poderosa, pero repetir las mismas elecciones de proveedor, fronteras de herramienta y encuadre de tarea una y otra vez es wasteful.",
-                "El mecanismo Preset Task de HagiCode convierte esos patrones repetidos en plantillas reutilizables. Es más que comandos de atajo — es una plataforma de integración de Skills extensible:",
-                "Preset Task mejora tu colaboración con Pi de 'reconstruir el flujo de trabajo cada vez' a 'elegir el flujo de trabajo preparado y ejecutarlo'. Ahí es donde la configurabilidad se convierte en apalancamiento operacional real."
+                "El mecanismo HagiTask de HagiCode convierte esos patrones repetidos en plantillas reutilizables. Es más que comandos de atajo — es una plataforma de integración de Skills extensible:",
+                "HagiTask mejora tu colaboración con Pi de 'reconstruir el flujo de trabajo cada vez' a 'elegir el flujo de trabajo preparado y ejecutarlo'. Ahí es donde la configurabilidad se convierte en apalancamiento operacional real."
               ],
               "bullets": [
                 "Skills comunitarias listas para usar: importa flujos de trabajo probados de revisión, refactor, CRUD y documentación en lugar de reconstruirlos desde cero cada vez.",
@@ -206,6 +206,45 @@
                 "Ajusta diferentes rutas de modelo para diferentes cargas de trabajo, como codificación rápida, revisión profunda o planificación de arquitectura.",
                 "Ajusta costo y capacidad una vez en la capa de enrutamiento en lugar de reworkizar cada flujo de trabajo individual."
               ]
+            },
+            {
+              "id": "pi-vs-hagicode-section-2-item-11",
+              "title": "Vista unificada de llamadas a herramientas: consulta el uso de herramientas de Pi CLI con un formato coherente",
+              "content": [
+                "HagiCode asocia un único formato tipado de llamada a herramienta a cada mensaje de uso de herramienta y de resultado. Registra el tipo de herramienta, sus campos de entrada, el estado, el texto o las imágenes del resultado, cualquier error y los tiempos. El formato se calcula a partir de los datos almacenados, así que el historial de la sesión y las actualizaciones en vivo muestran la misma vista.",
+                "El mismo formato sirve para todos los proveedores, de modo que las llamadas a herramientas de Pi CLI se ven igual que las de cualquier otro agente de tu espacio de trabajo. Lees un solo formato en lugar de aprender la salida en bruto de cada CLI."
+              ],
+              "bullets": [
+                "Un solo formato para todos los proveedores: las llamadas de shell, archivos, búsqueda, fetch y MCP se presentan de forma coherente;",
+                "Las llamadas fallidas incluyen un mensaje de error legible;",
+                "Las imágenes raster de las herramientas se transportan como data URI."
+              ]
+            },
+            {
+              "id": "pi-vs-hagicode-section-2-item-12",
+              "title": "Consumo de un vistazo: los tokens y el coste de hoy en la barra de estado",
+              "content": [
+                "HagiCode puede mostrar en su barra de estado el consumo de tokens y el coste de hoy procedentes de la aplicación de escritorio TokenMonitor. La integración es opcional y viene desactivada por defecto.",
+                "Lee periódicamente el archivo de datos local de TokenMonitor o un HostHub de TokenMonitor y conserva únicamente el total de tokens y el coste de hoy. La barra de estado sigue siendo una consulta rápida, no un informe de consumo completo."
+              ],
+              "bullets": [
+                "No se lee nada hasta que activas la integración;",
+                "El secreto del HostHub es de solo escritura: una vez guardado, nunca se devuelve ni se registra;",
+                "Una dirección de HostHub no válida se rechaza al guardarla."
+              ]
+            },
+            {
+              "id": "pi-vs-hagicode-section-2-item-13",
+              "title": "Preguntas interactivas: deja que Pi CLI pregunte y continúe la misma ejecución",
+              "content": [
+                "Cuando Pi CLI necesita una decisión, puede hacerte una pregunta estructurada durante la ejecución. HagiCode muestra la pregunta en la conversación, el estado de la sesión pasa de ejecutándose a esperando respuesta, y tu respuesta permite que la misma ejecución continúe.",
+                "Si la ejecución ya ha terminado, por ejemplo tras un reinicio o un tiempo de espera agotado, tu respuesta se envía como un mensaje normal en la misma sesión para que el trabajo pueda seguir."
+              ],
+              "bullets": [
+                "Las preguntas que la CLI plantea a la vez pueden responderse juntas en un único envío;",
+                "Una pregunta sin respuesta en 30 minutos caduca, pero aún puede responderse mediante un mensaje de seguimiento;",
+                "Se activa por CLI mediante el ajuste de control interactivo, así que decides dónde pueden preguntar los agentes."
+              ]
             }
           ]
         }
@@ -228,8 +267,11 @@
           "type": "bullet-list",
           "items": [
             "Pi proporciona control: enrutamiento de proveedor, configuración de pensamiento, comportamiento de sesión y gobernanza de herramientas;",
-            "HagiCode proporciona eficiencia: multithreading, gestión de flota de Agents, propuestas OpenSpec, commits IA, editor Code Server, Preset Tasks;",
+            "HagiCode proporciona eficiencia: multithreading, gestión de flota de Agents, propuestas OpenSpec, commits IA, editor Code Server, HagiTasks;",
             "HagiCode expande fronteras: Monospecs deja que Pi entienda relaciones de proyecto cross-repo, Vault da a Pi memoria a largo plazo cross-sesión, OmniRoute escala limpiamente el flujo de trabajo proveedor-primero de Pi;",
+            "Vista de llamadas a herramientas: un formato coherente para el uso de herramientas de cualquier proveedor, en el historial y en las actualizaciones en vivo;",
+            "Consumo de un vistazo: vista opcional de TokenMonitor en la barra de estado con los tokens y el coste de hoy;",
+            "Preguntas interactivas: responde a las preguntas estructuradas del agente y deja que la misma ejecución continúe;",
             "Juntos proporcionan una experiencia: cadenas de decisión rastreables, tareas diarias automatizadas, una interfaz agradable, y un compañero IA a largo plazo que realmente entiende tu paisaje de proyecto y puede configurarse libremente con cualquier fuente de modelo."
           ]
         }

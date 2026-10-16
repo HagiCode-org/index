@@ -3,12 +3,12 @@
   "slug": "reasonix-vs-hagicode",
   "category": "vs-hagicode",
   "locale": "zh-CN",
-  "updatedAt": "2026-06-18T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
   "seo": {
     "title": "Reasonix CLI 对比 HagiCode:功能与差异",
-    "description": "了解 Reasonix CLI 的推理控制、预算护栏和 transcript 友好工作方式，并从多线程并行、OpenSpec 提案、AI 提交、Preset Task、游戏化界面、Agents 管理、Monospecs、Vault 和 OmniRoute 等角度，看 HagiCode 如何把 Reasonix 变成生产级 AI 编程平台。"
+    "description": "了解 Reasonix CLI 的 ACP 工具工作流、显式模型引用和单选提问，并从多线程并行、OpenSpec 提案、AI 提交、HagiTask、游戏化界面、Agents 管理、Monospecs、Vault 和 OmniRoute 等角度，看 HagiCode 如何把 Reasonix 变成生产级 AI 编程平台。同时涵盖共用的工具调用视图与 TokenMonitor 状态栏用量。包含可恢复同一次运行的交互式提问。"
   },
-  "summary": "Reasonix CLI 是一个强调推理控制的 AI 编程入口，适合那些希望直接在命令行里调节 effort、预算、transcript 记录和执行激进程度的开发者。它通过 ACP 形式接入工具调用，并保留可配置的运行时行为，因此特别适合讲究“过程可检查、决策可解释”的工程工作。不过 Reasonix 仍然只是一个终端工具，而 HagiCode 则补上了编排、记忆和多代理协作这一层。",
+  "summary": "Reasonix CLI 是一个基于 ACP 的 AI 编程入口，适合那些希望直接在命令行里使用显式模型引用和清晰执行开关的开发者。它通过 ACP 形式接入工具调用，并保留可配置的运行时行为，因此特别适合讲究“过程可检查、决策可解释”的工程工作。不过 Reasonix 仍然只是一个终端工具，而 HagiCode 则补上了编排、记忆和多代理协作这一层。它还涵盖共用的工具调用视图，以及状态栏中可选的 TokenMonitor 用量显示。Reasonix CLI 可以在运行中提出结构化问题，你回答后运行即可继续。",
   "sections": [
     {
       "id": "reasonix-vs-hagicode-section-1",
@@ -22,10 +22,10 @@
               "id": "reasonix-vs-hagicode-section-1-item-1",
               "title": "主要功能",
               "content": [
-                "Reasonix CLI 的优势，集中在“可控推理”和“可检查执行”上：",
-                "推理 effort 可调：Reasonix 暴露了 effort 设置，你可以根据任务类型决定要不要给它更多推理深度。快速实现和复杂架构分析，显然不该用同一档思考强度。",
-                "预算与执行激进度护栏：Reasonix 支持 budgetUsd 和 enableYolo 之类的运行控制项，让你可以根据任务场景在成本约束、执行保守度和探索性之间做明确权衡。",
-                "transcript 友好：Reasonix 可以把 transcript 输出到指定路径。这意味着一次编程任务不只是得到结果，还能保留过程，方便后续复盘、审查和审计。"
+                "Reasonix CLI 的优势，集中在“显式配置”和“清晰的提问流程”上：",
+                "显式的执行开关：enableYolo 默认关闭，并在 primary profession 中设置，因此选择谨慎执行还是更大胆的执行，是一个有意为之的决定，而不是隐式行为。",
+                "明确的模型引用：model 必须是在你的 Reasonix 配置中定义的 provider 或 provider/model 引用，因此路由保持显式；未定义的模型会让该轮运行以清晰的错误失败。",
+                "单选提问：当 Reasonix 提出问题时，HagiCode 会让每个问题只选一个答案，因此回复始终对应 Reasonix 给出的某个选项。"
               ]
             },
             {
@@ -44,7 +44,7 @@
               "content": [
                 "Reasonix 的生态价值，不在于花哨功能，而在于纪律性：",
                 "推理优先的工作流适配：Reasonix 特别适合那些重视计划、复核、约束和可解释性的团队，而不是无条件追求最快生成速度。",
-                "transcript 与审计支持：因为 transcript 本身就是运行时表面的一部分，Reasonix 很适合那些除了“答案”，也同样关心“答案是怎么来的”的工作流。",
+                "提问审计记录：每个问题以及为它选择的答案都会随会话一起保存，因此后续复盘时可以看到当时问了什么、又是如何回答的。",
                 "模型与路由不被锁死：Reasonix 保留了模型选择的可配置性，不会把整个工作流永远锁进某一条 provider 路径里。"
               ]
             }
@@ -85,11 +85,11 @@
             },
             {
               "id": "reasonix-vs-hagicode-section-2-item-2",
-              "title": "OpenSpec 提案会话：把 effort 与预算选择沉淀成文档化决策",
+              "title": "OpenSpec 提案会话：把模型引用与执行选择沉淀成文档化决策",
               "content": [
                 "在日常开发中，最容易出现的混乱不是代码写不出来，而是改了一堆东西之后，忘了为什么这么改、改了哪些、以及这些改动之间有什么关系。",
                 "HagiCode 内置的 OpenSpec 提案工作流从根本上解决了这个问题。每次开发任务都会以“提案”的形式启动：",
-                "对 Reasonix 来说，这种结构尤其重要，因为它不仅能记录最终方案，还能记录为什么当时选了某个 effort 档位、预算上限或者执行风格。"
+                "对 Reasonix 来说，这种结构尤其重要，因为它不仅能记录最终方案，还能记录为什么当时选了某个模型引用或者执行风格。"
               ],
               "bullets": [
                 "先写清楚这次要解决什么问题，为什么这样做是合理的；",
@@ -109,7 +109,7 @@
             },
             {
               "id": "reasonix-vs-hagicode-section-2-item-4",
-              "title": "Code Server 浏览器编辑：从推理 transcript 直接进入精准修改",
+              "title": "Code Server 浏览器编辑：从 Reasonix 的分析直接进入精准修改",
               "content": [
                 "Reasonix 分析完代码、定位到问题文件和具体行号之后，常见的尴尬发生了：你需要离开 AI 对话窗口，回到自己的 IDE 里重新找到那个文件，再手动跳到对应的位置。这个“分析→编辑”的上下文断点，不仅打断思路，也让 AI 的价值只停留在“告诉你问题在哪”，走不到“直接帮你进入修改状态”。",
                 "HagiCode 内置了基于 code-server 的浏览器编辑器，专门解决这个断点：",
@@ -123,11 +123,11 @@
             },
             {
               "id": "reasonix-vs-hagicode-section-2-item-5",
-              "title": "Preset Task：把重复出现的 Reasonix 评审与规划流程模板化",
+              "title": "HagiTask：把重复出现的 Reasonix 评审与规划流程模板化",
               "content": [
-                "Reasonix 很适合做评审、规划、审计类工作，但如果每次都要重新拼 effort 设置、约束条件和操作说明，本身就是重复劳动。",
-                "HagiCode 的 Preset Task 机制，就是把这些重复出现的工作流整理成可复用模板。它做的不只是“快捷指令”，更是一个可扩展的 Skills 集成平台：",
-                "Preset Task 让你和 Reasonix 的协作从“每次都从头描述流程”升级为“直接启动准备好的流程，把注意力放在结果上”。"
+                "Reasonix 很适合做评审、规划、审计类工作，但如果每次都要重新拼模型引用、约束条件和操作说明，本身就是重复劳动。",
+                "HagiCode 的 HagiTask 机制，就是把这些重复出现的工作流整理成可复用模板。它做的不只是“快捷指令”，更是一个可扩展的 Skills 集成平台：",
+                "HagiTask 让你和 Reasonix 的协作从“每次都从头描述流程”升级为“直接启动准备好的流程，把注意力放在结果上”。"
               ],
               "bullets": [
                 "社区 Skills 即装即用：直接复用现成的审查、文档、重构和交付模板。",
@@ -137,7 +137,7 @@
             },
             {
               "id": "reasonix-vs-hagicode-section-2-item-6",
-              "title": "游戏化界面：让 effort、预算和推进状态一目了然",
+              "title": "游戏化界面：让推进进度和运行状态一目了然",
               "content": [
                 "编程本身可以是枯燥的，但也可以是好玩的。HagiCode 的游戏化界面设计，打破了命令行工具冷冰冰的体验：",
                 "Reasonix 提供纪律化推理，HagiCode 提供体验层——两者结合，才能让一个严格的终端工作流变成可感知、可管理的工作空间。"
@@ -145,7 +145,7 @@
               "bullets": [
                 "视觉反馈清晰：什么在运行、什么在等待、什么已完成，不必再从终端原始文本里自己提炼。",
                 "成就与进度可视化：提案、提交和交付节点都变成了可见里程碑。",
-                "降低认知负担：当 effort 设置和长链推理过程被放到更友好的界面里时，整个工作流会更容易驾驭。"
+                "降低认知负担：当长链推理过程被放到更友好的界面里时，整个工作流会更容易驾驭。"
               ]
             },
             {
@@ -159,7 +159,7 @@
               "bullets": [
                 "Agent 身份与状态可视化：谁在运行、谁在等待、谁卡住、谁可归档，一眼就能看清。",
                 "任务与 Agent 绑定：提案、审查、重构、测试等任务都可以分配给专属 Agent。",
-                "Agent 配置独立可控：不同 Agent 可以挂不同的 effort、模型路由、Skills 和上下文范围，彼此互不干扰。"
+                "Agent 配置独立可控：不同 Agent 可以挂不同的模型引用、Skills 和上下文范围，彼此互不干扰。"
               ]
             },
             {
@@ -206,6 +206,45 @@
                 "针对快速实现、深度审查、架构规划等不同任务配置不同模型路线。",
                 "在路由层一次调整成本与能力配置，而不是逐个工作流重复折腾。"
               ]
+            },
+            {
+              "id": "reasonix-vs-hagicode-section-2-item-11",
+              "title": "统一工具调用视图：以一致的形态查看 Reasonix CLI 的工具使用",
+              "content": [
+                "HagiCode 会为每条工具调用消息和工具结果消息附加同一种类型化的工具调用结构，包括工具类型、输入字段、状态、结果文本或图片、错误信息以及耗时。该结构由已存储的数据计算得出，因此会话历史与实时更新显示的内容一致。",
+                "无论使用哪个提供方，工具调用都采用同一种格式。Reasonix CLI 的工具调用因此与工作区中其他 Agent 的调用保持一致，你无需分别适应每个 CLI 的原始输出。"
+              ],
+              "bullets": [
+                "所有提供方共用一种结构，shell、文件、搜索、抓取与 MCP 调用的呈现方式保持一致；",
+                "失败的调用会附带可读的错误信息；",
+                "栅格格式的工具图片以 data URI 形式传递。"
+              ]
+            },
+            {
+              "id": "reasonix-vs-hagicode-section-2-item-12",
+              "title": "一目了然：在状态栏查看今日的 Token 用量与费用",
+              "content": [
+                "HagiCode 可以在状态栏中显示来自 TokenMonitor 桌面应用的今日 Token 用量与费用。该集成为可选功能，默认关闭。",
+                "它会定时读取 TokenMonitor 的本地数据文件或 TokenMonitor HostHub，只保留今日的 Token 总量和费用。状态栏因此用于快速查看，而不是完整的用量报告。"
+              ],
+              "bullets": [
+                "未开启集成前不会读取任何数据；",
+                "HostHub 密钥只写不读，保存后不会再返回或写入日志；",
+                "无效的 HostHub 地址会在保存时被拒绝。"
+              ]
+            },
+            {
+              "id": "reasonix-vs-hagicode-section-2-item-13",
+              "title": "交互式提问：让 Reasonix CLI 提问，并在同一次运行中继续",
+              "content": [
+                "当 Reasonix CLI 需要做出决定时，可以在运行过程中向你提出结构化问题。HagiCode 会在会话中展示该问题，会话状态从执行中变为等待回复，你的回答会让同一次运行继续。",
+                "如果运行已经结束，例如重启或超时之后，你的回答会作为普通消息发送到同一会话中，工作得以继续。"
+              ],
+              "bullets": [
+                "CLI 同时提出的多个问题可以在一次提交中一并作答；",
+                "未在 30 分钟内回答的问题会过期，仍可通过后续消息补充回答；",
+                "按 CLI 通过交互控制设置启用，由你决定允许哪些 Agent 提问。"
+              ]
             }
           ]
         }
@@ -227,9 +266,12 @@
           "id": "reasonix-vs-hagicode-section-3-bullets",
           "type": "bullet-list",
           "items": [
-            "Reasonix 提供纪律性：effort 控制、预算护栏、transcript 友好执行和工具能力；",
-            "HagiCode 提供效率：多线程并行、Agents 编队管理、OpenSpec 提案、AI 提交、Code Server 编辑器、Preset Task；",
+            "Reasonix 提供纪律性：显式模型引用、显式执行开关、单选提问和工具能力；",
+            "HagiCode 提供效率：多线程并行、Agents 编队管理、OpenSpec 提案、AI 提交、Code Server 编辑器、HagiTask；",
             "HagiCode 拓展边界：Monospecs 让 Reasonix 理解跨仓库项目关系，Vault 让 Reasonix 拥有跨会话长期记忆，OmniRoute 让工作流稳定、模型路由灵活；",
+            "工具调用视图：所有提供方的工具使用都采用一致的结构，历史记录与实时更新保持一致；",
+            "一目了然：可选的 TokenMonitor 状态栏显示今日 Token 用量与费用；",
+            "交互式提问：回答 Agent 的结构化问题，让同一次运行继续；",
             "两者结合提供体验：可追溯的决策链、自动化的日常事务、让人愉悦的操作界面，以及一个真正了解你项目全景、可自由配置模型来源的长期 AI 搭档。"
           ]
         }
