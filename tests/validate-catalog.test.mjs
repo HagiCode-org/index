@@ -1,19 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
-import { access, cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { access, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import { promisify } from 'node:util';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SUPPORTED_DESKTOP_LANGUAGE_CODES } from '../src/lib/desktop-language-contract.ts';
-import {
-  buildStructuredArticleLocaleManifest,
-  buildStructuredArticleRootManifest,
-  listStructuredArticleLocales,
-  listStructuredArticleSlugs,
-  loadStructuredArticleDetail,
-} from '../src/lib/structured-articles.ts';
 import { buildCharacterTemplateLibrary } from '../scripts/build-agent-preset-library.mjs';
 import { validateGeneratedImageDescriptor } from '../scripts/validate-catalog.mjs';
 import { writeImageFixtureFile } from './helpers/image-fixtures.mjs';
@@ -719,16 +712,6 @@ function buildCatalogFixture({
         status: 'published',
       },
       {
-        id: 'structured-articles',
-        title: 'Structured Article Manifest',
-        description: '公开按语言目录组织的 *-vs-hagicode 结构化文章根清单。',
-        path: '/articles/index.json',
-        category: 'catalogs',
-        sourceRepo: 'repos/index',
-        lastUpdated: '2026-06-17T00:00:00.000Z',
-        status: 'published',
-      },
-      {
         id: 'steam-achievements',
         title: 'Steam Achievements',
         description: '公开 Steamworks 后台配置用的成就 API 名、双语文案、里程碑参数与 256x256 图标路径。',
@@ -1119,7 +1102,6 @@ async function createValidationFixture({
   const imageInspectionScriptPath = path.join(projectRoot, 'scripts', 'image-file-inspection.mjs');
   const desktopLanguageContractPath = path.join(projectRoot, 'src', 'lib', 'desktop-language-contract.ts');
   const localeMetadataPath = path.join(projectRoot, 'src', 'i18n', 'locale-metadata.ts');
-  const structuredArticlesLibPath = path.join(projectRoot, 'src', 'lib', 'structured-articles.ts');
   const soulIndexFixture = buildSoulIndexFixture();
   const traitIndexFixture = buildTraitIndexFixture();
   const characterLibraryFixture = buildCharacterTemplateLibrary({
@@ -1172,16 +1154,10 @@ async function createValidationFixture({
     'utf8',
   );
   await writeFile(
-    path.join(srcLibDir, 'structured-articles.ts'),
-    await readFile(structuredArticlesLibPath, 'utf8'),
-    'utf8',
-  );
-  await writeFile(
     path.join(srcI18nDir, 'locale-metadata.ts'),
     await readFile(localeMetadataPath, 'utf8'),
     'utf8',
   );
-  await cp(path.join(projectRoot, 'src', 'data', 'articles'), path.join(srcDataDir, 'articles'), { recursive: true });
   const managedIndexFixture = JSON.stringify({
     generatedAt: catalog.generatedAt,
     packages: [{ version: '1.0.0' }],
@@ -1241,28 +1217,6 @@ async function createValidationFixture({
   await writeFile(path.join(distDir, 'desktop', 'index.json'), managedIndexFixture, 'utf8');
   await writeFile(path.join(distDir, 'steam', 'index.json'), JSON.stringify(steam), 'utf8');
   await writeFile(path.join(distDir, 'steam', 'achievements.json'), JSON.stringify(steamAchievements), 'utf8');
-  await mkdir(path.join(distDir, 'articles'), { recursive: true });
-  await writeFile(
-    path.join(distDir, 'articles', 'index.json'),
-    JSON.stringify(await buildStructuredArticleRootManifest()),
-    'utf8',
-  );
-  for (const locale of await listStructuredArticleLocales()) {
-    await mkdir(path.join(distDir, 'articles', locale), { recursive: true });
-    await writeFile(
-      path.join(distDir, 'articles', locale, 'index.json'),
-      JSON.stringify(await buildStructuredArticleLocaleManifest(locale)),
-      'utf8',
-    );
-
-    for (const slug of await listStructuredArticleSlugs(locale)) {
-      await writeFile(
-        path.join(distDir, 'articles', locale, `${slug}.json`),
-        JSON.stringify(await loadStructuredArticleDetail(locale, slug)),
-        'utf8',
-      );
-    }
-  }
   await writeFile(path.join(distDir, 'agent-templates', 'index.json'), JSON.stringify({
     version: '1.0.0',
     generatedAt: catalog.generatedAt,
@@ -1449,7 +1403,6 @@ test('catalog exposes managed server and desktop entries', async () => {
     'about',
     'design-theme-catalog',
     'secondary-professions',
-    'structured-articles',
     'steam-data',
     'steam-achievements',
     'promotion-flags',
