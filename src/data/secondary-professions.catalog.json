@@ -5,6 +5,25 @@
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
     {
+      "id": "secondary-gpt-6-0-astra",
+      "name": "GPT 6.0 Astra",
+      "family": "gpt",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
+      "sortOrder": 4,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "codex",
+        "copilot",
+        "hermes",
+        "pi",
+        "omp",
+        "junie"
+      ],
+      "defaultParameters": {
+        "model": "gpt-6-astra"
+      }
+    },
+    {
       "id": "secondary-gpt-6-1-sol",
       "name": "GPT 6.1 Sol",
       "family": "gpt",
