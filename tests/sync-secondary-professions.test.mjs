@@ -260,3 +260,10 @@ test('syncSecondaryProfessions check mode detects drift across published asset, 
     /out of sync/,
   );
 });
+
+test('secondary-professions catalog carries no Agent CLI description copy', async () => {
+  const catalogSource = await readFile(new URL('../src/data/secondary-professions.catalog.json', import.meta.url), 'utf8');
+
+  // Agent CLI descriptions lived under hero.catalogCopy.primary.*; that copy was removed, so it must not come back here.
+  assert.equal(catalogSource.includes('hero.catalogCopy.primary'), false);
+});
