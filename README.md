@@ -1,5 +1,8 @@
 # HagiCode Index
 
+[![last commit](https://img.shields.io/github/last-commit/HagiCode-org/index)](https://github.com/HagiCode-org/index/commits/main)
+[![website](https://img.shields.io/website?url=https%3A%2F%2Findex.hagicode.com&label=website)](https://index.hagicode.com)
+
 这是 `https://index.hagicode.com` 的独立 Astro 静态站点。它负责托管公开 JSON 资产、站点门户首页，以及数据镜像页与版本历史页。
 
 ## 站点职责
