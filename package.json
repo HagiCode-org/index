@@ -39,10 +39,10 @@
     "js-yaml": "^4.1.1"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.8",
+    "@astrojs/check": "^0.9.10",
     "@hagicode/hagi18n": "^0.1.1",
     "@types/node": "^24.5.2",
-    "typescript": "~5.3.3"
+    "typescript": "~6.0.3"
   },
   "engines": {
     "node": ">=24.0.0",
