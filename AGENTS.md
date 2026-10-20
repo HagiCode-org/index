@@ -21,6 +21,7 @@ npm run build
 npm test
 npm run validate
 npm run i18n:check
+npm run i18n:audit            # hagi18n audit/report/doctor/sync/prune (config: hagi18n.yaml; sync/prune have :write variants)
 npm run typecheck
 npm run sync:index
 npm run sync:secondary-professions
