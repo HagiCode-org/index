@@ -1,0 +1,52 @@
+{
+  "$comment": "Key art for the five promote.json entries, one key per promotion id. Textless on purpose: Anima cannot be trusted to spell a product name or a URL, and the promotion copy is localized in ten languages, so the title, description and CTA stay in the page. The hue of each sub-site follows its existing banner (awesome blue, design purple, openspec green, omniroute amber); the Microsoft Store entry follows the watercolor storybook look of the Steam hero. Subject sits right of centre and the left third stays calm so copy can be overlaid. Re-roll by changing a seed and running sync --only <key>.",
+  "usage": {
+    "purpose": "Banner key art for one promotion entry.",
+    "surface": "Image of a promote_content.json entry, shown on the Promoto showcase and in the HagiCode app promotion slot.",
+    "requirements": [
+      "Canvas 1232 x 704, wide landscape.",
+      "Subject right of centre, calm left third.",
+      "No text, letters, logos, UI chrome or people."
+    ]
+  },
+  "structure": "direction-list",
+  "render": { "canvas": { "width": 1232, "height": 704 }, "fit": "exact" },
+  "output": {
+    "fileName": "{key}.avif",
+    "publish": { "prefix": "promotion-banners" },
+    "preset": "theme-background",
+    "budget": { "perFileBytes": 240000, "totalBytes": 1200000 }
+  },
+  "shared": {
+    "style": "masterpiece, best quality, score_7, safe, no humans, scenery, wide shot",
+    "composition": "Make a wide landscape banner with one clear focal subject right of centre and a calm, open left third. Keep the picture uncluttered with premium lighting. The picture is pure illustrated artwork with no writing anywhere.",
+    "negative": "worst quality, low quality, score_1, score_2, score_3, watermark, logo, text, letters, typography, signature, UI chrome, frame, letterbox, black bars, people, close-up"
+  },
+  "items": [
+    {
+      "key": "desktop-microsoft-store-2026-06-10",
+      "seed": 1,
+      "prompt": "watercolor storybook illustration, soft washes, warm golden and sky blue palette, friendly mood, Show a small friendly blue robot assistant with round headphones standing on a sunlit wooden desk beside an open laptop, presenting a glowing square app tile that floats above the screen, with paper checklists, little gears and a lightbulb drifting around it, and a golden road winding through clouds in the background."
+    },
+    {
+      "key": "subsite-awesome",
+      "seed": 1,
+      "prompt": "digital illustration, deep navy and electric cyan palette, glowing constellation, calm curious mood, Show a grand curated library at night where tall shelves hold glowing open-source crates and lanterns, with a bright constellation of connected stars rising above the shelves on the right, as if hand-picked treasures are being gathered into one collection."
+    },
+    {
+      "key": "subsite-design",
+      "seed": 1,
+      "prompt": "digital illustration, deep violet and magenta palette, soft neon glow, creative mood, Show a floating gallery of design system boards on the right, each a different abstract style swatch of colour palettes, type specimens and rounded component shapes, hung in a dark violet hall and lit by pink and lilac light."
+    },
+    {
+      "key": "subsite-openspec",
+      "seed": 1,
+      "prompt": "digital illustration, deep emerald and mint green palette, clean technical blueprint feel, focused mood, Show a glowing blueprint scroll unrolling across a dark green drafting table on the right, with a stack of drafted proposal sheets and a checklist beside it, thin mint lines turning into a small finished structure, and concentric rings of light fading behind."
+    },
+    {
+      "key": "subsite-omniroute",
+      "seed": 1,
+      "prompt": "digital illustration, dark brown and warm amber palette, golden light trails, dynamic mood, Show a single glowing amber gateway on the right where many thin golden routes from different directions converge into one bright beam, with small orbs of different sizes travelling along the routes like providers connecting through one endpoint."
+    }
+  ]
+}
