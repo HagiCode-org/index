@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-10-24T06:24:21.321Z",
+  "generatedAt": "2026-10-24T11:21:32.374Z",
   "entries": [
     {
       "id": "presets-catalog",
@@ -34,7 +34,7 @@
       "historyPagePath": "/desktop/history/",
       "category": "packages",
       "sourceRepo": "repos/hagicode-desktop",
-      "lastUpdated": "2026-10-23T17:58:21.000Z",
+      "lastUpdated": "2026-10-24T07:07:53.000Z",
       "status": "published",
       "sourceUrl": "https://github.com/HagiCode-org/site/tree/main/repos/hagicode-desktop"
     },
