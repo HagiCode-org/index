@@ -1,20 +1,24 @@
 ---
 public: true
 multilingual: false
-style: technical
+style: product
 ---
 
 # README requirements
 
-## Audience and focus
+## Product focus
 
-- Address maintainers of the `index.hagicode.com` static Astro site, which hosts public JSON assets, the site portal and version history pages. The README is written in Chinese; keep it in Chinese.
+- Introduce HagiCode Index (`index.hagicode.com`) as the static site that gives people one portal to the HagiCode sites (main site, docs, Builder, Soul, Trait and the data mirror), a human-readable data page, and version history pages for HagiCode Server and HagiCode Desktop, while also publishing the public JSON assets that HagiCode clients and external programs read.
+- Address visitors who want to find HagiCode sites and release history first, and developers who consume the published JSON (for example `/index-catalog.json`, `/activity-metrics.json`, `/server/index.json`, `/desktop/index.json`, `/presets/index.json`). The README is written in Chinese; keep it in Chinese.
+- Lead with what the site offers visitors and consumers; keep how the data is built and synced out of the main description.
 
 ## Required content
 
-- Keep the sections the current README relies on: site responsibilities, standalone build and verification, JSON publishing format, source and public boundary, version history pages, activity data model and sources, environment variables, GitHub Actions automation, development commands, sync flow, production deployment and maintenance boundary.
-- Route and file names must match `src/` and `public/`.
+- Open with a short product introduction and the site link, keeping the badges the README carries.
+- Describe the user-facing capabilities as the site shows them: the portal home page, the `/data/` page, the Server and Desktop version history pages (`/server/history/`, `/desktop/history/`) and the stable public JSON URLs.
+- Document the public JSON assets a consumer can rely on, such as the `/promote_content.json` image fallback list and the stable JSON routes. Route and file names must match `src/` and `public/`.
 
 ## Exclusions
 
 - Exclude values for environment variables, tokens, secret values, internal hosts, machine-specific paths and private links.
+- Keep repository maintenance instructions out of the README: build and verification commands, JSON minification rules, localization workflow, source and public boundaries, GitHub Actions automation, sync flow, deployment and maintenance boundaries. Do not list features the repository does not show.
