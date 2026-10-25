@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "npm run prepare:generated && astro dev --host 0.0.0.0 --port ${PORT_INDEX:-31266}",
     "start": "astro dev --host 0.0.0.0",
-    "build": "export NODE_ENV=\"${NODE_ENV:-production}\"; npm run prepare:generated && npm run i18n:check && astro build && node ./scripts/minify-published-json.mjs --published-root dist && npm run verify:json-routes -- --published-root dist",
+    "build": "export NODE_OPTIONS=\"${NODE_OPTIONS:-} --max-old-space-size=8192\"; export NODE_ENV=\"${NODE_ENV:-production}\"; npm run prepare:generated && npm run i18n:check && astro build && node ./scripts/minify-published-json.mjs --published-root dist && npm run verify:json-routes -- --published-root dist",
     "preview": "astro preview --port ${PORT_INDEX:-31266}",
     "astro": "astro",
     "i18n:audit": "hagi18n audit --config hagi18n.yaml",
@@ -26,7 +26,7 @@
     "sync:character-templates": "node ./scripts/build-agent-preset-library.mjs",
     "validate": "export NODE_ENV=\"${NODE_ENV:-production}\"; npm run prepare:generated && npm run i18n:check && astro build --outDir .astro-validate && node ./scripts/minify-published-json.mjs --published-root .astro-validate && npm run verify:json-routes -- --published-root .astro-validate && node ./scripts/sync-secondary-professions.mjs --check",
     "test": "export NODE_ENV=\"${NODE_ENV:-production}\"; npm run prepare:generated && npm run i18n:check && astro build --outDir .astro-test && node ./scripts/minify-published-json.mjs --published-root .astro-test && npm run verify:json-routes -- --published-root .astro-test && INDEX_BUILD_ROOT=.astro-test node --experimental-strip-types --test ./tests/*.test.mjs",
-    "typecheck": "astro check",
+    "typecheck": "export NODE_OPTIONS=\"${NODE_OPTIONS:-} --max-old-space-size=8192\"; astro check",
     "generate:steam-achievements": "node ./scripts/generate-steam-achievement-icons.mjs",
     "sync:index": "node ./scripts/sync-r2-index.mjs",
     "sync:agent-templates": "node ./scripts/sync-agent-templates.mjs",
