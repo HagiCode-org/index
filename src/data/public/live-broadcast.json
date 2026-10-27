@@ -29,8 +29,8 @@
     "width": 201,
     "height": 213,
     "alt": {
-      "zh-CN": "Hagicode 抖音直播二维码",
-      "en": "Douyin QR code for the Hagicode live broadcast"
+      "zh-CN": "HagiCode 抖音直播二维码",
+      "en": "Douyin QR code for the HagiCode live broadcast"
     },
     "fallbackLabel": {
       "zh-CN": "二维码暂时不可用",
@@ -40,7 +40,7 @@
   "locales": {
     "zh-CN": {
       "eyebrow": "直播预告",
-      "title": "Hagicode 每日直播编程间",
+      "title": "HagiCode 每日直播编程间",
       "description": "每天 20:00 按北京时间开播，扫码进入抖音直播间。周四固定停播。",
       "status": {
         "upcoming": "即将开始",

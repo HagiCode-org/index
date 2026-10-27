@@ -88,8 +88,8 @@ function buildLiveBroadcastFixture() {
       width: 201,
       height: 213,
       alt: {
-        'zh-CN': 'Hagicode 抖音直播二维码',
-        en: 'Douyin QR code for the Hagicode live broadcast',
+        'zh-CN': 'HagiCode 抖音直播二维码',
+        en: 'Douyin QR code for the HagiCode live broadcast',
       },
       fallbackLabel: {
         'zh-CN': '二维码暂时不可用',
@@ -99,7 +99,7 @@ function buildLiveBroadcastFixture() {
     locales: {
       'zh-CN': {
         eyebrow: '直播预告',
-        title: 'Hagicode 每日直播编程间',
+        title: 'HagiCode 每日直播编程间',
         description: '每天 20:00 按北京时间开播，扫码进入抖音直播间。周四固定停播。',
         status: { upcoming: '即将开始', live: '正在直播', offline: '暂未开播' },
         stateCopy: { upcoming: '今晚 20:00 开播，18:00 起会显示直播提醒。', live: '直播已开始，扫码即可进入抖音直播间。', offline: '当前不在直播窗口，页面会自动显示下一场时间。' },

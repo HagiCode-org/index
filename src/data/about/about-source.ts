@@ -160,7 +160,7 @@ export const aboutSource = {
       type: 'qr',
       label: '抖音二维码',
       regionPriority: 'china-first',
-      description: '扫码查看 Hagicode 抖音账号。',
+      description: '扫码查看 HagiCode 抖音账号。',
       imageId: 'douyin',
       alt: 'HagiCode 抖音二维码',
     },
