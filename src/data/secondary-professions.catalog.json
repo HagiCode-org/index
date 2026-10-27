@@ -43,11 +43,30 @@
       }
     },
     {
+      "id": "secondary-gpt-6-1-terra",
+      "name": "GPT 6.1 Terra",
+      "family": "gpt",
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
+      "sortOrder": 6,
+      "supportsImage": true,
+      "compatiblePrimaryFamilies": [
+        "codex",
+        "copilot",
+        "hermes",
+        "pi",
+        "omp",
+        "junie"
+      ],
+      "defaultParameters": {
+        "model": "gpt-6.1-terra"
+      }
+    },
+    {
       "id": "secondary-gpt-6-0-sol",
       "name": "GPT 6.0 Sol",
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
-      "sortOrder": 6,
+      "sortOrder": 7,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
@@ -66,7 +85,7 @@
       "name": "GPT 6.0 Luna",
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
-      "sortOrder": 7,
+      "sortOrder": 8,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
@@ -85,7 +104,7 @@
       "name": "GPT 5.6 Sol",
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
-      "sortOrder": 8,
+      "sortOrder": 9,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
@@ -104,7 +123,7 @@
       "name": "GPT 5.6 Terra",
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
-      "sortOrder": 9,
+      "sortOrder": 10,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
@@ -123,7 +142,7 @@
       "name": "GPT 5.6 Luna",
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
-      "sortOrder": 10,
+      "sortOrder": 11,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
@@ -142,7 +161,7 @@
       "name": "GPT 5.5",
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
-      "sortOrder": 11,
+      "sortOrder": 12,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
@@ -161,7 +180,7 @@
       "name": "GPT 5.4",
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
-      "sortOrder": 12,
+      "sortOrder": 13,
       "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
