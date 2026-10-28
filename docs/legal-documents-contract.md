@@ -65,7 +65,7 @@ Whenever you update either legal document in `repos/docs`, update this contract 
 2. Update the matching `effectiveDate` and `revision` in `repos/index/src/data/public/legal-documents.json`.
 3. Verify each `browserOpenUrl` still targets the correct published docs route.
 4. Keep `documentType` values stable: `eula` and `privacy-policy`.
-5. Run `npm test` in `repos/index` so the published JSON contract is validated.
+5. Run `pnpm test` in `repos/index` so the published JSON contract is validated.
 
 ## Compatibility notes
 
