@@ -204,7 +204,7 @@ async function assertAllPublishedJsonMinified(publishedRoot) {
 
     assert(
       raw === stable,
-      `Published JSON ${publishedPath} must be stable minified JSON. Run npm run build so scripts/minify-published-json.mjs rewrites build output only.`,
+      `Published JSON ${publishedPath} must be stable minified JSON. Run pnpm run build so scripts/minify-published-json.mjs rewrites build output only.`,
     );
 
     assert(
