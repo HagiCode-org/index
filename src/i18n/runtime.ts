@@ -43,7 +43,7 @@ function readGeneratedNamespace(locale: SupportedI18nLocale, namespace: Required
   const resourcePath = path.join(generatedRoot, locale, `${namespace}.json`);
   if (!fs.existsSync(resourcePath)) {
     throw new Error(
-      `Missing generated i18n resource ${path.relative(projectRoot, resourcePath)}. Run npm run i18n:generate in repos/index.`,
+      `Missing generated i18n resource ${path.relative(projectRoot, resourcePath)}. Run pnpm run i18n:generate in repos/index.`,
     );
   }
 
