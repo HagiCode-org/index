@@ -1,0 +1,1 @@
+import{t as e}from"./preload-helper.DHhhL8Zf.js";import{n as t}from"./analytics-events.Ci6ssndZ.js";t(),document.querySelector(`script[data-hagilight-analytics]`)&&e(()=>import(`./consent-gate.BhoDC52y.js`).then(e=>e.t).then(e=>e.mountConsentGate()),[]);
