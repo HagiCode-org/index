@@ -20,7 +20,7 @@ node scripts/generate-steam-achievement-icons.mjs --only HAGICODE_CREATE --force
 The script writes:
 
 - generated ImgBin source assets to `src/assets/steam/achievements/.imgbin-library/`
-- Steam-ready 256x256 PNG icons to `public/steam/achievements/icons/`
+- 256x256 AVIF icons to `public/steam/achievements/icons/`
 - one achieved icon and one locked grayscale icon per achievement
 
 When `--force` is used, the script first removes existing ImgBin library directories for the target achievement slug, then regenerates the source asset through ImgBin. This keeps stale or failed-provider metadata out of the managed asset library.
