@@ -1,103 +1,103 @@
 metadata:
   title: HagiCode Portal
-  description: HagiCode site navigation portal for the main site, docs, data mirrors, and standalone tools.
+  description: HagiCode-Portal zur Seitennavigation für die Hauptseite, die Dokumentation, Datenspiegel und eigenständige Tools.
 header:
   brandName: HagiCode Portal
-  brandSubtitle: Site navigation and public data handoff
-  navAria: Portal shortcuts
+  brandSubtitle: Seitennavigation und Übergabe öffentlicher Daten
+  navAria: Portal-Verknüpfungen
   nav:
-    dataPage: Data
-    catalogJson: View catalog JSON
+    dataPage: Daten
+    catalogJson: Katalog-JSON ansehen
 hero:
   eyebrow: index.hagicode.com
   kicker: Site switchboard
-  title: HagiCode Index control surface
+  title: HagiCode-Index-Kontrollzentrale
   actions:
-    dataMirror: Open data mirror
-  routesAria: Homepage priority exits
+    dataMirror: Datenspiegel öffnen
+  routesAria: Wichtigste Ausgänge der Startseite
   routes:
-    catalog: Catalog index
-    desktopHistory: Desktop history
-    serverHistory: Server history
-    promoto: Promoto showcase
-  metricsAria: Portal overview
+    catalog: Katalogindex
+    desktopHistory: Desktop-Verlauf
+    serverHistory: Server-Verlauf
+    promoto: Promoto-Schaufenster
+  metricsAria: Portal-Übersicht
   metrics:
-    siteCount: Site entries
-    groupCount: Site groups
-    publicIndexCount: Public indexes
-    routeCount: Stable routes
+    siteCount: Seiteneinträge
+    groupCount: Seitengruppen
+    publicIndexCount: Öffentliche Indizes
+    routeCount: Stabile Routen
   signal:
     category: Operational signal
-    title: Entry / JSON / history
-    deliveryLabel: Delivery
-    deliveryValue: Static publish
-    snapshotLabel: Site snapshot
+    title: Einstieg / JSON / Verlauf
+    deliveryLabel: Bereitstellung
+    deliveryValue: Statische Veröffentlichung
+    snapshotLabel: Seiten-Snapshot
 sections:
   surface:
     eyebrow: Control surface
-    title: Four operating lines for Index
-    snapshotAria: Portal snapshot
+    title: Vier Betriebslinien für Index
+    snapshotAria: Portal-Snapshot
   data:
     eyebrow: Public data
-    title: Data entry navigation
+    title: Navigation zu den Dateneinstiegen
   sites:
     eyebrow: Portal sites
-    title: Site entries
+    title: Seiteneinträge
 surfaceCards:
   portal:
-    title: Portal entry
+    title: Portal-Einstieg
     label: portal
     status: always on
-    action: Open entry
+    action: Einstieg öffnen
   mirror:
-    title: Data mirror
+    title: Datenspiegel
     label: mirror
     status: always on
-    action: Open entry
+    action: Einstieg öffnen
   history:
-    title: Version history
+    title: Versionsverlauf
     label: history
     status: always on
-    action: Open entry
+    action: Einstieg öffnen
   review:
-    title: Operations review
+    title: Betriebsprüfung
     label: review
     status: always on
-    action: Open entry
+    action: Einstieg öffnen
 routeSignals:
-  siteSnapshot: Site catalog snapshot
-  publicIndexScale: Public index scale
-  stableRouteCount: Stable entry count
+  siteSnapshot: Snapshot des Seitenkatalogs
+  publicIndexScale: Umfang der öffentlichen Indizes
+  stableRouteCount: Anzahl stabiler Einstiege
 dataCategory: data
 stableRouteBadge: stable route
 dataEntries:
   steamAchievements:
-    title: Steam achievements page
-    description: Achievement catalog, icon preview, and stable public route for developer review.
+    title: Steam-Erfolgsseite
+    description: Erfolgskatalog, Symbolvorschau und stabile öffentliche Route für die Entwicklerprüfung.
   indexCatalog:
-    title: Catalog index JSON
-    description: Public index catalog and status metadata.
+    title: Katalogindex-JSON
+    description: Öffentlicher Indexkatalog und Statusmetadaten.
   activityMetrics:
-    title: Activity metrics JSON
-    description: Homepage activity statistics consumed by the main site.
+    title: Aktivitätsmetriken-JSON
+    description: Von der Hauptseite verwendete Aktivitätsstatistiken der Startseite.
   liveBroadcast:
-    title: Live broadcast JSON
-    description: Public live-entry metadata for the site.
+    title: Livestream-JSON
+    description: Öffentliche Metadaten der Live-Einstiege der Website.
   steamAchievementsJson:
-    title: Steam achievements JSON
-    description: Steamworks achievement list, milestone parameters, and icon paths.
+    title: Steam-Erfolge-JSON
+    description: Steamworks-Erfolgsliste, Meilensteinparameter und Symbolpfade.
   design:
-    title: Design catalog JSON
-    description: Public catalog entry for awesome-design-md.
+    title: Design-Katalog-JSON
+    description: Öffentlicher Katalogeintrag für awesome-design-md.
   legalDocuments:
-    title: Legal documents JSON
-    description: Public legal document metadata and landing-page mappings.
+    title: Rechtsdokumente-JSON
+    description: Öffentliche Metadaten der Rechtsdokumente und Zuordnungen zu Landingpages.
   desktopHistory:
-    title: Desktop version history
-    description: Crawlable desktop history page and download entry.
+    title: Desktop-Versionsverlauf
+    description: Crawlbare Verlaufsseite für Desktop und Download-Einstieg.
   serverHistory:
-    title: Server version history
-    description: Crawlable server history page and index entry.
+    title: Server-Versionsverlauf
+    description: Crawlbare Verlaufsseite für den Server und Indexeinstieg.
 siteCard:
   productionBadge: production
-  actionAriaTemplate: '{title} actions'
+  actionAriaTemplate: Aktionen für {title}

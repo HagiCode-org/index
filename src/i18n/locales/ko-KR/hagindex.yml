@@ -1,103 +1,103 @@
 metadata:
   title: HagiCode Portal
-  description: HagiCode site navigation portal for the main site, docs, data mirrors, and standalone tools.
+  description: 메인 사이트, 문서, 데이터 미러, 독립 도구를 한곳에 모은 HagiCode 사이트 내비게이션 포털입니다.
 header:
   brandName: HagiCode Portal
-  brandSubtitle: Site navigation and public data handoff
-  navAria: Portal shortcuts
+  brandSubtitle: 사이트 내비게이션 및 공개 데이터 인계
+  navAria: 포털 바로가기
   nav:
-    dataPage: Data
-    catalogJson: View catalog JSON
+    dataPage: 데이터
+    catalogJson: 카탈로그 JSON 보기
 hero:
   eyebrow: index.hagicode.com
   kicker: Site switchboard
-  title: HagiCode Index control surface
+  title: HagiCode Index 통합 제어판
   actions:
-    dataMirror: Open data mirror
-  routesAria: Homepage priority exits
+    dataMirror: 데이터 미러 열기
+  routesAria: 홈페이지 주요 이동 링크
   routes:
-    catalog: Catalog index
-    desktopHistory: Desktop history
-    serverHistory: Server history
-    promoto: Promoto showcase
-  metricsAria: Portal overview
+    catalog: 카탈로그 색인
+    desktopHistory: Desktop 기록
+    serverHistory: Server 기록
+    promoto: Promoto 쇼케이스
+  metricsAria: 포털 개요
   metrics:
-    siteCount: Site entries
-    groupCount: Site groups
-    publicIndexCount: Public indexes
-    routeCount: Stable routes
+    siteCount: 사이트 항목
+    groupCount: 사이트 그룹
+    publicIndexCount: 공개 색인
+    routeCount: 안정 경로
   signal:
     category: Operational signal
-    title: Entry / JSON / history
-    deliveryLabel: Delivery
-    deliveryValue: Static publish
-    snapshotLabel: Site snapshot
+    title: 진입점 / JSON / 기록
+    deliveryLabel: 제공 방식
+    deliveryValue: 정적 게시
+    snapshotLabel: 사이트 스냅샷
 sections:
   surface:
     eyebrow: Control surface
-    title: Four operating lines for Index
-    snapshotAria: Portal snapshot
+    title: Index의 네 가지 운영 축
+    snapshotAria: 포털 스냅샷
   data:
     eyebrow: Public data
-    title: Data entry navigation
+    title: 데이터 진입점 내비게이션
   sites:
     eyebrow: Portal sites
-    title: Site entries
+    title: 사이트 항목
 surfaceCards:
   portal:
-    title: Portal entry
+    title: 포털 진입점
     label: portal
     status: always on
-    action: Open entry
+    action: 진입점 열기
   mirror:
-    title: Data mirror
+    title: 데이터 미러
     label: mirror
     status: always on
-    action: Open entry
+    action: 진입점 열기
   history:
-    title: Version history
+    title: 버전 기록
     label: history
     status: always on
-    action: Open entry
+    action: 진입점 열기
   review:
-    title: Operations review
+    title: 운영 점검
     label: review
     status: always on
-    action: Open entry
+    action: 진입점 열기
 routeSignals:
-  siteSnapshot: Site catalog snapshot
-  publicIndexScale: Public index scale
-  stableRouteCount: Stable entry count
+  siteSnapshot: 사이트 카탈로그 스냅샷
+  publicIndexScale: 공개 색인 규모
+  stableRouteCount: 안정 진입점 총수
 dataCategory: data
 stableRouteBadge: stable route
 dataEntries:
   steamAchievements:
-    title: Steam achievements page
-    description: Achievement catalog, icon preview, and stable public route for developer review.
+    title: Steam 업적 페이지
+    description: 개발자 검토용 업적 카탈로그, 아이콘 미리보기, 안정적인 공개 경로.
   indexCatalog:
-    title: Catalog index JSON
-    description: Public index catalog and status metadata.
+    title: 카탈로그 색인 JSON
+    description: 공개 색인 카탈로그와 상태 메타데이터.
   activityMetrics:
-    title: Activity metrics JSON
-    description: Homepage activity statistics consumed by the main site.
+    title: 활동 지표 JSON
+    description: 메인 사이트가 사용하는 홈페이지 활동 통계.
   liveBroadcast:
-    title: Live broadcast JSON
-    description: Public live-entry metadata for the site.
+    title: 라이브 방송 JSON
+    description: 사이트의 라이브 진입점에 대한 공개 메타데이터.
   steamAchievementsJson:
-    title: Steam achievements JSON
-    description: Steamworks achievement list, milestone parameters, and icon paths.
+    title: Steam 업적 JSON
+    description: Steamworks 업적 목록, 마일스톤 매개변수, 아이콘 경로.
   design:
-    title: Design catalog JSON
-    description: Public catalog entry for awesome-design-md.
+    title: 디자인 카탈로그 JSON
+    description: awesome-design-md의 공개 카탈로그 진입점.
   legalDocuments:
-    title: Legal documents JSON
-    description: Public legal document metadata and landing-page mappings.
+    title: 법률 문서 JSON
+    description: 공개 법률 문서 메타데이터와 랜딩 페이지 매핑.
   desktopHistory:
-    title: Desktop version history
-    description: Crawlable desktop history page and download entry.
+    title: Desktop 버전 기록
+    description: 크롤링 가능한 데스크톱 기록 페이지와 다운로드 진입점.
   serverHistory:
-    title: Server version history
-    description: Crawlable server history page and index entry.
+    title: Server 버전 기록
+    description: 크롤링 가능한 서버 기록 페이지와 색인 진입점.
 siteCard:
   productionBadge: production
-  actionAriaTemplate: '{title} actions'
+  actionAriaTemplate: "{title} 작업"

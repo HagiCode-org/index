@@ -4,7 +4,7 @@ metadata:
 header:
   brandAria: "返回 HagiCode Index 门户"
   brandName: "HagiCode Promoto Showcase"
-  brandSubtitle: "Promotion content and rendered asset review surface"
+  brandSubtitle: "推广内容与渲染素材检查台"
   navAria: "Promoto 页面快捷入口"
   nav:
     portal: "返回门户"
@@ -16,13 +16,13 @@ showcase:
     title: "Promoto 内容展示台"
     descriptionTemplate: "按 desktop 的完整语言清单检查 Promoto 文案覆盖情况，目前要求每个条目都补齐 {count} 种语言的标题、描述与 CTA。"
   meta:
-    aria: "Promoto payload metadata"
-    payloadVersion: "Payload Version"
-    updated: "Updated"
-    localeScope: "Locale Scope"
-    rawEndpoint: "Raw Endpoint"
+    aria: "Promoto payload 元数据"
+    payloadVersion: "Payload 版本"
+    updated: "更新时间"
+    localeScope: "语言范围"
+    rawEndpoint: "原始端点"
   metrics:
-    aria: "Promoto summary metrics"
+    aria: "Promoto 汇总指标"
     entries: "总条目"
     platforms: "平台数"
     noPlatforms: "暂无平台"
@@ -33,7 +33,7 @@ showcase:
     localeCompleteTemplate: "{count} 种语言完整"
     missingTextTemplate: "{count} 条缺多语言文案"
   filters:
-    aria: "Promoto filters"
+    aria: "Promoto 筛选器"
     platformLegend: "按平台筛选"
     platformAll: "全部"
     qualityLegend: "按数据质量筛选"
@@ -59,15 +59,15 @@ showcase:
       titleTemplate: "缺少标题{language}文案"
       descriptionTemplate: "缺少描述{language}文案"
       ctaTemplate: "缺少按钮{language}文案"
-      imageLabelTemplate: "Promoto entry {id} is missing an image descriptor"
-      imageTitle: "Missing Image"
+      imageLabelTemplate: "Promoto 条目 {id} 缺少图片描述"
+      imageTitle: "缺少图片"
     localeSummaryTemplate: "语言覆盖 {complete}/{total}"
     missingLocalesTemplate: "缺少 {locales}"
     allLocalesComplete: "已补齐全部 desktop 语言"
     meta:
-      locales: "Locales"
-      image: "Image"
-      noImage: "No image descriptor available"
+      locales: "语言"
+      image: "图片"
+      noImage: "暂无图片描述"
     ctaLabel: "CTA"
     jsonAction: "查看 JSON"
   states:

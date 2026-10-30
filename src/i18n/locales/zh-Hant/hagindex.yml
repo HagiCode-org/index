@@ -1,103 +1,103 @@
 metadata:
   title: HagiCode Portal
-  description: HagiCode site navigation portal for the main site, docs, data mirrors, and standalone tools.
+  description: HagiCode 站點導覽門戶，集中收納主站、文件、資料鏡像與獨立工具站點。
 header:
   brandName: HagiCode Portal
-  brandSubtitle: Site navigation and public data handoff
-  navAria: Portal shortcuts
+  brandSubtitle: 站點導覽與公開資料交接
+  navAria: 門戶快捷入口
   nav:
-    dataPage: Data
-    catalogJson: View catalog JSON
+    dataPage: 資料頁
+    catalogJson: 檢視目錄 JSON
 hero:
   eyebrow: index.hagicode.com
   kicker: Site switchboard
-  title: HagiCode Index control surface
+  title: HagiCode Index 站群總控台
   actions:
-    dataMirror: Open data mirror
-  routesAria: Homepage priority exits
+    dataMirror: 開啟資料鏡像
+  routesAria: 首頁重點出口
   routes:
-    catalog: Catalog index
-    desktopHistory: Desktop history
-    serverHistory: Server history
-    promoto: Promoto showcase
-  metricsAria: Portal overview
+    catalog: 目錄索引
+    desktopHistory: Desktop 歷史頁
+    serverHistory: Server 歷史頁
+    promoto: Promoto 展示台
+  metricsAria: 門戶概覽
   metrics:
-    siteCount: Site entries
-    groupCount: Site groups
-    publicIndexCount: Public indexes
-    routeCount: Stable routes
+    siteCount: 站點入口
+    groupCount: 站群分組
+    publicIndexCount: 公開索引
+    routeCount: 穩定路由
   signal:
     category: Operational signal
-    title: Entry / JSON / history
-    deliveryLabel: Delivery
-    deliveryValue: Static publish
-    snapshotLabel: Site snapshot
+    title: 入口 / JSON / 歷史
+    deliveryLabel: 交付方式
+    deliveryValue: 靜態發布
+    snapshotLabel: 站點快照
 sections:
   surface:
     eyebrow: Control surface
-    title: Four operating lines for Index
-    snapshotAria: Portal snapshot
+    title: 把 Index 劃成四條主線
+    snapshotAria: 門戶快照
   data:
     eyebrow: Public data
-    title: Data entry navigation
+    title: 資料入口導覽
   sites:
     eyebrow: Portal sites
-    title: Site entries
+    title: 站點入口
 surfaceCards:
   portal:
-    title: Portal entry
+    title: 門戶入口
     label: portal
     status: always on
-    action: Open entry
+    action: 開啟入口
   mirror:
-    title: Data mirror
+    title: 資料鏡像
     label: mirror
     status: always on
-    action: Open entry
+    action: 開啟入口
   history:
-    title: Version history
+    title: 版本歷史
     label: history
     status: always on
-    action: Open entry
+    action: 開啟入口
   review:
-    title: Operations review
+    title: 營運檢查
     label: review
     status: always on
-    action: Open entry
+    action: 開啟入口
 routeSignals:
-  siteSnapshot: Site catalog snapshot
-  publicIndexScale: Public index scale
-  stableRouteCount: Stable entry count
+  siteSnapshot: 站點清單快照
+  publicIndexScale: 公開索引規模
+  stableRouteCount: 穩定入口總數
 dataCategory: data
 stableRouteBadge: stable route
 dataEntries:
   steamAchievements:
-    title: Steam achievements page
-    description: Achievement catalog, icon preview, and stable public route for developer review.
+    title: Steam 成就頁面
+    description: 供開發者瀏覽的成就目錄、圖示預覽和穩定公開路徑。
   indexCatalog:
-    title: Catalog index JSON
-    description: Public index catalog and status metadata.
+    title: 目錄索引 JSON
+    description: 公開索引目錄與狀態中繼資料。
   activityMetrics:
-    title: Activity metrics JSON
-    description: Homepage activity statistics consumed by the main site.
+    title: 活動指標 JSON
+    description: 主站執行時使用的首頁活動統計資料。
   liveBroadcast:
-    title: Live broadcast JSON
-    description: Public live-entry metadata for the site.
+    title: 直播入口 JSON
+    description: 站內直播入口與公開直播中繼資料。
   steamAchievementsJson:
-    title: Steam achievements JSON
-    description: Steamworks achievement list, milestone parameters, and icon paths.
+    title: Steam 成就 JSON
+    description: Steamworks 後台設定用的成就清單、里程碑參數與圖示路徑。
   design:
-    title: Design catalog JSON
-    description: Public catalog entry for awesome-design-md.
+    title: 設計目錄 JSON
+    description: awesome-design-md 的公開目錄入口。
   legalDocuments:
-    title: Legal documents JSON
-    description: Public legal document metadata and landing-page mappings.
+    title: 法律文件 JSON
+    description: 公開法律文件中繼資料與登陸頁對應。
   desktopHistory:
-    title: Desktop version history
-    description: Crawlable desktop history page and download entry.
+    title: Desktop 版本歷史
+    description: 可供爬取的桌面端歷史頁與下載入口。
   serverHistory:
-    title: Server version history
-    description: Crawlable server history page and index entry.
+    title: Server 版本歷史
+    description: 可供爬取的伺服器端歷史頁與索引入口。
 siteCard:
   productionBadge: production
-  actionAriaTemplate: '{title} actions'
+  actionAriaTemplate: "{title} 操作"

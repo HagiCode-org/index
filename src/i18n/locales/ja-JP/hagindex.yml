@@ -1,103 +1,103 @@
 metadata:
   title: HagiCode Portal
-  description: HagiCode site navigation portal for the main site, docs, data mirrors, and standalone tools.
+  description: メインサイト、ドキュメント、データミラー、単体ツールをまとめた HagiCode のサイトナビゲーションポータルです。
 header:
   brandName: HagiCode Portal
-  brandSubtitle: Site navigation and public data handoff
-  navAria: Portal shortcuts
+  brandSubtitle: サイトナビゲーションと公開データの引き渡し
+  navAria: ポータルのショートカット
   nav:
-    dataPage: Data
-    catalogJson: View catalog JSON
+    dataPage: データ
+    catalogJson: カタログ JSON を表示
 hero:
   eyebrow: index.hagicode.com
   kicker: Site switchboard
-  title: HagiCode Index control surface
+  title: HagiCode Index 統合コントロール画面
   actions:
-    dataMirror: Open data mirror
-  routesAria: Homepage priority exits
+    dataMirror: データミラーを開く
+  routesAria: ホームページの優先リンク
   routes:
-    catalog: Catalog index
-    desktopHistory: Desktop history
-    serverHistory: Server history
-    promoto: Promoto showcase
-  metricsAria: Portal overview
+    catalog: カタログインデックス
+    desktopHistory: Desktop の履歴
+    serverHistory: Server の履歴
+    promoto: Promoto ショーケース
+  metricsAria: ポータルの概要
   metrics:
-    siteCount: Site entries
-    groupCount: Site groups
-    publicIndexCount: Public indexes
-    routeCount: Stable routes
+    siteCount: サイトエントリー
+    groupCount: サイトグループ
+    publicIndexCount: 公開インデックス
+    routeCount: 安定ルート
   signal:
     category: Operational signal
-    title: Entry / JSON / history
-    deliveryLabel: Delivery
-    deliveryValue: Static publish
-    snapshotLabel: Site snapshot
+    title: エントリー / JSON / 履歴
+    deliveryLabel: 配信方式
+    deliveryValue: 静的公開
+    snapshotLabel: サイトスナップショット
 sections:
   surface:
     eyebrow: Control surface
-    title: Four operating lines for Index
-    snapshotAria: Portal snapshot
+    title: Index を支える 4 つの運用ライン
+    snapshotAria: ポータルのスナップショット
   data:
     eyebrow: Public data
-    title: Data entry navigation
+    title: データ入口ナビゲーション
   sites:
     eyebrow: Portal sites
-    title: Site entries
+    title: サイトエントリー
 surfaceCards:
   portal:
-    title: Portal entry
+    title: ポータルの入口
     label: portal
     status: always on
-    action: Open entry
+    action: 入口を開く
   mirror:
-    title: Data mirror
+    title: データミラー
     label: mirror
     status: always on
-    action: Open entry
+    action: 入口を開く
   history:
-    title: Version history
+    title: バージョン履歴
     label: history
     status: always on
-    action: Open entry
+    action: 入口を開く
   review:
-    title: Operations review
+    title: 運用レビュー
     label: review
     status: always on
-    action: Open entry
+    action: 入口を開く
 routeSignals:
-  siteSnapshot: Site catalog snapshot
-  publicIndexScale: Public index scale
-  stableRouteCount: Stable entry count
+  siteSnapshot: サイトカタログのスナップショット
+  publicIndexScale: 公開インデックスの規模
+  stableRouteCount: 安定した入口の総数
 dataCategory: data
 stableRouteBadge: stable route
 dataEntries:
   steamAchievements:
-    title: Steam achievements page
-    description: Achievement catalog, icon preview, and stable public route for developer review.
+    title: Steam 実績ページ
+    description: 開発者向けの実績カタログ、アイコンプレビュー、安定した公開ルート。
   indexCatalog:
-    title: Catalog index JSON
-    description: Public index catalog and status metadata.
+    title: カタログインデックス JSON
+    description: 公開インデックスのカタログとステータスメタデータ。
   activityMetrics:
-    title: Activity metrics JSON
-    description: Homepage activity statistics consumed by the main site.
+    title: アクティビティ指標 JSON
+    description: メインサイトが利用するホームページのアクティビティ統計。
   liveBroadcast:
-    title: Live broadcast JSON
-    description: Public live-entry metadata for the site.
+    title: ライブ配信 JSON
+    description: サイトのライブ入口に関する公開メタデータ。
   steamAchievementsJson:
-    title: Steam achievements JSON
-    description: Steamworks achievement list, milestone parameters, and icon paths.
+    title: Steam 実績 JSON
+    description: Steamworks の実績リスト、マイルストーンのパラメーター、アイコンのパス。
   design:
-    title: Design catalog JSON
-    description: Public catalog entry for awesome-design-md.
+    title: デザインカタログ JSON
+    description: awesome-design-md の公開カタログ入口。
   legalDocuments:
-    title: Legal documents JSON
-    description: Public legal document metadata and landing-page mappings.
+    title: 法的文書 JSON
+    description: 公開されている法的文書のメタデータとランディングページへの対応表。
   desktopHistory:
-    title: Desktop version history
-    description: Crawlable desktop history page and download entry.
+    title: Desktop のバージョン履歴
+    description: クロール可能なデスクトップ版の履歴ページとダウンロード入口。
   serverHistory:
-    title: Server version history
-    description: Crawlable server history page and index entry.
+    title: Server のバージョン履歴
+    description: クロール可能なサーバー版の履歴ページとインデックス入口。
 siteCard:
   productionBadge: production
-  actionAriaTemplate: '{title} actions'
+  actionAriaTemplate: "{title} の操作"

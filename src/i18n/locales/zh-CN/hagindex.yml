@@ -3,7 +3,7 @@ metadata:
   description: "HagiCode 站点导航门户，集中收纳主站、文档、数据镜像与独立工具站点。"
 header:
   brandName: "HagiCode Portal"
-  brandSubtitle: "Site navigation and public data handoff"
+  brandSubtitle: "站点导航与公开数据交接"
   navAria: "门户快捷入口"
   nav:
     dataPage: "数据页"
