@@ -11,6 +11,37 @@ targetLocales:
   - ru-RU
   - zh-CN
   - zh-Hant
+# 与英文基线相同、且在各语言里本就应当相同的值(品牌名、URL、技术标识、通用借词等),按「文件 → 键」逐条精确列出,每条写理由。
+# 名单对所有目标语言生效:只有在所有仍与英文相同的语言里英文写法都正确时才加入;其余一律翻译。
+auditIdenticalAllowlist:
+  hagindex.yml:
+    - dataCategory # 界面装饰英文标签
+    - header.brandName # 品牌名
+    - hero.eyebrow # 域名/URL
+    - hero.kicker # 界面装饰英文标签
+    - hero.signal.category # 界面装饰英文标签
+    - metadata.title # 品牌名
+    - sections.data.eyebrow # 界面装饰英文标签
+    - sections.sites.eyebrow # 界面装饰英文标签
+    - sections.surface.eyebrow # 界面装饰英文标签
+    - siteCard.productionBadge # 界面装饰英文标签
+    - stableRouteBadge # 界面装饰英文标签
+    - surfaceCards.history.label # 界面装饰英文标签
+    - surfaceCards.history.status # 界面装饰英文标签
+    - surfaceCards.mirror.label # 界面装饰英文标签
+    - surfaceCards.mirror.status # 界面装饰英文标签
+    - surfaceCards.portal.label # 界面装饰英文标签
+    - surfaceCards.portal.status # 界面装饰英文标签
+    - surfaceCards.review.label # 界面装饰英文标签
+    - surfaceCards.review.status # 界面装饰英文标签
+  promoto.yml:
+    - header.brandName # 品牌名
+    - header.nav.portal # 德/西/葡通用借词
+    - header.nav.rawJson # 技术标识
+    - metadata.title # 品牌名
+    - showcase.card.ctaLabel # 技术缩写
+    - showcase.card.meta.image # 法语同形词
+    - showcase.hero.eyebrow # 界面装饰英文标签
 doctor:
   excludedDirectories:
     - .git

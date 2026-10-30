@@ -20,7 +20,7 @@
     "i18n:prune:write": "hagi18n prune --config hagi18n.yaml --from en-US --write",
     "i18n:generate": "node ./scripts/generate-i18n-resources.mjs",
     "prepare:i18n": "pnpm run i18n:generate",
-    "i18n:check": "node ./scripts/generate-i18n-resources.mjs --check",
+    "i18n:check": "pnpm run i18n:audit && pnpm run i18n:doctor && node ./scripts/generate-i18n-resources.mjs --check",
     "prepare:generated": "pnpm run prepare:i18n && pnpm run sync:secondary-professions && pnpm run sync:character-templates",
     "verify:json-routes": "node --experimental-strip-types ./scripts/validate-catalog.mjs",
     "sync:character-templates": "node ./scripts/build-agent-preset-library.mjs",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "@hagicode/hagi18n": "^0.2.0",
+    "@hagicode/hagi18n": "^0.3.0",
     "@types/node": "^24.5.2",
     "typescript": "~6.0.3"
   },
