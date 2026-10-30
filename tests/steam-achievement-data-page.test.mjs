@@ -17,8 +17,8 @@ test('/steam/achievements/ builds a human-readable Steam achievement page with p
   assert.match(page, /HAGICODE_CREATE/);
   assert.match(page, /开题者/);
   assert.match(page, /\/steam\/achievements\.json/);
-  assert.match(page, /\/steam\/achievements\/icons\/hagicode_create\.png/);
-  assert.match(page, /\/steam\/achievements\/icons\/hagicode_create_locked\.png/);
+  assert.match(page, /\/steam\/achievements\/icons\/hagicode_create\.avif/);
+  assert.match(page, /\/steam\/achievements\/icons\/hagicode_create_locked\.avif/);
   assert.equal(rawJson.achievements.length, 19);
   assert.equal(rawJson.achievements.some((entry) => entry.steamApiName === 'HAGICODE_CREATE'), true);
 });

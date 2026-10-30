@@ -64,7 +64,7 @@ const requiredAboutEntryIds = [
 ];
 const aboutRegionPriorities = ['china-first', 'international-first'];
 const aboutSourcePathFragments = ['/about/', 'src/assets/about/'];
-const aboutRawFilenamePattern = /(?:^|\/)(?:douyin\.png|feishu\.png|wechat_account\.jpg|wechat-account\.jpg)$/i;
+const aboutRawFilenamePattern = /(?:^|\/)(?:douyin\.(?:png|avif)|feishu\.(?:png|avif)|wechat_account\.jpg|wechat-account\.jpg)$/i;
 
 const expectedHistoryPaths = new Map([
   ['server-packages', '/server/history/'],
@@ -663,7 +663,7 @@ function validateSteamAchievementsContract(payload) {
   assert(payload.applicationSteamAppId === '4625540', 'Steam achievements payload applicationSteamAppId must be 4625540.');
   assert(payload.iconSize?.width === 256, 'Steam achievements icon width must be 256.');
   assert(payload.iconSize?.height === 256, 'Steam achievements icon height must be 256.');
-  assert(payload.iconSize?.format === 'png', 'Steam achievements icon format must be png.');
+  assert(payload.iconSize?.format === 'avif', 'Steam achievements icon format must be avif.');
   assert(payload.steamworksDefaults?.hidden === false, 'Steam achievements must default to visible Steamworks achievements.');
   assert(payload.steamworksDefaults?.statBased === false, 'Steam achievements must publish ordinary one-shot Steamworks achievement settings.');
   assert(payload.schedulePresets && typeof payload.schedulePresets === 'object', 'Steam achievements schedulePresets are required.');
@@ -707,8 +707,8 @@ function validateSteamAchievementsArray(achievements, fieldName) {
     assert(entry.steamworks.apiName === entry.steamApiName, `${entryName} steamworks.apiName must match steamApiName.`);
     assert(entry.steamworks.hidden === false, `${entryName} steamworks.hidden must be false.`);
     assert(entry.steamworks.statBased === false, `${entryName} steamworks.statBased must be false.`);
-    assert(typeof entry.steamworks.achievedIconPath === 'string' && entry.steamworks.achievedIconPath.endsWith('.png'), `${entryName} steamworks.achievedIconPath must be a PNG path.`);
-    assert(typeof entry.steamworks.lockedIconPath === 'string' && entry.steamworks.lockedIconPath.endsWith('_locked.png'), `${entryName} steamworks.lockedIconPath must be a locked PNG path.`);
+    assert(typeof entry.steamworks.achievedIconPath === 'string' && entry.steamworks.achievedIconPath.endsWith('.avif'), `${entryName} steamworks.achievedIconPath must be an AVIF path.`);
+    assert(typeof entry.steamworks.lockedIconPath === 'string' && entry.steamworks.lockedIconPath.endsWith('_locked.avif'), `${entryName} steamworks.lockedIconPath must be a locked AVIF path.`);
 
     assert(entry.icons && typeof entry.icons === 'object' && !Array.isArray(entry.icons), `${entryName} icons must be an object.`);
     validateGeneratedImageDescriptor(entry.icons.achieved, `${entryName} icons.achieved`, { requireVariant: true });

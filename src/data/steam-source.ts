@@ -1,13 +1,13 @@
-import hagicodeHero from '@/assets/steam/hagicode/3840x1240.png';
-import hagicodeLibraryCapsule from '@/assets/steam/hagicode/600x900.png';
-import hagicodeStoreCapsule from '@/assets/steam/hagicode/462x174.png';
-import hagicodeWideCapsule from '@/assets/steam/hagicode/1232x706.png';
-import hagicodePlusLibraryCapsule from '@/assets/steam/hagicode-plus/hagicode-plus-748x896.png';
-import hagicodePlusStoreCapsule from '@/assets/steam/hagicode-plus/hagicode-plus-462x174.png';
-import hagicodePlusWideCapsule from '@/assets/steam/hagicode-plus/hagicode-plus-1232x706.png';
-import turboEngineLibraryCapsule from '@/assets/steam/turboEngine/hagicode-turbo-engine-promo-748x896.png';
-import turboEngineStoreCapsule from '@/assets/steam/turboEngine/hagicode-turbo-engine-promo-462x174.png';
-import turboEngineWideCapsule from '@/assets/steam/turboEngine/hagicode-turbo-engine-promo-1232x706.png';
+import hagicodeHero from '@/assets/steam/hagicode/3840x1240.avif';
+import hagicodeLibraryCapsule from '@/assets/steam/hagicode/600x900.avif';
+import hagicodeStoreCapsule from '@/assets/steam/hagicode/462x174.avif';
+import hagicodeWideCapsule from '@/assets/steam/hagicode/1232x706.avif';
+import hagicodePlusLibraryCapsule from '@/assets/steam/hagicode-plus/hagicode-plus-748x896.avif';
+import hagicodePlusStoreCapsule from '@/assets/steam/hagicode-plus/hagicode-plus-462x174.avif';
+import hagicodePlusWideCapsule from '@/assets/steam/hagicode-plus/hagicode-plus-1232x706.avif';
+import turboEngineLibraryCapsule from '@/assets/steam/turboEngine/hagicode-turbo-engine-promo-748x896.avif';
+import turboEngineStoreCapsule from '@/assets/steam/turboEngine/hagicode-turbo-engine-promo-462x174.avif';
+import turboEngineWideCapsule from '@/assets/steam/turboEngine/hagicode-turbo-engine-promo-1232x706.avif';
 import { createImageDescriptor, type ImageDescriptor } from '@/data/image-descriptor';
 import rawSteamAchievementSource from '@/data/steam-achievements-source.json';
 
@@ -186,8 +186,8 @@ function createPublicImageDescriptor(
 
 function createSteamAchievementEntry(entry: RawSteamAchievementEntry): SteamAchievementEntry {
   const basename = apiNameToIconBasename(entry.steamApiName);
-  const achievedIconPath = `${steamAchievementSource.iconBasePath}/${basename}.png`;
-  const lockedIconPath = `${steamAchievementSource.iconBasePath}/${basename}_locked.png`;
+  const achievedIconPath = `${steamAchievementSource.iconBasePath}/${basename}.avif`;
+  const lockedIconPath = `${steamAchievementSource.iconBasePath}/${basename}_locked.avif`;
 
   return {
     ...entry,

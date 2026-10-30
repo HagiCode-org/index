@@ -18,44 +18,44 @@
   ],
   "outputs": [
     {
-      "fileName": "hagicode-plus-1414x464.png",
+      "fileName": "hagicode-plus-1414x464.avif",
       "width": 1414,
       "height": 464,
       "sourceId": "wide",
-      "sourcePath": "../../steam/hagicode-plus/.imgbin-library/2026-04/hagicode-plus-wide/original.png",
-      "outputPath": "../../steam/hagicode-plus/hagicode-plus-1414x464.png"
+      "sourcePath": "../../steam/hagicode-plus/.imgbin-library/2026-04/hagicode-plus-wide/original.avif",
+      "outputPath": "../../steam/hagicode-plus/hagicode-plus-1414x464.avif"
     },
     {
-      "fileName": "hagicode-plus-920x430.png",
+      "fileName": "hagicode-plus-920x430.avif",
       "width": 920,
       "height": 430,
       "sourceId": "wide",
-      "sourcePath": "../../steam/hagicode-plus/.imgbin-library/2026-04/hagicode-plus-wide/original.png",
-      "outputPath": "../../steam/hagicode-plus/hagicode-plus-920x430.png"
+      "sourcePath": "../../steam/hagicode-plus/.imgbin-library/2026-04/hagicode-plus-wide/original.avif",
+      "outputPath": "../../steam/hagicode-plus/hagicode-plus-920x430.avif"
     },
     {
-      "fileName": "hagicode-plus-462x174.png",
+      "fileName": "hagicode-plus-462x174.avif",
       "width": 462,
       "height": 174,
       "sourceId": "wide",
-      "sourcePath": "../../steam/hagicode-plus/.imgbin-library/2026-04/hagicode-plus-wide/original.png",
-      "outputPath": "../../steam/hagicode-plus/hagicode-plus-462x174.png"
+      "sourcePath": "../../steam/hagicode-plus/.imgbin-library/2026-04/hagicode-plus-wide/original.avif",
+      "outputPath": "../../steam/hagicode-plus/hagicode-plus-462x174.avif"
     },
     {
-      "fileName": "hagicode-plus-1232x706.png",
+      "fileName": "hagicode-plus-1232x706.avif",
       "width": 1232,
       "height": 706,
       "sourceId": "wide",
-      "sourcePath": "../../steam/hagicode-plus/.imgbin-library/2026-04/hagicode-plus-wide/original.png",
-      "outputPath": "../../steam/hagicode-plus/hagicode-plus-1232x706.png"
+      "sourcePath": "../../steam/hagicode-plus/.imgbin-library/2026-04/hagicode-plus-wide/original.avif",
+      "outputPath": "../../steam/hagicode-plus/hagicode-plus-1232x706.avif"
     },
     {
-      "fileName": "hagicode-plus-748x896.png",
+      "fileName": "hagicode-plus-748x896.avif",
       "width": 748,
       "height": 896,
       "sourceId": "portrait",
-      "sourcePath": "../../steam/hagicode-plus/.imgbin-library/2026-04/hagicode-plus-portrait/original.png",
-      "outputPath": "../../steam/hagicode-plus/hagicode-plus-748x896.png"
+      "sourcePath": "../../steam/hagicode-plus/.imgbin-library/2026-04/hagicode-plus-portrait/original.avif",
+      "outputPath": "../../steam/hagicode-plus/hagicode-plus-748x896.avif"
     }
   ]
 }

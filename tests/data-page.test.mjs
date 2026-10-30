@@ -25,5 +25,5 @@ test('/data/ keeps the legacy catalog and about mirror content accessible', asyn
   assert.match(dataPage, /Bilibili/);
   assert.match(dataPage, /\/server\/history\//);
   assert.match(dataPage, /\/desktop\/history\//);
-  assert.match(dataPage, /\/_astro\/.+\.(png|jpg)/);
+  assert.match(dataPage, /\/_astro\/.+\.(avif|jpg)/);
 });

@@ -172,7 +172,7 @@ function buildAboutFixture() {
         type: 'qr',
         label: '抖音二维码',
         regionPriority: 'china-first',
-        imageUrl: '/_astro/douyin.ABC123.png',
+        imageUrl: '/_astro/douyin.ABC123.avif',
         width: 1061,
         height: 1059,
         alt: 'HagiCode 抖音二维码',
@@ -190,7 +190,7 @@ function buildAboutFixture() {
         type: 'qr',
         label: '飞书群',
         regionPriority: 'china-first',
-        imageUrl: '/_astro/feishu.XYZ789.png',
+        imageUrl: '/_astro/feishu.XYZ789.avif',
         width: 778,
         height: 724,
         alt: 'HagiCode 飞书群二维码',
@@ -541,8 +541,8 @@ function buildSteamAchievementsFixture() {
   const iconSize = steamAchievementSourceFixture.iconSize;
   const achievements = steamAchievementSourceFixture.achievements.map((entry) => {
     const basename = entry.steamApiName.toLowerCase();
-    const achievedIconPath = `${iconBasePath}/${basename}.png`;
-    const lockedIconPath = `${iconBasePath}/${basename}_locked.png`;
+    const achievedIconPath = `${iconBasePath}/${basename}.avif`;
+    const lockedIconPath = `${iconBasePath}/${basename}_locked.avif`;
 
     return {
       ...entry,
@@ -2324,7 +2324,7 @@ test('catalog validation fails when the about payload leaks a raw source filenam
   const douyinQrEntry = about.entries.find((entry) => entry.id === 'douyin-qr');
 
   assert.ok(douyinQrEntry, 'douyin-qr fixture entry is required.');
-  douyinQrEntry.imageUrl = '/_astro/douyin.png';
+  douyinQrEntry.imageUrl = '/_astro/douyin.avif';
 
   const tempDir = await createValidationFixture({
     catalog: buildCatalogFixture(),

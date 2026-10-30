@@ -173,7 +173,7 @@ test('about route-mapped JSON loads the canonical structured about contract', as
   assert.equal(xiaohongshuEntry.value, '11671904293');
   assert.equal(douyinQrEntry.type, 'qr');
   assert.equal(douyinQrEntry.regionPriority, 'china-first');
-  assert.match(douyinQrEntry.imageUrl, /^\/_astro\/.+\.(png|jpg)$/);
+  assert.match(douyinQrEntry.imageUrl, /^\/_astro\/.+\.(avif|jpg)$/);
   assert.equal(Number.isInteger(douyinQrEntry.width) && douyinQrEntry.width > 0, true);
   assert.equal(Number.isInteger(douyinQrEntry.height) && douyinQrEntry.height > 0, true);
   assert.equal(typeof douyinQrEntry.alt, 'string');
@@ -231,8 +231,8 @@ test('steam route-mapped JSON publishes the canonical application mapping for Ha
   assert.equal(createAchievement.steamworks.statBased, false);
   assert.equal(createAchievement.icons.achieved.width, 256);
   assert.equal(createAchievement.icons.achieved.height, 256);
-  assert.equal(createAchievement.icons.achieved.src, '/steam/achievements/icons/hagicode_create.png');
-  assert.equal(createAchievement.icons.locked.src, '/steam/achievements/icons/hagicode_create_locked.png');
+  assert.equal(createAchievement.icons.achieved.src, '/steam/achievements/icons/hagicode_create.avif');
+  assert.equal(createAchievement.icons.locked.src, '/steam/achievements/icons/hagicode_create_locked.avif');
   assert.equal(hagicodeEntry.kind, 'application');
   assert.equal(hagicodeEntry.storeAppId, '4625540');
   assert.equal(hagicodeEntry.platformAppIds.windows, '4625541');

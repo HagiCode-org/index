@@ -12,7 +12,7 @@
   },
   "paths": {
     "assetDir": "/home/newbe36524/repos/hagicode-mono/repos/index/src/assets/steam/achievements/.imgbin-library/2026-04/hagicode-global-quick-idea-count",
-    "original": "original.png"
+    "original": "original.avif"
   },
   "generated": {
     "prompt": "Square Steam achievement badge icon for HagiCode: a cluster of glowing idea bulbs orbiting a small notebook and pencil, golden sparks with teal shadows, lifetime progress feeling, premium game badge, crisp centered silhouette, no readable text, no logo, dark rounded vignette background.\n\nRender as a polished square icon that remains recognizable at 64x64.\n\nUse a single centered emblem, thick readable shapes, balanced negative space, subtle rim light, and no text or watermark.\n\nThe final source image will be resized to 256x256 PNG for Steamworks achievement icon upload.",

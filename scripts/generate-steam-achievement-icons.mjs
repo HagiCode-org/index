@@ -172,7 +172,7 @@ async function createPromptFile(achievement) {
       achievement.icon.prompt,
       'Render as a polished square icon that remains recognizable at 64x64.',
       'Use a single centered emblem, thick readable shapes, balanced negative space, subtle rim light, and no text or watermark.',
-      'The final source image will be resized to 256x256 PNG for Steamworks achievement icon upload.'
+      'The final source image will be resized to a 256x256 AVIF achievement icon.'
     ].join('\n\n'),
     generationParams: {
       size: '1024x1024',
@@ -250,10 +250,29 @@ async function generateOriginalWithImgBin(achievement, options) {
       throw new Error(`Unable to resolve generated ImgBin asset directory for ${achievement.steamApiName}.`);
     }
 
-    return path.join(match[1].trim(), 'original.png');
+    return await convertOriginalToAvif(match[1].trim());
   } finally {
     await cleanup();
   }
+}
+
+const avifOptions = { quality: 80, effort: 6 };
+
+// ImgBin always writes original.png; keep only an AVIF original in the library.
+async function convertOriginalToAvif(assetDir) {
+  const pngPath = path.join(assetDir, 'original.png');
+  const avifPath = path.join(assetDir, 'original.avif');
+  await sharp(pngPath).avif(avifOptions).toFile(avifPath);
+  await rm(pngPath, { force: true });
+
+  const metadataPath = path.join(assetDir, 'metadata.json');
+  const metadata = JSON.parse(await readFile(metadataPath, 'utf8'));
+  if (metadata.paths) {
+    metadata.paths.original = 'original.avif';
+  }
+  await writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`, 'utf8');
+
+  return avifPath;
 }
 
 async function exportIcons(originalPath, achievedPath, lockedPath) {
@@ -261,7 +280,7 @@ async function exportIcons(originalPath, achievedPath, lockedPath) {
 
   await sharp(originalPath)
     .resize(256, 256, { fit: 'cover', position: 'center' })
-    .png({ compressionLevel: 9 })
+    .avif(avifOptions)
     .toFile(achievedPath);
 
   const lockOverlay = Buffer.from(`
@@ -280,7 +299,7 @@ async function exportIcons(originalPath, achievedPath, lockedPath) {
     .grayscale()
     .modulate({ brightness: 0.58, saturation: 0.1 })
     .composite([{ input: lockOverlay, blend: 'over' }])
-    .png({ compressionLevel: 9 })
+    .avif(avifOptions)
     .toFile(lockedPath);
 }
 
@@ -305,8 +324,8 @@ async function main() {
   for (const achievement of achievements) {
     const basename = apiNameToIconBasename(achievement.steamApiName);
     const assetSlug = apiNameToAssetSlug(achievement.steamApiName);
-    const achievedPath = path.join(publicIconRoot, `${basename}.png`);
-    const lockedPath = path.join(publicIconRoot, `${basename}_locked.png`);
+    const achievedPath = path.join(publicIconRoot, `${basename}.avif`);
+    const lockedPath = path.join(publicIconRoot, `${basename}_locked.avif`);
 
     if (!options.force && await pathExists(achievedPath) && await pathExists(lockedPath)) {
       console.log(`Skipping ${achievement.steamApiName}; icons already exist.`);

@@ -7,7 +7,7 @@
   "iconSize": {
     "width": 256,
     "height": 256,
-    "format": "png"
+    "format": "avif"
   },
   "steamworksDefaults": {
     "hidden": false,
