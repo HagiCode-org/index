@@ -45,7 +45,7 @@ Requires Node.js 24+. `build`, `validate` and `test` first run `prepare:generate
 - `tests/`: `node --test` suites run by `pnpm test` against the `.astro-test` build
 - `.github/workflows/`: gh-pages deploy plus `index-file-sync.yml` (scheduled mirror sync that commits managed index changes)
 - `src/pages/steam/`: Steam achievements page and JSON routes, fed by `src/data/steam-achievements-source.json` and `src/assets/steam/`
-- `src/assets/promote/generated/`: textless generated key art for `promote.json` entries (imported by `src/data/promote-content-metadata.ts`); `recipes.json` there records the generation recipe, so change art by editing the recipe rather than hand-editing the images
+- `src/assets/promote/generated/`: textless generated key art for `promote.json` entries (imported by `src/data/promote-content-metadata.ts`); `recipes.json` there records the generation recipe, so change art by editing the recipe rather than hand-editing the images. Every promotional image pairs one predefined Agent Girl (look from `steam-metadata`'s `agent-girls.json`, kept whole) with the entry's theme and is rendered with Codex (`img-gen --provider codex`; it ignores the seed, so judge by eye)
 - `docs/legal-documents-contract.md`: contract for the published `legal-documents.json` (consumed by HagiCode Desktop)
 
 ## Agent Guidelines
