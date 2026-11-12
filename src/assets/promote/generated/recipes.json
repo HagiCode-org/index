@@ -1,52 +1,63 @@
 {
-  "$comment": "Key art for the five promote.json entries, one key per promotion id. Textless on purpose: Anima cannot be trusted to spell a product name or a URL, and the promotion copy is localized in ten languages, so the title, description and CTA stay in the page. The hue of each sub-site follows its existing banner (awesome blue, design purple, openspec green, omniroute amber); the Microsoft Store entry follows the watercolor storybook look of the Steam hero. Subject sits right of centre and the left third stays calm so copy can be overlaid. Re-roll by changing a seed and running sync --only <key>.",
+  "$comment": "Key art for the five promote.json entries, one key per promotion id. Every picture pairs one of Hagicode's predefined Agent Girls with the entry's theme: her look (hair, eyes, outfit, accessory) is copied from steam-metadata's agent-girls.json and kept whole, and her pose and props carry the theme. Rendered with the Codex image tool (img-gen --provider codex), which ignores the seed, so a re-roll is just sync --only <key> --force and the picture is judged by eye. Textless on purpose: the image model cannot be trusted to spell a product name or a URL, and the promotion copy is localized in ten languages, so the title, description and CTA stay in the page. The hue of each sub-site follows its existing banner (awesome blue, design purple, openspec green, omniroute amber); the Microsoft Store entry follows the watercolor storybook look of the Steam hero. The girl sits right of centre and the left third stays calm so copy can be overlaid.",
   "usage": {
-    "purpose": "Banner key art for one promotion entry.",
+    "purpose": "Banner key art for one promotion entry: one Agent Girl performing the entry's theme.",
     "surface": "Image of a promote_content.json entry, shown on the Promoto showcase and in the HagiCode app promotion slot.",
     "requirements": [
       "Canvas 1232 x 704, wide landscape.",
-      "Subject right of centre, calm left third.",
-      "No text, letters, logos, UI chrome or people."
+      "Exactly one predefined Agent Girl, face and signature accessory readable at thumbnail size, right of centre; calm left third.",
+      "No text, letters, logos or UI chrome."
     ]
   },
   "structure": "direction-list",
-  "render": { "canvas": { "width": 1232, "height": 704 }, "fit": "exact" },
+  "render": {
+    "canvas": {
+      "width": 1232,
+      "height": 704
+    },
+    "fit": "exact"
+  },
   "output": {
     "fileName": "{key}.avif",
-    "publish": { "prefix": "promotion-banners" },
+    "publish": {
+      "prefix": "promotion-banners"
+    },
     "preset": "theme-background",
-    "budget": { "perFileBytes": 240000, "totalBytes": 1200000 }
+    "budget": {
+      "perFileBytes": 240000,
+      "totalBytes": 1200000
+    }
   },
   "shared": {
-    "style": "masterpiece, best quality, score_7, safe, no humans, scenery, wide shot",
-    "composition": "Make a wide landscape banner with one clear focal subject right of centre and a calm, open left third. Keep the picture uncluttered with premium lighting. The picture is pure illustrated artwork with no writing anywhere.",
-    "negative": "worst quality, low quality, score_1, score_2, score_3, watermark, logo, text, letters, typography, signature, UI chrome, frame, letterbox, black bars, people, close-up"
+    "style": "masterpiece, best quality, safe, 1girl, solo",
+    "composition": "Make a wide landscape banner. Frame her from the waist up, right of centre, large enough that her face, hair and signature accessory read at thumbnail size, with her hands showing the theme. Keep the left third calm, open and softly lit so copy can be overlaid. Keep the picture uncluttered with premium lighting. The picture is pure illustrated artwork, and every sign, screen and surface stays blank and clean.",
+    "negative": "worst quality, low quality, watermark, logo, text, letters, typography, signature, UI chrome, frame, letterbox, black bars, multiple girls, extra people, crowd, close-up, extra fingers"
   },
   "items": [
     {
       "key": "desktop-microsoft-store-2026-06-10",
       "seed": 1,
-      "prompt": "watercolor storybook illustration, soft washes, warm golden and sky blue palette, friendly mood, Show a small friendly blue robot assistant with round headphones standing on a sunlit wooden desk beside an open laptop, presenting a glowing square app tile that floats above the screen, with paper checklists, little gears and a lightbulb drifting around it, and a golden road winding through clouds in the background."
+      "prompt": "very long orange hair, crown braid, calm blue eyes, cream-white ruffled dress, coral ribbon, open book emblem, big smile, indoors, desk, laptop, watercolor storybook illustration, soft washes, warm golden and sky blue palette, friendly mood, Show her standing at a sunlit wooden desk, one hand presenting a glowing square app tile that floats above an open laptop, while paper checklists, little gears and a lightbulb drift around her and a golden road winds through clouds in the background."
     },
     {
       "key": "subsite-awesome",
       "seed": 1,
-      "prompt": "digital illustration, deep navy and electric cyan palette, glowing constellation, calm curious mood, Show a grand curated library at night where tall shelves hold glowing open-source crates and lanterns, with a bright constellation of connected stars rising above the shelves on the right, as if hand-picked treasures are being gathered into one collection."
+      "prompt": "blonde hair, gold star hair clip, blue eyes, midnight indigo jacket, pale lavender collared shirt, small gold star charm on the lapel, bright smile, library, night, stars, digital illustration, deep navy and electric cyan palette, glowing constellation, calm curious mood, Show her in a grand curated library at night, one hand raised to gather glowing open-source crates and lanterns from the tall shelves, as a bright constellation of connected stars rises above her, like hand-picked treasures joining one collection."
     },
     {
       "key": "subsite-design",
       "seed": 1,
-      "prompt": "digital illustration, deep violet and magenta palette, soft neon glow, creative mood, Show a floating gallery of design system boards on the right, each a different abstract style swatch of colour palettes, type specimens and rounded component shapes, hung in a dark violet hall and lit by pink and lilac light."
+      "prompt": "black hair, short bob, violet streak, violet eyes, black jacket, violet lining, black shirt, lightning bolt patch on shoulder, grin, indoors, digital illustration, deep violet and magenta palette, soft neon glow, creative mood, Show her in a dark violet hall holding a colour palette board in one hand, with a floating gallery of design system boards around her, each a different abstract style swatch of colour palettes, type specimens and rounded component shapes, lit by pink and lilac light."
     },
     {
       "key": "subsite-openspec",
       "seed": 1,
-      "prompt": "digital illustration, deep emerald and mint green palette, clean technical blueprint feel, focused mood, Show a glowing blueprint scroll unrolling across a dark green drafting table on the right, with a stack of drafted proposal sheets and a checklist beside it, thin mint lines turning into a small finished structure, and concentric rings of light fading behind."
+      "prompt": "blue hair, double buns, tassel, green eyes, indigo high-collared jacket, pale celadon trim, small porcelain cloud pattern at the collar, serene smile, indoors, digital illustration, deep emerald and mint green palette, clean technical blueprint feel, focused mood, Show her at a dark green drafting table, one hand pointing at a glowing blueprint scroll that unrolls in front of her, with a stack of drafted proposal sheets and a checklist beside it, thin mint lines turning into a small finished structure and concentric rings of light fading behind."
     },
     {
       "key": "subsite-omniroute",
       "seed": 1,
-      "prompt": "digital illustration, dark brown and warm amber palette, golden light trails, dynamic mood, Show a single glowing amber gateway on the right where many thin golden routes from different directions converge into one bright beam, with small orbs of different sizes travelling along the routes like providers connecting through one endpoint."
+      "prompt": "copper-brown bob hair, amber eyes, burnt orange hoodie, butter yellow trim, drawstring, small bean-shaped patch on the chest, excited grin, digital illustration, dark brown and warm amber palette, golden light trails, dynamic mood, Show her standing before a single glowing amber gateway, one arm guiding the bright beam where many thin golden routes from different directions converge into one endpoint, with small orbs of different sizes travelling along the routes like providers connecting."
     }
   ]
 }
