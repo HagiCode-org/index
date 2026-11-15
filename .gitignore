@@ -6,3 +6,6 @@ npm-debug.log*
 .astro-validate/
 .index-sync-*/
 src/i18n/generated-locales/
+
+# Local deja session-rule export (auto-extracted from agent sessions; not committed)
+.deja/
