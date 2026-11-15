@@ -234,26 +234,6 @@
       "category": "code-server"
     },
     {
-      "id": "omniroute-provider",
-      "text": "OmniRoute 能在同一處連接不同模型，讓切換能力更加容易。",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-model-choice",
-      "text": "簡單任務用快速模型，複雜任務再切換到更強的模型。",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-fallback",
-      "text": "模型無法使用時，OmniRoute 的備援路由能減少中斷。",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-cost",
-      "text": "透過 OmniRoute，可以根據任務重要性來平衡速度、品質與成本。",
-      "category": "omniroute"
-    },
-    {
       "id": "hagipower-overview",
       "text": "Hagipower 會追蹤你在各工作階段的能量與活動，讓你了解長期使用量的累積。",
       "category": "hagipower"

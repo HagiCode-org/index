@@ -234,26 +234,6 @@
       "category": "code-server"
     },
     {
-      "id": "omniroute-provider",
-      "text": "OmniRoute 可以统一连接不同模型，让你更方便切换能力。",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-model-choice",
-      "text": "简单任务可以选更快的模型，复杂任务再切到更强的模型。",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-fallback",
-      "text": "模型不可用时，OmniRoute 的备用路由可以减少中断。",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-cost",
-      "text": "使用 OmniRoute 时，可以按任务重要程度平衡速度、质量和成本。",
-      "category": "omniroute"
-    },
-    {
       "id": "hagipower-overview",
       "text": "Hagipower 会追踪你在各会话中的能量和活动，让你看到使用量随时间累积的情况。",
       "category": "hagipower"

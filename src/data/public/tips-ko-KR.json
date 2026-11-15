@@ -234,26 +234,6 @@
       "category": "code-server"
     },
     {
-      "id": "omniroute-provider",
-      "text": "OmniRoute는 여러 모델을 한 곳에서 연결할 수 있어, 기능 전환이 더 쉬워요.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-model-choice",
-      "text": "간단한 작업에는 빠른 모델을 사용하고, 복잡한 작업에는 더 강력한 모델로 전환해 보세요.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-fallback",
-      "text": "모델을 사용할 수 없을 때 OmniRoute 폴백 라우팅이 중단을 줄여줘요.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-cost",
-      "text": "OmniRoute를 사용하면 작업의 중요도에 따라 속도, 품질, 비용의 균형을 맞출 수 있어요.",
-      "category": "omniroute"
-    },
-    {
       "id": "hagipower-overview",
       "text": "Hagipower는 세션 전반에 걸쳐 에너지와 활동을 추적해서, 시간이 지남에 따라 사용량이 어떻게 쌓이는지 볼 수 있어요.",
       "category": "hagipower"

@@ -234,26 +234,6 @@
       "category": "code-server"
     },
     {
-      "id": "omniroute-provider",
-      "text": "O OmniRoute pode conectar diferentes modelos em um único lugar, facilitando a troca entre capacidades.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-model-choice",
-      "text": "Use um modelo mais rápido para tarefas simples e mude para um modelo mais robusto para tarefas complexas.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-fallback",
-      "text": "Quando um modelo estiver indisponível, as rotas alternativas do OmniRoute podem reduzir interrupções.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-cost",
-      "text": "Com o OmniRoute, equilibre velocidade, qualidade e custo de acordo com a importância da tarefa.",
-      "category": "omniroute"
-    },
-    {
       "id": "hagipower-overview",
       "text": "O Hagipower acompanha sua energia e atividade nas sessões para que você veja como o uso se acumula ao longo do tempo.",
       "category": "hagipower"

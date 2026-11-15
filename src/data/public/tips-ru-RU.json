@@ -234,26 +234,6 @@
       "category": "code-server"
     },
     {
-      "id": "omniroute-provider",
-      "text": "OmniRoute объединяет разные модели в одном месте, упрощая переключение между ними.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-model-choice",
-      "text": "Используй быструю модель для простых задач и переключайся на более мощную для сложных.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-fallback",
-      "text": "Когда модель недоступна, резервные маршруты OmniRoute помогут избежать простоев.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-cost",
-      "text": "С OmniRoute балансируй скорость, качество и стоимость в зависимости от важности задачи.",
-      "category": "omniroute"
-    },
-    {
       "id": "hagipower-overview",
       "text": "Hagipower отслеживает твою энергию и активность между сессиями, показывая, как складывается использование с течением времени.",
       "category": "hagipower"

@@ -234,26 +234,6 @@
       "category": "code-server"
     },
     {
-      "id": "omniroute-provider",
-      "text": "OmniRouteを使うと、複数のモデルを一箇所で管理でき、機能の切り替えが簡単になります。",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-model-choice",
-      "text": "単純なタスクには高速なモデルを、複雑なタスクには高性能なモデルを使い分けましょう。",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-fallback",
-      "text": "モデルが利用できない場合、OmniRouteのフォールバックルートにより中断を減らせます。",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-cost",
-      "text": "OmniRouteでは、タスクの重要度に応じて速度・品質・コストのバランスを調整できます。",
-      "category": "omniroute"
-    },
-    {
       "id": "hagipower-overview",
       "text": "Hagipowerはセッション全体のエネルギーと活動を記録するため、利用状況の推移を確認できます。",
       "category": "hagipower"

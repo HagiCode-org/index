@@ -234,26 +234,6 @@
       "category": "code-server"
     },
     {
-      "id": "omniroute-provider",
-      "text": "OmniRoute kann verschiedene Modelle an einem Ort verbinden, sodass der Wechsel zwischen Fähigkeiten einfacher wird.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-model-choice",
-      "text": "Nutze ein schnelleres Modell für einfache Aufgaben und wechsle zu einem leistungsstärkeren Modell für komplexe Aufgaben.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-fallback",
-      "text": "Wenn ein Modell nicht verfügbar ist, können OmniRoute-Fallback-Routen Unterbrechungen reduzieren.",
-      "category": "omniroute"
-    },
-    {
-      "id": "omniroute-cost",
-      "text": "Nutze OmniRoute, um Geschwindigkeit, Qualität und Kosten basierend auf der Wichtigkeit der Aufgabe auszubalancieren.",
-      "category": "omniroute"
-    },
-    {
       "id": "hagipower-overview",
       "text": "Hagipower verfolgt deine Energie und Aktivität über Sitzungen hinweg, damit du sehen kannst, wie sich deine Nutzung über die Zeit summiert.",
       "category": "hagipower"
