@@ -38,7 +38,6 @@ test('syncSecondaryProfessions publishes the stable asset, backend fallback snap
         icon: null,
         sourceLabel: 'tests',
         sortOrder: 10,
-        supportsImage: true,
         compatiblePrimaryFamilies: ['codex'],
         defaultParameters: {
           model: 'gpt-5.4',
@@ -104,7 +103,6 @@ test('syncSecondaryProfessions keeps GLM 5.1 aligned across the source and publi
     family: 'anthropic',
     sourceLabel: 'hero.professionCopy.sources.aiSharedAnthropicModel',
     sortOrder: 64,
-    supportsImage: true,
     compatiblePrimaryFamilies: ANTHROPIC_COMPATIBLE_FAMILIES,
     defaultParameters: {
       model: 'glm-5.1',
@@ -144,7 +142,6 @@ test('syncSecondaryProfessions keeps GLM 5.2 aligned across the source and publi
     family: 'anthropic',
     sourceLabel: 'hero.professionCopy.sources.aiSharedAnthropicModel',
     sortOrder: 65,
-    supportsImage: true,
     compatiblePrimaryFamilies: ANTHROPIC_COMPATIBLE_FAMILIES,
     defaultParameters: {
       model: 'glm-5.2',
@@ -171,7 +168,6 @@ test('syncSecondaryProfessions keeps GLM 5.3 aligned and ordered across the sour
     family: 'anthropic',
     sourceLabel: 'hero.professionCopy.sources.aiSharedAnthropicModel',
     sortOrder: 66,
-    supportsImage: true,
     compatiblePrimaryFamilies: ANTHROPIC_COMPATIBLE_FAMILIES,
     defaultParameters: {
       model: 'glm-5.3',
@@ -202,7 +198,6 @@ test('syncSecondaryProfessions keeps MiniMax 3 aligned and ordered across the so
     family: 'anthropic',
     sourceLabel: 'hero.professionCopy.sources.aiSharedAnthropicModel',
     sortOrder: 69,
-    supportsImage: true,
     compatiblePrimaryFamilies: ANTHROPIC_COMPATIBLE_FAMILIES,
     defaultParameters: {
       model: 'minimax-m3',
@@ -244,7 +239,6 @@ test('syncSecondaryProfessions check mode detects drift across published asset, 
         family: 'gpt',
         sourceLabel: 'tests',
         sortOrder: 10,
-        supportsImage: true,
         compatiblePrimaryFamilies: ['codex'],
       },
     ],
@@ -266,4 +260,56 @@ test('secondary-professions catalog carries no Agent CLI description copy', asyn
 
   // Agent CLI descriptions lived under hero.catalogCopy.primary.*; that copy was removed, so it must not come back here.
   assert.equal(catalogSource.includes('hero.catalogCopy.primary'), false);
+});
+
+test('syncSecondaryProfessions discards obsolete image flags and preserves model metadata', async (t) => {
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'secondary-professions-legacy-'));
+  const sourceFile = path.join(tempRoot, 'source.json');
+  const publishedFile = path.join(tempRoot, 'published.json');
+  const catalogFile = path.join(tempRoot, 'index-catalog.json');
+  const backendFallbackFile = path.join(tempRoot, 'fallback.json');
+  t.after(async () => rm(tempRoot, { recursive: true, force: true }));
+
+  const baseItem = {
+    name: 'Legacy model',
+    family: 'anthropic',
+    summary: 'Preserved summary',
+    icon: 'model-icon',
+    sourceLabel: 'tests',
+    sortOrder: 27,
+    compatiblePrimaryFamilies: ['claude', 'kiro'],
+    defaultParameters: { model: 'legacy-model', reasoning: 'high' },
+    fieldConstraints: [{ key: 'reasoning', isRequired: false, isReadOnly: false, description: 'Reasoning level' }],
+  };
+  const sourceCatalog = {
+    version: '2026.03.27',
+    publishedAt: '2026-03-27T00:00:00.000Z',
+    items: [
+      { ...baseItem, id: 'legacy-true', supportsImage: true },
+      { ...baseItem, id: 'legacy-false', supportsImage: false },
+      { ...baseItem, id: 'legacy-null', supportsImage: null },
+      { ...baseItem, id: 'marker-free' },
+    ],
+  };
+
+  await writeFile(sourceFile, stableJson(sourceCatalog), 'utf8');
+  await writeFile(catalogFile, stableJson({ version: '1.0.0', generatedAt: '2026-03-27T00:00:00.000Z', entries: [] }), 'utf8');
+  await syncSecondaryProfessions({ sourceFile, publishedFile, catalogFile, backendFallbackFile });
+
+  const published = JSON.parse(await readFile(publishedFile, 'utf8'));
+  assert.deepEqual(published.items.map(({ supportsImage, ...item }) => item), published.items);
+  assert.deepEqual(published.items.map((item) => item.id), ['legacy-true', 'legacy-false', 'legacy-null', 'marker-free']);
+  assert.deepEqual(published.items[0], {
+    id: 'legacy-true',
+    name: baseItem.name,
+    family: baseItem.family,
+    primaryProfessionId: null,
+    summary: baseItem.summary,
+    icon: baseItem.icon,
+    sourceLabel: baseItem.sourceLabel,
+    sortOrder: baseItem.sortOrder,
+    compatiblePrimaryFamilies: baseItem.compatiblePrimaryFamilies,
+    defaultParameters: baseItem.defaultParameters,
+    fieldConstraints: baseItem.fieldConstraints,
+  });
 });

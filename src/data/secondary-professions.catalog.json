@@ -1,6 +1,6 @@
 {
-  "version": "2026.11.08.1",
-  "publishedAt": "2026-11-08T08:00:32.013Z",
+  "version": "2026.11.15.1",
+  "publishedAt": "2026-11-15T00:00:00.000Z",
   "title": "Secondary Profession Catalog",
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
@@ -10,7 +10,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 4,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -29,7 +28,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 5,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -48,7 +46,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 6,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -67,7 +64,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 7,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -86,7 +82,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 8,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -105,7 +100,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 9,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -124,7 +118,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 10,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -143,7 +136,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 11,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -162,7 +154,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 12,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -181,7 +172,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 13,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -200,7 +190,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiCodex",
       "sortOrder": 20,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -219,7 +208,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiCodex",
       "sortOrder": 20,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -238,7 +226,6 @@
       "family": "gpt",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGitHubCopilotModel",
       "sortOrder": 30,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "codex",
         "copilot",
@@ -257,7 +244,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 40,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -277,7 +263,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 41,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -297,7 +282,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 42,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -317,7 +301,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 43,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -337,7 +320,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 44,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -357,7 +339,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 49,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -377,7 +358,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 45,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -397,7 +377,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 46,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -417,7 +396,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 47,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -437,7 +415,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 48,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -457,7 +434,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 60,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -477,7 +453,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 60,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -497,7 +472,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 60,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -517,7 +491,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
       "sortOrder": 63,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -537,7 +510,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
       "sortOrder": 64,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -557,7 +529,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
       "sortOrder": 65,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -577,7 +548,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 64,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -597,7 +567,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 65,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -617,7 +586,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 66,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -637,7 +605,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 69,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -657,7 +624,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 70,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -677,7 +643,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 71,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -697,7 +662,6 @@
       "family": "anthropic",
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 72,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
@@ -717,7 +681,6 @@
       "family": "deepseek",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersReasonixCliModel",
       "sortOrder": 73,
-      "supportsImage": false,
       "compatiblePrimaryFamilies": [
         "reasonix"
       ],
@@ -731,7 +694,6 @@
       "family": "deepseek",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersReasonixCliModel",
       "sortOrder": 74,
-      "supportsImage": false,
       "compatiblePrimaryFamilies": [
         "reasonix"
       ],
@@ -746,7 +708,6 @@
       "primaryProfessionId": "profession-kimi",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersKimiCliModel",
       "sortOrder": 80,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "kimi"
       ],
@@ -759,7 +720,6 @@
       "primaryProfessionId": "profession-gemini",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 81,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "gemini"
       ],
@@ -774,7 +734,6 @@
       "primaryProfessionId": "profession-gemini",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 82,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "gemini"
       ],
@@ -789,7 +748,6 @@
       "primaryProfessionId": "profession-gemini",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 83,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "gemini"
       ],
@@ -803,7 +761,6 @@
       "family": "copilot",
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGitHubCopilotModel",
       "sortOrder": 84,
-      "supportsImage": true,
       "compatiblePrimaryFamilies": [
         "copilot"
       ],

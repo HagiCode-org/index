@@ -112,10 +112,7 @@ function normalizeItem(item, index) {
   const compatiblePrimaryFamilies = normalizeStringArray(item.compatiblePrimaryFamilies, `items[${index}].compatiblePrimaryFamilies`);
   const primaryProfessionId = normalizeString(item.primaryProfessionId, `items[${index}].primaryProfessionId`, { optional: true });
 
-  assert(primaryProfessionId || compatiblePrimaryFamilies.length > 0, `items[${index}] must declare primaryProfessionId or compatiblePrimaryFamilies.`);
   assert(Number.isInteger(item.sortOrder), `items[${index}].sortOrder must be an integer.`);
-  assert(typeof item.supportsImage === 'boolean', `items[${index}].supportsImage must be a boolean.`);
-
   const normalizedSummary = normalizeString(item.summary, `items[${index}].summary`, { optional: true });
   return {
     id: normalizeString(item.id, `items[${index}].id`),
@@ -126,7 +123,6 @@ function normalizeItem(item, index) {
     icon: normalizeString(item.icon, `items[${index}].icon`, { optional: true }),
     sourceLabel: normalizeString(item.sourceLabel, `items[${index}].sourceLabel`),
     sortOrder: item.sortOrder,
-    supportsImage: item.supportsImage,
     compatiblePrimaryFamilies,
     defaultParameters: normalizeDefaultParameters(item.defaultParameters, `items[${index}].defaultParameters`),
     fieldConstraints: normalizeFieldConstraints(item.fieldConstraints, `items[${index}].fieldConstraints`),
