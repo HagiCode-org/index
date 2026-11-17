@@ -6,7 +6,7 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 
 import { readAgentCliFamilies, syncSecondaryProfessions } from '../scripts/sync-secondary-professions.mjs';
 
-const presetText = await readFile(new URL('../../hagicode-core/src/PCode.Web/Resources/SystemPresets/agent-cli-presets.yaml', import.meta.url), 'utf8');
+const presetText = await readFile(new URL('../src/data/agent-cli-presets.yaml', import.meta.url), 'utf8');
 const ALL_AGENT_CLI_FAMILIES = readAgentCliFamilies(presetText).sort();
 
 function stableJson(value) {

@@ -8,7 +8,7 @@ const defaultSourceFile = path.join(defaultProjectRoot, 'src', 'data', 'secondar
 const defaultPublishedFile = path.join(defaultProjectRoot, 'public', 'secondary-professions', 'index.json');
 const defaultCatalogFile = path.join(defaultProjectRoot, 'src', 'data', 'public', 'index-catalog.json');
 const defaultBackendFallbackFile = path.resolve(defaultProjectRoot, '..', 'hagicode-core', 'src', 'PCode.Web', 'Assets', 'secondary-professions.index.json');
-const defaultAgentCliPresetFile = path.resolve(defaultProjectRoot, '..', 'hagicode-core', 'src', 'PCode.Web', 'Resources', 'SystemPresets', 'agent-cli-presets.yaml');
+const defaultAgentCliPresetFile = path.join(defaultProjectRoot, 'src', 'data', 'agent-cli-presets.yaml');
 const publishedPath = '/secondary-professions/index.json';
 const catalogEntryId = 'secondary-professions';
 // Retired providers must never re-enter the catalog through an import or hand edit.

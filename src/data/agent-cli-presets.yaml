@@ -1,0 +1,319 @@
+# Source of truth for agent CLI families used to validate secondary professions.
+# Owned by repos/index; sync-secondary-professions.mjs reads only the "Family:" lines.
+- Id: "profession-claude-code"
+  Name: "Claude Code"
+  Family: "claude"
+  Icon: "executor-avatar:Claude"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersClaudeCodeCli"
+  ProviderType: "ClaudeCodeCli"
+  BuiltInSkillsReasonCode: "plugin_dir"
+  SortOrder: 10
+  DefaultEnabled: true
+  Features:
+    - "chat"
+    - "image"
+    - "resume"
+    - "ask_user_question"
+    - "built_in_skills"
+    - "steer"
+    - "magpie"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "claude"
+    timeoutSeconds: "7200"
+- Id: "profession-codex"
+  Name: "Codex"
+  Family: "codex"
+  Icon: "executor-avatar:Codex"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersCodexCli"
+  ProviderType: "CodexCli"
+  BuiltInSkillsReasonCode: "no_startup_mechanism"
+  SortOrder: 20
+  DefaultEnabled: true
+  Features:
+    - "chat"
+    - "image"
+    - "resume"
+    - "ask_user_question"
+    - "steer"
+    - "magpie"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "codex"
+    sandboxMode: "danger-full-access"
+    networkAccessEnabled: "true"
+    profile: null
+- Id: "profession-github-copilot"
+  Name: "GitHub Copilot"
+  Family: "copilot"
+  Icon: "executor-avatar:Copilot"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersGitHubCopilot"
+  ProviderType: "GitHubCopilot"
+  BuiltInSkillsReasonCode: "plugin_dir"
+  SortOrder: 30
+  DefaultEnabled: true
+  Features:
+    - "chat"
+    - "resume"
+    - "ask_user_question"
+    - "built_in_skills"
+    - "steer"
+    - "magpie"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "copilot"
+    mode: "agent"
+    permissionMode: "default"
+    noAskUser: "true"
+    timeout: "7200"
+- Id: "profession-opencode"
+  Name: "OpenCode"
+  Family: "opencode"
+  Icon: "executor-avatar:OpenCode"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersOpenCodeCli"
+  ProviderType: "OpenCodeCli"
+  BuiltInSkillsReasonCode: "env_skill_paths"
+  SortOrder: 35
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "image"
+    - "resume"
+    - "ask_user_question"
+    - "built_in_skills"
+    - "steer"
+    - "magpie"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "opencode"
+    executionMode: "live"
+    startupTimeoutSeconds: "15"
+- Id: "profession-hermes"
+  Name: "Hermes"
+  Family: "hermes"
+  Icon: "executor-avatar:Hermes"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersHermesCli"
+  ProviderType: "HermesCli"
+  BuiltInSkillsReasonCode: "not_verified"
+  SortOrder: 40
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "hermes"
+    arguments: "acp"
+    startupTimeoutMs: "30000"
+    modeId: "bypassPermissions"
+- Id: "profession-qoder"
+  Name: "QoderCLI"
+  Family: "qoder"
+  Icon: "executor-avatar:Qoder"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersQoderCli"
+  ProviderType: "QoderCli"
+  BuiltInSkillsReasonCode: "not_verified"
+  SortOrder: 50
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "resume"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "qodercli"
+    arguments: ""
+    startupTimeoutMs: "5000"
+- Id: "profession-kiro"
+  Name: "Kiro"
+  Family: "kiro"
+  Icon: "executor-avatar:Kiro"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersKiroCli"
+  ProviderType: "kiro-cli"
+  BuiltInSkillsReasonCode: "not_verified"
+  SortOrder: 55
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "resume"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "kiro-cli"
+    arguments: ""
+    startupTimeoutMs: "60000"
+    authMethod: ""
+    authToken: ""
+    bootstrapMethod: ""
+- Id: "profession-kimi"
+  Name: "Kimi"
+  Family: "kimi"
+  Icon: "executor-avatar:Kimi"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersKimiCli"
+  ProviderType: "KimiCli"
+  BuiltInSkillsReasonCode: "not_verified"
+  SortOrder: 57
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "resume"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "kimi"
+    arguments: ""
+    startupTimeoutMs: "15000"
+    authToken: ""
+    authHint: "Complete local sign-in or provide a token before refreshing."
+- Id: "profession-gemini"
+  Name: "Gemini"
+  Family: "gemini"
+  Icon: "executor-avatar:Gemini"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersGeminiCli"
+  ProviderType: "GeminiCli"
+  BuiltInSkillsReasonCode: "not_verified"
+  SortOrder: 58
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "resume"
+    - "magpie"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "gemini"
+    arguments: ""
+    startupTimeoutMs: "15000"
+    authToken: ""
+    authHint: "Complete local sign-in or provide a token before refreshing."
+- Id: "profession-junie"
+  Name: "Junie"
+  Family: "junie"
+  Icon: "executor-avatar:Junie"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersJunieCli"
+  ProviderType: "JunieCli"
+  BuiltInSkillsReasonCode: "not_verified"
+  SortOrder: 58
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "resume"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "junie"
+    arguments: ""
+    startupTimeoutMs: "15000"
+    effort: ""
+    brave: "true"
+- Id: "profession-pi"
+  Name: "Pi"
+  Family: "pi"
+  Icon: "executor-avatar:Pi"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersPiCli"
+  ProviderType: "PiCli"
+  BuiltInSkillsReasonCode: "skill_flags_name_precedence"
+  SortOrder: 59
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "image"
+    - "resume"
+    - "ask_user_question"
+    - "built_in_skills"
+    - "steer"
+    - "magpie"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "pi"
+    thinking: "high"
+    noSession: "false"
+    disableBuiltinTools: "false"
+    disableAllTools: "false"
+- Id: "profession-omp"
+  Name: "OMP"
+  Family: "omp"
+  Icon: "executor-avatar:Omp"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersOmpCli"
+  ProviderType: "OmpCli"
+  BuiltInSkillsReasonCode: "prepared_plugin_dir"
+  SortOrder: 60
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "image"
+    - "resume"
+    - "ask_user_question"
+    - "built_in_skills"
+    - "steer"
+    - "magpie"
+  DefaultParameters:
+    binary: "omp"
+    thinking: "high"
+    noSession: "false"
+    disableBuiltinTools: "false"
+    disableAllTools: "false"
+- Id: "profession-deepagents"
+  Name: "DeepAgents"
+  Family: "deepagents"
+  Icon: "executor-avatar:DeepAgents"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersDeepAgentsCli"
+  ProviderType: "DeepAgentsCli"
+  BuiltInSkillsReasonCode: "not_installable"
+  SortOrder: 61
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "resume"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "deepagents"
+    workspaceRoot: ""
+    agentName: ""
+    agentDescription: ""
+    skillsDirectories: "[]"
+    memoryFiles: "[]"
+    arguments: "[]"
+    startupTimeoutMs: "15000"
+- Id: "profession-codebuddy"
+  Name: "Codebuddy"
+  Family: "codebuddy"
+  Icon: "executor-avatar:Codebuddy"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersCodebuddyCli"
+  ProviderType: "CodebuddyCli"
+  BuiltInSkillsReasonCode: "not_verified"
+  SortOrder: 62
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "image"
+    - "resume"
+    - "steer"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "codebuddy"
+    bootstrapArguments: "--acp"
+    startupTimeoutMs: "5000"
+- Id: "profession-dsh"
+  Name: "DSH"
+  Family: "dsh"
+  Icon: "executor-avatar:Dsh"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersDshCli"
+  ProviderType: "DshCli"
+  BuiltInSkillsReasonCode: "not_verified"
+  SortOrder: 63
+  DefaultEnabled: true
+  IsBeta: false
+  Features:
+    - "chat"
+    - "resume"
+    - "task_agent_family"
+  DefaultParameters:
+    binary: "dsh"
+    arguments: ""
+    startupTimeoutMs: "45000"
