@@ -1,6 +1,6 @@
 {
-  "version": "2026.11.15.1",
-  "publishedAt": "2026-11-15T00:00:00.000Z",
+  "version": "2026.11.17.1",
+  "publishedAt": "2026-11-17T00:00:00.000Z",
   "title": "Secondary Profession Catalog",
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
@@ -673,32 +673,6 @@
       ],
       "defaultParameters": {
         "model": "minimax-m2.5"
-      }
-    },
-    {
-      "id": "secondary-deepseek-v4-pro",
-      "name": "DeepSeek V4 Pro",
-      "family": "deepseek",
-      "sourceLabel": "hero.professionCopy.sources.aiProvidersReasonixCliModel",
-      "sortOrder": 73,
-      "compatiblePrimaryFamilies": [
-        "reasonix"
-      ],
-      "defaultParameters": {
-        "model": "deepseek-v4-pro"
-      }
-    },
-    {
-      "id": "secondary-deepseek-v4-flash",
-      "name": "DeepSeek V4 Flash",
-      "family": "deepseek",
-      "sourceLabel": "hero.professionCopy.sources.aiProvidersReasonixCliModel",
-      "sortOrder": 74,
-      "compatiblePrimaryFamilies": [
-        "reasonix"
-      ],
-      "defaultParameters": {
-        "model": "deepseek-v4-flash"
       }
     },
     {

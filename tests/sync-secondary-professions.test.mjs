@@ -89,6 +89,54 @@ test('syncSecondaryProfessions publishes the stable asset, backend fallback snap
   assert.equal(entry.lastUpdated, '2026-03-27T00:00:00.000Z');
 });
 
+test('syncSecondaryProfessions rejects retired provider families and writes no output', async (t) => {
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'secondary-professions-retired-'));
+  const sourceFile = path.join(tempRoot, 'src', 'data', 'secondary-professions.catalog.json');
+  const publishedFile = path.join(tempRoot, 'public', 'secondary-professions', 'index.json');
+  const catalogFile = path.join(tempRoot, 'src', 'data', 'public', 'index-catalog.json');
+  const backendFallbackFile = path.join(tempRoot, 'backend', 'Assets', 'secondary-professions.index.json');
+
+  t.after(async () => rm(tempRoot, { recursive: true, force: true }));
+
+  await mkdir(path.dirname(sourceFile), { recursive: true });
+  await mkdir(path.dirname(catalogFile), { recursive: true });
+
+  const item = {
+    id: 'secondary-deepseek-v4-pro',
+    name: 'DeepSeek V4 Pro',
+    family: 'deepseek',
+    primaryProfessionId: null,
+    icon: null,
+    sourceLabel: 'hero.professionCopy.sources.aiProvidersKimiCliModel',
+    sortOrder: 73,
+    compatiblePrimaryFamilies: ['kimi'],
+    defaultParameters: { model: 'deepseek-v4-pro' },
+    fieldConstraints: [],
+  };
+  const baseCatalog = { version: '1.0.0', generatedAt: '2026-03-27T00:00:00.000Z', entries: [] };
+
+  await writeFile(catalogFile, stableJson(baseCatalog), 'utf8');
+
+  const syncOptions = { sourceFile, publishedFile, catalogFile, backendFallbackFile };
+
+  await writeFile(sourceFile, stableJson({ version: '2026.11.17.1', publishedAt: '2026-11-17T00:00:00.000Z', items: [{ ...item, compatiblePrimaryFamilies: ['reasonix'] }] }), 'utf8');
+  await assert.rejects(syncSecondaryProfessions(syncOptions), /must not reference retired family 'reasonix'/);
+
+  await writeFile(sourceFile, stableJson({ version: '2026.11.17.1', publishedAt: '2026-11-17T00:00:00.000Z', items: [{ ...item, sourceLabel: 'hero.professionCopy.sources.aiProvidersReasonixCliModel' }] }), 'utf8');
+  await assert.rejects(syncSecondaryProfessions(syncOptions), /must not reference a retired provider/);
+
+  await assert.rejects(readFile(publishedFile, 'utf8'), { code: 'ENOENT' });
+  await assert.rejects(readFile(backendFallbackFile, 'utf8'), { code: 'ENOENT' });
+});
+
+test('secondary profession source catalog has no retired provider references', async () => {
+  const sourceText = await readFile(new URL('../src/data/secondary-professions.catalog.json', import.meta.url), 'utf8');
+  const publishedText = await readFile(new URL('../public/secondary-professions/index.json', import.meta.url), 'utf8');
+
+  assert.doesNotMatch(sourceText, /reasonix/i);
+  assert.doesNotMatch(publishedText, /reasonix/i);
+});
+
 test('syncSecondaryProfessions keeps GLM 5.1 aligned across the source and published asset', async () => {
   const sourceCatalog = JSON.parse(await readFile(new URL('../src/data/secondary-professions.catalog.json', import.meta.url), 'utf8'));
   const publishedCatalog = JSON.parse(await readFile(new URL('../public/secondary-professions/index.json', import.meta.url), 'utf8'));

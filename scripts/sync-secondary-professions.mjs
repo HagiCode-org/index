@@ -10,6 +10,10 @@ const defaultCatalogFile = path.join(defaultProjectRoot, 'src', 'data', 'public'
 const defaultBackendFallbackFile = path.resolve(defaultProjectRoot, '..', 'hagicode-core', 'src', 'PCode.Web', 'Assets', 'secondary-professions.index.json');
 const publishedPath = '/secondary-professions/index.json';
 const catalogEntryId = 'secondary-professions';
+// Retired providers must never re-enter the catalog through an import or hand edit.
+// Keep in sync with repos/hagicode-core/docs/retired-providers.md.
+const retiredPrimaryFamilies = Object.freeze(['reasonix']);
+const retiredReferencePattern = /reasonix/i;
 
 const catalogEntryTemplate = Object.freeze({
   id: catalogEntryId,
@@ -111,6 +115,20 @@ function normalizeItem(item, index) {
   assert(item && typeof item === 'object' && !Array.isArray(item), `items[${index}] must be an object.`);
   const compatiblePrimaryFamilies = normalizeStringArray(item.compatiblePrimaryFamilies, `items[${index}].compatiblePrimaryFamilies`);
   const primaryProfessionId = normalizeString(item.primaryProfessionId, `items[${index}].primaryProfessionId`, { optional: true });
+
+  for (const family of compatiblePrimaryFamilies) {
+    assert(
+      !retiredPrimaryFamilies.includes(family.toLowerCase()),
+      `items[${index}].compatiblePrimaryFamilies must not reference retired family '${family}'.`,
+    );
+  }
+
+  for (const [fieldName, value] of [['id', item.id], ['family', item.family], ['sourceLabel', item.sourceLabel]]) {
+    assert(
+      typeof value !== 'string' || !retiredReferencePattern.test(value),
+      `items[${index}].${fieldName} must not reference a retired provider.`,
+    );
+  }
 
   assert(Number.isInteger(item.sortOrder), `items[${index}].sortOrder must be an integer.`);
   const normalizedSummary = normalizeString(item.summary, `items[${index}].summary`, { optional: true });
