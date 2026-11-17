@@ -1,6 +1,6 @@
 {
-  "version": "2026.11.17.2",
-  "publishedAt": "2026-11-17T00:00:00.000Z",
+  "version": "2026.11.17.3",
+  "publishedAt": "2026-11-17T12:00:00.000Z",
   "title": "Secondary Profession Catalog",
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
@@ -8,17 +8,27 @@
       "id": "secondary-gpt-6-2-astra",
       "name": "GPT 6.2 Astra",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 2,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-6.2-astra"
@@ -29,17 +39,27 @@
       "id": "secondary-gpt-6-2-sol",
       "name": "GPT 6.2 Sol",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 3,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-6.2-sol"
@@ -50,17 +70,27 @@
       "id": "secondary-gpt-6-0-astra",
       "name": "GPT 6.0 Astra",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 4,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-6-astra"
@@ -71,17 +101,27 @@
       "id": "secondary-gpt-6-1-sol",
       "name": "GPT 6.1 Sol",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 5,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-6.1-sol"
@@ -92,17 +132,27 @@
       "id": "secondary-gpt-6-1-terra",
       "name": "GPT 6.1 Terra",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 6,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-6.1-terra"
@@ -113,17 +163,27 @@
       "id": "secondary-gpt-6-0-sol",
       "name": "GPT 6.0 Sol",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 7,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-6-sol"
@@ -134,17 +194,27 @@
       "id": "secondary-gpt-6-0-luna",
       "name": "GPT 6.0 Luna",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 8,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-6-luna"
@@ -155,17 +225,27 @@
       "id": "secondary-gpt-5-6-sol",
       "name": "GPT 5.6 Sol",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 9,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-5.6-sol"
@@ -176,17 +256,27 @@
       "id": "secondary-gpt-5-6-terra",
       "name": "GPT 5.6 Terra",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 10,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-5.6-terra"
@@ -197,17 +287,27 @@
       "id": "secondary-gpt-5-6-luna",
       "name": "GPT 5.6 Luna",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 11,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-5.6-luna"
@@ -218,17 +318,27 @@
       "id": "secondary-gpt-5-5",
       "name": "GPT 5.5",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 12,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-5.5"
@@ -239,17 +349,27 @@
       "id": "secondary-gpt-5-4",
       "name": "GPT 5.4",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 13,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-5.4"
@@ -260,17 +380,27 @@
       "id": "secondary-gpt-5-3-codex",
       "name": "GPT 5.3 Codex",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiCodex",
       "sortOrder": 20,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-5.3-codex"
@@ -281,17 +411,27 @@
       "id": "secondary-gpt-5-2-codex",
       "name": "GPT 5.2 Codex",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiCodex",
       "sortOrder": 20,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-5.2-codex"
@@ -302,17 +442,27 @@
       "id": "secondary-gpt-5-mini",
       "name": "GPT 5 Mini",
       "family": "gpt",
+      "preferenceGroup": "gpt",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGitHubCopilotModel",
       "sortOrder": 30,
       "compatiblePrimaryFamilies": [
+        "claude",
+        "codebuddy",
         "codex",
         "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "pi",
+        "junie",
+        "kimi",
+        "kiro",
         "omp",
-        "junie"
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gpt-5-mini"
@@ -323,6 +473,7 @@
       "id": "secondary-claude-opus-5-5",
       "name": "Opus 5.5",
       "family": "anthropic",
+      "preferenceGroup": "claude",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
@@ -330,11 +481,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "claude-opus-5-5"
@@ -345,6 +504,7 @@
       "id": "secondary-claude-opus-5",
       "name": "Opus 5",
       "family": "anthropic",
+      "preferenceGroup": "claude",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
@@ -352,11 +512,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "claude-opus-5"
@@ -367,6 +535,7 @@
       "id": "secondary-claude-sonnet-5-5",
       "name": "Sonnet 5.5",
       "family": "anthropic",
+      "preferenceGroup": "claude",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
@@ -374,11 +543,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "claude-sonnet-5-5"
@@ -389,6 +566,7 @@
       "id": "secondary-claude-sonnet-5",
       "name": "Sonnet 5",
       "family": "anthropic",
+      "preferenceGroup": "claude",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
@@ -396,11 +574,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "claude-sonnet-5"
@@ -411,6 +597,7 @@
       "id": "secondary-claude-haiku-4-5",
       "name": "Haiku 4.5",
       "family": "anthropic",
+      "preferenceGroup": "claude",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
@@ -418,11 +605,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "claude-haiku-4-5"
@@ -433,6 +628,7 @@
       "id": "secondary-claude-haiku-5-5",
       "name": "Haiku 5.5",
       "family": "anthropic",
+      "preferenceGroup": "claude",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
@@ -440,11 +636,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "claude-haiku-5-5"
@@ -455,6 +659,7 @@
       "id": "secondary-claude-opus-4-8",
       "name": "Opus 4.8",
       "family": "anthropic",
+      "preferenceGroup": "claude",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
@@ -462,11 +667,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "claude-opus-4-8"
@@ -477,6 +690,7 @@
       "id": "secondary-claude-opus-4",
       "name": "Opus 4.7",
       "family": "anthropic",
+      "preferenceGroup": "claude",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
@@ -484,11 +698,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "claude-opus-4-7"
@@ -499,6 +721,7 @@
       "id": "secondary-claude-opus-4-6",
       "name": "Opus 4.6",
       "family": "anthropic",
+      "preferenceGroup": "claude",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
@@ -506,11 +729,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "claude-opus-4-6"
@@ -521,6 +752,7 @@
       "id": "secondary-claude-4-sonnet",
       "name": "Sonnet 4.6",
       "family": "anthropic",
+      "preferenceGroup": "claude",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
@@ -528,11 +760,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "claude-sonnet-4-6"
@@ -543,6 +783,7 @@
       "id": "secondary-glm-4-7",
       "name": "GLM 4.7",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
@@ -550,11 +791,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "glm-4.7"
@@ -565,6 +814,7 @@
       "id": "secondary-glm-5",
       "name": "GLM 5",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
@@ -572,11 +822,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "glm-5"
@@ -587,6 +845,7 @@
       "id": "secondary-glm-5-turbo",
       "name": "GLM 5 Turbo",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
@@ -594,11 +853,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "glm-5-turbo"
@@ -609,6 +876,7 @@
       "id": "secondary-glm-5-codebuddy",
       "name": "GLM 5.0",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
@@ -616,11 +884,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "glm-5.0"
@@ -631,6 +907,7 @@
       "id": "secondary-hy3-codebuddy",
       "name": "HY3",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
@@ -638,11 +915,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "hy3"
@@ -653,6 +938,7 @@
       "id": "secondary-hy3-x-codebuddy",
       "name": "HY3-X",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
@@ -660,11 +946,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "hy3-x"
@@ -675,6 +969,7 @@
       "id": "secondary-glm-5-1",
       "name": "GLM 5.1",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
@@ -682,11 +977,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "glm-5.1"
@@ -697,6 +1000,7 @@
       "id": "secondary-glm-5-2",
       "name": "GLM 5.2",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
@@ -704,11 +1008,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "glm-5.2"
@@ -719,6 +1031,7 @@
       "id": "secondary-glm-5-3",
       "name": "GLM 5.3",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
@@ -726,11 +1039,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "glm-5.3"
@@ -741,6 +1062,7 @@
       "id": "secondary-minimax-3",
       "name": "MiniMax 3",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
@@ -748,11 +1070,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "minimax-m3"
@@ -763,6 +1093,7 @@
       "id": "secondary-minimax-m2-7",
       "name": "Minimax M2.7",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
@@ -770,11 +1101,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "minimax-m2.7"
@@ -785,6 +1124,7 @@
       "id": "secondary-minimax-m2-7-high-speed",
       "name": "Minimax M2.7 High Speed",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
@@ -792,11 +1132,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "minimax-m2.7-high-speed"
@@ -807,6 +1155,7 @@
       "id": "secondary-minimax-m2-5",
       "name": "Minimax M2.5",
       "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
@@ -814,11 +1163,19 @@
       "compatiblePrimaryFamilies": [
         "claude",
         "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
         "hermes",
-        "qoder",
+        "junie",
+        "kimi",
         "kiro",
+        "omp",
+        "opencode",
         "pi",
-        "omp"
+        "qoder"
       ],
       "defaultParameters": {
         "model": "minimax-m2.5"
@@ -829,26 +1186,58 @@
       "id": "secondary-kimi-k2-5",
       "name": "Kimi K2.5",
       "family": "anthropic",
-      "primaryProfessionId": "profession-kimi",
+      "preferenceGroup": "claude-compatible",
+      "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersKimiCliModel",
       "sortOrder": 80,
       "compatiblePrimaryFamilies": [
-        "kimi"
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
       ],
-      "defaultParameters": {},
+      "defaultParameters": {
+        "model": "kimi-k2.5"
+      },
       "fieldConstraints": []
     },
     {
       "id": "secondary-gemini-2-5-pro",
       "name": "Gemini 2.5 Pro",
       "family": "gemini",
-      "primaryProfessionId": "profession-gemini",
+      "preferenceGroup": "other",
+      "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 81,
       "compatiblePrimaryFamilies": [
-        "gemini"
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gemini-2.5-pro"
@@ -859,12 +1248,27 @@
       "id": "secondary-gemini-2-5-flash",
       "name": "Gemini 2.5 Flash",
       "family": "gemini",
-      "primaryProfessionId": "profession-gemini",
+      "preferenceGroup": "other",
+      "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 82,
       "compatiblePrimaryFamilies": [
-        "gemini"
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gemini-2.5-flash"
@@ -875,12 +1279,27 @@
       "id": "secondary-gemini-2-5-flash-lite",
       "name": "Gemini 2.5 Flash-Lite",
       "family": "gemini",
-      "primaryProfessionId": "profession-gemini",
+      "preferenceGroup": "other",
+      "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 83,
       "compatiblePrimaryFamilies": [
-        "gemini"
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
       ],
       "defaultParameters": {
         "model": "gemini-2.5-flash-lite"
@@ -891,6 +1310,7 @@
       "id": "secondary-copilot-fusion",
       "name": "Copilot Fusion",
       "family": "copilot",
+      "preferenceGroup": "other",
       "primaryProfessionId": null,
       "icon": null,
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGitHubCopilotModel",

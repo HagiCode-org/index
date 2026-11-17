@@ -8,12 +8,17 @@ const defaultSourceFile = path.join(defaultProjectRoot, 'src', 'data', 'secondar
 const defaultPublishedFile = path.join(defaultProjectRoot, 'public', 'secondary-professions', 'index.json');
 const defaultCatalogFile = path.join(defaultProjectRoot, 'src', 'data', 'public', 'index-catalog.json');
 const defaultBackendFallbackFile = path.resolve(defaultProjectRoot, '..', 'hagicode-core', 'src', 'PCode.Web', 'Assets', 'secondary-professions.index.json');
+const defaultAgentCliPresetFile = path.resolve(defaultProjectRoot, '..', 'hagicode-core', 'src', 'PCode.Web', 'Resources', 'SystemPresets', 'agent-cli-presets.yaml');
 const publishedPath = '/secondary-professions/index.json';
 const catalogEntryId = 'secondary-professions';
 // Retired providers must never re-enter the catalog through an import or hand edit.
 // Keep in sync with repos/hagicode-core/docs/retired-providers.md.
 const retiredPrimaryFamilies = Object.freeze(['reasonix']);
 const retiredReferencePattern = /reasonix/i;
+// Every catalog entry declares one of these groups; the Libs ranker reads them.
+const preferenceGroups = Object.freeze(['claude', 'claude-compatible', 'gpt', 'other']);
+// The only entry allowed to omit agent CLI families. Any other pin is rejected.
+const pinnedEntryIds = Object.freeze(['secondary-copilot-fusion']);
 
 const catalogEntryTemplate = Object.freeze({
   id: catalogEntryId,
@@ -111,6 +116,13 @@ function normalizeFieldConstraints(value, fieldName) {
   });
 }
 
+export function readAgentCliFamilies(presetText, { excludedFamilies = retiredPrimaryFamilies } = {}) {
+  const families = [...presetText.matchAll(/^\s*Family:\s*"([^"]+)"\s*$/gm)].map((match) => match[1].trim().toLowerCase());
+  const unique = [...new Set(families)].filter((family) => !excludedFamilies.includes(family));
+  assert(unique.length > 0, 'agent-cli-presets.yaml must declare at least one agent CLI family.');
+  return unique;
+}
+
 function normalizeItem(item, index) {
   assert(item && typeof item === 'object' && !Array.isArray(item), `items[${index}] must be an object.`);
   const compatiblePrimaryFamilies = normalizeStringArray(item.compatiblePrimaryFamilies, `items[${index}].compatiblePrimaryFamilies`);
@@ -131,11 +143,17 @@ function normalizeItem(item, index) {
   }
 
   assert(Number.isInteger(item.sortOrder), `items[${index}].sortOrder must be an integer.`);
+  const preferenceGroup = normalizeString(item.preferenceGroup, `items[${index}].preferenceGroup`);
+  assert(
+    preferenceGroups.includes(preferenceGroup),
+    `items[${index}].preferenceGroup must be one of ${preferenceGroups.join(', ')}.`,
+  );
   const normalizedSummary = normalizeString(item.summary, `items[${index}].summary`, { optional: true });
   return {
     id: normalizeString(item.id, `items[${index}].id`),
     name: normalizeString(item.name, `items[${index}].name`),
     family: normalizeString(item.family, `items[${index}].family`),
+    preferenceGroup,
     primaryProfessionId,
     ...(normalizedSummary ? { summary: normalizedSummary } : {}),
     icon: normalizeString(item.icon, `items[${index}].icon`, { optional: true }),
@@ -147,7 +165,31 @@ function normalizeItem(item, index) {
   };
 }
 
-function normalizeSourceCatalog(data) {
+function assertFamilyCoverage(items, agentCliFamilies) {
+  for (const item of items) {
+    const missing = agentCliFamilies.filter((family) => !item.compatiblePrimaryFamilies.includes(family));
+    if (pinnedEntryIds.includes(item.id)) {
+      assert(missing.length > 0, `${item.id} must stay pinned to fewer agent CLI families.`);
+      continue;
+    }
+
+    assert(
+      missing.length === 0,
+      `${item.id} must list agent CLI family '${missing[0]}' in compatiblePrimaryFamilies; only ${pinnedEntryIds.join(', ')} may be pinned.`,
+    );
+  }
+}
+
+function assertLaunchModels(items) {
+  for (const item of items) {
+    assert(
+      typeof item.defaultParameters.model === 'string' && item.defaultParameters.model.length > 0,
+      `${item.id} must declare a non-empty defaultParameters.model.`,
+    );
+  }
+}
+
+function normalizeSourceCatalog(data, { agentCliFamilies }) {
   assert(data && typeof data === 'object' && !Array.isArray(data), 'Secondary profession source catalog must be an object.');
   const version = normalizeString(data.version, 'version');
   const publishedAt = normalizeString(data.publishedAt, 'publishedAt');
@@ -161,6 +203,9 @@ function normalizeSourceCatalog(data) {
     assert(!ids.has(normalizedId), `Duplicate secondary profession id '${item.id}'.`);
     ids.add(normalizedId);
   }
+
+  assertFamilyCoverage(items, agentCliFamilies);
+  assertLaunchModels(items);
 
   return {
     version,
@@ -208,9 +253,11 @@ export async function syncSecondaryProfessions({
   publishedFile = defaultPublishedFile,
   catalogFile = defaultCatalogFile,
   backendFallbackFile = defaultBackendFallbackFile,
+  agentCliPresetFile = defaultAgentCliPresetFile,
   check = false,
 } = {}) {
-  const sourceCatalog = normalizeSourceCatalog(await readJson(sourceFile));
+  const agentCliFamilies = readAgentCliFamilies(await readFile(agentCliPresetFile, 'utf8'));
+  const sourceCatalog = normalizeSourceCatalog(await readJson(sourceFile), { agentCliFamilies });
   const publishedContent = stableJson(sourceCatalog);
   const catalog = upsertCatalogEntry(await readJson(catalogFile), sourceCatalog);
   const catalogContent = stableJson(catalog);
