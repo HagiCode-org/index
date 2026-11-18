@@ -1503,7 +1503,7 @@ test('catalog exposes promotion discovery entries at canonical JSON routes', asy
   assert.match(microsoftStorePromotionContent?.description['en-US'] ?? '', /store-managed update path/);
   assert.equal(microsoftStorePromotionContent?.cta['zh-CN'], '打开 Microsoft Store');
   assert.equal(microsoftStorePromotionContent?.cta['en-US'], 'Open Microsoft Store');
-  assert.equal(microsoftStorePromotionContent?.image.alt, 'HagiCode for Windows Microsoft Store artwork');
+  assert.equal(microsoftStorePromotionContent?.image.alt, 'HagiCode for Windows Microsoft Store 宣传图');
   assert.equal(microsoftStorePromotionContent?.link, 'https://apps.microsoft.com/detail/9N3PM0N3SVDW');
   assert.equal(microsoftStorePromotionContent?.targetPlatform, 'microsoft-store');
 });

@@ -320,7 +320,7 @@ test('promotion route-mapped JSON publishes stable flags and localized content c
   assert.equal(microsoftStorePromotionContent.cta['en-US'], 'Open Microsoft Store');
   assert.equal(microsoftStorePromotionContent.link, 'https://apps.microsoft.com/detail/9N3PM0N3SVDW');
   assert.equal(microsoftStorePromotionContent.targetPlatform, 'microsoft-store');
-  assert.equal(microsoftStorePromotionContent.image.alt, 'HagiCode for Windows Microsoft Store artwork');
+  assert.equal(microsoftStorePromotionContent.image.alt, 'HagiCode for Windows Microsoft Store 宣传图');
 });
 
 test('sub-site promotions publish active flags and complete localized content', async () => {
