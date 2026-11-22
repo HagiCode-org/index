@@ -27,7 +27,6 @@
     "validate": "export NODE_ENV=\"${NODE_ENV:-production}\"; pnpm run prepare:generated && pnpm run i18n:check && astro build --outDir .astro-validate && node ./scripts/minify-published-json.mjs --published-root .astro-validate && pnpm run verify:json-routes --published-root .astro-validate && node ./scripts/sync-secondary-professions.mjs --check",
     "test": "export NODE_ENV=\"${NODE_ENV:-production}\"; pnpm run prepare:generated && pnpm run i18n:check && astro build --outDir .astro-test && node ./scripts/minify-published-json.mjs --published-root .astro-test && pnpm run verify:json-routes --published-root .astro-test && INDEX_BUILD_ROOT=.astro-test node --experimental-strip-types --test ./tests/*.test.mjs",
     "typecheck": "export NODE_OPTIONS=\"${NODE_OPTIONS:-} --max-old-space-size=8192\"; astro check",
-    "generate:steam-achievements": "node ./scripts/generate-steam-achievement-icons.mjs",
     "sync:index": "node ./scripts/sync-r2-index.mjs",
     "sync:agent-templates": "node ./scripts/sync-agent-templates.mjs",
     "sync:secondary-professions": "node ./scripts/sync-secondary-professions.mjs",
