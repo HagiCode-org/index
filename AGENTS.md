@@ -27,7 +27,6 @@ pnpm run sync:index
 pnpm run sync:secondary-professions
 pnpm run sync:character-templates
 pnpm run sync:agent-templates
-pnpm run generate:steam-achievements   # regenerate Steam achievement icons (scripts/steam-achievements/)
 ```
 
 `pnpm run dev` / `pnpm run preview` listen on `${PORT_INDEX:-31266}`. Hosting config for Aliyun ESA lives in `esa.jsonc` (`npm ci --include=dev`, `pnpm run build`, `dist/` assets).
