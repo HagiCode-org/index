@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "@hagicode/hagi18n": "^0.3.0",
+    "@hagicode/hagi18n": "^0.3.1",
     "@types/node": "^24.5.2",
     "typescript": "~6.0.3"
   },
