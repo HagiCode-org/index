@@ -490,7 +490,9 @@ function mediaTypeForImageFormat(format) {
 
 function expectedPromoteChainFormats(originalFormat) {
   const canonicalOriginal = originalFormat === 'jpg' ? 'jpeg' : originalFormat;
-  return [...promoteChainTierFormats.filter((format) => format !== canonicalOriginal), originalFormat];
+  const generated = promoteChainTierFormats.filter((format) => format !== canonicalOriginal);
+  // An AVIF original leads the chain; any other original is the last-resort fallback.
+  return canonicalOriginal === 'avif' ? [originalFormat, ...generated] : [...generated, originalFormat];
 }
 
 async function readPublishedFileOrNull(sitePath, publishedRoot) {
@@ -538,7 +540,7 @@ export async function validatePromoteImageChains(payload, publishedRoot) {
         `${tier} src must be a root-relative /_astro/<file> path, found ${source.src}.`,
       );
 
-      if (index === expectedFormats.length - 1) {
+      if (index === expectedFormats.indexOf(image.format)) {
         assert(
           source.src === image.src && source.format === image.format && source.width === image.width && source.height === image.height,
           `${tier} must mirror image.src, format, width and height of the original.`,

@@ -354,7 +354,7 @@ test('sub-site promotions publish active flags and complete localized content', 
   assert.match(promoteContent.contents.find((entry) => entry.id === 'subsite-design').description['en-US'], /DESIGN\.md/);
 });
 
-test('published promote_content.json is minified and gives each entry three distinct tier src values', async () => {
+test('published promote_content.json is minified and gives each entry distinct tier src values', async () => {
   const raw = await readFile(path.join(process.cwd(), process.env.INDEX_BUILD_ROOT ?? 'dist', 'promote_content.json'), 'utf8');
   const payload = JSON.parse(raw);
 
@@ -362,9 +362,11 @@ test('published promote_content.json is minified and gives each entry three dist
 
   for (const content of payload.contents) {
     const sources = content.image.sources.map((source) => source.src);
+    // An AVIF original is its own AVIF tier, so only the WebP tier is generated next to it.
+    const tierCount = content.image.format === 'avif' ? 2 : 3;
 
-    assert.equal(sources.length, 3, content.id);
-    assert.equal(new Set(sources).size, 3, content.id);
+    assert.equal(sources.length, tierCount, content.id);
+    assert.equal(new Set(sources).size, tierCount, content.id);
   }
 });
 
@@ -378,10 +380,12 @@ test('promotion route-mapped JSON keeps business fields and orders each image fa
     assert.deepEqual(Object.keys(descriptor).sort(), ['alt', 'format', 'height', 'src', 'width'], content.id);
 
     const original = descriptor.format === 'jpg' ? 'jpeg' : descriptor.format;
-    const expectedFormats = [...['avif', 'webp'].filter((format) => format !== original), descriptor.format];
+    const generated = ['avif', 'webp'].filter((format) => format !== original);
+    // An AVIF original leads the chain; any other original is the last-resort fallback.
+    const expectedFormats = original === 'avif' ? [descriptor.format, ...generated] : [...generated, descriptor.format];
     assert.deepEqual(sources.map((source) => source.format), expectedFormats, content.id);
     assert.deepEqual(
-      sources.at(-1),
+      sources[expectedFormats.indexOf(descriptor.format)],
       { format: descriptor.format, type: `image/${original}`, src: descriptor.src, width: descriptor.width, height: descriptor.height },
       content.id,
     );

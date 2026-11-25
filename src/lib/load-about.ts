@@ -1,6 +1,6 @@
 import douyinImage from '@/assets/about/douyin.avif';
 import feishuImage from '@/assets/about/feishu.avif';
-import wechatAccountImage from '@/assets/about/wechat-account.jpg';
+import wechatAccountImage from '@/assets/about/wechat-account.avif';
 import { buildAboutPayload, type AboutPayload } from '@/lib/about-data';
 
 export function loadAboutPayload(): AboutPayload {

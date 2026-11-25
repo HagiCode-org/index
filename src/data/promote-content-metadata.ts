@@ -1,9 +1,9 @@
 import type { ImageMetadata } from 'astro';
-import hagicodeWindowsStoreArtwork from '@/assets/promote/generated/desktop-microsoft-store-2026-06-10.jpg';
-import subSiteAwesomeBanner from '@/assets/promote/generated/subsite-awesome.jpg';
-import subSiteDesignBanner from '@/assets/promote/generated/subsite-design.jpg';
-import subSiteOpenSpecBanner from '@/assets/promote/generated/subsite-openspec.jpg';
-import subSiteOmniRouteBanner from '@/assets/promote/generated/subsite-omniroute.jpg';
+import hagicodeWindowsStoreArtwork from '@/assets/promote/generated/desktop-microsoft-store-2026-06-10.avif';
+import subSiteAwesomeBanner from '@/assets/promote/generated/subsite-awesome.avif';
+import subSiteDesignBanner from '@/assets/promote/generated/subsite-design.avif';
+import subSiteOpenSpecBanner from '@/assets/promote/generated/subsite-openspec.avif';
+import subSiteOmniRouteBanner from '@/assets/promote/generated/subsite-omniroute.avif';
 
 export interface PromoteContentMetadataEntry {
   readonly id: string;

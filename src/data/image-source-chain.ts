@@ -32,7 +32,7 @@ export async function createImageSources(
     throw new Error(`${image.src} is ${originalFormat}, which cannot be encoded to AVIF or WebP.`);
   }
 
-  const sources: ImageSource[] = [];
+  const generated: ImageSource[] = [];
 
   for (const format of modernTiers) {
     if (canonicalFormat(originalFormat) === format) {
@@ -45,7 +45,7 @@ export async function createImageSources(
       throw new Error(`${image.src} ${format} rendition has no width or height.`);
     }
 
-    sources.push({
+    generated.push({
       format,
       type: mediaTypes[format],
       src,
@@ -54,13 +54,15 @@ export async function createImageSources(
     });
   }
 
-  sources.push({
+  const original: ImageSource = {
     format: originalFormat,
     type: mediaTypes[originalFormat],
     src: image.src,
     width: image.width,
     height: image.height,
-  });
+  };
 
-  return sources;
+  // An AVIF original is already the most-preferred tier, so it leads the list.
+  // Any other original stays last as the fallback.
+  return canonicalFormat(originalFormat) === 'avif' ? [original, ...generated] : [...generated, original];
 }
