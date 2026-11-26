@@ -29,7 +29,7 @@ pnpm run sync:character-templates
 pnpm run sync:agent-templates
 ```
 
-`pnpm run dev` / `pnpm run preview` listen on `${PORT_INDEX:-31266}`. Hosting config for Aliyun ESA lives in `esa.jsonc` (`npm ci --include=dev`, `pnpm run build`, `dist/` assets).
+`pnpm run dev` / `pnpm run preview` listen on `${PORT_INDEX:-31266}`. Hosting config for Aliyun ESA lives in `esa.jsonc` (`corepack enable && pnpm install --frozen-lockfile`, `pnpm run build`, `dist/` assets).
 
 Requires Node.js 24+. `build`, `validate` and `test` first run `prepare:generated` (i18n resources, secondary professions, character templates) and build into `dist/`, `.astro-validate/` and `.astro-test/` respectively (all gitignored). Initialize submodules with `git submodule update --init --recursive` (`vendor/awesome-design-md`).
 
