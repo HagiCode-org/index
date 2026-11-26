@@ -292,6 +292,7 @@ test('syncSecondaryProfessions keeps GLM 5.1 aligned across the source and publi
       'secondary-glm-5-1',
       'secondary-glm-5-2',
       'secondary-glm-5-3',
+      'secondary-glm-5-4',
       'secondary-minimax-3',
       'secondary-minimax-m2-7',
     ],
@@ -352,7 +353,38 @@ test('syncSecondaryProfessions keeps GLM 5.3 aligned and ordered across the sour
   });
   assert.deepEqual(
     publishedIds.slice(publishedIds.indexOf('secondary-glm-5-2'), publishedIds.indexOf('secondary-minimax-3') + 1),
-    ['secondary-glm-5-2', 'secondary-glm-5-3', 'secondary-minimax-3'],
+    ['secondary-glm-5-2', 'secondary-glm-5-3', 'secondary-glm-5-4', 'secondary-minimax-3'],
+  );
+});
+
+test('syncSecondaryProfessions keeps GLM 5.4 aligned and ordered across the source and published asset', async () => {
+  const sourceCatalog = JSON.parse(await readFile(new URL('../src/data/secondary-professions.catalog.json', import.meta.url), 'utf8'));
+  const publishedCatalog = JSON.parse(await readFile(new URL('../public/secondary-professions/index.json', import.meta.url), 'utf8'));
+  const sourceEntry = sourceCatalog.items.find((item) => item.id === 'secondary-glm-5-4');
+  const publishedEntry = publishedCatalog.items.find((item) => item.id === 'secondary-glm-5-4');
+  const publishedIds = publishedCatalog.items.map((item) => item.id);
+
+  assert.deepEqual(sourceEntry, {
+    id: 'secondary-glm-5-4',
+    name: 'GLM 5.4',
+    family: 'anthropic',
+    preferenceGroup: 'claude-compatible',
+    sourceLabel: 'hero.professionCopy.sources.aiSharedAnthropicModel',
+    sortOrder: 67,
+    compatiblePrimaryFamilies: ALL_AGENT_CLI_FAMILIES,
+    defaultParameters: {
+      model: 'glm-5.4',
+    },
+  });
+  assert.deepEqual(publishedEntry, {
+    ...sourceEntry,
+    primaryProfessionId: null,
+    icon: null,
+    fieldConstraints: [],
+  });
+  assert.deepEqual(
+    publishedIds.slice(publishedIds.indexOf('secondary-glm-5-3'), publishedIds.indexOf('secondary-minimax-3') + 1),
+    ['secondary-glm-5-3', 'secondary-glm-5-4', 'secondary-minimax-3'],
   );
 });
 

@@ -1093,6 +1093,38 @@
       "fieldConstraints": []
     },
     {
+      "id": "secondary-glm-5-4",
+      "name": "GLM 5.4",
+      "family": "anthropic",
+      "preferenceGroup": "claude-compatible",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
+      "sortOrder": 67,
+      "compatiblePrimaryFamilies": [
+        "antigravity",
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
+      ],
+      "defaultParameters": {
+        "model": "glm-5.4"
+      },
+      "fieldConstraints": []
+    },
+    {
       "id": "secondary-minimax-3",
       "name": "MiniMax 3",
       "family": "anthropic",
