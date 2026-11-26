@@ -1,6 +1,6 @@
 {
-  "version": "2026.11.17.3",
-  "publishedAt": "2026-11-17T12:00:00.000Z",
+  "version": "2026.11.25.1",
+  "publishedAt": "2026-11-25T12:00:00.000Z",
   "title": "Secondary Profession Catalog",
   "description": "Stable default secondary profession catalog published for backend startup loading and bundled fallback sync.",
   "items": [
@@ -14,6 +14,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 2,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -45,6 +46,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 3,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -76,6 +78,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 4,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -107,6 +110,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 5,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -138,6 +142,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 6,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -169,6 +174,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 7,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -200,6 +206,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 8,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -231,6 +238,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 9,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -262,6 +270,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 10,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -293,6 +302,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 11,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -324,6 +334,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 12,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -355,6 +366,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodexCliModel",
       "sortOrder": 13,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -386,6 +398,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiCodex",
       "sortOrder": 20,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -417,6 +430,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiCodex",
       "sortOrder": 20,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -448,6 +462,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGitHubCopilotModel",
       "sortOrder": 30,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -479,6 +494,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 40,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -510,6 +526,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 41,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -541,6 +558,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 42,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -572,6 +590,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 43,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -603,6 +622,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 44,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -634,6 +654,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 49,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -665,6 +686,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 45,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -696,6 +718,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 46,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -727,6 +750,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 47,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -758,6 +782,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersClaudeCodeCliModel",
       "sortOrder": 48,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -789,6 +814,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 60,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -820,6 +846,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 60,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -851,6 +878,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 60,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -882,6 +910,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
       "sortOrder": 63,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -913,6 +942,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
       "sortOrder": 64,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -944,6 +974,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersCodebuddyCliModel",
       "sortOrder": 65,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -975,6 +1006,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 64,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -1006,6 +1038,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 65,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -1037,6 +1070,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 66,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -1068,6 +1102,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 69,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -1099,6 +1134,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 70,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -1130,6 +1166,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 71,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -1161,6 +1198,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiSharedAnthropicModel",
       "sortOrder": 72,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -1192,6 +1230,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersKimiCliModel",
       "sortOrder": 80,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -1223,6 +1262,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 81,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -1254,6 +1294,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 82,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -1285,6 +1326,7 @@
       "sourceLabel": "hero.professionCopy.sources.aiProvidersGeminiCliModel",
       "sortOrder": 83,
       "compatiblePrimaryFamilies": [
+        "antigravity",
         "claude",
         "codebuddy",
         "codex",
@@ -1320,6 +1362,230 @@
       ],
       "defaultParameters": {
         "model": "fusion"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-antigravity-gemini-4-hydrogen-xhigh",
+      "name": "Gemini 4 Hydrogen (XHigh)",
+      "family": "gemini",
+      "preferenceGroup": "other",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersAntigravityCliModel",
+      "sortOrder": 85,
+      "compatiblePrimaryFamilies": [
+        "antigravity",
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
+      ],
+      "defaultParameters": {
+        "model": "gemini-4-hydrogen-xhigh"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-antigravity-gemini-4-hydrogen-high",
+      "name": "Gemini 4 Hydrogen (High)",
+      "family": "gemini",
+      "preferenceGroup": "other",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersAntigravityCliModel",
+      "sortOrder": 86,
+      "compatiblePrimaryFamilies": [
+        "antigravity",
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
+      ],
+      "defaultParameters": {
+        "model": "gemini-4-hydrogen-high"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-antigravity-gemini-4-hydrogen-medium",
+      "name": "Gemini 4 Hydrogen (Medium)",
+      "family": "gemini",
+      "preferenceGroup": "other",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersAntigravityCliModel",
+      "sortOrder": 87,
+      "compatiblePrimaryFamilies": [
+        "antigravity",
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
+      ],
+      "defaultParameters": {
+        "model": "gemini-4-hydrogen-medium"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-antigravity-gemini-4-hydrogen-low",
+      "name": "Gemini 4 Hydrogen (Low)",
+      "family": "gemini",
+      "preferenceGroup": "other",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersAntigravityCliModel",
+      "sortOrder": 88,
+      "compatiblePrimaryFamilies": [
+        "antigravity",
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
+      ],
+      "defaultParameters": {
+        "model": "gemini-4-hydrogen-low"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-antigravity-gemini-3-8-flash-high",
+      "name": "Gemini 3.8 Flash (High)",
+      "family": "gemini",
+      "preferenceGroup": "other",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersAntigravityCliModel",
+      "sortOrder": 89,
+      "compatiblePrimaryFamilies": [
+        "antigravity",
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
+      ],
+      "defaultParameters": {
+        "model": "gemini-3.8-flash-high"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-antigravity-gemini-3-8-flash-medium",
+      "name": "Gemini 3.8 Flash (Medium)",
+      "family": "gemini",
+      "preferenceGroup": "other",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersAntigravityCliModel",
+      "sortOrder": 90,
+      "compatiblePrimaryFamilies": [
+        "antigravity",
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
+      ],
+      "defaultParameters": {
+        "model": "gemini-3.8-flash-medium"
+      },
+      "fieldConstraints": []
+    },
+    {
+      "id": "secondary-antigravity-gemini-3-8-flash-low",
+      "name": "Gemini 3.8 Flash (Low)",
+      "family": "gemini",
+      "preferenceGroup": "other",
+      "primaryProfessionId": null,
+      "icon": null,
+      "sourceLabel": "hero.professionCopy.sources.aiProvidersAntigravityCliModel",
+      "sortOrder": 91,
+      "compatiblePrimaryFamilies": [
+        "antigravity",
+        "claude",
+        "codebuddy",
+        "codex",
+        "copilot",
+        "deepagents",
+        "dsh",
+        "gemini",
+        "hermes",
+        "junie",
+        "kimi",
+        "kiro",
+        "omp",
+        "opencode",
+        "pi",
+        "qoder"
+      ],
+      "defaultParameters": {
+        "model": "gemini-3.8-flash-low"
       },
       "fieldConstraints": []
     }

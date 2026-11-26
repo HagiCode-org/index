@@ -241,7 +241,7 @@ test('every selectable catalog entry declares a launch model and a valid prefere
       assert.deepEqual([...item.compatiblePrimaryFamilies].sort(), ALL_AGENT_CLI_FAMILIES, `${item.id} is not listed for every agent CLI family`);
     }
   }
-  assert.equal(sourceCatalog.items.filter((item) => item.id !== 'secondary-copilot-fusion' && item.preferenceGroup === 'other').length, 3);
+  assert.equal(sourceCatalog.items.filter((item) => item.id !== 'secondary-copilot-fusion' && item.preferenceGroup === 'other').length, 10);
 });
 
 test('published catalog and bundled fallback list the same model ids and compatible families', async () => {
