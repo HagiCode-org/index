@@ -317,3 +317,21 @@
     binary: "dsh"
     arguments: ""
     startupTimeoutMs: "45000"
+- Id: "profession-antigravity"
+  Name: "Antigravity"
+  Family: "antigravity"
+  Icon: "executor-avatar:Antigravity"
+  SourceLabel: "hero.catalogCopy.sources.aiProvidersAntigravityCli"
+  ProviderType: "AntigravityCli"
+  BuiltInSkillsReasonCode: "not_verified"
+  SortOrder: 64
+  DefaultEnabled: true
+  IsBeta: false
+  # chat and resume are verified against agy 1.5.17 (repos/Hagicode.Libs/docs/antigravity-feature-matrix.md).
+  Features:
+    - "chat"
+    - "resume"
+  DefaultParameters:
+    executablePath: "agy"
+    arguments: ""
+    authenticationMethod: ""
